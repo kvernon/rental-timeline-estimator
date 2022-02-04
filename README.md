@@ -1,5 +1,66 @@
 # rental-timeline-estimator
+
 A website that runs the rental-investor-timeline app
+
+# realty-investor-timeline
+
+[![CircleCI](https://circleci.com/gh/kvernon/realty-investor-timeline.svg?style=shield)](https://circleci.com/gh/kvernon/realty-investor-timeline)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![Wallaby.js](https://img.shields.io/badge/wallaby.js-configured-green.svg)](https://wallabyjs.com)
+![](./badges/badge.svg)
+
+A way to determine if and when your expenses would be covered through rental properties
+
+Will be based on version 1 (this will also replace it when published)
+
+1. https://bitbucket.org/kellyvernon/realty-generator-core (a private repo by me).
+2. version 1 live: http://cubedelement.com/realty/
+
+Note: this above is buggy. I was racing to get the pieces together.
+
+## Inspiration
+
+This was originally used as a discussion point between me and my SO. The idea is that we like our jobs, but we also want
+a way to ensure that if anything happens to us, we would be able to sustain our income.
+
+For me, I was inspired by a game originally from early 2000's where you could quickly click on houses and flip them, but
+after this idea and speaking with mentors, the idea has become find an optimal way to _ramp-up_.
+
+> ☝️Mentors are great! They do a great job at helping you discover how to get to the next point in your life. Also, a
+> mentor is someone who has done the thing and is either where you've been or want to go. AKA, don't ask a someone how
+> to become a CEO when that person has never been a CEO. (Hopefully that give you a good idea)
+
+## What this does
+
+As mentioned prior, we want to find a way to _ramp-up_. This library will work through the scenarios of houses and
+provide a way to collect them. Once it completes, it'll provide feedback as to why you passed on a property.
+
+For example, it could be that you didn't have enough cash. Another is that you may have wanted more cash flow per month.
+After you see the trends, and based on the time-line hand at play, you could realize that you might need to expand on
+your ideal finds.
+
+The library loop simulates a per-month savings. In there it will take your money saved and determine if you have enough
+to acquire more properties. Equally, we run through selling of properties too, because it's a common practice.
+
+## Building
+
+### Node version
+
+On linux, mac, etc... do: `$ nvm install`, referencing this manager: `https://github.com/nvm-sh/nvm`
+
+on windows: `$ nvs install`, referencing this manager: `https://github.com/jasongin/nvs`
+
+### Getting the Repo up and running
+
+#### Install libs
+
+`$ npm ci`
+
+#### Run tests
+
+`$ npm run tests`
+
+> ☝️This can run using Wallaby.js in automatic config, or you can use the config supplied here
 
 # helpful links:
 

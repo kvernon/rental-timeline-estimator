@@ -7,4 +7,5 @@ coverage
 jest.config.ts
 commitlint.config.js
 webpack.config.js
+lint-staged.config.js
 /dist/
