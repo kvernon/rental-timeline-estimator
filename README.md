@@ -2,8 +2,6 @@
 
 A website that runs the rental-investor-timeline app
 
-# realty-investor-timeline
-
 [![Wallaby.js](https://img.shields.io/badge/wallaby.js-configured-green.svg)](https://wallabyjs.com)
 ![](./badges/badge.svg)
 
