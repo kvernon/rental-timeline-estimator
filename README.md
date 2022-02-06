@@ -63,3 +63,4 @@ on windows: `$ nvs install`, referencing this manager: `https://github.com/jason
 1. https://testing-library.com/
 2. https://reactjs.org/
 3. https://create-react-app.dev/
+4. https://emotion.sh/docs/@emotion/styled
