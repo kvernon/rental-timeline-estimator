@@ -1,3 +1,7 @@
+jest.mock('@mui/material', () => ({
+  ThemeProvider: () => ({}),
+  createTheme: () => ({}),
+}));
 jest.mock('react-dom');
 jest.mock('../src/app', () => ({
   App: () => {
@@ -5,12 +9,13 @@ jest.mock('../src/app', () => ({
   },
 }));
 
+import { ThemeProvider } from '@mui/material';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { App } from '../src/app';
 
 describe('test ReactDOM.render', () => {
-  let expectedHtml: HTMLElement;
+  let expectedHtml: HTMLElement | null;
 
   afterEach(() => {
     jest.resetAllMocks();
@@ -24,6 +29,11 @@ describe('test ReactDOM.render', () => {
 
   it('should call ReactDOM.render', () => {
     require('../src/index');
-    expect(ReactDOM.render).toBeCalledWith(<App />, expectedHtml);
+    expect(ReactDOM.render).toBeCalledWith(
+      <ThemeProvider theme={{}}>
+        <App />
+      </ThemeProvider>,
+      expectedHtml,
+    );
   });
 });
