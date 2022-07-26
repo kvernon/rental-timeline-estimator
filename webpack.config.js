@@ -1,8 +1,6 @@
 const { join } = require("path");
 require("html-webpack-plugin");
 require("eslint-webpack-plugin");
-//const CopyPlugin = require('copy-webpack-plugin');
-
 const common = require("./webpack.common.config");
 const webpack = require("webpack");
 

@@ -1,8 +1,8 @@
 jest.mock('@mui/material', () => ({
-  ThemeProvider: () => ({}),
-  createTheme: () => ({}),
+  ThemeProvider: jest.fn(),
+  createTheme: jest.fn().mockReturnValue({}),
 }));
-jest.mock('react-dom');
+jest.mock('react-dom/client');
 jest.mock('../src/app', () => ({
   App: () => {
     return <div>App</div>;
@@ -11,11 +11,10 @@ jest.mock('../src/app', () => ({
 
 import { ThemeProvider } from '@mui/material';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { App } from '../src/app';
 
 describe('test ReactDOM.render', () => {
-  let expectedHtml: HTMLElement | null;
+  let mockedRoot: any;
 
   afterEach(() => {
     jest.resetAllMocks();
@@ -23,17 +22,21 @@ describe('test ReactDOM.render', () => {
   });
 
   beforeEach(() => {
-    expectedHtml = null;
-    global.document.getElementById = jest.fn().mockReturnValue(expectedHtml);
+    mockedRoot = {
+      render: jest.fn(),
+    };
+
+    jest.doMock('react-dom/client', () => ({
+      createRoot: jest.fn().mockReturnValue(mockedRoot),
+    }));
   });
 
   it('should call ReactDOM.render', () => {
     require('../src/index');
-    expect(ReactDOM.render).toBeCalledWith(
+    expect(mockedRoot.render).toBeCalledWith(
       <ThemeProvider theme={{}}>
         <App />
       </ThemeProvider>,
-      expectedHtml,
     );
   });
 });

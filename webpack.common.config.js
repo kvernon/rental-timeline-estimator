@@ -1,7 +1,6 @@
 const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
-//const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: "./src/index.tsx",
@@ -44,9 +43,6 @@ module.exports = {
     new ESLintPlugin({
       extensions: [".tsx", ".ts"],
       exclude: "node_modules",
-    }) /*,
-    new CopyPlugin({
-      patterns: [{ from: 'public/images', to: 'images' }]
-    })*/,
+    })
   ],
 };
