@@ -9,10 +9,10 @@ A way to determine if and when your expenses would be covered through rental pro
 
 Will be based on version 1 (this will also replace it when published)
 
-1. https://bitbucket.org/kellyvernon/realty-generator-core (a private repo by me).
+1. ~~https://bitbucket.org/kellyvernon/realty-generator-core (a private repo by me)~~ https://github.com/kvernon/realty-investor-timeline.
 2. version 1 live: http://cubedelement.com/realty/
 
-Note: this above is buggy. I was racing to get the pieces together.
+Note: this version 1 above is buggy. I was racing to get the pieces together.
 
 ## Inspiration
 
@@ -65,3 +65,4 @@ on windows: `$ nvs install`, referencing this manager: `https://github.com/jason
 3. https://create-react-app.dev/
 4. https://emotion.sh/docs/@emotion/styled
 5. https://mui.com/guides/understand-mui-packages/
+6. https://zustand-demo.pmnd.rs/
