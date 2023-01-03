@@ -33,7 +33,7 @@ describe('test ReactDOM.render', () => {
 
   it('should call ReactDOM.render', () => {
     require('../src/index');
-    expect(mockedRoot.render).toBeCalledWith(
+    expect(mockedRoot.render).toHaveBeenCalledWith(
       <ThemeProvider theme={{}}>
         <App />
       </ThemeProvider>,
