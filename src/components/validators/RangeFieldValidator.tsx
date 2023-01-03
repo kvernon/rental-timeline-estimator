@@ -79,7 +79,7 @@ export function RangeFieldValidator(props: IRangeFieldValidatorProps): React.Rea
     evaluateAndDispatch({
       target: props.defaultValue,
     });
-  }, [inputValue.data.defaultValue]);
+  }, []);
 
   const prefixDom = inputValue.data.prefix ? inputValue.data.prefix : undefined;
   const suffixDom = inputValue.data.suffix ? inputValue.data.suffix : undefined;
@@ -109,6 +109,9 @@ export function RangeFieldValidator(props: IRangeFieldValidatorProps): React.Rea
             overflow: 'visible',
             alignSelf: inputValue.data.direction === 'column' ? 'flex-start' : 'center',
             flexGrow: 2,
+            '&.Mui-focused': {
+              color: '#6ad8fd',
+            },
           }}
         >
           {inputValue.data.title ? `${inputValue.data.title}:` : inputValue.data.title}
@@ -151,6 +154,7 @@ export function RangeFieldValidator(props: IRangeFieldValidatorProps): React.Rea
           }}
           onChange={onChange}
           onKeyUp={onKeyUp}
+          defaultValue={inputValue.data.defaultValue ? inputValue.data.defaultValue : inputValue.data.min}
           value={inputValue.data.defaultValue}
           title={`Range between ${inputValue.data.min || 0} and ${inputValue.data.max || 100}`}
         />
