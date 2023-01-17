@@ -1,21 +1,39 @@
 import React from 'react';
-import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import styled from '@emotion/styled';
 
-export const TitleDropDown = (props: { titles: string[]; defaultIndex?: number; id?: string }) => {
+const Select = styled.select`
+  width: 100%;
+  padding-left: 10px;
+  border: 2px solid #56afcc;
+  border-radius: 4px;
+  color: #56afcc;
+  border-color: #6ad8fd;
+  height: 43px;
+
+  &:focus {
+    color: #9EE5FF;
+    border-color: #9EE5FF;
+  },
+
+`;
+
+export const TitleDropDown = function (props: { titles: string[]; defaultIndex?: number; id?: string }) {
   const [titleValue, setTitleValue] = React.useState((props.defaultIndex || 0).toString());
 
-  const handleChange = (event: SelectChangeEvent) => {
+  function handleChange(event: React.ChangeEvent<HTMLSelectElement>): void {
     setTitleValue(event.target.value);
-  };
+    console.log(event.target.value);
+  }
 
   const selectUuid = props.id || window.crypto.randomUUID();
+  const id = `title-drop-down-${selectUuid}`;
   return (
-    <Select id={`title-drop-down-${selectUuid}`} sx={{ width: '100%' }} value={titleValue} onChange={handleChange}>
-      {props.titles.map((i, idx) => {
+    <Select id={id} onChange={handleChange} value={titleValue}>
+      {props.titles.map((title: string, idx: number) => {
         return (
-          <MenuItem value={idx.toString()} key={`${selectUuid}-${idx.toString()}`}>
-            {i}
-          </MenuItem>
+          <option value={idx.toString()} key={`${id}-${idx.toString()}`}>
+            {title}
+          </option>
         );
       })}
     </Select>

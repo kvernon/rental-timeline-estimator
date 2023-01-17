@@ -2,7 +2,6 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { ValidationBar } from '../components/validators/ValidationBar';
 import React from 'react';
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
-import { Box, Stack } from '@mui/material';
 
 export default {
   title: 'Example/ValidationBar',
@@ -10,26 +9,7 @@ export default {
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof ValidationBar>;
 
-const Template: ComponentStory<typeof ValidationBar> = (args) => (
-  <Stack
-    direction="row"
-    sx={{
-      width: '50px',
-      height: '100px',
-      backgroundColor: 'blue',
-      display: 'flex',
-      direction: 'row',
-      alignItems: 'stretch',
-    }}
-  >
-    <Box
-      sx={{
-        width: '40px',
-      }}
-    />
-    <ValidationBar {...args} />
-  </Stack>
-);
+const Template: ComponentStory<typeof ValidationBar> = (args) => <ValidationBar {...args} />;
 
 export const Optional = Template.bind({});
 Optional.args = {

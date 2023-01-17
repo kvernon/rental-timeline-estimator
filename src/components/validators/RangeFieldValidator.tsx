@@ -1,13 +1,48 @@
 import React, { ChangeEventHandler, useEffect } from 'react';
-import { Box, FormControl, Input, InputLabel, styled } from '@mui/material';
 import { ValidatorStackTypes } from './ValidatorStackTypes';
 import { ValidatorTypes } from './ValidatorTypes';
 import { IRangeFieldValidatorProps } from './IRangeFieldValidatorProps';
 import { IEventResult } from './IEventResult';
 import { IRangeFieldValidatorEntity } from './IRangeFieldValidatorEntity';
 import { useStackProviderStore } from './ValidatorStackProvider';
+import styled from '@emotion/styled';
 
-const SpanPaddingLeft = styled('span')`
+const Box = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-content: space-evenly;
+  align-items: baseline;
+  width: 100%;
+  flex-grow: 1;
+  height: 43px;
+`;
+
+const FormControl = styled.div`
+  display: flex;
+  color: #ffffffff;
+  flex-direction: ${(props: { direction?: 'row' | 'column' }) => props.direction || 'row'};
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 43px;
+`;
+
+const InputLabel = styled.label((props: { direction?: 'row' | 'column' }) => ({
+  display: 'flex',
+  color: '#56afcc',
+  position: 'static',
+  whiteSpace: 'nowrap',
+  padding: '5px',
+  transform: 'none',
+  overflow: 'visible',
+  alignSelf: props.direction === 'column' ? 'flex-start' : 'center',
+  flexGrow: 2,
+  '&:focus': {
+    color: '#9EE5FF',
+  },
+}));
+
+const SpanPaddingLeft = styled.span`
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   font-weight: 400;
   font-size: 1rem;
@@ -17,6 +52,21 @@ const SpanPaddingLeft = styled('span')`
   margin: 0;
   padding: ${(props) => (props.title ? '5.5px 7px' : '7px')};
   display: inline-flex;
+`;
+
+const Input = styled.input`
+  text-align: right;
+  color: #0a0a0a;
+  background-color: #56afcc;
+  border-color: #6ad8fd;
+  border-radius: 6px;
+  border-width: 1px 1px 5px 1px;
+  flex-grow: 1;
+  width: 100%;
+  height: 43px;
+'&:focus': {
+  background-color: #9EE5FF;
+},
 `;
 
 export function RangeFieldValidator(props: IRangeFieldValidatorProps): React.ReactElement {
@@ -84,50 +134,13 @@ export function RangeFieldValidator(props: IRangeFieldValidatorProps): React.Rea
   const prefixDom = inputValue.data.prefix ? inputValue.data.prefix : undefined;
   const suffixDom = inputValue.data.suffix ? inputValue.data.suffix : undefined;
   return (
-    <FormControl
-      variant="standard"
-      sx={{
-        display: 'flex',
-        color: '#FFFFFFFF',
-        flexDirection: inputValue.data.direction || 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        width: '100%',
-        height: '43px',
-      }}
-    >
+    <FormControl>
       {props.title && (
-        <InputLabel
-          htmlFor={`TextFieldValidator${inputValue.data.id}`}
-          sx={{
-            display: 'flex',
-            color: '#FFFFFFFF',
-            position: 'static',
-            whiteSpace: 'nowrap',
-            padding: '5px',
-            transform: 'none',
-            overflow: 'visible',
-            alignSelf: inputValue.data.direction === 'column' ? 'flex-start' : 'center',
-            flexGrow: 2,
-            '&.Mui-focused': {
-              color: '#6ad8fd',
-            },
-          }}
-        >
+        <InputLabel direction={inputValue.data.direction} htmlFor={`TextFieldValidator${inputValue.data.id}`}>
           {inputValue.data.title ? `${inputValue.data.title}:` : inputValue.data.title}
         </InputLabel>
       )}
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignContent: 'space-evenly',
-          alignItems: 'baseline',
-          width: '100%',
-          flexGrow: 1,
-          height: '43px',
-        }}
-      >
+      <Box>
         {prefixDom && (
           <SpanPaddingLeft className="prefix" title={inputValue.data.title}>
             {prefixDom}
@@ -136,22 +149,6 @@ export function RangeFieldValidator(props: IRangeFieldValidatorProps): React.Rea
         <Input
           id={`TextFieldValidator${inputValue.data.id}`}
           type="number"
-          inputProps={{
-            sx: {
-              textAlign: 'right',
-            },
-          }}
-          sx={{
-            ...inputValue.data.sx,
-            color: '#0a0a0a',
-            backgroundColor: '#9EE5FF',
-            borderColor: '#6ad8fd',
-            borderRadius: '6px',
-            borderWidth: '1px 1px 5px 1px',
-            flexGrow: 1,
-            width: '100%',
-            height: '43px',
-          }}
           onChange={onChange}
           onKeyUp={onKeyUp}
           defaultValue={inputValue.data.defaultValue ? inputValue.data.defaultValue : inputValue.data.min}

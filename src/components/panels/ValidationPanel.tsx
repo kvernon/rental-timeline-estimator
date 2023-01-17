@@ -1,9 +1,8 @@
-import { Card, CardContent, CardHeader, Container, Stack, Typography } from '@mui/material';
 import React from 'react';
 import { ValidatorStack } from '../validators/ValidatorStack';
 import { ValidatorStackTypes } from '../validators/ValidatorStackTypes';
 import { IRangeFieldValidatorChange } from '../validators/IRangeFieldValidatorProps';
-import { Label } from '@mui/icons-material';
+import styled from '@emotion/styled';
 
 export interface IValidationPanelProps {
   id: string;
@@ -12,39 +11,38 @@ export interface IValidationPanelProps {
   title: string;
 }
 
-export const ValidationPanel = (props: IValidationPanelProps) => {
+const Typography = styled.div`
+  position: relative;
+  top: 9px;
+  color: #a19fa8;
+`;
+
+const Card = styled.div`
+  background-color: #321f59;
+  color: #a19fa8;
+`;
+
+const CardContent = styled.div`
+  padding: 0;
+  margin-top: 0;
+'&:last-child': {
+  padding-bottom: 0;
+},
+`;
+
+export const ValidationPanel = function (props: IValidationPanelProps) {
   return (
-    <Container>
-      <Typography
-        variant="h5"
-        component="div"
-        sx={{
-          position: 'relative',
-          top: '9px',
-          color: '#A19FA8',
-        }}
-      >
-        {props.title}
+    <div>
+      <Typography>
+        <h5>{props.title}</h5>
       </Typography>
-      <Card id={`panel-${props.id}`} sx={{ backgroundColor: '#321F59', color: '#A19FA8' }}>
-        <CardContent
-          sx={{
-            padding: 0,
-            marginTop: 0,
-            '&:last-child': {
-              paddingBottom: 0,
-            },
-          }}
-        >
+      <Card id={`panel-${props.id}`}>
+        <CardContent>
           <ValidatorStack panelValidatorStackType={props.panelType} id={props.id}>
             {props.children}
           </ValidatorStack>
         </CardContent>
       </Card>
-    </Container>
-    /*  <Stack id={`panel-${props.id}`} sx={{backgroundColor: '#321F59', }}>
-        <CardHeader sx={{color:'#A19FA8'}}>{props.title}</CardHeader>
-        <ValidatorStack panelValidatorStackType={props.panelType} id={props.id}>{props.children}</ValidatorStack>
-      </Stack>*/
+    </div>
   );
 };

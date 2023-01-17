@@ -50,7 +50,6 @@ Required.args = {
   title: 'Example Title 50px',
   prefix: 'Required',
   suffix: '%',
-  sx: { width: '50px' },
   validationType: ValidatorStackTypes.Required,
   onChange: (evt: IEventResult) => console.log(evt),
 };
@@ -59,7 +58,6 @@ export const RequiredNoTitle = Template.bind({});
 RequiredNoTitle.args = {
   prefix: 'Required',
   suffix: '%',
-  sx: { width: '50px' },
   validationType: ValidatorStackTypes.Required,
   onChange: (evt: IEventResult) => console.log(evt),
 };
@@ -67,7 +65,6 @@ RequiredNoTitle.args = {
 export const RequiredNoSuffix = Template.bind({});
 RequiredNoSuffix.args = {
   prefix: 'Required',
-  sx: { width: '50px' },
   validationType: ValidatorStackTypes.Required,
   onChange: (evt: IEventResult) => console.log(evt),
 };

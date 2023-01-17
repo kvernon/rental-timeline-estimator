@@ -31,14 +31,4 @@ describe('TitleDropDown unit tests', () => {
       expect(screen.queryByTestId(/title-drop-down-3/i)).toBeInTheDocument();
     });
   });
-
-  describe('and hover', () => {
-    test('should highlight', async () => {
-      render(<TitleDropDown titles={['Hi']} />);
-      const title = screen.getByRole('button');
-      fireEvent.mouseOver(title);
-
-      expect(title).toHaveStyle('MuiButton-root:');
-    });
-  });
 });

@@ -1,6 +1,5 @@
-jest.mock('@mui/material', () => ({
+jest.mock('@emotion/react', () => ({
   ThemeProvider: jest.fn(),
-  createTheme: jest.fn().mockReturnValue({}),
 }));
 jest.mock('react-dom/client');
 jest.mock('../src/app', () => ({
@@ -9,7 +8,11 @@ jest.mock('../src/app', () => ({
   },
 }));
 
-import { ThemeProvider } from '@mui/material';
+jest.mock('../src/theme', () => ({
+  options: {},
+}));
+
+import { ThemeProvider } from '@emotion/react';
 import React from 'react';
 import { App } from '../src/app';
 

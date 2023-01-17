@@ -1,5 +1,3 @@
-import { SxProps } from '@mui/system';
-import { Theme } from '@mui/material/styles';
 import { ValidatorStackTypes } from './ValidatorStackTypes';
 import { IEventResult } from './IEventResult';
 
@@ -14,7 +12,6 @@ export interface IRangeFieldValidatorProps extends IRangeFieldValidatorChange {
   title?: string;
   prefix?: string;
   suffix?: string;
-  sx?: SxProps<Theme>;
   validationType: ValidatorStackTypes;
   /**
    * will default to 0

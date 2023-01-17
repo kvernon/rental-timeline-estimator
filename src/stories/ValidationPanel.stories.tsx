@@ -20,22 +20,12 @@ Required.args = {
   title: 'Required',
   id: 'id',
   children: [
-    <RangeFieldValidator
-      validationType={ValidatorStackTypes.Optional}
-      title={'input'}
-      min={1}
-      max={10}
-      sx={{ color: '#FFFFFFFF' }}
-      defaultValue={7}
-      id={'id'}
-      stackId={'id'}
-    />,
+    <RangeFieldValidator validationType={ValidatorStackTypes.Optional} title={'input'} min={1} max={10} defaultValue={7} id={'id'} stackId={'id'} />,
     <RangeFieldValidator
       validationType={ValidatorStackTypes.Optional}
       title={'input2'}
       min={1}
       max={10}
-      sx={{ color: '#FFFFFFFF' }}
       defaultValue={1}
       id={'id2'}
       stackId={'id'}

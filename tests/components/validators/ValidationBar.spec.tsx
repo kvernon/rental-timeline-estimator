@@ -5,7 +5,7 @@ jest.mock('../../../src/components/validators/IsValid', () => ({
   }),
 }));
 import React from 'react';
-import { configure, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { ValidationBar } from '../../../src/components/validators/ValidationBar';
 import { IsValid } from '../../../src/components/validators/IsValid';
@@ -18,10 +18,6 @@ describe('ValidationBar unit tests', () => {
     });
   });
 
-  beforeEach(() => {
-    configure({ testIdAttribute: 'class' });
-  });
-
   afterEach(() => {
     jest.resetAllMocks();
   });
@@ -32,7 +28,7 @@ describe('ValidationBar unit tests', () => {
 
       render(<ValidationBar isValid={expectedValidatorType} />);
 
-      expect(screen.queryByTestId(/MuiBox-root/i)).toHaveStyle('background: ouch;');
+      expect(screen.getByTitle('ouch')).toHaveStyle('background: ouch;');
       expect(IsValid).toHaveBeenCalledWith(expectedValidatorType);
     });
   });

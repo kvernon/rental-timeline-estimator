@@ -1,9 +1,8 @@
 import React from 'react';
-import {createTheme, ThemeProvider} from '@mui/material';
 
 import {options} from './../src/theme';
+import {ThemeProvider} from '@emotion/react';
 
-const theme = createTheme(options);
 const defaultBackground = 'rentalGen3';
 
 export const parameters = {
@@ -27,7 +26,7 @@ export const parameters = {
 
 export const decorators = [
   (Story) => (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={options}>
       <Story/>
     </ThemeProvider>
   ),
