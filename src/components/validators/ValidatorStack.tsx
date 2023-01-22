@@ -20,10 +20,10 @@ const Stack = styled.div((props: IStackProps) => ({
   flexDirection: props.direction || 'column',
   flexGrow: props.flexGrow,
   flex: props.spacing,
-  paddingBottom: props.paddingBottom || '2px',
-  paddingTop: props.paddingTop || '2px',
+  paddingBottom: props.paddingBottom || '0',
+  paddingTop: props.paddingTop || '0',
   paddingLeft: props.paddingLeft || '2px',
-  paddingRight: props.paddingRight || '2px',
+  paddingRight: props.paddingRight || '0',
 }));
 
 export const ValidatorStack = function (props: IValidatorPanelProps) {

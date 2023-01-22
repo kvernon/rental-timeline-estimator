@@ -64,5 +64,4 @@ on windows: `$ nvs install`, referencing this manager: `https://github.com/jason
 2. https://reactjs.org/
 3. https://create-react-app.dev/
 4. https://emotion.sh/docs/@emotion/styled
-5. https://mui.com/guides/understand-mui-packages/
-6. https://zustand-demo.pmnd.rs/
+5. https://zustand-demo.pmnd.rs/

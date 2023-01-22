@@ -6,6 +6,8 @@ import { IEventResult } from './IEventResult';
 import { IRangeFieldValidatorEntity } from './IRangeFieldValidatorEntity';
 import { useStackProviderStore } from './ValidatorStackProvider';
 import styled from '@emotion/styled';
+import { useTheme } from '@emotion/react';
+import { FontGroups, IThemeOptions } from '../../theme';
 
 const Box = styled.div`
   display: flex;
@@ -21,26 +23,16 @@ const FormControl = styled.div`
   display: flex;
   color: #ffffffff;
   flex-direction: ${(props: { direction?: 'row' | 'column' }) => props.direction || 'row'};
+  margin: 5px 5px 24px 5px;
   justify-content: flex-start;
   align-items: center;
   width: 100%;
   height: 43px;
-`;
 
-const InputLabel = styled.label((props: { direction?: 'row' | 'column' }) => ({
-  display: 'flex',
-  color: '#56afcc',
-  position: 'static',
-  whiteSpace: 'nowrap',
-  padding: '5px',
-  transform: 'none',
-  overflow: 'visible',
-  alignSelf: props.direction === 'column' ? 'flex-start' : 'center',
-  flexGrow: 2,
-  '&:focus': {
-    color: '#9EE5FF',
-  },
-}));
+  &:last-child {
+    margin: 5px;
+  }
+`;
 
 const SpanPaddingLeft = styled.span`
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
@@ -54,23 +46,49 @@ const SpanPaddingLeft = styled.span`
   display: inline-flex;
 `;
 
-const Input = styled.input`
-  text-align: right;
-  color: #0a0a0a;
-  background-color: #56afcc;
-  border-color: #6ad8fd;
-  border-radius: 6px;
-  border-width: 1px 1px 5px 1px;
-  flex-grow: 1;
-  width: 100%;
-  height: 43px;
-'&:focus': {
-  background-color: #9EE5FF;
-},
-`;
-
 export function RangeFieldValidator(props: IRangeFieldValidatorProps): React.ReactElement {
   const context = useStackProviderStore();
+  const coreTheme = useTheme() as IThemeOptions;
+
+  const InputLabel = styled.label<{ direction?: 'row' | 'column' }>`
+    font-family: ${coreTheme.typography.get(FontGroups.inputLabel)?.font};
+    font-size: ${coreTheme.typography.get(FontGroups.inputLabel)?.size};
+    display: flex;
+    color: #56afcc;
+    position: static;
+    white-space: nowrap;
+    padding: 5px;
+    transform: none;
+    overflow: visible;
+    align-self: ${(props) => (props.direction === 'column' ? 'flex-start' : 'center')};
+    flex-grow: 2;
+
+    &:focus {
+      color: #9ee5ff;
+    }
+  `;
+
+  const Input = styled.input<{ result: IEventResult }>`
+    font-family: ${coreTheme.typography.get(FontGroups.input)?.font};
+    font-size: ${coreTheme.typography.get(FontGroups.input)?.size};
+    text-align: right;
+    color: ${coreTheme.typography.get(FontGroups.input)?.color};
+    background-color: ${(props) => coreTheme.palette.validation[props.result.validationResultName].background};
+    transition: background-color 0.4s ease-out;
+    border-radius: 6px;
+    border-width: 1px;
+    flex-grow: 1;
+    width: 100%;
+    height: 43px;
+
+    &:hover {
+      background-color: ${(props) => coreTheme.palette.validation[props.result.validationResultName].backgroundFocus};
+    }
+
+    &:focus {
+      background-color: ${(props) => coreTheme.palette.validation[props.result.validationResultName].backgroundFocus};
+    }
+  `;
 
   const evaluate = (evt: { targetValue?: number }): IEventResult => {
     const validation: IEventResult = {
@@ -147,11 +165,14 @@ export function RangeFieldValidator(props: IRangeFieldValidatorProps): React.Rea
           </SpanPaddingLeft>
         )}
         <Input
+          result={evaluate({ targetValue: inputValue.data.defaultValue })}
           id={`TextFieldValidator${inputValue.data.id}`}
           type="number"
           onChange={onChange}
+          min={inputValue.data.min}
+          max={inputValue.data.max}
           onKeyUp={onKeyUp}
-          defaultValue={inputValue.data.defaultValue ? inputValue.data.defaultValue : inputValue.data.min}
+          defaultValue={inputValue.data.defaultValue}
           value={inputValue.data.defaultValue}
           title={`Range between ${inputValue.data.min || 0} and ${inputValue.data.max || 100}`}
         />

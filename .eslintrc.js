@@ -26,7 +26,7 @@ module.exports = {
     'import/prefer-default-export': 'off'
   },
   'overrides': [{
-    'files': ['tests/**'],
+    'files': ['__tests__/**'],
     'rules': {
       '@typescript-eslint/no-var-requires': 0
     }

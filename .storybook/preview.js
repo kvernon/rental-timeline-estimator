@@ -12,7 +12,7 @@ export const parameters = {
     values: [
       {
         name: defaultBackground,
-        value: options.palette.primary.dark,
+        value: options.palette.pageBackground,
       }
     ],
   },

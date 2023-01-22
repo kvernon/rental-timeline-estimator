@@ -1,17 +1,19 @@
 import { IValidatorStackProvider } from './IValidatorStackProvider';
 
-import create from 'zustand';
+import { create } from 'zustand';
 import { ValidatorStackTypes } from './ValidatorStackTypes';
 import { ValidateResults } from './ValidateResults';
+import { ValidatorTypes } from './ValidatorTypes';
+import { IRangeFieldValidatorEntity } from './IRangeFieldValidatorEntity';
 
 export const useStackProviderStore = create<IValidatorStackProvider>()((set, get) => {
   return {
     entities: [],
-    pushOrUpdateEntity: (entity) =>
+    pushOrUpdateEntity: (entity): void =>
       set((state) => ({
         entities: [...state.entities.filter((x) => x.key !== entity.key), entity],
       })),
-    updateCollectionEntity: (item) =>
+    updateCollectionEntity: (item): void =>
       set((state) => {
         if (!item || !item.data || !item.data.stackId) {
           return { entities: state.entities };
@@ -42,13 +44,13 @@ export const useStackProviderStore = create<IValidatorStackProvider>()((set, get
           ],
         };
       }),
-    areValidateResults: (stackKey, panelValidatorStackType: ValidatorStackTypes) => {
+    areValidateResults: (stackKey, panelValidatorStackType: ValidatorStackTypes): ValidatorTypes => {
       const find = get().entities.find((x) => x.key === stackKey);
       const map = find?.collection.map((y) => y.results.validationResult);
       return ValidateResults(panelValidatorStackType, map || []);
     },
 
-    getEntityByKeys: (stackKey, collectionKey) => {
+    getEntityByKeys: (stackKey, collectionKey): IRangeFieldValidatorEntity | null => {
       const newVar = get().entities.find((x) => x.key === stackKey);
 
       if (!newVar) {

@@ -1,5 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { TitleDropDown } from '../components/rules/TitleDropDown';
+import { within, userEvent } from '@storybook/testing-library';
 import React from 'react';
 
 export default {
@@ -8,6 +9,7 @@ export default {
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     backgroundColor: { control: 'color' },
+    onClick: { action: 'clicked' },
   },
 } as ComponentMeta<typeof TitleDropDown>;
 
