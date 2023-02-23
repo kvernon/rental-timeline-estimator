@@ -13,7 +13,7 @@ const Box = styled.div<{ validationColor: string }>`
   transition: background-color 0.4s ease-out;
   flex-direction: column;
   width: 10px;
-  background-color: ${(props) => props.validationColor};
+  background: ${(props) => `linear-gradient(${props.validationColor}, ${props.validationColor + 33})`};
 `;
 
 export const ValidationBar = function (props: IValidationBarProps) {

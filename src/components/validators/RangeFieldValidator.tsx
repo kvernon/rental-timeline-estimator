@@ -34,25 +34,26 @@ const FormControl = styled.div`
   }
 `;
 
-const SpanPaddingLeft = styled.span`
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.4375em;
-  letter-spacing: 0.00938em;
-  color: #a19fa8;
-  margin: 0;
-  padding: ${(props) => (props.title ? '5.5px 7px' : '7px')};
-  display: inline-flex;
-`;
-
 export function RangeFieldValidator(props: IRangeFieldValidatorProps): React.ReactElement {
   const context = useStackProviderStore();
   const coreTheme = useTheme() as IThemeOptions;
 
+  const SpanPaddingLeft = styled.span`
+    font-family: ${coreTheme.typography.get(FontGroups.inputLabel)?.font};
+    font-size: ${coreTheme.typography.get(FontGroups.inputLabel)?.size};
+    font-weight: ${coreTheme.typography.get(FontGroups.inputLabel)?.weight};
+    line-height: 1.4375em;
+    letter-spacing: 0.00938em;
+    color: #a19fa8;
+    margin: 0;
+    padding: ${(props) => (props.title ? '5.5px 7px' : '7px')};
+    display: inline-flex;
+  `;
+
   const InputLabel = styled.label<{ direction?: 'row' | 'column' }>`
     font-family: ${coreTheme.typography.get(FontGroups.inputLabel)?.font};
     font-size: ${coreTheme.typography.get(FontGroups.inputLabel)?.size};
+    font-weight: ${coreTheme.typography.get(FontGroups.inputLabel)?.weight};
     display: flex;
     color: #56afcc;
     position: static;
@@ -71,6 +72,7 @@ export function RangeFieldValidator(props: IRangeFieldValidatorProps): React.Rea
   const Input = styled.input<{ result: IEventResult }>`
     font-family: ${coreTheme.typography.get(FontGroups.input)?.font};
     font-size: ${coreTheme.typography.get(FontGroups.input)?.size};
+    font-weight: ${coreTheme.typography.get(FontGroups.input)?.weight};
     text-align: right;
     color: ${coreTheme.typography.get(FontGroups.input)?.color};
     background-color: ${(props) => coreTheme.palette.validation[props.result.validationResultName].background};
