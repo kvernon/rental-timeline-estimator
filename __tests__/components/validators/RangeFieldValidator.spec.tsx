@@ -1,18 +1,66 @@
+import { IThemeOptions, ITypography } from '../../../src/theme';
 import { ValidatorStackTypes } from '../../../src/components/validators/ValidatorStackTypes';
 import React from 'react';
 import { configure, fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { RangeFieldValidator } from '../../../src/components/validators/RangeFieldValidator';
 import { ValidatorTypes } from '../../../src/components/validators/ValidatorTypes';
+import type { Theme } from '@emotion/react';
 
+const useTheme: jest.MockedFn<() => Theme> = jest.fn();
+jest.mock('@emotion/react', () => {
+  const requireActual = jest.requireActual('@emotion/react');
+  return {
+    ...requireActual,
+    useTheme,
+  };
+});
+
+import { RangeFieldValidator } from '../../../src/components/validators/RangeFieldValidator';
 describe('RangeFieldValidator unit tests', () => {
+  let typographyMock: jest.Mocked<ITypography>;
+
   afterEach(() => {
     jest.resetAllMocks();
-    jest.restoreAllMocks();
   });
 
   beforeEach(() => {
+    typographyMock = {
+      parent: {
+        allPopulated: jest.fn(),
+        font: 'p',
+        color: 'p',
+        size: 'p',
+      },
+      get: jest.fn().mockReturnValue({
+        font: 'child',
+        color: 'child',
+        size: 'child',
+      }),
+    };
+
     configure({ testIdAttribute: 'id' });
+    useTheme.mockReturnValue({
+      palette: {
+        validation: {
+          Invalid: {
+            validationColor: '0',
+            background: '0',
+            backgroundFocus: '0',
+          },
+          Valid: {
+            validationColor: '1',
+            background: '1',
+            backgroundFocus: '1',
+          },
+          Optional: {
+            validationColor: '1',
+            background: '1',
+            backgroundFocus: '1',
+          },
+        },
+      },
+      typography: typographyMock,
+    } as unknown as IThemeOptions);
   });
 
   describe('and onChange', () => {
@@ -112,6 +160,7 @@ describe('RangeFieldValidator unit tests', () => {
         });
       });
     });
+
     describe('and Required', () => {
       describe('and value supplied', () => {
         test('should be Valid', () => {

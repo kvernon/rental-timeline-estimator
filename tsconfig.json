@@ -4,5 +4,7 @@
   "compilerOptions": {
     "outDir": "./dist"
   },
-  "exclude": ["node_modules", "dist", "./jest.config.ts", "tests"]
+  "exclude": ["node_modules", "dist", "./jest.config.ts",
+    "__tests__"
+  ]
 }

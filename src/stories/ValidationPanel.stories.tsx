@@ -15,20 +15,24 @@ export default {
 
 const Template: ComponentStory<typeof ValidationPanel> = (args) => <ValidationPanel {...args} />;
 
+export const Optional = Template.bind({});
+Optional.args = {
+  title: 'Optional',
+  panelType: ValidatorStackTypes.Optional,
+  id: 'id',
+  children: [
+    <RangeFieldValidator validationType={ValidatorStackTypes.Optional} title={'input'} min={1} max={10} id={'id'} stackId={'id'} />,
+    <RangeFieldValidator validationType={ValidatorStackTypes.Optional} title={'input2'} min={1} max={10} id={'id2'} stackId={'id'} />,
+  ],
+};
+
 export const Required = Template.bind({});
 Required.args = {
   title: 'Required',
+  panelType: ValidatorStackTypes.Required,
   id: 'id',
   children: [
-    <RangeFieldValidator validationType={ValidatorStackTypes.Optional} title={'input'} min={1} max={10} defaultValue={7} id={'id'} stackId={'id'} />,
-    <RangeFieldValidator
-      validationType={ValidatorStackTypes.Optional}
-      title={'input2'}
-      min={1}
-      max={10}
-      defaultValue={1}
-      id={'id2'}
-      stackId={'id'}
-    />,
+    <RangeFieldValidator validationType={ValidatorStackTypes.Optional} title={'input'} min={1} max={10} id={'id'} stackId={'id'} />,
+    <RangeFieldValidator validationType={ValidatorStackTypes.Optional} title={'input2'} min={1} max={10} id={'id2'} stackId={'id'} />,
   ],
 };
