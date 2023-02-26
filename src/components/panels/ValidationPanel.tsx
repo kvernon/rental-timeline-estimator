@@ -17,6 +17,7 @@ const H5 = styled.h5<{ theme: IThemeOptions }>`
   color: ${(props) => props.theme.typography.get(FontGroups.panelTitle)?.color};
   font-family: ${(props) => props.theme.typography.get(FontGroups.panelTitle)?.font};
   font-size: ${(props) => props.theme.typography.get(FontGroups.panelTitle)?.size};
+  font-weight: ${(props) => props.theme.typography.get(FontGroups.panelTitle)?.weight};
   margin: 0;
 `;
 
@@ -26,10 +27,9 @@ const Typography = styled.div`
 `;
 
 const Card = styled.div<{ theme: IThemeOptions }>`
-  background-color: ${(props) => props.theme.palette.panelBackground};
+  background: ${(props) => `linear-gradient(#7950C5, ${props.theme.palette.panelBackground} 2%)`};
   color: ${(props) => props.theme.typography.get(FontGroups.panelTitle)?.color};
-  /*drop-shadow(20px 505px 1 #101B1E);*/
-  box-shadow: 0px 10px 15px rgba(16, 27, 30, 0.4);
+  box-shadow: 0 10px 15px rgba(16, 27, 30, 0.4);
 `;
 
 const CardContent = styled.div`
