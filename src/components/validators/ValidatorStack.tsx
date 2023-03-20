@@ -1,42 +1,47 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ValidationBar } from './ValidationBar';
 import { IValidatorPanelProps } from './IValidatorPanelProps';
-import { useStackProviderStore } from './ValidatorStackProvider';
+import { Stack } from '../core/Stack';
+import { useFormContext } from 'react-hook-form';
 import { ValidatorTypes } from './ValidatorTypes';
-import styled from '@emotion/styled';
-
-interface IStackProps {
-  paddingBottom?: string;
-  paddingTop?: string;
-  paddingLeft?: string;
-  paddingRight?: string;
-  direction?: 'column' | 'row';
-  spacing?: number;
-  flexGrow?: number;
-}
-
-const Stack = styled.div((props: IStackProps) => ({
-  display: 'flex',
-  flexDirection: props.direction || 'column',
-  flexGrow: props.flexGrow,
-  flex: props.spacing,
-  paddingBottom: props.paddingBottom || '0',
-  paddingTop: props.paddingTop || '0',
-  paddingLeft: props.paddingLeft || '2px',
-  paddingRight: props.paddingRight || '0',
-}));
+import { ValidatorStackName } from './ValidatorStackName';
+import { ValidatorStackTypes } from './ValidatorStackTypes';
+import { RangeFieldValidatorName } from './RangeFieldValidatorName';
 
 export const ValidatorStack = function (props: IValidatorPanelProps) {
-  const ctx = useStackProviderStore();
-  let isValid: ValidatorTypes = ctx.areValidateResults(props.id, props.panelValidatorStackType);
-
-  useEffect(
-    () => useStackProviderStore.subscribe((provider) => (isValid = provider.areValidateResults(props.id, props.panelValidatorStackType))),
-    [ctx.entities],
+  const methods = useFormContext();
+  const [isValid, setIsValid] = useState(
+    props.panelValidatorStackType === ValidatorStackTypes.Optional ? ValidatorTypes.Valid : ValidatorTypes.Invalid,
   );
 
+  const id = ValidatorStackName(props.id);
+
+  const watchChildren = (Array.isArray(props.children) ? props.children : [props.children]).map(
+    (c) => `${RangeFieldValidatorName(c.props.id)}.validationResult`,
+  );
+
+  const [isValidCollection, setIsValidCollection] = useState(
+    watchChildren.map((x) => ({
+      name: x,
+      result: isValid,
+    })),
+  );
+
+  useEffect(() => {
+    const subscription = methods.watch((value, { name }) => {
+      const findIndex = watchChildren.findIndex((x) => x === name);
+      if (findIndex >= 0) {
+        const split = isValidCollection[findIndex].name.split('.');
+        isValidCollection[findIndex].result = value[split[0]][split[1]];
+        setIsValidCollection(isValidCollection);
+        setIsValid(isValidCollection.some((x) => x.result === ValidatorTypes.Invalid) ? ValidatorTypes.Invalid : ValidatorTypes.Valid);
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [methods.watch]);
+
   return (
-    <Stack id={'validation-panel-stack'} direction="row">
+    <Stack id={id} direction="row">
       <Stack spacing={2} id={props.id} flexGrow={1} paddingLeft={'25px'} paddingTop={'25px'} paddingBottom={'25px'} paddingRight={'25px'}>
         {props.children}
       </Stack>

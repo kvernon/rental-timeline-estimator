@@ -2,6 +2,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { ValidationBar } from '../components/validators/ValidationBar';
 import React from 'react';
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
+import styled from '@emotion/styled';
 
 export default {
   title: 'Example/ValidationBar',
@@ -9,7 +10,20 @@ export default {
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof ValidationBar>;
 
-const Template: ComponentStory<typeof ValidationBar> = (args) => <ValidationBar {...args} />;
+const DivStyled = styled.div`
+  display: flex;
+  align-content: normal;
+  align-items: stretch;
+  flex-grow: 1;
+  height: 200px;
+  width: 200px;
+`;
+
+const Template: ComponentStory<typeof ValidationBar> = (args) => (
+  <DivStyled>
+    <ValidationBar {...args} />
+  </DivStyled>
+);
 
 export const Optional = Template.bind({});
 Optional.args = {

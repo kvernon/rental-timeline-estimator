@@ -16,6 +16,18 @@ jest.mock('@emotion/react', () => {
 });
 
 import { RangeFieldValidator } from '../../../src/components/validators/RangeFieldValidator';
+import { IRangeFieldValidatorProps } from '../../../src/components/validators/IRangeFieldValidatorProps';
+import { FormProvider, useForm } from 'react-hook-form';
+
+const RangeFieldValidatorSetup = (props: IRangeFieldValidatorProps) => {
+  const methods = useForm({});
+  return (
+    <FormProvider {...methods}>
+      <RangeFieldValidator {...props} />
+    </FormProvider>
+  );
+};
+
 describe('RangeFieldValidator unit tests', () => {
   let typographyMock: jest.Mocked<ITypography>;
 
@@ -68,23 +80,22 @@ describe('RangeFieldValidator unit tests', () => {
       describe('and value supplied', () => {
         describe('and in range', () => {
           test('should be Valid', () => {
-            const onChangeMock = jest.fn();
+            const onBlurMock = jest.fn();
 
-            render(
-              <RangeFieldValidator
-                id={'Test'}
-                validationType={ValidatorStackTypes.Optional}
-                defaultValue={0}
-                onChange={onChangeMock}
-                stackId={'foo'}
-              />,
-            );
+            render(<RangeFieldValidatorSetup id={'Test'} validationType={ValidatorStackTypes.Optional} defaultValue={0} onBlur={onBlurMock} />);
 
-            const entity = screen.getByTestId('TextFieldValidatorTest');
+            const entity = screen.getByTestId('rangeFieldValidatorTest.value');
             const value = 33;
-            fireEvent.change(entity, { target: { value } });
 
-            expect(onChangeMock).toHaveBeenCalledWith({
+            fireEvent.input(entity, {
+              target: {
+                value,
+              },
+            });
+
+            fireEvent.blur(entity);
+
+            expect(onBlurMock).toHaveBeenCalledWith({
               validationResult: ValidatorTypes.Valid,
               validationResultName: 'Valid',
               value,
@@ -93,23 +104,21 @@ describe('RangeFieldValidator unit tests', () => {
         });
         describe('and out of range', () => {
           test('should be invalid', () => {
-            const onChangeMock = jest.fn();
+            const onBlurMock = jest.fn();
 
-            render(
-              <RangeFieldValidator
-                id={'Test'}
-                validationType={ValidatorStackTypes.Optional}
-                defaultValue={0}
-                onChange={onChangeMock}
-                stackId={'foo'}
-              />,
-            );
+            render(<RangeFieldValidatorSetup id={'Test'} validationType={ValidatorStackTypes.Optional} defaultValue={0} onBlur={onBlurMock} />);
 
-            const entity = screen.getByTestId('TextFieldValidatorTest');
+            const entity = screen.getByTestId('rangeFieldValidatorTest.value');
             const value = -10;
-            fireEvent.change(entity, { target: { value } });
 
-            expect(onChangeMock).toHaveBeenCalledWith({
+            fireEvent.input(entity, {
+              target: {
+                value,
+              },
+            });
+            fireEvent.blur(entity);
+
+            expect(onBlurMock).toHaveBeenCalledWith({
               validationResult: ValidatorTypes.Invalid,
               validationResultName: 'Invalid',
               value,
@@ -117,19 +126,25 @@ describe('RangeFieldValidator unit tests', () => {
           });
         });
         describe('and undefined', () => {
-          test('should be Optional', () => {
-            const onChangeMock = jest.fn();
+          test('should be called', () => {
+            const onBlurMock = jest.fn();
 
-            render(<RangeFieldValidator id={'Test'} validationType={ValidatorStackTypes.Optional} onChange={onChangeMock} stackId={'foo'} />);
+            render(<RangeFieldValidatorSetup id={'Test'} validationType={ValidatorStackTypes.Optional} onBlur={onBlurMock} />);
 
-            const entity = screen.getByTestId('TextFieldValidatorTest');
+            const entity = screen.getByTestId('rangeFieldValidatorTest.value');
             const value = undefined;
-            fireEvent.change(entity, { target: { value } });
 
-            expect(onChangeMock).toHaveBeenCalledWith({
-              validationResult: ValidatorTypes.Optional,
+            fireEvent.input(entity, {
+              target: {
+                value,
+              },
+            });
+            fireEvent.blur(entity);
+
+            expect(onBlurMock).toHaveBeenCalledWith({
+              validationResult: 2,
               validationResultName: 'Optional',
-              value,
+              value: undefined,
             });
           });
         });
@@ -137,22 +152,22 @@ describe('RangeFieldValidator unit tests', () => {
 
       describe('and value defaulted', () => {
         test('should be Valid', () => {
-          const onChangeMock = jest.fn();
+          const onBlurMock = jest.fn();
 
           const defaultValue = 0;
           render(
-            <RangeFieldValidator
-              id={'Test'}
-              validationType={ValidatorStackTypes.Optional}
-              defaultValue={defaultValue}
-              onChange={onChangeMock}
-              stackId={'foo'}
-            />,
+            <RangeFieldValidatorSetup id={'Test'} validationType={ValidatorStackTypes.Optional} defaultValue={defaultValue} onBlur={onBlurMock} />,
           );
 
-          screen.getByTestId('TextFieldValidatorTest');
+          const entity = screen.getByTestId('rangeFieldValidatorTest.value');
+          fireEvent.input(entity, {
+            target: {
+              value: defaultValue,
+            },
+          });
+          fireEvent.blur(entity);
 
-          expect(onChangeMock).toHaveBeenCalledWith({
+          expect(onBlurMock).toHaveBeenCalledWith({
             validationResult: ValidatorTypes.Valid,
             validationResultName: 'Valid',
             value: defaultValue,
@@ -164,23 +179,20 @@ describe('RangeFieldValidator unit tests', () => {
     describe('and Required', () => {
       describe('and value supplied', () => {
         test('should be Valid', () => {
-          const onChangeMock = jest.fn();
+          const onBlurMock = jest.fn();
 
-          render(
-            <RangeFieldValidator
-              id={'Test'}
-              validationType={ValidatorStackTypes.Required}
-              defaultValue={0}
-              onChange={onChangeMock}
-              stackId={'foo'}
-            />,
-          );
+          render(<RangeFieldValidatorSetup id={'Test'} validationType={ValidatorStackTypes.Required} defaultValue={0} onBlur={onBlurMock} />);
 
-          const entity = screen.getByTestId('TextFieldValidatorTest');
           const value = 55;
-          fireEvent.change(entity, { target: { value } });
+          const entity = screen.getByTestId('rangeFieldValidatorTest.value');
+          fireEvent.input(entity, {
+            target: {
+              value,
+            },
+          });
+          fireEvent.blur(entity);
 
-          expect(onChangeMock).toHaveBeenCalledWith({
+          expect(onBlurMock).toHaveBeenCalledWith({
             validationResult: ValidatorTypes.Valid,
             validationResultName: 'Valid',
             value,
@@ -189,52 +201,55 @@ describe('RangeFieldValidator unit tests', () => {
       });
 
       describe('and value not supplied', () => {
-        test('should be called and Valid', () => {
-          const onChangeMock = jest.fn();
+        test('should be called', () => {
+          const onBlurMock = jest.fn();
 
-          render(<RangeFieldValidator id={'Test'} validationType={ValidatorStackTypes.Required} onChange={onChangeMock} stackId={'foo'} />);
+          render(<RangeFieldValidatorSetup id={'Test'} validationType={ValidatorStackTypes.Required} onBlur={onBlurMock} />);
 
-          screen.getByTestId('TextFieldValidatorTest');
+          const entity = screen.getByTestId('rangeFieldValidatorTest.value');
+          fireEvent.input(entity, {
+            target: {
+              value: undefined,
+            },
+          });
+          fireEvent.blur(entity);
 
-          expect(onChangeMock).toHaveBeenCalledWith({
-            validationResult: ValidatorTypes.Invalid,
+          expect(onBlurMock).toHaveBeenCalledWith({
+            validationResult: 0,
             validationResultName: 'Invalid',
             value: undefined,
           });
         });
 
         test('should be not called', () => {
-          const onChangeMock = jest.fn();
+          const onBlurMock = jest.fn();
 
-          render(
-            <RangeFieldValidator
-              id={'Test'}
-              validationType={ValidatorStackTypes.Required}
-              onChange={onChangeMock}
-              stackId={'foo'}
-              defaultValue={undefined}
-            />,
-          );
+          render(<RangeFieldValidatorSetup id={'Test'} validationType={ValidatorStackTypes.Required} onBlur={onBlurMock} defaultValue={undefined} />);
 
-          screen.getByTestId('TextFieldValidatorTest');
+          screen.getByTestId('rangeFieldValidatorTest.value');
 
-          expect(onChangeMock).not.toHaveBeenCalledWith();
+          expect(onBlurMock).not.toHaveBeenCalledWith();
         });
 
         describe('and undefined', () => {
-          test('should be Invalid', () => {
-            const onChangeMock = jest.fn();
+          test('should be called', () => {
+            const onBlurMock = jest.fn();
 
-            render(<RangeFieldValidator id={'Test'} validationType={ValidatorStackTypes.Required} onChange={onChangeMock} stackId={'foo'} />);
+            render(<RangeFieldValidatorSetup id={'Test'} validationType={ValidatorStackTypes.Required} onBlur={onBlurMock} />);
 
-            const entity = screen.getByTestId('TextFieldValidatorTest');
+            const entity = screen.getByTestId('rangeFieldValidatorTest.value');
             const value = undefined;
-            fireEvent.change(entity, { target: { value } });
+            fireEvent.input(entity, {
+              target: {
+                value,
+              },
+            });
+            fireEvent.blur(entity);
 
-            expect(onChangeMock).toHaveBeenCalledWith({
-              validationResult: ValidatorTypes.Invalid,
+            expect(onBlurMock).toHaveBeenCalledWith({
+              validationResult: 0,
               validationResultName: 'Invalid',
-              value,
+              value: undefined,
             });
           });
         });
@@ -247,23 +262,17 @@ describe('RangeFieldValidator unit tests', () => {
       describe('and value supplied', () => {
         describe('and in range', () => {
           test('should be Valid', () => {
-            const onChangeMock = jest.fn();
+            const onBlurMock = jest.fn();
 
-            render(
-              <RangeFieldValidator
-                id={'Test'}
-                validationType={ValidatorStackTypes.Optional}
-                defaultValue={0}
-                onChange={onChangeMock}
-                stackId={'foo'}
-              />,
-            );
+            render(<RangeFieldValidatorSetup id={'Test'} validationType={ValidatorStackTypes.Optional} defaultValue={0} onBlur={onBlurMock} />);
 
-            const entity = screen.getByTestId('TextFieldValidatorTest');
+            const entity = screen.getByTestId('rangeFieldValidatorTest.value');
             const value = 33;
             fireEvent.keyUp(entity, { key: 'Enter', target: { value } });
 
-            expect(onChangeMock).toHaveBeenCalledWith({
+            fireEvent.blur(entity);
+
+            expect(onBlurMock).toHaveBeenCalledWith({
               validationResult: ValidatorTypes.Valid,
               validationResultName: 'Valid',
               value,
@@ -272,23 +281,17 @@ describe('RangeFieldValidator unit tests', () => {
         });
         describe('and out of range', () => {
           test('should be invalid', () => {
-            const onChangeMock = jest.fn();
+            const onBlurMock = jest.fn();
 
-            render(
-              <RangeFieldValidator
-                id={'Test'}
-                validationType={ValidatorStackTypes.Optional}
-                defaultValue={0}
-                onChange={onChangeMock}
-                stackId={'foo'}
-              />,
-            );
+            render(<RangeFieldValidatorSetup id={'Test'} validationType={ValidatorStackTypes.Optional} defaultValue={0} onBlur={onBlurMock} />);
 
-            const entity = screen.getByTestId('TextFieldValidatorTest');
+            const entity = screen.getByTestId('rangeFieldValidatorTest.value');
             const value = -10;
             fireEvent.keyUp(entity, { key: 'Enter', target: { value } });
 
-            expect(onChangeMock).toHaveBeenCalledWith({
+            fireEvent.blur(entity);
+
+            expect(onBlurMock).toHaveBeenCalledWith({
               validationResult: ValidatorTypes.Invalid,
               validationResultName: 'Invalid',
               value,
@@ -297,15 +300,17 @@ describe('RangeFieldValidator unit tests', () => {
         });
         describe('and undefined', () => {
           test('should be Optional', () => {
-            const onChangeMock = jest.fn();
+            const onBlurMock = jest.fn();
 
-            render(<RangeFieldValidator id={'Test'} validationType={ValidatorStackTypes.Optional} onChange={onChangeMock} stackId={'foo'} />);
+            render(<RangeFieldValidatorSetup id={'Test'} validationType={ValidatorStackTypes.Optional} onBlur={onBlurMock} />);
 
-            const entity = screen.getByTestId('TextFieldValidatorTest');
+            const entity = screen.getByTestId('rangeFieldValidatorTest.value');
             const value = undefined;
             fireEvent.keyUp(entity, { key: 'Enter', target: { value } });
 
-            expect(onChangeMock).toHaveBeenCalledWith({
+            fireEvent.blur(entity);
+
+            expect(onBlurMock).toHaveBeenCalledWith({
               validationResult: ValidatorTypes.Optional,
               validationResultName: 'Optional',
               value,
@@ -317,23 +322,17 @@ describe('RangeFieldValidator unit tests', () => {
     describe('and Required', () => {
       describe('and value supplied', () => {
         test('should be Valid', () => {
-          const onChangeMock = jest.fn();
+          const onBlurMock = jest.fn();
 
-          render(
-            <RangeFieldValidator
-              id={'Test'}
-              validationType={ValidatorStackTypes.Required}
-              defaultValue={0}
-              onChange={onChangeMock}
-              stackId={'foo'}
-            />,
-          );
+          render(<RangeFieldValidatorSetup id={'Test'} validationType={ValidatorStackTypes.Required} defaultValue={0} onBlur={onBlurMock} />);
 
-          const entity = screen.getByTestId('TextFieldValidatorTest');
+          const entity = screen.getByTestId('rangeFieldValidatorTest.value');
           const value = 55;
           fireEvent.keyUp(entity, { key: 'Enter', target: { value } });
 
-          expect(onChangeMock).toHaveBeenCalledWith({
+          fireEvent.blur(entity);
+
+          expect(onBlurMock).toHaveBeenCalledWith({
             validationResult: ValidatorTypes.Valid,
             validationResultName: 'Valid',
             value,
@@ -343,26 +342,22 @@ describe('RangeFieldValidator unit tests', () => {
 
       describe('and value not supplied', () => {
         test('should be Valid', () => {
-          const onChangeMock = jest.fn();
+          const onBlurMock = jest.fn();
 
           const defaultValue = 0;
 
           render(
-            <RangeFieldValidator
-              id={'Test'}
-              validationType={ValidatorStackTypes.Required}
-              defaultValue={defaultValue}
-              onChange={onChangeMock}
-              stackId={'foo'}
-            />,
+            <RangeFieldValidatorSetup id={'Test'} validationType={ValidatorStackTypes.Required} defaultValue={defaultValue} onBlur={onBlurMock} />,
           );
 
-          const entity = screen.getByTestId('TextFieldValidatorTest');
+          const entity = screen.getByTestId('rangeFieldValidatorTest.value');
           const value = defaultValue;
 
           fireEvent.keyUp(entity, { key: 'Enter', target: { value } });
 
-          expect(onChangeMock).toHaveBeenCalledWith({
+          fireEvent.blur(entity);
+
+          expect(onBlurMock).toHaveBeenCalledWith({
             validationResult: ValidatorTypes.Valid,
             validationResultName: 'Valid',
             value,
@@ -371,15 +366,17 @@ describe('RangeFieldValidator unit tests', () => {
 
         describe('and undefined', () => {
           test('should be Invalid', () => {
-            const onChangeMock = jest.fn();
+            const onBlurMock = jest.fn();
 
-            render(<RangeFieldValidator id={'Test'} validationType={ValidatorStackTypes.Required} onChange={onChangeMock} stackId={'foo'} />);
+            render(<RangeFieldValidatorSetup id={'Test'} validationType={ValidatorStackTypes.Required} onBlur={onBlurMock} />);
 
-            const entity = screen.getByTestId('TextFieldValidatorTest');
+            const entity = screen.getByTestId('rangeFieldValidatorTest.value');
             const value = undefined;
             fireEvent.keyUp(entity, { key: 'Enter', target: { value } });
 
-            expect(onChangeMock).toHaveBeenCalledWith({
+            fireEvent.blur(entity);
+
+            expect(onBlurMock).toHaveBeenCalledWith({
               validationResult: ValidatorTypes.Invalid,
               validationResultName: 'Invalid',
               value,

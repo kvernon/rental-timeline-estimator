@@ -1,11 +1,18 @@
 import React from 'react';
-import { TitleDropDown } from './components/rules/TitleDropDown';
+import { ThemeProvider } from '@emotion/react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { TitleDropDownValidator } from './components/validators/TitleDropDownValidator';
+import { ValidatorStackTypes } from './components/validators/ValidatorStackTypes';
+import { options } from './theme';
 
 export const App = function () {
+  const methods = useForm({});
   return (
-    <div>
-      <h1>Hi</h1>
-      <TitleDropDown titles={['Hello']} />
-    </div>
+    <FormProvider {...methods}>
+      <ThemeProvider theme={options}>
+        <h1>Hi</h1>
+        <TitleDropDownValidator titles={['Hello']} validationType={ValidatorStackTypes.Optional} />
+      </ThemeProvider>
+    </FormProvider>
   );
 };

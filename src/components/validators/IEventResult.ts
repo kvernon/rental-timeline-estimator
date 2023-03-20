@@ -1,7 +1,7 @@
 import { ValidatorTypes } from './ValidatorTypes';
 
-export interface IEventResult {
+export interface IEventResult<T> {
   validationResult: ValidatorTypes;
   validationResultName: string;
-  value?: number;
+  value?: T;
 }

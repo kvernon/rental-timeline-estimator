@@ -1,18 +1,17 @@
 import { ValidatorStackTypes } from './ValidatorStackTypes';
 import { IEventResult } from './IEventResult';
 
-export interface IRangeFieldValidatorChange {
-  onChange?: (evt: IEventResult) => void;
+export interface IRangeFieldValidatorBlur {
+  onBlur?: (evt: IEventResult) => void;
 }
 
-export interface IRangeFieldValidatorProps extends IRangeFieldValidatorChange {
-  direction?: 'row' | 'column';
+export interface IRangeFieldValidatorProps extends IRangeFieldValidatorBlur {
   id: string;
-  stackId: string;
+  validationType: ValidatorStackTypes;
+  direction?: 'row' | 'column';
   title?: string;
   prefix?: string;
   suffix?: string;
-  validationType: ValidatorStackTypes;
   /**
    * will default to 0
    */
