@@ -1,8 +1,8 @@
 import { ValidatorStackTypes } from './ValidatorStackTypes';
 import React from 'react';
-import { IRangeFieldValidatorChange } from './IRangeFieldValidatorProps';
+import { IRangeFieldValidatorProps } from './IRangeFieldValidatorProps';
 export interface IValidatorPanelProps {
   id: string;
   panelValidatorStackType: ValidatorStackTypes;
-  children: React.ReactElement<IRangeFieldValidatorChange>[] | React.ReactElement<IRangeFieldValidatorChange>;
+  children: React.ReactElement<IRangeFieldValidatorProps>[] | React.ReactElement<IRangeFieldValidatorProps>;
 }

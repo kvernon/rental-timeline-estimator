@@ -63,5 +63,8 @@ on windows: `$ nvs install`, referencing this manager: `https://github.com/jason
 1. https://testing-library.com/
 2. https://reactjs.org/
 3. https://create-react-app.dev/
-4. https://emotion.sh/docs/@emotion/styled
-5. https://zustand-demo.pmnd.rs/
+4. https://stackoverflow.com/questions/65243256/react-hook-form-submit-a-form-with-nested-components-or-extract-fields-of-neste
+5. https://react-select.com/typescript
+6. https://react-hook-form.com/api/useformcontext/
+7. https://emotion.sh/docs/@emotion/styled
+8. https://zustand-demo.pmnd.rs/

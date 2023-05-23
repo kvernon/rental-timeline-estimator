@@ -1,19 +1,19 @@
-import React, { ChangeEventHandler, useEffect } from 'react';
-import { ValidatorStackTypes } from './ValidatorStackTypes';
+import React, { ChangeEventHandler, useEffect, useState } from 'react';
 import { ValidatorTypes } from './ValidatorTypes';
 import { IRangeFieldValidatorProps } from './IRangeFieldValidatorProps';
 import { IEventResult } from './IEventResult';
-import { IRangeFieldValidatorEntity } from './IRangeFieldValidatorEntity';
-import { useStackProviderStore } from './ValidatorStackProvider';
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
 import { FontGroups, IThemeOptions } from '../../theme';
+import { useFormContext } from 'react-hook-form';
+import { evaluateValidation } from './evaluatateValidation';
+import { RangeFieldValidatorName } from './RangeFieldValidatorName';
 
 const Box = styled.div`
   display: flex;
   flex-direction: row;
   align-content: space-evenly;
-  align-items: baseline;
+  align-items: center;
   width: 100%;
   flex-grow: 1;
   height: 43px;
@@ -27,7 +27,6 @@ const FormControl = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  height: 43px;
 
   &:last-child {
     margin: 5px;
@@ -35,8 +34,12 @@ const FormControl = styled.div`
 `;
 
 export function RangeFieldValidator(props: IRangeFieldValidatorProps): React.ReactElement {
-  const context = useStackProviderStore();
   const coreTheme = useTheme() as IThemeOptions;
+  const { register, getValues, setValue } = useFormContext();
+
+  const rangFieldId = RangeFieldValidatorName(props.id);
+  const inputValue = `${rangFieldId}.value`;
+  const inputValidationResult = `${rangFieldId}.validationResult`;
 
   const SpanPaddingLeft = styled.span`
     font-family: ${coreTheme.typography.get(FontGroups.inputLabel)?.font};
@@ -56,7 +59,6 @@ export function RangeFieldValidator(props: IRangeFieldValidatorProps): React.Rea
     font-weight: ${coreTheme.typography.get(FontGroups.inputLabel)?.weight};
     display: flex;
     color: #56afcc;
-    position: static;
     white-space: nowrap;
     padding: 5px;
     transform: none;
@@ -69,118 +71,107 @@ export function RangeFieldValidator(props: IRangeFieldValidatorProps): React.Rea
     }
   `;
 
-  const Input = styled.input<{ result: IEventResult }>`
+  const Input = styled.input<{ result: IEventResult<number> }>`
+    display: flex;
     font-family: ${coreTheme.typography.get(FontGroups.input)?.font};
     font-size: ${coreTheme.typography.get(FontGroups.input)?.size};
     font-weight: ${coreTheme.typography.get(FontGroups.input)?.weight};
     text-align: right;
     color: ${coreTheme.typography.get(FontGroups.input)?.color};
-    background-color: ${(props) => coreTheme.palette.validation[props.result.validationResultName].background};
+    background-color: ${(props) => coreTheme.palette.validation[props.result.validationResultName].background}41;
     transition: background-color 0.4s ease-out;
     border-radius: 6px;
     border-width: 1px;
     flex-grow: 1;
     width: 100%;
-    height: 43px;
+    height: 59px;
 
     &:hover {
-      background-color: ${(props) => coreTheme.palette.validation[props.result.validationResultName].backgroundFocus};
+      background-color: ${(props) => coreTheme.palette.validation[props.result.validationResultName].backgroundFocus}81;
     }
 
     &:focus {
-      background-color: ${(props) => coreTheme.palette.validation[props.result.validationResultName].backgroundFocus};
+      background-color: ${(props) => coreTheme.palette.validation[props.result.validationResultName].backgroundFocus}81;
     }
   `;
 
-  const evaluate = (evt: { targetValue?: number }): IEventResult => {
-    const validation: IEventResult = {
-      validationResult: ValidatorTypes.Invalid,
-      validationResultName: ValidatorTypes[ValidatorTypes.Invalid],
-      value: evt.targetValue,
-    };
-
-    const isInRange = (value: number): ValidatorTypes => {
-      return (props.min || 0) <= value && (props.max || 100) >= value ? ValidatorTypes.Valid : ValidatorTypes.Invalid;
-    };
-
-    if (props.validationType === ValidatorStackTypes.Required) {
-      validation.validationResult = evt.targetValue === undefined ? ValidatorTypes.Invalid : isInRange(evt.targetValue);
-    } else {
-      validation.validationResult = evt.targetValue === undefined ? ValidatorTypes.Optional : isInRange(evt.targetValue);
-    }
-
-    validation.validationResultName = ValidatorTypes[validation.validationResult];
-
-    return validation;
+  const isInRange = (value: number): ValidatorTypes => {
+    return (props.min || 0) <= value && (props.max || 100) >= value ? ValidatorTypes.Valid : ValidatorTypes.Invalid;
   };
 
-  const inputValue: IRangeFieldValidatorEntity = context.getEntityByKeys(props.stackId, props.id) || {
-    data: { ...props },
-    results: {
-      value: props.defaultValue || undefined,
-      validationResult: evaluate({ targetValue: props.defaultValue || undefined }).validationResult,
-      validationResultName: evaluate({ targetValue: props.defaultValue || undefined }).validationResultName,
-    },
-  };
+  const [evaluated, setEvaluated] = useState(evaluateValidation(props.defaultValue as number, props.validationType, isInRange));
 
   const evaluateAndDispatch = (evt: { target?: number }): void => {
-    const validation = evaluate({ targetValue: evt.target });
+    const validation = evaluateValidation(evt.target as number, props.validationType, isInRange);
 
     const valueUpdate = { data: { ...props }, results: validation };
     valueUpdate.data.defaultValue = validation.value || undefined;
 
-    context.updateCollectionEntity(valueUpdate);
-    if (props.onChange) props.onChange(validation);
+    if (props.onBlur) props.onBlur(validation);
   };
 
-  const onKeyUp: React.KeyboardEventHandler<HTMLTextAreaElement | HTMLInputElement> = (evt): void => {
-    if (evt.key !== 'Enter') return;
-
-    evaluateAndDispatch({ target: evt.currentTarget.value === '' ? undefined : parseInt(evt.currentTarget.value) });
-  };
-
-  const onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (evt): void => {
+  const onBlur: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (evt): void => {
+    const target = typeof evt.target.value === 'undefined' || evt.target.value === '' ? undefined : parseInt(evt.target.value);
+    setValue(inputValue, target);
+    const eventResult = evaluateValidation(target as number, props.validationType, isInRange);
+    setValue(inputValidationResult, eventResult.validationResult);
+    setEvaluated(eventResult);
     evaluateAndDispatch({
-      target: typeof evt.target.value === 'undefined' || evt.target.value === '' ? undefined : parseInt(evt.target.value),
+      target,
     });
   };
 
   useEffect(() => {
-    evaluateAndDispatch({
-      target: props.defaultValue,
-    });
-  }, []);
+    const values = getValues(inputValue);
+    const validationResult = evaluateValidation(values, props.validationType, isInRange);
 
-  const prefixDom = inputValue.data.prefix ? inputValue.data.prefix : undefined;
-  const suffixDom = inputValue.data.suffix ? inputValue.data.suffix : undefined;
+    setEvaluated(validationResult);
+    setValue(inputValidationResult, validationResult.validationResult);
+  }, [props.max, props.validationType, props.id, props.min, props.title, props.prefix, props.suffix]);
+
+  const message = `Range between ${props.min || 0} and ${props.max || 100}`;
+
   return (
     <FormControl>
       {props.title && (
-        <InputLabel direction={inputValue.data.direction} htmlFor={`TextFieldValidator${inputValue.data.id}`}>
-          {inputValue.data.title ? `${inputValue.data.title}:` : inputValue.data.title}
+        <InputLabel direction={props.direction} htmlFor={`TextFieldValidator${props.id}`}>
+          {props.title ? `${props.title}:` : props.title}
         </InputLabel>
       )}
       <Box>
-        {prefixDom && (
-          <SpanPaddingLeft className="prefix" title={inputValue.data.title}>
-            {prefixDom}
+        {props.prefix && (
+          <SpanPaddingLeft className="prefix" title={props.title}>
+            {props.prefix}
           </SpanPaddingLeft>
         )}
         <Input
-          result={evaluate({ targetValue: inputValue.data.defaultValue })}
-          id={`TextFieldValidator${inputValue.data.id}`}
+          {...register(inputValue, {
+            required: true,
+            valueAsNumber: true,
+            onBlur: (event) => onBlur(event),
+            validate: (value) => {
+              return evaluateValidation(value, props.validationType, isInRange).validationResult > 0;
+            },
+            min: {
+              value: props.min || 0,
+              message,
+            },
+            max: {
+              value: props.max || 100,
+              message,
+            },
+          })}
+          result={evaluated}
+          id={inputValue}
+          name={inputValue}
           type="number"
-          onChange={onChange}
-          min={inputValue.data.min}
-          max={inputValue.data.max}
-          onKeyUp={onKeyUp}
-          defaultValue={inputValue.data.defaultValue}
-          value={inputValue.data.defaultValue}
-          title={`Range between ${inputValue.data.min || 0} and ${inputValue.data.max || 100}`}
+          min={props.min}
+          max={props.max}
+          title={message}
         />
-        {suffixDom && (
-          <SpanPaddingLeft className="suffix" title={inputValue.data.title}>
-            {suffixDom}
+        {props.suffix && (
+          <SpanPaddingLeft className="suffix" title={props.title}>
+            {props.suffix}
           </SpanPaddingLeft>
         )}
       </Box>

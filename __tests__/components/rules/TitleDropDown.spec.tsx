@@ -1,4 +1,10 @@
 import { IThemeOptions } from '../../../src/theme';
+import React from 'react';
+import { configure, render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { ITitleDropDownParams, TitleDropDownValidator } from '../../../src/components/validators/TitleDropDownValidator';
+import { ValidatorStackTypes } from '../../../src/components/validators/ValidatorStackTypes';
+import { FormProvider, useForm } from 'react-hook-form';
 
 jest.mock('@emotion/react', () => {
   const all = jest.requireActual('@emotion/react');
@@ -15,16 +21,28 @@ jest.mock('@emotion/react', () => {
             validationColor: '1',
             background: '1',
           },
+          Optional: {
+            validationColor: '2',
+            background: '2',
+          },
         },
+      },
+      typography: {
+        get: jest.fn(),
       },
     } as unknown as IThemeOptions),
   };
 });
 
-import React from 'react';
-import { fireEvent, render, screen, configure } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import { TitleDropDown } from '../../../src/components/rules/TitleDropDown';
+const TitleDropDownValidatorSetup = (props: ITitleDropDownParams) => {
+  const methods = useForm({});
+  methods.getValues = jest.fn().mockReturnValue({});
+  return (
+    <FormProvider {...methods}>
+      <TitleDropDownValidator {...props} />
+    </FormProvider>
+  );
+};
 
 describe('TitleDropDown unit tests', () => {
   beforeAll(() => {
@@ -34,24 +52,25 @@ describe('TitleDropDown unit tests', () => {
   });
 
   beforeEach(() => {
-    configure({ testIdAttribute: 'id' });
+    configure({ testIdAttribute: 'name' });
   });
 
   describe('and titles supplied', () => {
     test('should have title', async () => {
       const title = 'Hi';
 
-      render(<TitleDropDown titles={[title]} />);
+      render(<TitleDropDownValidatorSetup titles={[title]} validationType={ValidatorStackTypes.Required} />);
 
-      expect(screen.getByText(title, {})).toBeInTheDocument();
+      const actual = screen.getByTestId(`titleDropDown${3}.value`);
+      expect(actual).toBeInTheDocument();
     });
   });
 
   describe('and no titles supplied', () => {
     test('should have title', async () => {
-      render(<TitleDropDown titles={[]} />);
+      render(<TitleDropDownValidatorSetup titles={[]} validationType={ValidatorStackTypes.Optional} />);
 
-      expect(screen.queryByTestId(/title-drop-down-3/i)).toBeInTheDocument();
+      expect(screen.getByTestId(`titleDropDown${3}.value`)).toBeInTheDocument();
     });
   });
 });

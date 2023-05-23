@@ -10,8 +10,15 @@ module.exports = {
     'tsconfigRootDir': __dirname,
     'project': ['./tsconfig-dev.json']
   },
-  'plugins': ['@typescript-eslint', 'jest', 'import', 'jsx-a11y', 'react', 'react-hooks'],
-  'extends': ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier', 'plugin:jest/recommended', 'plugin:storybook/recommended'],
+  'plugins': ['@typescript-eslint', 'jest', 'import', 'jsx-a11y', 'testing-library',
+    'react', 'react-hooks', 'jest-dom'],
+  'extends': ['eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
+    'plugin:jest/recommended',
+    'plugin:storybook/recommended',
+    'eslint:recommended',
+    'plugin:jest-dom/recommended'],
   'rules': {
     'semi': 'off',
     '@typescript-eslint/semi': ['error'],
@@ -23,7 +30,11 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': ['error'],
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
-    'import/prefer-default-export': 'off'
+    'import/prefer-default-export': 'off',
+    'testing-library/await-async-query': 'error',
+    'testing-library/no-await-sync-query': 'error',
+    'testing-library/no-debugging-utils': 'warn',
+    'testing-library/no-dom-import': 'off',
   },
   'overrides': [{
     'files': ['__tests__/**'],

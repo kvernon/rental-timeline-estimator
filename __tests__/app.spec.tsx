@@ -1,30 +1,11 @@
-import { IThemeOptions } from '../src/theme';
-
-jest.mock('@emotion/react', () => {
-  const all = jest.requireActual('@emotion/react');
-  return {
-    ...all,
-    useTheme: jest.fn().mockReturnValue({
-      palette: {
-        validation: {
-          Invalid: {
-            validationColor: '0',
-            background: '0',
-          },
-          Valid: {
-            validationColor: '1',
-            background: '1',
-          },
-        },
-      },
-    } as unknown as IThemeOptions),
-  };
-});
-
 import React from 'react';
 import { App } from '../src/app';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { matchers } from '@emotion/jest';
+
+jest.mock('../src/components/validators/TitleDropDownValidator');
+
+expect.extend(matchers);
 
 describe('App unit tests', () => {
   beforeAll(() => {
@@ -37,7 +18,6 @@ describe('App unit tests', () => {
     describe('and success', () => {
       test('should create', async () => {
         render(<App />);
-
         expect(screen.getByText('Hi', {})).toBeInTheDocument();
       });
     });

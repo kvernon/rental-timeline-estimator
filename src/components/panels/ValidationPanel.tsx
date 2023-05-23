@@ -1,7 +1,7 @@
 import React from 'react';
 import { ValidatorStack } from '../validators/ValidatorStack';
 import { ValidatorStackTypes } from '../validators/ValidatorStackTypes';
-import { IRangeFieldValidatorChange } from '../validators/IRangeFieldValidatorProps';
+import { IRangeFieldValidatorProps } from '../validators/IRangeFieldValidatorProps';
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
 import { FontGroups, IThemeOptions } from '../../theme';
@@ -9,7 +9,7 @@ import { FontGroups, IThemeOptions } from '../../theme';
 export interface IValidationPanelProps {
   id: string;
   panelType: ValidatorStackTypes;
-  children: React.ReactElement<IRangeFieldValidatorChange>[] | React.ReactElement<IRangeFieldValidatorChange>;
+  children: React.ReactElement<IRangeFieldValidatorProps>[] | React.ReactElement<IRangeFieldValidatorProps>;
   title: string;
 }
 

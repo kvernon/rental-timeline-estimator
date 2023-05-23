@@ -2,12 +2,7 @@ import { ValidatorStackTypes } from '../../../src/components/validators/Validato
 import React from 'react';
 import { configure, fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { ValidatorTypes } from '../../../src/components/validators/ValidatorTypes';
 
-const ValidateResults: jest.MockedFn<(validatorStackType: ValidatorStackTypes, children?: ValidatorTypes[]) => ValidatorTypes> = jest.fn();
-jest.mock('../../../src/components/validators/ValidateResults', () => ({
-  ValidateResults,
-}));
 import type { Theme } from '@emotion/react';
 
 const useTheme: jest.MockedFn<() => Theme> = jest.fn();
@@ -22,6 +17,19 @@ jest.mock('@emotion/react', () => {
 import { RangeFieldValidator } from '../../../src/components/validators/RangeFieldValidator';
 import { ValidatorStack } from '../../../src/components/validators/ValidatorStack';
 import { IThemeOptions, ITypography } from '../../../src/theme';
+import { FormProvider, useForm } from 'react-hook-form';
+import { IValidatorPanelProps } from '../../../src/components/validators/IValidatorPanelProps';
+
+const ValidatorStackSetup = (props: IValidatorPanelProps) => {
+  const methods = useForm({});
+  return (
+    <FormProvider {...methods}>
+      <ValidatorStack id={props.id} panelValidatorStackType={props.panelValidatorStackType}>
+        {props.children}
+      </ValidatorStack>
+    </FormProvider>
+  );
+};
 
 describe('ValidatorStack unit tests', () => {
   let typographyMock: jest.Mocked<ITypography>;
@@ -71,61 +79,54 @@ describe('ValidatorStack unit tests', () => {
 
   describe('and panelValidatorType is Optional', () => {
     describe('and children is empty', () => {
-      test('should be Optional', () => {
-        ValidateResults.mockReturnValueOnce(ValidatorTypes.Optional);
+      test('should be Valid', () => {
         const panelValidatorStackType = ValidatorStackTypes.Optional;
 
-        render(<ValidatorStack id={'foo'} panelValidatorStackType={panelValidatorStackType} children={[]}></ValidatorStack>);
+        render(<ValidatorStackSetup id={'foo'} panelValidatorStackType={panelValidatorStackType} children={[]}></ValidatorStackSetup>);
 
-        expect(screen.getByTestId(/validation-panel-stack/i)).toBeInTheDocument();
+        expect(screen.getByTestId(/validatorStackfoo/i)).toBeInTheDocument();
 
-        expect(ValidateResults).toHaveBeenCalledWith(panelValidatorStackType, []);
+        expect(screen.getByTitle(/Valid/i)).toBeInTheDocument();
       });
     });
 
     describe('and children is populated', () => {
       describe('and valid', () => {
         test('should be Valid', () => {
-          ValidateResults.mockReturnValueOnce(ValidatorTypes.Valid);
-          ValidateResults.mockReturnValueOnce(ValidatorTypes.Valid);
-          ValidateResults.mockReturnValueOnce(ValidatorTypes.Valid);
-          ValidateResults.mockReturnValueOnce(ValidatorTypes.Valid);
           const panelValidatorStackType = ValidatorStackTypes.Optional;
 
           render(
-            <ValidatorStack id={'foo'} panelValidatorStackType={panelValidatorStackType}>
-              <RangeFieldValidator stackId={'foo'} validationType={ValidatorStackTypes.Optional} id="something" defaultValue={undefined} />
-            </ValidatorStack>,
+            <ValidatorStackSetup id={'foo'} panelValidatorStackType={panelValidatorStackType}>
+              <RangeFieldValidator validationType={ValidatorStackTypes.Optional} id="something" defaultValue={undefined} />
+            </ValidatorStackSetup>,
           );
 
-          const something = screen.getByTestId(/TextFieldValidatorsomething/i);
+          const something = screen.getByTestId(/rangeFieldValidatorsomething.value/i);
           fireEvent.change(something, { target: { value: '6' } });
 
-          expect(screen.getByTestId(/validation-panel-stack/i)).toBeInTheDocument();
+          expect(screen.getByTestId('validatorStackfoo')).toBeInTheDocument();
 
-          expect(ValidateResults).toHaveBeenCalledWith(panelValidatorStackType, [ValidatorTypes.Valid]);
+          expect(screen.getByTitle(/Valid/i)).toBeInTheDocument();
         });
       });
       describe('and invalid', () => {
         test('should be Valid', () => {
-          ValidateResults.mockReturnValueOnce(ValidatorTypes.Invalid);
-          ValidateResults.mockReturnValueOnce(ValidatorTypes.Invalid);
-          ValidateResults.mockReturnValueOnce(ValidatorTypes.Invalid);
-          ValidateResults.mockReturnValueOnce(ValidatorTypes.Invalid);
           const panelValidatorStackType = ValidatorStackTypes.Optional;
 
           render(
-            <ValidatorStack id={'foo'} panelValidatorStackType={panelValidatorStackType}>
-              <RangeFieldValidator stackId={'foo'} validationType={ValidatorStackTypes.Optional} id="something" defaultValue={undefined} />
-            </ValidatorStack>,
+            <ValidatorStackSetup id={'foo'} panelValidatorStackType={panelValidatorStackType}>
+              <RangeFieldValidator validationType={ValidatorStackTypes.Optional} id="something" defaultValue={undefined} />
+            </ValidatorStackSetup>,
           );
 
-          const something = screen.getByTestId(/TextFieldValidatorsomething/i);
-          fireEvent.change(something, { target: { value: '-1' } });
+          const something = screen.getByTestId(/rangeFieldValidatorsomething.value/i);
+          fireEvent.change(something, { target: { value: -1 } });
 
-          expect(screen.getByTestId(/validation-panel-stack/i)).toBeInTheDocument();
+          fireEvent.blur(something);
 
-          expect(ValidateResults).toHaveBeenCalledWith(panelValidatorStackType, [ValidatorTypes.Invalid]);
+          expect(screen.getByTestId('validatorStackfoo')).toBeInTheDocument();
+
+          expect(screen.getByTitle(/Invalid/i)).toBeInTheDocument();
         });
       });
     });
