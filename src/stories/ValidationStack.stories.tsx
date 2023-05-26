@@ -6,7 +6,9 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { RangeFieldValidator } from '../components/validators/RangeFieldValidator';
 import { DevTool } from '@hookform/devtools';
 import { IValidatorPanelProps } from '../components/validators/IValidatorPanelProps';
-import { RangeFieldValidatorName } from '../components/validators/RangeFieldValidatorName';
+import { RangeFieldValidatorName } from '../components/naming/RangeFieldValidatorName';
+import { FormRuleStackEntityDataValueResult } from '../FormRuleStackEntityDataValueResult';
+import { ValidatorTypes } from '../components/validators/ValidatorTypes';
 
 const meta: ComponentMeta<typeof ValidatorStack> = {
   title: 'Example/ValidatorStack',
@@ -17,12 +19,12 @@ const meta: ComponentMeta<typeof ValidatorStack> = {
 export default meta;
 
 const Builder = (arg: IValidatorPanelProps) => {
-  const methods = useForm({
+  const methods = useForm<FormRuleStackEntityDataValueResult<number>>({
     mode: 'onBlur',
     defaultValues: {
       [`${RangeFieldValidatorName(arg.id)}`]: {
         value: undefined,
-        validationResult: arg.panelValidatorStackType,
+        validationResult: arg.panelValidatorStackType === ValidatorStackTypes.Optional ? ValidatorTypes.Optional : ValidatorTypes.Invalid,
       },
     },
   });

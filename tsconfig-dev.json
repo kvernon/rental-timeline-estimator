@@ -4,5 +4,10 @@
   "compilerOptions": {
     "outDir": "./dist"
   },
-  "exclude": ["node_modules", "dist", "./jest.config.ts"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "./babel.config.js",
+    "./jest.config.ts"
+  ]
 }

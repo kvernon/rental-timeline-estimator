@@ -14,20 +14,47 @@ jest.mock('@emotion/react', () => {
   };
 });
 
+jest.mock('react-hook-form', () => {
+  //const watchMock: jest.Mock = jest.fn();
+  return {
+    useForm: jest.fn().mockReturnValue({}),
+    useFormContext: jest.fn().mockReturnValue({
+      register: jest.fn(),
+      getValues: jest.fn(),
+      setValue: jest.fn(),
+      trigger: jest.fn(),
+    }),
+  };
+});
+
+import { ValidatorTypes } from '../../../src/components/validators/ValidatorTypes';
 import { RangeFieldValidator } from '../../../src/components/validators/RangeFieldValidator';
 import { ValidatorStack } from '../../../src/components/validators/ValidatorStack';
-import { IThemeOptions, ITypography } from '../../../src/theme';
-import { FormProvider, useForm } from 'react-hook-form';
 import { IValidatorPanelProps } from '../../../src/components/validators/IValidatorPanelProps';
+import { IThemeOptions } from '../../../src/theming/IThemeOptions';
+import { ITypography } from '../../../src/theming/ITypography';
+import { useValidationChildren } from '../../../src/components/hooks/useValidationChildren';
+import { useWatcher } from '../../../src/components/hooks/useWatcher';
+
+jest.mock('../../../src/components/hooks/useWatcher', () => {
+  const returnMock = jest.fn();
+  return {
+    useWatcher: returnMock,
+  };
+});
+
+jest.mock('../../../src/components/hooks/useValidationChildren', () => {
+  const returnMock = jest.fn();
+  return {
+    useValidationChildren: returnMock,
+  };
+});
 
 const ValidatorStackSetup = (props: IValidatorPanelProps) => {
-  const methods = useForm({});
   return (
-    <FormProvider {...methods}>
-      <ValidatorStack id={props.id} panelValidatorStackType={props.panelValidatorStackType}>
-        {props.children}
-      </ValidatorStack>
-    </FormProvider>
+    <ValidatorStack id={props.id} panelValidatorStackType={props.panelValidatorStackType}>
+      {props.children}
+    </ValidatorStack>
   );
 };
 
@@ -74,25 +101,40 @@ describe('ValidatorStack unit tests', () => {
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    jest.resetModules();
   });
 
   describe('and panelValidatorType is Optional', () => {
     describe('and children is empty', () => {
       test('should be Valid', () => {
+        const useValidationChildrenMocked = jest.mocked(useValidationChildren);
+        useValidationChildrenMocked.mockReturnValueOnce({
+          isValid: ValidatorTypes.Optional,
+          isValidCollection: [],
+        });
+
         const panelValidatorStackType = ValidatorStackTypes.Optional;
 
         render(<ValidatorStackSetup id={'foo'} panelValidatorStackType={panelValidatorStackType} children={[]}></ValidatorStackSetup>);
 
         expect(screen.getByTestId(/validatorStackfoo/i)).toBeInTheDocument();
 
-        expect(screen.getByTitle(/Valid/i)).toBeInTheDocument();
+        expect(screen.getByTitle(/Optional/i)).toBeInTheDocument();
       });
     });
 
     describe('and children is populated', () => {
       describe('and valid', () => {
         test('should be Valid', () => {
+          const useWatcherMocked = jest.mocked(useWatcher);
+          useWatcherMocked.mockReturnValue([[], () => []]);
+
+          const useValidationChildrenMocked = jest.mocked(useValidationChildren);
+          useValidationChildrenMocked.mockReturnValueOnce({
+            isValid: ValidatorTypes.Valid,
+            isValidCollection: [],
+          });
+
           const panelValidatorStackType = ValidatorStackTypes.Optional;
 
           render(
@@ -111,6 +153,12 @@ describe('ValidatorStack unit tests', () => {
       });
       describe('and invalid', () => {
         test('should be Valid', () => {
+          const useValidationChildrenMocked = jest.mocked(useValidationChildren);
+          useValidationChildrenMocked.mockReturnValueOnce({
+            isValid: ValidatorTypes.Invalid,
+            isValidCollection: [],
+          });
+
           const panelValidatorStackType = ValidatorStackTypes.Optional;
 
           render(

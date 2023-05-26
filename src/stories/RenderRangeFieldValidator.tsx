@@ -3,20 +3,23 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { RangeFieldValidator } from '../components/validators/RangeFieldValidator';
 import { DevTool } from '@hookform/devtools';
-import { RangeFieldValidatorName } from '../components/validators/RangeFieldValidatorName';
+import { RangeFieldValidatorName } from '../components/naming/RangeFieldValidatorName';
 import { ValidatorStackTypes } from '../components/validators/ValidatorStackTypes';
+import { IFormRuleStackEntityDataValueResult } from '../FormRuleStackEntityDataValueResult';
+import { ValidatorTypes } from '../components/validators/ValidatorTypes';
 
 export interface IRenderRangeFieldValidatorProps extends IRangeFieldValidatorProps {
   overrideValidationType?: ValidatorStackTypes;
 }
 
 export const RenderRangeFieldValidator = (arg: IRenderRangeFieldValidatorProps): React.ReactElement => {
-  const methods = useForm({
+  const validatorStackTypes = arg.overrideValidationType || arg.validationType;
+  const methods = useForm<IFormRuleStackEntityDataValueResult<number>>({
     mode: 'onBlur',
     defaultValues: {
       [RangeFieldValidatorName(arg.id)]: {
         value: undefined,
-        validationResult: arg.overrideValidationType || arg.validationType,
+        validationResult: validatorStackTypes === ValidatorStackTypes.Optional ? ValidatorTypes.Optional : ValidatorTypes.Invalid,
       },
     },
   });

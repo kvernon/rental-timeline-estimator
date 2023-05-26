@@ -58,7 +58,15 @@ on windows: `$ nvs install`, referencing this manager: `https://github.com/jason
 
 > ☝️This can run using Wallaby.js in automatic config, or you can use the config supplied here
 
-# helpful links:
+## progress
+
+This is to show progress
+
+![image user settings intro](./docs/progress-visual-2.jpg)
+
+_image: User Settings_
+
+## helpful links:
 
 1. https://testing-library.com/
 2. https://reactjs.org/
@@ -68,3 +76,7 @@ on windows: `$ nvs install`, referencing this manager: `https://github.com/jason
 6. https://react-hook-form.com/api/useformcontext/
 7. https://emotion.sh/docs/@emotion/styled
 8. https://zustand-demo.pmnd.rs/
+9. https://konstantinlebedev.com/solid-in-react/
+10. https://www.everydayreact.com/articles/solid-principles-in-react
+11. https://github.com/tajo/react-movable
+12. note: styling seems to work: https://codesandbox.io/s/clever-wing-skxhlr... might be a problem with react-select

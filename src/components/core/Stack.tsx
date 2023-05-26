@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 
 export interface IStackProps {
   paddingBottom?: string;
+  marginBottom?: string;
   paddingTop?: string;
   paddingLeft?: string;
   paddingRight?: string;
@@ -13,11 +14,12 @@ export interface IStackProps {
 export const Stack = styled.div((props: IStackProps) => ({
   display: 'flex',
   width: '100%',
-  flexDirection: props.direction || 'column',
+  flexDirection: props.direction ?? 'column',
   flexGrow: props.flexGrow,
   flex: props.spacing,
-  paddingBottom: props.paddingBottom || '0',
-  paddingTop: props.paddingTop || '0',
-  paddingLeft: props.paddingLeft || '2px',
-  paddingRight: props.paddingRight || '0',
+  paddingBottom: props.paddingBottom ?? '0',
+  marginBottom: props.marginBottom ?? '0',
+  paddingTop: props.paddingTop ?? '0',
+  paddingLeft: props.paddingLeft ?? '2px',
+  paddingRight: props.paddingRight ?? '0',
 }));

@@ -2,7 +2,8 @@ import React from 'react';
 import { ValidatorTypes } from './ValidatorTypes';
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
-import { IThemeOptions } from '../../theme';
+
+import { IThemeOptions } from '../../theming/IThemeOptions';
 
 export interface IValidationBarProps {
   isValid: ValidatorTypes;

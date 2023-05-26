@@ -4,9 +4,10 @@ import { ValidationPanel } from '../components/panels/ValidationPanel';
 import { ValidatorStackTypes } from '../components/validators/ValidatorStackTypes';
 import { IRangeFieldValidatorProps } from '../components/validators/IRangeFieldValidatorProps';
 import { FormProvider, useForm } from 'react-hook-form';
-import { ValidatorStackName } from '../components/validators/ValidatorStackName';
+import { ValidatorStackName } from '../components/naming/ValidatorStackName';
 import { DevTool } from '@hookform/devtools';
 import { RangeFieldValidator } from '../components/validators/RangeFieldValidator';
+import { IFormRuleStackEntityDataValueResult } from '../FormRuleStackEntityDataValueResult';
 
 interface ITheseProps extends IRangeFieldValidatorProps {
   panelType: ValidatorStackTypes;
@@ -22,9 +23,9 @@ export default {
 } as ComponentMeta<typeof ValidationPanel>;
 
 const Builder = (arg: ITheseProps) => {
-  const methods = useForm({
+  const methods = useForm<IFormRuleStackEntityDataValueResult<number>>({
     defaultValues: {
-      [ValidatorStackName(arg.stackId)]: {
+      [ValidatorStackName(arg.id)]: {
         [`rangeFieldValidator${arg.id}`]: {
           value: undefined,
           validationResult: arg.validationType,
@@ -38,10 +39,9 @@ const Builder = (arg: ITheseProps) => {
     <FormProvider {...methods}>
       <DevTool control={methods.control} placement="top-left" />
       <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <ValidationPanel panelType={arg.panelType} id={arg.stackId} title={arg.title as string}>
+        <ValidationPanel panelType={arg.panelType} title={arg.title as string} id={arg.id}>
           <RangeFieldValidator
             id={arg.id}
-            stackId={arg.stackId}
             min={arg.min}
             max={arg.max}
             suffix={arg.suffix}
@@ -64,7 +64,6 @@ const Template: ComponentStory<typeof Builder> = (args) => {
 export const Optional = Template.bind({});
 Optional.args = {
   title: 'Optional',
-  stackId: 'Optional',
   panelType: ValidatorStackTypes.Optional,
   id: 'id',
   max: 10,
@@ -74,7 +73,6 @@ Optional.args = {
 export const Required = Template.bind({});
 Required.args = {
   title: 'Required',
-  stackId: 'Required',
   panelType: ValidatorStackTypes.Required,
   id: 'id',
   max: 10,

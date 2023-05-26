@@ -1,3 +1,5 @@
+import type { Root } from 'react-dom/client';
+
 jest.mock('@emotion/react', () => ({
   ThemeProvider: jest.fn(),
 }));
@@ -8,7 +10,7 @@ jest.mock('../src/app', () => ({
   },
 }));
 
-jest.mock('../src/theme', () => ({
+jest.mock('../src/theming/theme', () => ({
   options: {},
 }));
 
@@ -17,7 +19,7 @@ import React from 'react';
 import { App } from '../src/app';
 
 describe('test ReactDOM.render', () => {
-  let mockedRoot: any;
+  let mockedRoot: Root;
 
   afterEach(() => {
     jest.resetAllMocks();
@@ -26,6 +28,7 @@ describe('test ReactDOM.render', () => {
 
   beforeEach(() => {
     mockedRoot = {
+      unmount: jest.fn(),
       render: jest.fn(),
     };
 

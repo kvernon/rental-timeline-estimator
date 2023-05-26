@@ -1,4 +1,3 @@
-import { IThemeOptions, ITypography } from '../../../src/theme';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -15,6 +14,8 @@ jest.mock('@emotion/react', () => {
 });
 
 import { ValidationBar } from '../../../src/components/validators/ValidationBar';
+import { IThemeOptions } from '../../../src/theming/IThemeOptions';
+import { ITypography } from '../../../src/theming/ITypography';
 
 describe('ValidationBar unit tests', () => {
   let typographyMock: jest.Mocked<ITypography>;
