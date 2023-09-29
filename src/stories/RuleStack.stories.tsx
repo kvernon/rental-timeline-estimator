@@ -4,8 +4,9 @@ import { IRuleStackProps, RuleStack } from '../components/rules/RuleStack';
 import { ValidatorStackTypes } from '../components/validators/ValidatorStackTypes';
 import { FormProvider, useForm } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
-import { RangeFieldValidatorName } from '../components/validators/RangeFieldValidatorName';
-import { TitleDropDownValidatorName } from '../components/validators/TitleDropDownValidatorName';
+import { RangeFieldValidatorName } from '../components/naming/RangeFieldValidatorName';
+import { TitleDropDownValidatorName } from '../components/naming/TitleDropDownValidatorName';
+import { ValidatorTypes } from '../components/validators/ValidatorTypes';
 
 const meta: ComponentMeta<typeof RuleStack> = {
   title: 'Example/RuleStack',
@@ -24,7 +25,7 @@ const Builder = (arg: IRuleStackProps) => {
       },
       [`${RangeFieldValidatorName(arg.id)}`]: {
         value: undefined,
-        validationResult: arg.validationType,
+        validationResult: arg.validationType === ValidatorStackTypes.Optional ? ValidatorTypes.Optional : ValidatorTypes.Invalid,
       },
     },
   });

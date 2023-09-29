@@ -2,7 +2,7 @@ import { ValidatorStackTypes } from './ValidatorStackTypes';
 import { IEventResult } from './IEventResult';
 
 export interface IRangeFieldValidatorBlur {
-  onBlur?: (evt: IEventResult) => void;
+  onBlur?: (evt: IEventResult<number>) => void;
 }
 
 export interface IRangeFieldValidatorProps extends IRangeFieldValidatorBlur {

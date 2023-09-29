@@ -2,9 +2,13 @@ import React from 'react';
 import { ValidatorStack } from '../validators/ValidatorStack';
 import { ValidatorStackTypes } from '../validators/ValidatorStackTypes';
 import { IRangeFieldValidatorProps } from '../validators/IRangeFieldValidatorProps';
-import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
-import { FontGroups, IThemeOptions } from '../../theme';
+import { IThemeOptions } from '../../theming/IThemeOptions';
+import { Header5 } from '../core/Header5';
+import { TypographyDiv } from '../core/TypographyDiv';
+import { Card } from '../core/Card';
+import { CardContent } from '../core/CardContent';
+import { Stack } from '../core/Stack';
 
 export interface IValidationPanelProps {
   id: string;
@@ -13,41 +17,14 @@ export interface IValidationPanelProps {
   title: string;
 }
 
-const H5 = styled.h5<{ theme: IThemeOptions }>`
-  color: ${(props) => props.theme.typography.get(FontGroups.panelTitle)?.color};
-  font-family: ${(props) => props.theme.typography.get(FontGroups.panelTitle)?.font};
-  font-size: ${(props) => props.theme.typography.get(FontGroups.panelTitle)?.size};
-  font-weight: ${(props) => props.theme.typography.get(FontGroups.panelTitle)?.weight};
-  margin: 0;
-`;
-
-const Typography = styled.div`
-  position: relative;
-  top: 6px;
-`;
-
-const Card = styled.div<{ theme: IThemeOptions }>`
-  background: ${(props) => `linear-gradient(#7950C5, ${props.theme.palette.panelBackground} 2%)`};
-  color: ${(props) => props.theme.typography.get(FontGroups.panelTitle)?.color};
-  box-shadow: 0 10px 15px rgba(16, 27, 30, 0.4);
-`;
-
-const CardContent = styled.div`
-  padding: 0;
-  margin-top: 0;
-  &:last-child {
-    padding-bottom: 0;
-  },
-`;
-
 export const ValidationPanel = function (props: IValidationPanelProps) {
   const coreTheme = useTheme() as IThemeOptions;
 
   return (
-    <div>
-      <Typography>
-        <H5 theme={coreTheme}>{props.title}</H5>
-      </Typography>
+    <Stack direction={'column'} paddingTop={'15px'} paddingBottom={'15px'}>
+      <TypographyDiv>
+        <Header5 theme={coreTheme}>{props.title}</Header5>
+      </TypographyDiv>
       <Card id={`panel-${props.id}`} theme={coreTheme}>
         <CardContent>
           <ValidatorStack panelValidatorStackType={props.panelType} id={props.id}>
@@ -55,6 +32,6 @@ export const ValidationPanel = function (props: IValidationPanelProps) {
           </ValidatorStack>
         </CardContent>
       </Card>
-    </div>
+    </Stack>
   );
 };

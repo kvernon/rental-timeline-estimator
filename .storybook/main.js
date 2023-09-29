@@ -1,3 +1,4 @@
+const CopyPlugin = require('copy-webpack-plugin');
 module.exports = {
   "stories": [
     "../src/**/*.stories.mdx",
@@ -9,11 +10,20 @@ module.exports = {
     "@storybook/addon-interactions"
   ],
   "framework": "@storybook/react",
-  "core": {
-    "builder": "@storybook/builder-webpack5"
+  core: {
+    builder: 'webpack5',
   },
   features: {
     emotionAlias: false,
     storyStoreV7: true,
+  },
+  webpackFinal: async (config) => {
+    config.plugins.push(    new CopyPlugin({
+        patterns: [{ from: 'images', to: 'images' }]
+      })
+    )
+    // Make whatever fine-grained changes you need
+    // Return the altered config
+    return config;
   },
 }

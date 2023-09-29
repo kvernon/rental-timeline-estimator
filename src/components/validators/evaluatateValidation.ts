@@ -2,16 +2,20 @@ import { ValidatorTypes } from './ValidatorTypes';
 import { IEventResult } from './IEventResult';
 import { ValidatorStackTypes } from './ValidatorStackTypes';
 
+export type RuleEval = (value: number, options: { min?: number; max?: number }) => ValidatorTypes;
+
 /**
  *
- * @param selectedValue can also be NaN
  * @param validationType
  * @param rule
+ * @param selectedValue can also be NaN
+ * @param options
  */
 export const evaluateValidation = (
-  selectedValue: number,
   validationType: ValidatorStackTypes,
-  rule: (value: number) => ValidatorTypes,
+  rule: RuleEval,
+  selectedValue?: number,
+  options?: { min?: number; max?: number },
 ): IEventResult<number> => {
   const validation: IEventResult<number> = {
     validationResult: ValidatorTypes.Invalid,
@@ -21,9 +25,9 @@ export const evaluateValidation = (
 
   const isUndefinedOrNaN = selectedValue === undefined || isNaN(selectedValue);
   if (validationType === ValidatorStackTypes.Required) {
-    validation.validationResult = isUndefinedOrNaN ? ValidatorTypes.Invalid : rule(selectedValue);
+    validation.validationResult = isUndefinedOrNaN ? ValidatorTypes.Invalid : rule(selectedValue, options || {});
   } else {
-    validation.validationResult = isUndefinedOrNaN ? ValidatorTypes.Optional : rule(selectedValue);
+    validation.validationResult = isUndefinedOrNaN ? ValidatorTypes.Optional : rule(selectedValue, options || {});
   }
 
   validation.validationResultName = ValidatorTypes[validation.validationResult];

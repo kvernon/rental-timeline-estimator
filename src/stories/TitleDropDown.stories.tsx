@@ -1,9 +1,12 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { TitleDropDownValidator } from '../components/validators/TitleDropDownValidator';
+import { IOption, TitleDropDownValidator } from '../components/validators/TitleDropDownValidator';
 import React from 'react';
 import { DevTool } from '@hookform/devtools';
 import { FormProvider, useForm } from 'react-hook-form';
-import { TitleDropDownValidatorName } from '../components/validators/TitleDropDownValidatorName';
+import { TitleDropDownValidatorName } from '../components/naming/TitleDropDownValidatorName';
+import { IFormRuleStackEntityDataValueResult } from '../FormRuleStackEntityDataValueResult';
+import { ValidatorStackTypes } from '../components/validators/ValidatorStackTypes';
+import { ValidatorTypes } from '../components/validators/ValidatorTypes';
 
 export default {
   title: 'Example/TitleDropDown',
@@ -16,11 +19,11 @@ export default {
 } as ComponentMeta<typeof TitleDropDownValidator>;
 
 const Template: ComponentStory<typeof TitleDropDownValidator> = (args) => {
-  const methods = useForm({
+  const methods = useForm<IFormRuleStackEntityDataValueResult<IOption>>({
     defaultValues: {
       [`${TitleDropDownValidatorName(args.id as string)}`]: {
         value: { value: args.defaultIndex || 0, label: args.titles[args.defaultIndex || 0] },
-        validationResult: args.validationType,
+        validationResult: args.validationType === ValidatorStackTypes.Optional ? ValidatorTypes.Optional : ValidatorTypes.Invalid,
       },
     },
   });

@@ -1,10 +1,10 @@
-import { IThemeOptions } from '../../../src/theme';
 import React from 'react';
 import { configure, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { ITitleDropDownParams, TitleDropDownValidator } from '../../../src/components/validators/TitleDropDownValidator';
 import { ValidatorStackTypes } from '../../../src/components/validators/ValidatorStackTypes';
 import { FormProvider, useForm } from 'react-hook-form';
+import { IThemeOptions } from '../../../src/theming/IThemeOptions';
 
 jest.mock('@emotion/react', () => {
   const all = jest.requireActual('@emotion/react');

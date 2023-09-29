@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {options} from './../src/theme';
+import {options} from '../src/theming/theme';
 import {ThemeProvider} from '@emotion/react';
 
 const defaultBackground = 'rentalGen3';

@@ -1,11 +1,11 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './app';
-import { options } from './theme';
 import { ThemeProvider } from '@emotion/react';
+import { options } from './theming/theme';
 
 const container = document.getElementById('root');
-const root = createRoot(container!);
+const root = createRoot(container as HTMLElement);
 
 root.render(
   <ThemeProvider theme={options}>

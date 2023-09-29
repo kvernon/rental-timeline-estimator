@@ -5,6 +5,8 @@ import type { JestConfigWithTsJest } from 'ts-jest';
  * https://jestjs.io/docs/configuration
  */
 
+const esModules = ['react-movable'].join('|');
+
 const jestConfig: JestConfigWithTsJest = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
@@ -87,7 +89,7 @@ const jestConfig: JestConfigWithTsJest = {
   // notifyMode: "failure-change",
 
   // A preset that is used as a base for Jest's configuration
-  // preset: 'ts-jest',
+  preset: 'ts-jest',
 
   // Run tests from one or more projects
   // projects: undefined,
@@ -145,6 +147,10 @@ const jestConfig: JestConfigWithTsJest = {
   //   "\\\\node_modules\\\\"
   // ],
 
+  // https://github.com/tajo/react-movable/issues/84
+  // https://github.com/tajo/react-movable/issues/94 An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
+  transformIgnorePatterns: [`/node_modules/(?!${esModules})`],
+
   // The regexp pattern or array of patterns that Jest uses to detect test files
   // testRegex: [],
 
@@ -162,25 +168,20 @@ const jestConfig: JestConfigWithTsJest = {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    '^.+\\.tsx?$': [
+    '^.+\\.ts?(x)$': [
       'ts-jest',
       {
         tsconfig: './tsconfig-dev.json',
       },
     ],
+    [`(${esModules}).+\\.js$`]: 'babel-jest',
   },
-
-  // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-  // transformIgnorePatterns: [
-  //   "\\\\node_modules\\\\",
-  //   "\\.pnp\\.[^\\\\]+$"
-  // ],
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,
 
   // Indicates whether each individual test should be reported during the run
-  // verbose: undefined,
+  verbose: false,
 
   // An array of regexp patterns that are matched against all source file paths before re-running tests in watch mode
   // watchPathIgnorePatterns: [],
