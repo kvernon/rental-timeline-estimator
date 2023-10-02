@@ -1,10 +1,5 @@
 import { renderHook } from '@testing-library/react';
-import { ValidatorStackTypes } from '../../../src/components/validators/ValidatorStackTypes';
-import {
-  translateFieldValidatorResult,
-  translateRangeFieldValidatorValue,
-  useChildrenValueNames,
-} from '../../../src/components/hooks/useChildrenValueNames';
+import { useChildrenValueNames } from '../../../src/components/hooks/useChildrenValueNames';
 
 jest.mock('react', () => {
   const requireActual = jest.requireActual('react');
@@ -33,10 +28,10 @@ describe('useChildrenValueNames unit tests', () => {
         const { result } = renderHook(() =>
           useChildrenValueNames(
             [
-              { id: 'One', validationType: ValidatorStackTypes.Required },
-              { id: 'Two', validationType: ValidatorStackTypes.Optional },
+              { id: 'One', type: 'RangeFieldValidator' },
+              { id: 'Two', type: 'RangeFieldValidator' },
             ],
-            translateFieldValidatorResult,
+            'validationResult',
           ),
         );
 
@@ -50,10 +45,10 @@ describe('useChildrenValueNames unit tests', () => {
         const { result } = renderHook(() =>
           useChildrenValueNames(
             [
-              { id: 'One', validationType: ValidatorStackTypes.Required },
-              { id: 'Two', validationType: ValidatorStackTypes.Optional },
+              { id: 'One', type: 'RangeFieldValidator' },
+              { id: 'Two', type: 'RangeFieldValidator' },
             ],
-            translateRangeFieldValidatorValue,
+            'value',
           ),
         );
 
@@ -65,12 +60,12 @@ describe('useChildrenValueNames unit tests', () => {
       test('should get the children results', async () => {
         const { result } = renderHook(() =>
           useChildrenValueNames([
-            { id: 'One', validationType: ValidatorStackTypes.Required },
-            { id: 'Two', validationType: ValidatorStackTypes.Optional },
+            { id: 'One', type: 'FieldValidator' },
+            { id: 'Two', type: 'FieldValidator' },
           ]),
         );
 
-        expect(result.current).toEqual(expect.arrayContaining([['One', 'Two']]));
+        expect(result.current).toEqual(expect.arrayContaining([['One.validationResult', 'Two.validationResult']]));
       });
     });
   });

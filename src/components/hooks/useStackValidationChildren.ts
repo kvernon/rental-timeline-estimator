@@ -1,11 +1,11 @@
 import { ValidatorStackTypes } from '../validators/ValidatorStackTypes';
 import React, { useMemo, useState } from 'react';
-import { IRangeFieldValidatorProps } from '../validators/IRangeFieldValidatorProps';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
-import { translateFieldValidatorResult, useChildrenValueNames } from './useChildrenValueNames';
-import { useChildrenPropsList } from './useChildrenPropsList';
+import { useChildrenValueNames } from './useChildrenValueNames';
+import { useChildrenIdsList } from './useChildrenIdsList';
 import { useValid } from './useValid';
 import { useWatcher } from './useWatcher';
+import { IIdentifier } from '../validators/IIdentifier';
 
 const translateValues = (names: string[], valid: ValidatorTypes) => {
   return names.map((c) => {
@@ -16,15 +16,15 @@ const translateValues = (names: string[], valid: ValidatorTypes) => {
   });
 };
 
-export const useValidationChildren = (
+export const useStackValidationChildren = (
   panelValidatorStackType: ValidatorStackTypes = ValidatorStackTypes.Optional,
-  children: React.ReactElement<IRangeFieldValidatorProps>[] | React.ReactElement<IRangeFieldValidatorProps> = [],
+  children: React.ReactElement<IIdentifier>[] | React.ReactElement<IIdentifier> = [],
 ) => {
-  const { isValid } = useValid(panelValidatorStackType);
+  const [theChildrenIds] = useChildrenIdsList(children);
 
-  const { theChildrenProps } = useChildrenPropsList(children);
+  const [isValid] = useValid(panelValidatorStackType);
 
-  const [childrenValidationResultNames] = useChildrenValueNames(theChildrenProps, translateFieldValidatorResult);
+  const [childrenValidationResultNames] = useChildrenValueNames(theChildrenIds, 'validationResult');
 
   const [isValidCollection, setIsCollectionValid] = useState<ValidatorTypes[]>([]);
 

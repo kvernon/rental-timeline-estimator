@@ -8,7 +8,7 @@ module.exports = {
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier', 'eslint:recommended'],
   overrides: [
     {
-      files: ['__tests__/**'],
+      files: ['__tests__/**', '**/__mocks__/**'],
       env: {
         jest: true,
         'jest/globals': true,
@@ -20,6 +20,7 @@ module.exports = {
         'testing-library/await-async-query': 'error',
         'testing-library/no-await-sync-query': 'error',
         'testing-library/no-debugging-utils': 'warn',
+        '@typescript-eslint/ban-types': 'warn',
         'testing-library/no-dom-import': 'off',
         'no-console': 0,
       },

@@ -10,7 +10,7 @@ const solve = (panelValidatorStackType: ValidatorStackTypes): ValidatorTypes => 
   }
 };
 
-export const useValid = (panelValidatorStackType: ValidatorStackTypes = ValidatorStackTypes.Optional) => {
+export const useValid = (panelValidatorStackType: ValidatorStackTypes = ValidatorStackTypes.Optional): [ValidatorTypes] => {
   const [isValid, setIsValid] = useState<ValidatorTypes>(ValidatorTypes.Optional);
 
   useEffect(() => {
@@ -22,7 +22,5 @@ export const useValid = (panelValidatorStackType: ValidatorStackTypes = Validato
     }
   }, [panelValidatorStackType, isValid]);
 
-  return {
-    isValid,
-  };
+  return [isValid];
 };

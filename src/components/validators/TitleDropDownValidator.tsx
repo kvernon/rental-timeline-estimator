@@ -15,7 +15,6 @@ export interface ITitleDropDownParams {
   defaultIndex?: number;
   id?: string;
   validationType: ValidatorStackTypes;
-  // eslint-disable-next-line no-unused-vars
   onChange?: (value: IOption) => void;
 }
 
