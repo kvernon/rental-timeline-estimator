@@ -4,19 +4,23 @@ module.exports = {
     "../src/**/*.stories.mdx",
     "../src/**/*.stories.@(js|jsx|ts|tsx)"
   ],
+
   "addons": [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions"
   ],
-  "framework": "@storybook/react",
-  core: {
-    builder: 'webpack5',
+
+  "framework": {
+    name: '@storybook/react-webpack5',
+    options: {}
   },
+
   features: {
     emotionAlias: false,
     storyStoreV7: true,
   },
+
   webpackFinal: async (config) => {
     config.plugins.push(    new CopyPlugin({
         patterns: [{ from: 'images', to: 'images' }]
@@ -26,4 +30,8 @@ module.exports = {
     // Return the altered config
     return config;
   },
+
+  docs: {
+    autodocs: true
+  }
 }
