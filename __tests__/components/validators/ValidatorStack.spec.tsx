@@ -33,7 +33,7 @@ import { ValidatorStack } from '../../../src/components/validators/ValidatorStac
 import { IValidatorPanelProps } from '../../../src/components/validators/IValidatorPanelProps';
 import { IThemeOptions } from '../../../src/theming/IThemeOptions';
 import { ITypography } from '../../../src/theming/ITypography';
-import { useValidationChildren } from '../../../src/components/hooks/useValidationChildren';
+import { useStackValidationChildren } from '../../../src/components/hooks/useStackValidationChildren';
 import { useWatcher } from '../../../src/components/hooks/useWatcher';
 
 jest.mock('../../../src/components/hooks/useWatcher', () => {
@@ -43,10 +43,10 @@ jest.mock('../../../src/components/hooks/useWatcher', () => {
   };
 });
 
-jest.mock('../../../src/components/hooks/useValidationChildren', () => {
+jest.mock('../../../src/components/hooks/useStackValidationChildren', () => {
   const returnMock = jest.fn();
   return {
-    useValidationChildren: returnMock,
+    useStackValidationChildren: returnMock,
   };
 });
 
@@ -107,7 +107,7 @@ describe('ValidatorStack unit tests', () => {
   describe('and panelValidatorType is Optional', () => {
     describe('and children is empty', () => {
       test('should be Valid', () => {
-        const useValidationChildrenMocked = jest.mocked(useValidationChildren);
+        const useValidationChildrenMocked = jest.mocked(useStackValidationChildren);
         useValidationChildrenMocked.mockReturnValueOnce({
           isValid: ValidatorTypes.Optional,
           isValidCollection: [],
@@ -129,7 +129,7 @@ describe('ValidatorStack unit tests', () => {
           const useWatcherMocked = jest.mocked(useWatcher);
           useWatcherMocked.mockReturnValue([[], () => []]);
 
-          const useValidationChildrenMocked = jest.mocked(useValidationChildren);
+          const useValidationChildrenMocked = jest.mocked(useStackValidationChildren);
           useValidationChildrenMocked.mockReturnValueOnce({
             isValid: ValidatorTypes.Valid,
             isValidCollection: [],
@@ -153,7 +153,7 @@ describe('ValidatorStack unit tests', () => {
       });
       describe('and invalid', () => {
         test('should be Valid', () => {
-          const useValidationChildrenMocked = jest.mocked(useValidationChildren);
+          const useValidationChildrenMocked = jest.mocked(useStackValidationChildren);
           useValidationChildrenMocked.mockReturnValueOnce({
             isValid: ValidatorTypes.Invalid,
             isValidCollection: [],

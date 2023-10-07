@@ -21,11 +21,7 @@ describe('useValid unit tests', () => {
     test('should get the children results', async () => {
       const { result } = renderHook(() => useValid());
 
-      expect(result.current).toEqual(
-        expect.objectContaining({
-          isValid: ValidatorTypes.Optional,
-        }),
-      );
+      expect(result.current).toEqual(expect.arrayContaining([ValidatorTypes.Optional]));
     });
   });
 
@@ -33,11 +29,7 @@ describe('useValid unit tests', () => {
     test('should get the Optional results', async () => {
       const { result } = renderHook(() => useValid(ValidatorStackTypes.Optional));
 
-      expect(result.current).toEqual(
-        expect.objectContaining({
-          isValid: ValidatorTypes.Optional,
-        }),
-      );
+      expect(result.current).toEqual(expect.arrayContaining([ValidatorTypes.Optional]));
     });
   });
 
@@ -45,11 +37,7 @@ describe('useValid unit tests', () => {
     test('should get the Invalid result', async () => {
       const { result } = renderHook(() => useValid(ValidatorStackTypes.Required));
 
-      expect(result.current).toEqual(
-        expect.objectContaining({
-          isValid: ValidatorTypes.Invalid,
-        }),
-      );
+      expect(result.current).toEqual(expect.arrayContaining([ValidatorTypes.Invalid]));
     });
   });
 });

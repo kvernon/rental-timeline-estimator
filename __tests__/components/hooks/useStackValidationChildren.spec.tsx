@@ -3,16 +3,16 @@ import { renderHook } from '@testing-library/react';
 import { RangeFieldValidator } from '../../../src/components/validators/RangeFieldValidator';
 import { ValidatorStackTypes } from '../../../src/components/validators/ValidatorStackTypes';
 import { ValidatorTypes } from '../../../src/components/validators/ValidatorTypes';
-import { useValidationChildren } from '../../../src/components/hooks/useValidationChildren';
+import { useStackValidationChildren } from '../../../src/components/hooks/useStackValidationChildren';
 
 import { useChildrenValueNames } from '../../../src/components/hooks/useChildrenValueNames';
 import { useWatcher } from '../../../src/components/hooks/useWatcher';
-import { useChildrenPropsList } from '../../../src/components/hooks/useChildrenPropsList';
+import { useChildrenIdsList } from '../../../src/components/hooks/useChildrenIdsList';
 import { useValid } from '../../../src/components/hooks/useValid';
 
 jest.mock('../../../src/components/hooks/useChildrenValueNames');
 jest.mock('../../../src/components/hooks/useWatcher');
-jest.mock('../../../src/components/hooks/useChildrenPropsList');
+jest.mock('../../../src/components/hooks/useChildrenIdsList');
 jest.mock('../../../src/components/hooks/useValid');
 
 jest.mock('react', () => {
@@ -24,33 +24,32 @@ jest.mock('react', () => {
   };
 });
 
-describe('watchValidationChildren has children unit tests', () => {
+describe('useStackValidationChildren has children unit tests', () => {
   afterEach(() => {
     jest.resetModules();
     jest.clearAllMocks();
   });
 
+  const useValidMock = jest.mocked(useValid);
+  const useChildrenValueNamesMock = jest.mocked(useChildrenValueNames);
+  const useWatcherMock = jest.mocked(useWatcher);
+  const useChildrenIdsListMock = jest.mocked(useChildrenIdsList);
+
   describe('and no children array', () => {
     test('should get the children results', async () => {
+      useValidMock.mockReturnValue([ValidatorTypes.Valid]);
+      useChildrenValueNamesMock.mockReturnValue([[]]);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      useValid.mockReturnValue({ isValid: ValidatorTypes.Valid });
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      useChildrenValueNames.mockReturnValue([[]]);
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      useWatcher.mockReturnValue([[]]);
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      useChildrenPropsList.mockReturnValue({
-        theChildrenProps: [
-          { id: 'One', validationType: ValidatorStackTypes.Required },
-          { id: 'Two', validationType: ValidatorStackTypes.Optional },
+      useWatcherMock.mockReturnValue([[]]);
+      useChildrenIdsListMock.mockReturnValue([
+        [
+          { id: 'One', type: 'RenderRangeFieldValidator' },
+          { id: 'Two', type: 'RenderRangeFieldValidator' },
         ],
-      });
+      ]);
 
-      const { result } = renderHook(() => useValidationChildren(ValidatorStackTypes.Optional, []));
+      const { result } = renderHook(() => useStackValidationChildren(ValidatorStackTypes.Optional, []));
 
       expect(result.current).toEqual(
         expect.objectContaining({
@@ -65,26 +64,21 @@ describe('watchValidationChildren has children unit tests', () => {
     test('should get the children results', async () => {
       const expectedDefault = ValidatorTypes.Invalid;
       const expectedOneValid = ValidatorTypes.Valid;
+
+      useValidMock.mockReturnValue([expectedDefault]);
+      useChildrenValueNamesMock.mockReturnValue([['rangeFieldValidatorOne.validationResult', 'rangeFieldValidatorTwo.validationResult']]);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      useValid.mockReturnValue({ isValid: expectedDefault });
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      useChildrenValueNames.mockReturnValue([['rangeFieldValidatorOne.validationResult', 'rangeFieldValidatorTwo.validationResult']]);
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      useWatcher.mockReturnValue([[expectedOneValid]]);
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      useChildrenPropsList.mockReturnValue({
-        theChildrenProps: [
-          { id: 'One', validationType: ValidatorStackTypes.Required },
-          { id: 'Two', validationType: ValidatorStackTypes.Optional },
+      useWatcherMock.mockReturnValue([[expectedOneValid]]);
+      useChildrenIdsListMock.mockReturnValue([
+        [
+          { id: 'One', type: 'RenderRangeFieldValidator' },
+          { id: 'Two', type: 'RenderRangeFieldValidator' },
         ],
-      });
+      ]);
 
       const { result } = renderHook(() =>
-        useValidationChildren(ValidatorStackTypes.Optional, [
+        useStackValidationChildren(ValidatorStackTypes.Optional, [
           <RangeFieldValidator id="One" validationType={ValidatorStackTypes.Optional} />,
           <RangeFieldValidator id="Two" validationType={ValidatorStackTypes.Optional} />,
         ]),

@@ -1,12 +1,7 @@
 import { ValidatorStackTypes } from './ValidatorStackTypes';
-import { IEventResult } from './IEventResult';
-
-export interface IRangeFieldValidatorBlur {
-  onBlur?: (evt: IEventResult<number>) => void;
-}
+import { IRangeFieldValidatorBlur } from './IRangeFieldValidatorBlur';
 
 export interface IRangeFieldValidatorProps extends IRangeFieldValidatorBlur {
-  id: string;
   validationType: ValidatorStackTypes;
   direction?: 'row' | 'column';
   title?: string;

@@ -100,6 +100,7 @@
     "jsdom": "^22.1.0",
     "lint-staged": "^13.1.1",
     "prettier": "^3.0.0",
+    "react-select-event": "^5.5.1",
     "rimraf": "^5.0.1",
     "semantic-release": "^21.0.0",
     "semantic-release-cli": "^5.4.4",
