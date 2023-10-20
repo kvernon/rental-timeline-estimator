@@ -1,9 +1,10 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import React from 'react';
-import { IRuleCollectionProps, RulesCollection } from '../components/rules/RulesCollection';
+import { RulesCollection } from '../components/rules/RulesCollection';
 import { FormProvider, useForm } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { IFormRuleStackEntityDataValueResultEntity } from '../FormRuleStackEntityDataValueResult';
+import { IRuleCollectionProps } from '../components/rules/IRuleCollectionProps';
 
 export default {
   title: 'Example/RulesCollection',
