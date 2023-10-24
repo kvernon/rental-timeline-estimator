@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`input unit tests and defaults should contain styles 1`] = `
+.emotion-0 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  text-align: right;
+  width: 100%;
+  height: 59px;
+  border-radius: 0.3rem;
+}
+
+<input
+  class="emotion-0"
+  role="input"
+/>
+`;
+
+exports[`input unit tests and no spinner should contain styles and spinner removal 1`] = `
+.emotion-0 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  text-align: right;
+  width: 100%;
+  height: 59px;
+  border-radius: 0.3rem;
+}
+
+<input
+  class="emotion-0"
+  role="input"
+/>
+`;
+
+exports[`input unit tests and useUnderlineOnly should contain styles with no border and underline 1`] = `
+.emotion-0 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  text-align: right;
+  width: 100%;
+  height: 59px;
+  border-radius: 0.3rem;
+  -webkit-transition: border-color 0.4s ease-out;
+  transition: border-color 0.4s ease-out;
+  border-color: white;
+  border-width: 0px 0px 5px 0;
+}
+
+<input
+  class="emotion-0"
+  role="input"
+/>
+`;

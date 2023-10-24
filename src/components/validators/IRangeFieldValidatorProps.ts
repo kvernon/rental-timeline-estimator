@@ -1,7 +1,10 @@
 import { ValidatorStackTypes } from './ValidatorStackTypes';
 import { IRangeFieldValidatorBlur } from './IRangeFieldValidatorBlur';
+import { FontGroups } from '../../theming/fontGroups';
 
 export interface IRangeFieldValidatorProps extends IRangeFieldValidatorBlur {
+  inputFontGroup?: FontGroups;
+  inputLabelFontGroup?: FontGroups;
   validationType: ValidatorStackTypes;
   direction?: 'row' | 'column';
   title?: string;
@@ -21,4 +24,10 @@ export interface IRangeFieldValidatorProps extends IRangeFieldValidatorBlur {
    * will default to 0
    */
   defaultValue?: number;
+
+  hasSpinner?: boolean;
+
+  useUnderlineOnly?: boolean;
+
+  useTransparent?: boolean;
 }

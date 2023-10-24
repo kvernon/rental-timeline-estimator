@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 export const CardContent = styled.div`
-  padding: 10px;
+  padding: 0;
   margin-top: 0;
 
   display: block;

@@ -15,10 +15,11 @@ export class Typography extends Map<string, IFontInformation> implements ITypogr
       return information;
     }
 
-    information.color = information.color || this.parent.color;
-    information.size = information.size || this.parent.size;
-    information.font = information.font || this.parent.font;
-    information.weight = information.weight || this.parent.weight;
+    information.color = information.color ?? this.parent.color;
+    information.size = information.size ?? this.parent.size;
+    information.font = information.font ?? this.parent.font;
+    information.weight = information.weight ?? this.parent.weight;
+    information.lineHeight = information.lineHeight ?? this.parent.lineHeight;
 
     return information;
   }
@@ -28,5 +29,6 @@ export class Typography extends Map<string, IFontInformation> implements ITypogr
     font: 'Arial',
     color: '#FFFFFF',
     weight: 'normal',
+    lineHeight: '1.4375em',
   });
 }

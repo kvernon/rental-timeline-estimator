@@ -10,6 +10,7 @@ import { useWatcher } from '../hooks/useWatcher';
 import { FontGroups } from '../../theming/fontGroups';
 import { IThemeOptions } from '../../theming/IThemeOptions';
 import { useTheme } from '@emotion/react';
+import { Input } from '../core/input';
 
 const Box = styled.div`
   display: flex;
@@ -55,43 +56,54 @@ const isInRange: RuleEval = (
   return (options?.min || 0) <= value && (options?.max || 100) >= value ? ValidatorTypes.Valid : ValidatorTypes.Invalid;
 };
 
-const Input = styled.input<{
+const InputLocal = styled(Input)<{
   themeOptions: IThemeOptions;
   validationType: ValidatorTypes;
   id: string;
+  fontGroup?: FontGroups;
+  useTransparent: boolean;
 }>`
-  display: flex;
-  font-family: ${(coreTheme) => coreTheme.themeOptions.typography.get(FontGroups.input)?.font};
-  font-size: ${(coreTheme) => coreTheme.themeOptions.typography.get(FontGroups.input)?.size};
-  font-weight: ${(coreTheme) => coreTheme.themeOptions.typography.get(FontGroups.input)?.weight};
-  text-align: right;
-  color: ${(coreTheme) => coreTheme.themeOptions.typography.get(FontGroups.input)?.color};
-  background-color: ${(coreTheme) => coreTheme.themeOptions.palette.validation[ValidatorTypes[coreTheme.validationType]].background}41;
-  transition: background-color 0.4s ease-out;
-  border-radius: 0.3rem;
-  border-width: 1px;
-  flex-grow: 1;
-  width: 100%;
-  height: 59px;
+  font-family: ${(coreTheme) => coreTheme.themeOptions.typography.get(coreTheme.fontGroup ?? FontGroups.input)?.font};
+  font-size: ${(coreTheme) => coreTheme.themeOptions.typography.get(coreTheme.fontGroup ?? FontGroups.input)?.size};
+  font-weight: ${(coreTheme) => coreTheme.themeOptions.typography.get(coreTheme.fontGroup ?? FontGroups.input)?.weight};
+  color: ${(coreTheme) => coreTheme.themeOptions.typography.get(coreTheme.fontGroup ?? FontGroups.input)?.color};
 
-  &:hover {
-    background-color: ${(coreTheme) => coreTheme.themeOptions.palette.validation[ValidatorTypes[coreTheme.validationType]].backgroundFocus}81;
-  }
+  ${(coreTheme) =>
+    !coreTheme.useTransparent &&
+    `
+     background-color: ${coreTheme.themeOptions.palette.validation[ValidatorTypes[coreTheme.validationType]].background}41;
 
-  &:focus {
-    background-color: ${(coreTheme) => coreTheme.themeOptions.palette.validation[ValidatorTypes[coreTheme.validationType]].backgroundFocus}81;
-  }
+     &:hover {
+        background-color: ${coreTheme.themeOptions.palette.validation[ValidatorTypes[coreTheme.validationType]].backgroundFocus}81;
+     }
+
+     &:focus {
+        background-color: ${coreTheme.themeOptions.palette.validation[ValidatorTypes[coreTheme.validationType]].backgroundFocus}81;
+     }
+  `}
+
+  ${(coreTheme) =>
+    coreTheme.useTransparent &&
+    `
+     background-color: transparent;
+     border-color: ${coreTheme.themeOptions.palette.validation[ValidatorTypes[coreTheme.validationType]].background};
+
+     &:hover {
+        border-color: ${coreTheme.themeOptions.palette.validation[ValidatorTypes[coreTheme.validationType]].backgroundFocus};
+     }
+   `}
 `;
 
 const SpanPaddingLeft = styled.span<{
   themeOptions: IThemeOptions;
+  fontGroup?: FontGroups;
 }>`
-  font-family: ${(props) => props.themeOptions.typography.get(FontGroups.inputLabel)?.font};
-  font-size: ${(props) => props.themeOptions.typography.get(FontGroups.inputLabel)?.size};
-  font-weight: ${(props) => props.themeOptions.typography.get(FontGroups.inputLabel)?.weight};
-  line-height: 1.4375em;
-  letter-spacing: 0.00938em;
-  color: #a19fa8;
+  font-family: ${(props) => props.themeOptions.typography.get(props.fontGroup ?? FontGroups.inputLabel)?.font};
+  font-size: ${(props) => props.themeOptions.typography.get(props.fontGroup ?? FontGroups.inputLabel)?.size};
+  font-weight: ${(props) => props.themeOptions.typography.get(props.fontGroup ?? FontGroups.inputLabel)?.weight};
+  line-height: ${(props) => props.themeOptions.typography.get(props.fontGroup ?? FontGroups.inputLabel)?.lineHeight};
+  letter-spacing: ${(props) => props.themeOptions.typography.get(props.fontGroup ?? FontGroups.inputLabel)?.letterSpacing};
+  color: ${(props) => props.themeOptions.typography.get(props.fontGroup ?? FontGroups.inputLabel)?.color};
   margin: 0;
   padding: ${(props) => (props.title ? '5.5px 7px' : '7px')};
   display: inline-flex;
@@ -100,13 +112,17 @@ const SpanPaddingLeft = styled.span<{
 const InputLabel = styled.label<{
   themeOptions: IThemeOptions;
   direction?: 'row' | 'column';
+  fontGroup?: FontGroups;
 }>`
-  font-family: ${(props) => props.themeOptions.typography.get(FontGroups.inputLabel)?.font};
-  font-size: ${(props) => props.themeOptions.typography.get(FontGroups.inputLabel)?.size};
-  font-weight: ${(props) => props.themeOptions.typography.get(FontGroups.inputLabel)?.weight};
+  font-family: ${(props) => props.themeOptions.typography.get(props.fontGroup ?? FontGroups.inputLabel)?.font};
+  font-size: ${(props) => props.themeOptions.typography.get(props.fontGroup ?? FontGroups.inputLabel)?.size};
+  font-weight: ${(props) => props.themeOptions.typography.get(props.fontGroup ?? FontGroups.inputLabel)?.weight};
+  line-height: ${(props) => props.themeOptions.typography.get(props.fontGroup ?? FontGroups.inputLabel)?.lineHeight};
+  letter-spacing: ${(props) => props.themeOptions.typography.get(props.fontGroup ?? FontGroups.inputLabel)?.letterSpacing};
+  text-shadow: ${(props) => props.themeOptions.typography.get(props.fontGroup ?? FontGroups.inputLabel)?.textShadow};
   display: flex;
-  color: #56afcc;
-  white-space: nowrap;
+  color: ${(props) => props.themeOptions.typography.get(props.fontGroup ?? FontGroups.inputLabel)?.color};
+  white-space: ${(props) => (props.fontGroup === FontGroups.inputLabel ? 'nowrap' : 'normal')};
   padding: 5px;
   transform: none;
   overflow: visible;
@@ -176,17 +192,25 @@ export const RangeFieldValidator = (props: IRangeFieldValidatorProps) => {
   return (
     <FormControl>
       {props.title && (
-        <InputLabel themeOptions={coreTheme} direction={props.direction} htmlFor={`TextFieldValidator${props.id}`}>
+        <InputLabel
+          themeOptions={coreTheme}
+          direction={props.direction}
+          fontGroup={props.inputLabelFontGroup ?? FontGroups.inputLabel}
+          htmlFor={`TextFieldValidator${props.id}`}
+        >
           {props.title}
         </InputLabel>
       )}
-      <Box>
+      <Box id={`${rangeFieldId}-box`}>
         {props.prefix && (
-          <SpanPaddingLeft themeOptions={coreTheme} className="prefix" title={props.title}>
+          <SpanPaddingLeft themeOptions={coreTheme} className="prefix" fontGroup={props.inputFontGroup ?? FontGroups.input} title={props.title}>
             {props.prefix}
           </SpanPaddingLeft>
         )}
-        <Input
+        <InputLocal
+          hasSpinner={props.hasSpinner}
+          useUnderlineOnly={props.useUnderlineOnly}
+          useTransparent={!!props.useTransparent}
           {...register(inputValueName, {
             value: props.defaultValue,
             required: false,
@@ -212,6 +236,7 @@ export const RangeFieldValidator = (props: IRangeFieldValidatorProps) => {
           })}
           validationType={isFormValid}
           themeOptions={coreTheme}
+          fontGroup={props.inputFontGroup}
           id={inputValueName}
           type="number"
           min={props.min}
@@ -220,7 +245,12 @@ export const RangeFieldValidator = (props: IRangeFieldValidatorProps) => {
         />
         <input type={'hidden'} {...register(inputValidationResultName)} />
         {props.suffix && (
-          <SpanPaddingLeft themeOptions={coreTheme} className="suffix" title={props.title}>
+          <SpanPaddingLeft
+            themeOptions={coreTheme}
+            fontGroup={props.inputFontGroup ?? props.inputLabelFontGroup ?? FontGroups.inputLabel}
+            className="suffix"
+            title={props.title}
+          >
             {props.suffix}
           </SpanPaddingLeft>
         )}

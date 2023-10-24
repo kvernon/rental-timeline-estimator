@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ValidationBar } from './ValidationBar';
 import { IValidatorPanelProps } from './IValidatorPanelProps';
 import { Stack } from '../core/Stack';
@@ -7,6 +7,10 @@ import { useStackValidationChildren } from '../hooks/useStackValidationChildren'
 
 export const ValidatorStack = function (props: IValidatorPanelProps) {
   const { isValid } = useStackValidationChildren(props.panelValidatorStackType, props.children);
+
+  useEffect(() => {
+    console.log('ValidatorStack', isValid);
+  }, [isValid]);
 
   return (
     <Stack id={ValidatorStackName(props.id)} direction="row">
