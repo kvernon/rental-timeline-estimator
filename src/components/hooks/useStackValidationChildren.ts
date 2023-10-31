@@ -40,7 +40,7 @@ export const useStackValidationChildren = (
 
   useMemo(() => {
     if (watcherResults.some((x) => x !== undefined)) {
-      const newOne = [...isValidCollection]; //?
+      const newOne = [...isValidCollection];
       watcherResults.forEach((value: ValidatorTypes, idx: number) => {
         if (value !== undefined) {
           newOne[idx] = value;

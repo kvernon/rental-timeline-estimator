@@ -17,15 +17,19 @@ import { purchaseConfig } from './rules/purchaseRuleConfig';
 import { getFields } from './rules/getFields';
 import { getRuleChoices } from './rules/getRuleChoices';
 import { holdConfig } from './rules/holdRuleConfig';
+import { GoalPanel } from './components/panels/GoalPanel';
+import { FontGroups } from './theming/fontGroups';
 
 export const App = function () {
   const goalProps: IRangeFieldValidatorProps = {
+    inputFontGroup: FontGroups.inputGoal,
+    inputLabelFontGroup: FontGroups.inputGoalLabel,
     id: 'monthToMonthGoal',
     min: 1000,
     max: 100000,
     prefix: '$',
     validationType: ValidatorStackTypes.Required,
-    title: 'Goal',
+    title: 'Your Monthly Goal',
     defaultValue: 3000,
   };
 
@@ -36,6 +40,8 @@ export const App = function () {
     prefix: '$',
     validationType: ValidatorStackTypes.Optional,
     title: 'Amount Saved at Start',
+    hasSpinner: true,
+    useUnderlineOnly: false,
   };
 
   const savedMonthly: IRangeFieldValidatorProps = {
@@ -45,6 +51,8 @@ export const App = function () {
     prefix: '$',
     validationType: ValidatorStackTypes.Optional,
     title: 'Amount Saved Per Month',
+    hasSpinner: true,
+    useUnderlineOnly: false,
   };
 
   const methods = useForm({
@@ -90,9 +98,7 @@ export const App = function () {
       <FormProvider {...methods}>
         <Page />
         <DevTool control={methods.control} placement="bottom-right" />
-        <ValidationPanel id={'goal'} panelType={ValidatorStackTypes.Required} title={'Goal'}>
-          <RangeFieldValidator {...goalProps} />
-        </ValidationPanel>
+        <GoalPanel hasSpinner={false} useUnderlineOnly={true} {...goalProps} />
         <ValidationPanel id={'savings'} panelType={ValidatorStackTypes.Optional} title={'Savings Plan'}>
           <RangeFieldValidator {...savingsAtStartProps} />
           <RangeFieldValidator {...savedMonthly} />

@@ -3,6 +3,9 @@ export interface IFontInformation {
   size?: string;
   color?: string;
   weight?: string;
+  lineHeight?: string;
+  letterSpacing?: string;
+  textShadow?: string;
 
   allPopulated(): boolean;
 }

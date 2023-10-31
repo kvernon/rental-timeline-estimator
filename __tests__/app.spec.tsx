@@ -1,6 +1,6 @@
 import React from 'react';
 import { App } from '../src/app';
-import { render, screen } from '@testing-library/react';
+import { configure, render, screen } from '@testing-library/react';
 import { matchers } from '@emotion/jest';
 import '@testing-library/jest-dom';
 
@@ -13,13 +13,14 @@ describe('App unit tests', () => {
     Object.defineProperty(window, 'crypto', {
       value: { randomUUID: jest.fn().mockReturnValue('3') },
     });
+    configure({ testIdAttribute: 'id' });
   });
 
   describe('and App', () => {
     describe('and success', () => {
       test('should create', () => {
         render(<App />);
-        expect(screen.getByTitle('Goal', {})).toBeInTheDocument();
+        expect(screen.getByTestId('validatorStackmonthToMonthGoal', {})).toBeInTheDocument();
         expect(screen.getByTitle('Amount Saved at Start', {})).toBeInTheDocument();
         expect(screen.getByTitle('Amount Saved Per Month', {})).toBeInTheDocument();
       });

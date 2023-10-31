@@ -3,16 +3,15 @@
 A website that runs the rental-investor-timeline app
 
 [![Wallaby.js](https://img.shields.io/badge/wallaby.js-configured-green.svg)](https://wallabyjs.com)
-![](./badges/badge.svg)
 
 A way to determine if and when your expenses would be covered through rental properties
 
 Will be based on version 1 (this will also replace it when published)
 
-1. ~~https://bitbucket.org/kellyvernon/realty-generator-core (a private repo by me)~~ https://github.com/kvernon/realty-investor-timeline.
+1. ~~https://bitbucket.org/kellyvernon/realty-generator-core~~ https://github.com/kvernon/realty-investor-timeline (a private repo by me).
 2. version 1 live: http://cubedelement.com/realty/
 
-Note: this version 1 above is buggy. I was racing to get the pieces together.
+> Note: this version 1 above is buggy. I was racing to get the pieces together way back in the day.
 
 ## Inspiration
 
@@ -56,13 +55,13 @@ on windows: `$ nvs install`, referencing this manager: `https://github.com/jason
 
 `$ npm run tests`
 
-> ☝️This can run using Wallaby.js in automatic config, or you can use the config supplied here
+> ☝️This can run using [Wallaby.js](https://wallabyjs.com/) in automatic config
 
-## progress
+## Progress
 
 This is to show progress
 
-![image user settings intro](./docs/progress-visual-2.jpg)
+![image user settings intro](./docs/progress-visual.png)
 
 _image: User Settings_
 
