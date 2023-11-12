@@ -9,6 +9,7 @@ import { TitleDropDownValidator2 } from '../../../src/components/validators/Titl
 import { FormProvider, useForm } from 'react-hook-form';
 import { IThemeOptions } from '../../../src/theming/IThemeOptions';
 import { ITypography } from '../../../src/theming/ITypography';
+import selectEvent from 'react-select-event';
 
 const Setup = (props: ITitleDropDownParams) => {
   const methods = useForm({ mode: 'onBlur' });
@@ -37,12 +38,6 @@ describe.only('TitleDropDownValidator unit tests', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
-
-  const p: ITitleDropDownParams = {
-    id: 'Tested',
-    titles: [],
-    validationType: ValidatorStackTypes.Required,
-  };
 
   beforeEach(() => {
     configure({ testIdAttribute: 'name' });
@@ -92,13 +87,42 @@ describe.only('TitleDropDownValidator unit tests', () => {
       },
       typography: typographyMock,
     } as jest.Mocked<IThemeOptions>);
-
-    render(<Setup {...p} />);
   });
 
-  test('should contain styles', () => {
-    const entity = screen.getByTestId<HTMLInputElement>(`${TitleDropDownValidatorName(p.id as string)}.value`);
+  describe('and defaults', () => {
+    test('should contain styles', () => {
+      const p: ITitleDropDownParams = {
+        id: 'Tested',
+        titles: [],
+        validationType: ValidatorStackTypes.Required,
+      };
 
-    expect(entity).toMatchSnapshot();
+      render(<Setup {...p} />);
+
+      const entity = screen.queryByTestId<HTMLInputElement>(`${TitleDropDownValidatorName(p.id as string)}.value`);
+
+      expect(entity).toMatchSnapshot();
+    });
+  });
+
+  describe('and populated', () => {
+    test('should contain styles', () => {
+      const p: ITitleDropDownParams = {
+        id: 'TestedFilled',
+        titles: ['one', 'two', 'three', 'four'],
+        validationType: ValidatorStackTypes.Required,
+      };
+
+      render(<Setup {...p} />);
+
+      const entity = screen.getByTestId<HTMLElement>(`${TitleDropDownValidatorName(p.id as string)}.value`);
+
+      selectEvent.openMenu(entity);
+
+      expect(entity).toMatchSnapshot();
+
+      const allByText = screen.getAllByText(/(one|two|three|four)/);
+      expect(allByText.map((x) => x.innerHTML)).toEqual([p.titles[0]].concat(p.titles));
+    });
   });
 });

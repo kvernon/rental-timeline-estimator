@@ -75,7 +75,44 @@ export const TitleDropDownValidator2 = function (props: ITitleDropDownParams) {
       name={id}
       control={control}
       render={({ field }) => {
-        return <Select {...field} isMulti={false} themeOptions={coreTheme} options={optionsMap} onChange={handleChange} />;
+        return (
+          <Select
+            {...field}
+            isMulti={false}
+            defaultValue={optionsMap[selectedIndex]}
+            themeOptions={coreTheme}
+            options={optionsMap}
+            onChange={handleChange}
+            styles={{
+              singleValue: (base) => ({
+                ...base,
+                color: `${coreTheme.typography.get(FontGroups.input)?.color}`,
+              }),
+              menu: (baseStyles) => ({
+                ...baseStyles,
+                zIndex: baseStyles.isSelected ? 9999 : baseStyles.zIndex,
+              }),
+              control: (baseStyles) => {
+                return {
+                  ...baseStyles,
+                  overflow: 'visible',
+                  transition: 'background-color 0.4s ease-out',
+                  backgroundColor: `${coreTheme.palette.validation[evaluated.validationResultName].background}41`,
+                  height: '59px',
+                  borderColor: `${coreTheme.palette.inputBackground}`,
+                  border: `1px solid ${coreTheme.palette.panelBackground}`,
+                  borderRadius: '0.3rem',
+                  color: `${coreTheme.typography.get(FontGroups.input)?.color}`,
+                  ':hover': {
+                    backgroundColor: `${coreTheme.palette.validation[evaluated.validationResultName].background}81`,
+                    borderColor: `${coreTheme.palette.inputBackgroundFocus}`,
+                    color: `${coreTheme.palette.inputBackgroundFocus}`,
+                  },
+                };
+              },
+            }}
+          />
+        );
       }}
     />
   );
