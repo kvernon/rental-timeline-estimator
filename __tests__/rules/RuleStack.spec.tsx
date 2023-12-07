@@ -9,8 +9,8 @@ import { useStackValidationChildren } from '../../src/components/hooks/useStackV
 
 import { RangeFieldValidator } from '../../src/components/validators/RangeFieldValidator';
 
-jest.mock('../../src/components/validators/TitleDropDownValidator');
-import { TitleDropDownValidator } from '../../src/components/validators/TitleDropDownValidator';
+jest.mock('../../src/components/validators/TitleDropDownValidator2');
+import { TitleDropDownValidator2 } from '../../src/components/validators/TitleDropDownValidator2';
 import { DeleteButton } from '../../src/components/core/DeleteButton';
 
 jest.mock('../../src/components/core/DragPlaceHolder', () => {
@@ -95,7 +95,7 @@ describe('RuleStack unit tests', () => {
       const entity = screen.getByTestId<HTMLSelectElement>(`titleDropDownValidator${props.id}`);
 
       expect(entity).toBeInTheDocument();
-      expect(TitleDropDownValidator).toHaveBeenCalledWith(
+      expect(TitleDropDownValidator2).toHaveBeenCalledWith(
         {
           defaultIndex: 0,
           id: props.id,
@@ -172,7 +172,7 @@ describe('RuleStack unit tests', () => {
 
     describe('and title change', () => {
       test('and should update range validator', async () => {
-        expect(TitleDropDownValidator).toHaveBeenCalledWith(
+        expect(TitleDropDownValidator2).toHaveBeenCalledWith(
           {
             defaultIndex: 0,
             id: props.id,

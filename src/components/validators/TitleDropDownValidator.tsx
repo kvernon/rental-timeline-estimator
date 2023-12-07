@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTheme } from '@emotion/react';
-import styled from '@emotion/styled';
-import ReactSelect, { SingleValue } from 'react-select';
+import { SingleValue } from 'react-select';
 import { Controller, useFormContext } from 'react-hook-form';
 import { ValidatorStackTypes } from './ValidatorStackTypes';
 import { evaluateValidation, RuleEval } from './evaluatateValidation';
@@ -9,6 +8,7 @@ import { ValidatorTypes } from './ValidatorTypes';
 import { TitleDropDownValidatorName } from '../naming/TitleDropDownValidatorName';
 import { FontGroups } from '../../theming/fontGroups';
 import { IThemeOptions } from '../../theming/IThemeOptions';
+import { Select } from '../core/Select';
 
 export interface ITitleDropDownParams {
   titles: string[];
@@ -32,17 +32,6 @@ export const TitleDropDownValidator = function (props: ITitleDropDownParams) {
   const rule: RuleEval = (v: number, options: { min?: number; max?: number }) =>
     v > (options?.min || 0) ? ValidatorTypes.Valid : ValidatorTypes.Invalid;
   const [evaluated, setEvaluated] = useState(evaluateValidation(props.validationType, rule, selectedIndex));
-  const Select = styled(ReactSelect)<{ themeOptions: IThemeOptions }>`
-    appearance: none;
-    white-space: pre-wrap;
-    font-size: ${(props) => props.themeOptions.typography.get(FontGroups.inputLabel)?.size};
-    font-family: ${(props) => props.themeOptions.typography.get(FontGroups.inputLabel)?.font};
-    font-weight: ${(props) => props.themeOptions.typography.get(FontGroups.inputLabel)?.weight};
-    width: 100%;
-    padding-left: 10px;
-    color: ${(props) => props.themeOptions.typography.get(FontGroups.input)?.color};
-    overflow: visible;
-  `;
 
   const selectUuid = props.id || window.crypto.randomUUID();
   const id = `${TitleDropDownValidatorName(selectUuid)}.value`;

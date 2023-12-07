@@ -1,4 +1,5 @@
 import { Theme, useTheme } from '@emotion/react';
+import '@testing-library/jest-dom';
 
 import { configure, render, screen } from '@testing-library/react';
 import React from 'react';
@@ -10,9 +11,21 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { IThemeOptions } from '../../../src/theming/IThemeOptions';
 import { ITypography } from '../../../src/theming/ITypography';
 import selectEvent from 'react-select-event';
+import { ValidatorTypes } from '../../../src/components/validators/ValidatorTypes';
 
 const Setup = (props: ITitleDropDownParams) => {
-  const methods = useForm({ mode: 'onBlur' });
+  const methods = useForm({
+    mode: 'onBlur',
+    defaultValues: {
+      [`${TitleDropDownValidatorName(props.id as string)}`]: {
+        value: {
+          value: props.defaultIndex || 0,
+          label: props.titles[props.defaultIndex || 0],
+        },
+        validationResult: props.validationType === ValidatorStackTypes.Optional ? ValidatorTypes.Optional : ValidatorTypes.Invalid,
+      },
+    },
+  });
   return (
     <FormProvider {...methods}>
       <TitleDropDownValidator2 {...props} />
@@ -28,7 +41,7 @@ jest.mock('@emotion/react', () => {
     useTheme,
   };
 });
-describe.only('TitleDropDownValidator unit tests', () => {
+describe('TitleDropDownValidator unit tests', () => {
   let typographyMock: jest.Mocked<ITypography>;
 
   const validationColorOptionalRight = '#0000FF';
@@ -90,7 +103,7 @@ describe.only('TitleDropDownValidator unit tests', () => {
   });
 
   describe('and defaults', () => {
-    test('should contain styles', () => {
+    test('should exist', () => {
       const p: ITitleDropDownParams = {
         id: 'Tested',
         titles: [],
@@ -106,23 +119,37 @@ describe.only('TitleDropDownValidator unit tests', () => {
   });
 
   describe('and populated', () => {
-    test('should contain styles', () => {
-      const p: ITitleDropDownParams = {
-        id: 'TestedFilled',
-        titles: ['one', 'two', 'three', 'four'],
-        validationType: ValidatorStackTypes.Required,
-      };
+    const p: ITitleDropDownParams = {
+      id: 'TestedFilled',
+      titles: ['one', 'two', 'three', 'four'],
+      validationType: ValidatorStackTypes.Required,
+    };
 
+    beforeEach(() => {
       render(<Setup {...p} />);
+    });
 
-      const entity = screen.getByTestId<HTMLElement>(`${TitleDropDownValidatorName(p.id as string)}.value`);
+    const translatedId = `${TitleDropDownValidatorName(p.id as string)}.value`;
+
+    test('should contain titles', () => {
+      const entity = screen.getByTestId<HTMLElement>(translatedId);
 
       selectEvent.openMenu(entity);
 
-      expect(entity).toMatchSnapshot();
-
       const allByText = screen.getAllByText(/(one|two|three|four)/);
-      expect(allByText.map((x) => x.innerHTML)).toEqual([p.titles[0]].concat(p.titles));
+      expect(allByText.map((x) => x.innerHTML)).toEqual(p.titles);
+    });
+
+    test('call change', async () => {
+      const entity = screen.getByTestId<HTMLInputElement>(translatedId);
+
+      const expectedValue = 2;
+
+      const selectedOption = p.titles[expectedValue];
+      await selectEvent.select(entity, selectedOption);
+
+      expect(screen.getByText(selectedOption)).toBeInTheDocument();
+      expect(screen.getByTestId<HTMLInputElement>(translatedId).value).toEqual(expectedValue.toString());
     });
   });
 });

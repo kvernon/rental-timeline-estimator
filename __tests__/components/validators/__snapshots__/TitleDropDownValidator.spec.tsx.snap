@@ -1,17 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TitleDropDownValidator unit tests and defaults should contain styles 1`] = `
+exports[`TitleDropDownValidator unit tests and defaults should exist 1`] = `
 <input
   name="titleDropDownTested.value"
   type="hidden"
   value=""
-/>
-`;
-
-exports[`TitleDropDownValidator unit tests and populated should contain styles 1`] = `
-<input
-  name="titleDropDownTestedFilled.value"
-  type="hidden"
-  value="0"
 />
 `;

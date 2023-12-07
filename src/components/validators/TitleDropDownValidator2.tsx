@@ -1,25 +1,25 @@
 import { IOption, ITitleDropDownParams } from './TitleDropDownValidator';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TitleDropDownValidatorName } from '../naming/TitleDropDownValidatorName';
 import { Controller, useFormContext } from 'react-hook-form';
-import ReactSelect, { SingleValue } from 'react-select';
+import { SingleValue } from 'react-select';
 import { useTheme } from '@emotion/react';
 import { IThemeOptions } from '../../theming/IThemeOptions';
 import { evaluateValidation, RuleEval } from './evaluatateValidation';
 import { ValidatorTypes } from './ValidatorTypes';
-import styled from '@emotion/styled';
 import { useWatcher } from '../hooks/useWatcher';
 import { FontGroups } from '../../theming/fontGroups';
+import { Select } from '../core/Select';
 
 const rule: RuleEval = (v: number, options: { min?: number; max?: number }) =>
   v > (options?.min || 0) ? ValidatorTypes.Valid : ValidatorTypes.Invalid;
 
 export const TitleDropDownValidator2 = function (props: ITitleDropDownParams) {
-  const { control, setValue } = useFormContext();
+  const { control, setValue, getValues } = useFormContext();
   const coreTheme = useTheme() as IThemeOptions;
 
   const selectUuid = props.id || window.crypto.randomUUID();
-  const id = `${TitleDropDownValidatorName(selectUuid)}.value`;
+  const inputValidationValue = `${TitleDropDownValidatorName(selectUuid)}.value`;
   const inputValidationResult = `${TitleDropDownValidatorName(selectUuid)}.validationResult`;
 
   const [optionsMap, setOptionsMap] = useState<IOption[]>([]);
@@ -27,7 +27,12 @@ export const TitleDropDownValidator2 = function (props: ITitleDropDownParams) {
   const [selectedIndex, setSelectedIndex] = useState<number>(props.defaultIndex || 0);
   const [evaluated, setEvaluated] = useState(evaluateValidation(props.validationType, rule, selectedIndex));
 
-  const [watcherResult] = useWatcher<IOption>([id]);
+  const [watcherResult] = useWatcher<IOption>([inputValidationValue]);
+
+  useEffect(() => {
+    setValue(inputValidationValue, selectedIndex, { shouldDirty: true, shouldValidate: true, shouldTouch: true });
+    setValue(inputValidationResult, evaluateValidation(props.validationType, rule, selectedIndex).validationResult);
+  }, []);
 
   useEffect(() => {
     const map = props.titles.map((title: string, idx: number): IOption => {
@@ -40,39 +45,30 @@ export const TitleDropDownValidator2 = function (props: ITitleDropDownParams) {
   }, [props.titles, optionsMap]);
 
   useEffect(() => {
+    console.log('useEffect::[watcherResult, ...]', inputValidationValue);
     const eventResult = evaluateValidation(props.validationType, rule, selectedIndex);
 
     if (evaluated.validationResult !== eventResult.validationResult) {
       setEvaluated(eventResult);
       setValue(inputValidationResult, evaluated.validationResult);
     }
+
+    const storedResult = getValues(inputValidationResult);
+    console.log('useEffect::[watcherResult, ...]', inputValidationResult, storedResult);
   }, [watcherResult, evaluated, inputValidationResult, props.validationType, setValue, selectedIndex]);
 
-  const Select = styled(ReactSelect)<{ themeOptions: IThemeOptions }>`
-    appearance: none;
-    white-space: pre-wrap;
-    font-size: ${(props) => props.themeOptions.typography.get(FontGroups.inputLabel)?.size};
-    font-family: ${(props) => props.themeOptions.typography.get(FontGroups.inputLabel)?.font};
-    font-weight: ${(props) => props.themeOptions.typography.get(FontGroups.inputLabel)?.weight};
-    width: 100%;
-    padding-left: 10px;
-    color: ${(props) => props.themeOptions.typography.get(FontGroups.input)?.color};
-    overflow: visible;
-  `;
-
-  const handleChange = useCallback(
-    (option: SingleValue<IOption | unknown>): void => {
-      const value = (option as IOption).value;
-      if (value !== selectedIndex) {
-        setSelectedIndex(value);
-      }
-    },
-    [selectedIndex, id, setSelectedIndex],
-  );
+  const handleChange = (option: SingleValue<IOption | unknown>): void => {
+    const value = (option as IOption).value;
+    if (value !== selectedIndex) {
+      console.log('not equal handleChange', option);
+      setValue(inputValidationValue, option);
+      setSelectedIndex(value);
+    }
+  };
 
   return (
     <Controller
-      name={id}
+      name={inputValidationValue}
       control={control}
       render={({ field }) => {
         return (
