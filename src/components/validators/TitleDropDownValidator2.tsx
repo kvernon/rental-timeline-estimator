@@ -60,7 +60,6 @@ export const TitleDropDownValidator2 = function (props: ITitleDropDownParams) {
   const handleChange = (option: SingleValue<IOption | unknown>): void => {
     const value = (option as IOption).value;
     if (value !== selectedIndex) {
-      console.log('not equal handleChange', option);
       setValue(inputValidationValue, option);
       setSelectedIndex(value);
     }

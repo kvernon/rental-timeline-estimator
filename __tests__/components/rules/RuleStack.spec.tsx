@@ -1,42 +1,42 @@
 import React from 'react';
 import { cleanup, configure, fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { RuleStack } from '../../src/components/rules/RuleStack';
-import { ValidatorStackTypes } from '../../src/components/validators/ValidatorStackTypes';
-import { IRuleStackProps } from '../../src/components/rules/RuleStack';
-import { ValidatorTypes } from '../../src/components/validators/ValidatorTypes';
-import { useStackValidationChildren } from '../../src/components/hooks/useStackValidationChildren';
+import { RuleStack } from '../../../src/components/rules/RuleStack';
+import { ValidatorStackTypes } from '../../../src/components/validators/ValidatorStackTypes';
+import { IRuleStackProps } from '../../../src/components/rules/RuleStack';
+import { ValidatorTypes } from '../../../src/components/validators/ValidatorTypes';
+import { useStackValidationChildren } from '../../../src/components/hooks/useStackValidationChildren';
 
-import { RangeFieldValidator } from '../../src/components/validators/RangeFieldValidator';
+import { RangeFieldValidator } from '../../../src/components/validators/RangeFieldValidator';
 
-jest.mock('../../src/components/validators/TitleDropDownValidator2');
-import { TitleDropDownValidator2 } from '../../src/components/validators/TitleDropDownValidator2';
-import { DeleteButton } from '../../src/components/core/DeleteButton';
+jest.mock('../../../src/components/validators/TitleDropDownValidator2');
+import { TitleDropDownValidator2 } from '../../../src/components/validators/TitleDropDownValidator2';
+import { DeleteButton } from '../../../src/components/core/DeleteButton';
 
-jest.mock('../../src/components/core/DragPlaceHolder', () => {
+jest.mock('../../../src/components/core/DragPlaceHolder', () => {
   return {
     DragPlaceholder: jest.fn().mockReturnValue(<div>DragPlaceholder</div>),
   };
 });
-jest.mock('../../src/components/core/DeleteButton');
-jest.mock('../../src/components/validators/ValidationBar', () => {
+jest.mock('../../../src/components/core/DeleteButton');
+jest.mock('../../../src/components/validators/ValidationBar', () => {
   return {
     ValidationBar: jest.fn((props) => <div>ValidationBar ${props?.isValid}</div>),
   };
 });
 
-jest.mock('../../src/components/validators/RangeFieldValidator', () => {
+jest.mock('../../../src/components/validators/RangeFieldValidator', () => {
   return {
     RangeFieldValidator: jest.fn((p) => <input type="number" id={`rangeFieldValidator${p.id}`} />),
   };
 });
-jest.mock('../../src/components/PropertyDropDown', () => {
+jest.mock('../../../src/components/PropertyDropDown', () => {
   return {
     PropertyDropDown: jest.fn().mockReturnValue(<select id={'PropertyDropDown'}></select>),
   };
 });
 
-jest.mock('../../src/components/hooks/useStackValidationChildren');
+jest.mock('../../../src/components/hooks/useStackValidationChildren');
 
 describe('RuleStack unit tests', () => {
   let props: IRuleStackProps;
