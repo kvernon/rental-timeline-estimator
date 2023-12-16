@@ -55,7 +55,7 @@ on windows: `$ nvs install`, referencing this manager: `https://github.com/jason
 
 `$ npm run tests`
 
-> ☝️This can run using [Wallaby.js](https://wallabyjs.com/) in automatic config
+> ☝️This can run using [Wallaby.js](https://wallabyjs.com/) in automatic config or with the config file, [wallaby.js](./wallaby.js)
 
 ## Progress
 
