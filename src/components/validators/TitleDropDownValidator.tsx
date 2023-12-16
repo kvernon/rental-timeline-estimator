@@ -27,7 +27,7 @@ export interface IOption {
 const rule: RuleEval = (v: number, options: { min?: number; max?: number }) =>
   v > (options?.min || 0) ? ValidatorTypes.Valid : ValidatorTypes.Invalid;
 
-export const TitleDropDownValidator2 = function (props: ITitleDropDownParams) {
+export const TitleDropDownValidator = function (props: ITitleDropDownParams) {
   const { control, setValue, getValues } = useFormContext();
   const coreTheme = useTheme() as IThemeOptions;
 

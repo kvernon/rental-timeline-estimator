@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Stack } from '../core/Stack';
 import React, { useEffect, useState } from 'react';
 import { ValidationBar } from '../validators/ValidationBar';
-import { TitleDropDownValidator2, IOption } from '../validators/TitleDropDownValidator2';
+import { TitleDropDownValidator, IOption } from '../validators/TitleDropDownValidator';
 import { PropertyDropDown } from '../PropertyDropDown';
 import { RangeFieldValidator } from '../validators/RangeFieldValidator';
 import { DeleteButton } from '../core/DeleteButton';
@@ -55,7 +55,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
   };
 
   const titleDropDownValidator = (
-    <TitleDropDownValidator2
+    <TitleDropDownValidator
       onChange={(evt) => onChange(evt)}
       defaultIndex={selectedRuleStackValue}
       id={props.id}

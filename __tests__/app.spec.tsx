@@ -4,7 +4,7 @@ import { configure, render, screen } from '@testing-library/react';
 import { matchers } from '@emotion/jest';
 import '@testing-library/jest-dom';
 
-jest.mock('../src/components/validators/TitleDropDownValidator2');
+jest.mock('../src/components/validators/TitleDropDownValidator');
 
 expect.extend(matchers);
 

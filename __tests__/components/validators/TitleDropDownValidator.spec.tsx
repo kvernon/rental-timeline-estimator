@@ -5,7 +5,7 @@ import { configure, render, screen } from '@testing-library/react';
 import React from 'react';
 import { ValidatorStackTypes } from '../../../src/components/validators/ValidatorStackTypes';
 import { TitleDropDownValidatorName } from '../../../src/components/naming/TitleDropDownValidatorName';
-import { TitleDropDownValidator2, ITitleDropDownParams } from '../../../src/components/validators/TitleDropDownValidator2';
+import { TitleDropDownValidator, ITitleDropDownParams } from '../../../src/components/validators/TitleDropDownValidator';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IThemeOptions } from '../../../src/theming/IThemeOptions';
 import { ITypography } from '../../../src/theming/ITypography';
@@ -28,7 +28,7 @@ const Setup = (props: ITitleDropDownParams) => {
 
   return (
     <FormProvider {...methods}>
-      <TitleDropDownValidator2 {...props} />
+      <TitleDropDownValidator {...props} />
     </FormProvider>
   );
 };

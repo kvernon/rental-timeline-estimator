@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { TitleDropDownValidator2, IOption } from '../components/validators/TitleDropDownValidator2';
+import { TitleDropDownValidator, IOption } from '../components/validators/TitleDropDownValidator';
 import React from 'react';
 import { DevTool } from '@hookform/devtools';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -10,15 +10,15 @@ import { ValidatorTypes } from '../components/validators/ValidatorTypes';
 
 export default {
   title: 'Example/TitleDropDown',
-  component: TitleDropDownValidator2,
+  component: TitleDropDownValidator,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     backgroundColor: { control: 'color' },
     onClick: { action: 'clicked' },
   },
-} as ComponentMeta<typeof TitleDropDownValidator2>;
+} as ComponentMeta<typeof TitleDropDownValidator>;
 
-const Template: ComponentStory<typeof TitleDropDownValidator2> = (args) => {
+const Template: ComponentStory<typeof TitleDropDownValidator> = (args) => {
   const methods = useForm<IFormRuleStackEntityDataValueResult<IOption>>({
     defaultValues: {
       [`${TitleDropDownValidatorName(args.id as string)}`]: {
@@ -32,7 +32,7 @@ const Template: ComponentStory<typeof TitleDropDownValidator2> = (args) => {
     <FormProvider {...methods}>
       <DevTool control={methods.control} placement="top-left" />
       <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <TitleDropDownValidator2 {...args} />
+        <TitleDropDownValidator {...args} />
       </form>
     </FormProvider>
   );
