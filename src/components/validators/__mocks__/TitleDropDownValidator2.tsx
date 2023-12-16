@@ -1,4 +1,4 @@
-import type { ITitleDropDownParams } from '../TitleDropDownValidator';
+import type { ITitleDropDownParams } from '../TitleDropDownValidator2';
 import React from 'react';
 
 export const TitleDropDownValidator2 = jest.fn((p: ITitleDropDownParams) => {

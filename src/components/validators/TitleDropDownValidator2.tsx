@@ -1,4 +1,3 @@
-import { IOption, ITitleDropDownParams } from './TitleDropDownValidator';
 import React, { useEffect, useState } from 'react';
 import { TitleDropDownValidatorName } from '../naming/TitleDropDownValidatorName';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -10,6 +9,20 @@ import { ValidatorTypes } from './ValidatorTypes';
 import { useWatcher } from '../hooks/useWatcher';
 import { FontGroups } from '../../theming/fontGroups';
 import { Select } from '../core/Select';
+import { ValidatorStackTypes } from './ValidatorStackTypes';
+
+export interface ITitleDropDownParams {
+  titles: string[];
+  defaultIndex?: number;
+  id?: string;
+  validationType: ValidatorStackTypes;
+  onChange?: (value: IOption) => void;
+}
+
+export interface IOption {
+  label: string;
+  value: number;
+}
 
 const rule: RuleEval = (v: number, options: { min?: number; max?: number }) =>
   v > (options?.min || 0) ? ValidatorTypes.Valid : ValidatorTypes.Invalid;

@@ -1,6 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { IOption } from '../components/validators/TitleDropDownValidator';
-import { TitleDropDownValidator2 } from '../components/validators/TitleDropDownValidator2';
+import { TitleDropDownValidator2, IOption } from '../components/validators/TitleDropDownValidator2';
 import React from 'react';
 import { DevTool } from '@hookform/devtools';
 import { FormProvider, useForm } from 'react-hook-form';
