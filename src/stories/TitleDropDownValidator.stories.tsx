@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { TitleDropDownValidator, IOption } from '../components/validators/TitleDropDownValidator';
+import { TitleDropDownValidator, ITitleDropDownOption } from '../components/validators/TitleDropDownValidator';
 import React from 'react';
 import { DevTool } from '@hookform/devtools';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -19,7 +19,7 @@ export default {
 } as ComponentMeta<typeof TitleDropDownValidator>;
 
 const Template: ComponentStory<typeof TitleDropDownValidator> = (args) => {
-  const methods = useForm<IFormRuleStackEntityDataValueResult<IOption>>({
+  const methods = useForm<IFormRuleStackEntityDataValueResult<ITitleDropDownOption>>({
     defaultValues: {
       [`${TitleDropDownValidatorName(args.id as string)}`]: {
         value: { value: args.defaultIndex || 0, label: args.titles[args.defaultIndex || 0] },

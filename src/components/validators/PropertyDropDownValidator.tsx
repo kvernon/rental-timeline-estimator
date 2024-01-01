@@ -1,12 +1,12 @@
 import ReactSelect, { GroupBase, Props } from 'react-select';
 import styled from '@emotion/styled';
 import React, { ReactNode } from 'react';
-import { FontGroups } from '../theming/fontGroups';
+import { FontGroups } from '../../theming/fontGroups';
 import { useTheme } from '@emotion/react';
-import { IThemeOptions } from '../theming/IThemeOptions';
-import { ValidatorTypes } from './validators/ValidatorTypes';
+import { IThemeOptions } from '../../theming/IThemeOptions';
+import { ValidatorTypes } from './ValidatorTypes';
 
-interface IOption {
+export interface IOption {
   label: string;
   value: number;
   image: string;
@@ -16,9 +16,11 @@ const Img = styled.img`
   padding: 0;
 `;
 
-export function PropertyDropDown<Option extends IOption, IsMulti extends boolean = false, Group extends GroupBase<Option> = GroupBase<Option>>(
-  props: Props<Option, IsMulti, Group>,
-) {
+export function PropertyDropDownValidator<
+  Option extends IOption,
+  IsMulti extends boolean = false,
+  Group extends GroupBase<Option> = GroupBase<Option>,
+>(props: Props<Option, IsMulti, Group>) {
   const optionsMap = ['apartment', 'house'].map((title: string, idx: number) => {
     return { value: idx, label: title, image: `/images/${title}.jpg` };
   }) as (Option | Group)[];

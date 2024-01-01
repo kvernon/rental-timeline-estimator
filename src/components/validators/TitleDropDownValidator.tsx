@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { TitleDropDownValidatorName } from '../naming/TitleDropDownValidatorName';
 import { Controller, useFormContext } from 'react-hook-form';
-import { SingleValue } from 'react-select';
+import ReactSelect, { SingleValue } from 'react-select';
 import { useTheme } from '@emotion/react';
 import { IThemeOptions } from '../../theming/IThemeOptions';
 import { evaluateValidation, RuleEval } from './evaluatateValidation';
 import { ValidatorTypes } from './ValidatorTypes';
 import { useWatcher } from '../hooks/useWatcher';
 import { FontGroups } from '../../theming/fontGroups';
-import { Select } from '../core/Select';
 import { ValidatorStackTypes } from './ValidatorStackTypes';
+import styled from '@emotion/styled';
 
 export interface ITitleDropDownParams {
   titles: string[];
   defaultIndex?: number;
   id?: string;
   validationType: ValidatorStackTypes;
-  onChange?: (value: IOption) => void;
+  onChange?: (value: ITitleDropDownOption) => void;
 }
 
-export interface IOption {
+export interface ITitleDropDownOption {
   label: string;
   value: number;
 }
@@ -35,12 +35,12 @@ export const TitleDropDownValidator = function (props: ITitleDropDownParams) {
   const inputValidationValue = `${TitleDropDownValidatorName(selectUuid)}.value`;
   const inputValidationResult = `${TitleDropDownValidatorName(selectUuid)}.validationResult`;
 
-  const [optionsMap, setOptionsMap] = useState<IOption[]>([]);
+  const [optionsMap, setOptionsMap] = useState<ITitleDropDownOption[]>([]);
 
   const [selectedIndex, setSelectedIndex] = useState<number>(props.defaultIndex || 0);
   const [evaluated, setEvaluated] = useState(evaluateValidation(props.validationType, rule, selectedIndex));
 
-  const [watcherResult] = useWatcher<IOption>([inputValidationValue]);
+  const [watcherResult] = useWatcher<ITitleDropDownOption>([inputValidationValue]);
 
   useEffect(() => {
     setValue(inputValidationValue, selectedIndex, { shouldDirty: true, shouldValidate: true, shouldTouch: true });
@@ -48,7 +48,7 @@ export const TitleDropDownValidator = function (props: ITitleDropDownParams) {
   }, []);
 
   useEffect(() => {
-    const map = props.titles.map((title: string, idx: number): IOption => {
+    const map = props.titles.map((title: string, idx: number): ITitleDropDownOption => {
       return { value: idx, label: title };
     });
 
@@ -70,13 +70,27 @@ export const TitleDropDownValidator = function (props: ITitleDropDownParams) {
     console.log('useEffect::[watcherResult, ...]', inputValidationResult, storedResult);
   }, [watcherResult, evaluated, inputValidationResult, props.validationType, setValue, selectedIndex]);
 
-  const handleChange = (option: SingleValue<IOption | unknown>): void => {
-    const value = (option as IOption).value;
+  const handleChange = (option: SingleValue<ITitleDropDownOption | unknown>): void => {
+    const value = (option as ITitleDropDownOption).value;
     if (value !== selectedIndex) {
       setValue(inputValidationValue, option);
       setSelectedIndex(value);
     }
   };
+
+  const Select = styled(ReactSelect)<{
+    themeOptions: IThemeOptions;
+  }>`
+    appearance: none;
+    white-space: pre-wrap;
+    font-size: ${(props) => props.themeOptions.typography.get(FontGroups.inputLabel)?.size};
+    font-family: ${(props) => props.themeOptions.typography.get(FontGroups.inputLabel)?.font};
+    font-weight: ${(props) => props.themeOptions.typography.get(FontGroups.inputLabel)?.weight};
+    width: 100%;
+    padding-left: 10px;
+    color: ${(props) => props.themeOptions.typography.get(FontGroups.input)?.color};
+    overflow: visible;
+  `;
 
   return (
     <Controller

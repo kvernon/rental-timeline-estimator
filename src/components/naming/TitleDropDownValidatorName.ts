@@ -1,4 +1,4 @@
 import { formatName } from './FormatName';
+import { FormatNames } from './FormatNames';
 
-export const TitleDropDownValidatorId = 'titleDropDown';
-export const TitleDropDownValidatorName = (id: string) => formatName(id, TitleDropDownValidatorId);
+export const TitleDropDownValidatorName = (id: string) => formatName(id, FormatNames.TitleDropDownValidatorId);

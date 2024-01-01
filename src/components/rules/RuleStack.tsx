@@ -2,8 +2,8 @@ import styled from '@emotion/styled';
 import { Stack } from '../core/Stack';
 import React, { useEffect, useState } from 'react';
 import { ValidationBar } from '../validators/ValidationBar';
-import { TitleDropDownValidator, IOption } from '../validators/TitleDropDownValidator';
-import { PropertyDropDown } from '../PropertyDropDown';
+import { TitleDropDownValidator, ITitleDropDownOption } from '../validators/TitleDropDownValidator';
+import { PropertyDropDownValidator } from '../validators/PropertyDropDownValidator';
 import { RangeFieldValidator } from '../validators/RangeFieldValidator';
 import { DeleteButton } from '../core/DeleteButton';
 import { DragPlaceholder } from '../core/DragPlaceHolder';
@@ -24,7 +24,7 @@ export interface IRuleStackProps {
 }
 
 // https://stackoverflow.com/a/69830024 (example on making drop down w/ image)
-const PropertyPicker = styled(PropertyDropDown)`
+const PropertyPicker = styled(PropertyDropDownValidator)`
   width: 147px;
 `;
 
@@ -50,7 +50,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
     }
   }, [selectedRuleStackValue, selectedStack, props.ruleStackValues]);
 
-  const onChange = (valueOption: IOption) => {
+  const onChange = (valueOption: ITitleDropDownOption) => {
     setSelectedRuleStackValue(valueOption.value);
   };
 

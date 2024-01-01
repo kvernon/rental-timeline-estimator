@@ -30,9 +30,9 @@ jest.mock('../../../src/components/validators/RangeFieldValidator', () => {
     RangeFieldValidator: jest.fn((p) => <input type="number" id={`rangeFieldValidator${p.id}`} />),
   };
 });
-jest.mock('../../../src/components/PropertyDropDown', () => {
+jest.mock('../../../src/components/validators/PropertyDropDownValidator', () => {
   return {
-    PropertyDropDown: jest.fn().mockReturnValue(<select id={'PropertyDropDown'}></select>),
+    PropertyDropDownValidator: jest.fn().mockReturnValue(<select id={'PropertyDropDownValidator'}></select>),
   };
 });
 

@@ -1,3 +1,4 @@
 import { formatName } from './FormatName';
+import { FormatNames } from './FormatNames';
 
-export const ValidatorStackName = (id: string) => formatName(id, 'validatorStack');
+export const ValidatorStackName = (id: string) => formatName(id, FormatNames.ValidatorStackId);
