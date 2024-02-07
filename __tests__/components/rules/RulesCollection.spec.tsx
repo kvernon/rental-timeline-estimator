@@ -1,16 +1,16 @@
-import { RulesCollection } from '../../src/components/rules/RulesCollection';
+import { RulesCollection } from '../../../src/components/rules/RulesCollection';
 import { cleanup, configure, fireEvent, render, screen } from '@testing-library/react';
-import { IRuleCollectionProps } from '../../src/components/rules/IRuleCollectionProps';
-import { ValidatorStackTypes } from '../../src/components/validators/ValidatorStackTypes';
+import { IRuleCollectionProps } from '../../../src/components/rules/IRuleCollectionProps';
+import { ValidatorStackTypes } from '../../../src/components/validators/ValidatorStackTypes';
 import React from 'react';
 import '@testing-library/jest-dom';
-import { CardListLayout, ICardListLayoutProps } from '../../src/components/core/CardListLayout';
-import { IRuleStackProps, RuleStack } from '../../src/components/rules/RuleStack';
+import { CardListLayout, ICardListLayoutProps } from '../../../src/components/core/CardListLayout';
+import { IRuleStackProps, RuleStack } from '../../../src/components/rules/RuleStack';
 import { useFieldArray, UseFieldArrayReturn, useFormContext, UseFormReturn } from 'react-hook-form';
-import { ValidatorTypes } from '../../src/components/validators/ValidatorTypes';
-import { IAry, IFieldType } from '../../src/components/rules/FormInterfaces';
-import { CardContent } from '../../src/components/core/CardContent';
-import { AddListButton } from '../../src/components/core/AddListButton';
+import { ValidatorTypes } from '../../../src/components/validators/ValidatorTypes';
+import { IAry, IFieldType } from '../../../src/components/rules/FormInterfaces';
+import { CardContent } from '../../../src/components/core/CardContent';
+import { AddListButton } from '../../../src/components/core/AddListButton';
 import { userEvent } from '@testing-library/user-event';
 
 jest.mock('react-hook-form');
@@ -22,7 +22,7 @@ jest.mock('react-movable', () => {
   };
 });
 
-jest.mock('../../src/components/rules/RuleStack', () => {
+jest.mock('../../../src/components/rules/RuleStack', () => {
   return {
     RuleStack: jest.fn((p: IRuleStackProps) => {
       return (
@@ -43,8 +43,8 @@ jest.mock('../../src/components/rules/RuleStack', () => {
   };
 });
 
-jest.mock('../../src/components/core/CardContent', () => {
-  const all = jest.requireActual('../../src/components/core/CardContent');
+jest.mock('../../../src/components/core/CardContent', () => {
+  const all = jest.requireActual('../../../src/components/core/CardContent');
   return {
     CardContent: jest.fn((p: ICardListLayoutProps) => {
       return (
@@ -56,13 +56,13 @@ jest.mock('../../src/components/core/CardContent', () => {
   };
 });
 
-jest.mock('../../src/components/core/CardListLayout', () => {
+jest.mock('../../../src/components/core/CardListLayout', () => {
   return {
     CardListLayout: jest.fn((p: ICardListLayoutProps) => <div id={p.id}>{p.children}</div>),
   };
 });
 
-jest.mock('../../src/components/core/AddListButton');
+jest.mock('../../../src/components/core/AddListButton');
 
 describe('RulesCollection unit tests', () => {
   const useFormContextMock = jest.mocked(useFormContext<IAry<string>>);

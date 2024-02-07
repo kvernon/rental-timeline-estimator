@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TitleDropDownValidator unit tests and defaults should exist 1`] = `
+<input
+  name="titleDropDownTested.value"
+  type="hidden"
+  value=""
+/>
+`;
