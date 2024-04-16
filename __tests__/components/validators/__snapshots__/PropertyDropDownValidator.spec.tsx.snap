@@ -2,7 +2,7 @@
 
 exports[`PropertyDropDownValidator unit test and defaults should exist 1`] = `
 <input
-  name="titleDropDownTested.value"
+  name="propertyDropDownTested.value"
   type="hidden"
   value=""
 />

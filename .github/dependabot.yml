@@ -3,7 +3,49 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     pull-request-branch-name:
-      separator: "-"
-      prefix: "feature/"
+      separator: "/"
+    groups:
+      jest:
+        patterns:
+        - @testing-library/*
+        - @types/chance
+        - @types/jest
+        - @types/jsdom
+        - chance
+        - jest*
+        - jsdom
+        - ts-jest
+      style:
+        patterns:
+        - @emotion/*
+      story:
+        patterns:
+        - @storybook/*
+        - @mdx-js/react
+      dev:
+        patterns:
+        - @commitlint/*
+        - husky
+        - lint-staged
+        - semantic-*
+      lint:
+        patterns:
+          - eslint*
+          - prettier
+      webpack:
+        patterns:
+          - @types/webpack
+          - eslint-webpack-plugin
+          - html-webpack-plugin
+          - ts-loader
+          - webpack*
+      core:
+        patterns:
+        - @types/node
+        - @types/react
+        - @types/react-dom
+        - react
+        - react-dom
+        - typescript

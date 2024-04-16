@@ -28,6 +28,7 @@ export const RulesCollection = function (collectionProps: IRuleCollectionProps):
   const [possibleChoices, setPossibleChoices] = useState(collectionProps.possibleChoices || []);
 
   const CardContentForList = styled(CardContent)`
+    /*position: relative;*/
     padding: 0;
   `;
 
@@ -89,6 +90,7 @@ export const RulesCollection = function (collectionProps: IRuleCollectionProps):
         renderItem={({ value, props, index }) => (
           <RuleStack
             {...props}
+            index={index ? fieldItems.length - index : fieldItems.length}
             key={value?.titleDropDown?.value?.label}
             id={`${collectionProps.title}.${index}`}
             ruleStackValues={possibleChoices}

@@ -1,8 +1,8 @@
-import { configure, Matcher, render, screen } from '@testing-library/react';
+import { configure, render, screen } from '@testing-library/react';
 import React from 'react';
 import { formatName } from '../../../src/components/naming/FormatName';
 import { FormatNames } from '../../../src/components/naming/FormatNames';
-import { IPropertyDropDownParams, PropertyDropDownValidator2 } from '../../../src/components/validators/PropertyDropDownValidator2';
+import { IPropertyDropDownParams, PropertyDropDownValidator } from '../../../src/components/validators/PropertyDropDownValidator2';
 import { FormProvider, useForm } from 'react-hook-form';
 import { ValidatorTypes } from '../../../src/components/validators/ValidatorTypes';
 import { Theme, useTheme } from '@emotion/react';
@@ -27,7 +27,7 @@ const Setup = (props: IPropertyDropDownParams) => {
 
   return (
     <FormProvider {...methods}>
-      <PropertyDropDownValidator2 {...props} />
+      <PropertyDropDownValidator {...props} />
     </FormProvider>
   );
 };
@@ -140,29 +140,17 @@ describe('PropertyDropDownValidator unit test', () => {
       );
     });
 
-    /*    test('call change', async () => {
+    test('call change', async () => {
       render(<Setup {...params} />);
-
-
-      const choices = ['apartment', 'house'].map((exp) => ({
-        src: `http://localhost/images/${exp}.jpg`,
-        title: exp,
-        alt: exp,
-      }));
 
       const entity = screen.getByTestId<HTMLInputElement>(`${formatName(params.id as string, FormatNames.PropertyDropDownValidatorId)}.value`);
 
       selectEvent.openMenu(entity);
 
-      const element = screen.getByAltText<HTMLImageElement>('house');
+      await selectEvent.select(entity, (_content, element1): boolean => element1 instanceof HTMLImageElement && element1.alt === 'house');
 
-      const expectedValue = choices[1];
-
-      console.log(element);
-      await selectEvent.select(entity);
-
-      expect(screen.getByText('selectedOption')).toBeInTheDocument();
-      expect(screen.getByTestId<HTMLInputElement>(params.id as string).value).toEqual(expectedValue.toString());
-    });*/
+      const test = screen.getByTestId<HTMLInputElement>(`${formatName(params.id as string, FormatNames.PropertyDropDownValidatorId)}.value`);
+      expect(test.value).toEqual('1');
+    });
   });
 });

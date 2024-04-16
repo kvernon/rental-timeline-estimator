@@ -14,6 +14,13 @@ export const getFields = (collection: IRuleConfigEntity[]) => {
           },
           validationResult: ValidatorTypes.Optional,
         },
+        [FormatNames.PropertyDropDownValidatorId]: {
+          value: {
+            value: 1,
+            label: 'house',
+          },
+          validationResult: ValidatorTypes.Optional,
+        },
         [`${FormatNames.RangeFieldValidatorId}`]: {
           value: choice.min,
           validationResult: ValidatorTypes.Optional,

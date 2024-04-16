@@ -14,8 +14,6 @@ import { ValidatorStackTypes } from '../validators/ValidatorStackTypes';
 export interface IRuleStackProps {
   id: string;
 
-  index?: number;
-
   ruleStackValues: IRuleStackEntity[];
 
   validationType: ValidatorStackTypes;
@@ -23,8 +21,6 @@ export interface IRuleStackProps {
   defaultIndex?: number;
 
   removeClick?: (evt: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-
-  style?: React.CSSProperties;
 }
 
 // https://stackoverflow.com/a/69830024 (example on making drop down w/ image)
@@ -82,18 +78,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
   const { isValid } = useStackValidationChildren(props.validationType, [titleDropDownValidator, rangeFieldValidator]);
 
   return (
-    <StackBase
-      {...props}
-      ref={ref}
-      direction="row"
-      spacing={2}
-      flexGrow={1}
-      marginBottom={'20px'}
-      style={{
-        ...props.style,
-        zIndex: props.index,
-      }}
-    >
+    <StackBase {...props} ref={ref} direction="row" spacing={2} flexGrow={1} marginBottom={'20px'}>
       <DragPlaceholder role={'drag-handle'} data-movable-handle />
       <Stack id={`${props.id}-sub`} direction="column" paddingTop={'10px'} paddingLeft={'17px'} paddingBottom={'20px'} paddingRight={'17px'}>
         {titleDropDownValidator}

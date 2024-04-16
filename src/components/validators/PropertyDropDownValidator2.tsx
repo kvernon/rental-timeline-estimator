@@ -1,11 +1,11 @@
-import React, { ReactNode, useEffect, useState } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
 import ReactSelect, { GroupBase, SingleValue } from 'react-select';
+import styled from '@emotion/styled';
+import React, { ReactNode, useEffect, useState } from 'react';
+import { FontGroups } from '../../theming/fontGroups';
 import { useTheme } from '@emotion/react';
 import { IThemeOptions } from '../../theming/IThemeOptions';
 import { ValidatorTypes } from './ValidatorTypes';
-import { FontGroups } from '../../theming/fontGroups';
-import styled from '@emotion/styled';
+import { Controller, useFormContext } from 'react-hook-form';
 import { formatName } from '../naming/FormatName';
 import { FormatNames } from '../naming/FormatNames';
 
@@ -24,7 +24,7 @@ const Img = styled.img`
   padding: 0;
 `;
 
-export function PropertyDropDownValidator2<
+export function PropertyDropDownValidator<
   Option extends IPropertyDropDownOption,
   IsMulti extends boolean = false,
   Group extends GroupBase<Option> = GroupBase<Option>,
@@ -64,11 +64,11 @@ export function PropertyDropDownValidator2<
   }>`
     appearance: none;
     white-space: pre-wrap;
+    width: 100%;
+    padding-left: 10px;
     font-size: ${(props) => props.themeOptions.typography.get(FontGroups.inputLabel)?.size};
     font-family: ${(props) => props.themeOptions.typography.get(FontGroups.inputLabel)?.font};
     font-weight: ${(props) => props.themeOptions.typography.get(FontGroups.inputLabel)?.weight};
-    width: 100%;
-    padding-left: 10px;
     color: ${(props) => props.themeOptions.typography.get(FontGroups.input)?.color};
     overflow: visible;
   `;
@@ -98,9 +98,10 @@ export function PropertyDropDownValidator2<
               control: (baseStyles) => {
                 return {
                   ...baseStyles,
-                  overflow: 'visible',
-                  transition: 'background-color 0.4s ease-out',
                   backgroundColor: `${coreTheme.palette.validation[ValidatorTypes[ValidatorTypes.Valid]].background}41`,
+                  marginLeft: '0',
+                  padding: '0',
+                  transition: 'background-color 0.4s ease-out',
                   height: '59px',
                   borderColor: `${coreTheme.palette.inputBackground}`,
                   border: `1px solid ${coreTheme.palette.panelBackground}`,
@@ -111,6 +112,14 @@ export function PropertyDropDownValidator2<
                     borderColor: `${coreTheme.palette.inputBackgroundFocus}`,
                     color: `${coreTheme.palette.inputBackgroundFocus}`,
                   },
+                };
+              },
+              valueContainer: (baseStyles) => {
+                return {
+                  ...baseStyles,
+                  marginLeft: '0',
+                  marginTop: '0',
+                  padding: '0',
                 };
               },
             }}
