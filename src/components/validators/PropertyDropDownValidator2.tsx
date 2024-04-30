@@ -9,6 +9,8 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { formatName } from '../naming/FormatName';
 import { FormatNames } from '../naming/FormatNames';
 
+export const propertyOptions = ['apartment', 'house'];
+
 export interface IPropertyDropDownParams {
   id?: string;
   onChange?: (value: IPropertyDropDownOption) => void;
@@ -40,7 +42,7 @@ export function PropertyDropDownValidator<
   const inputValidationValue = `${formatName(selectUuid, FormatNames.PropertyDropDownValidatorId)}.value`;
   const inputValidationResult = `${formatName(selectUuid, FormatNames.PropertyDropDownValidatorId)}.validationResult`;
 
-  const optionsMap = ['apartment', 'house'].map((title: string, idx: number) => {
+  const optionsMap = propertyOptions.map((title: string, idx: number) => {
     return { value: idx, label: title, image: `/images/${title}.jpg` };
   }) as (Option | Group)[];
 
@@ -59,7 +61,7 @@ export function PropertyDropDownValidator<
     }
   };
 
-  const Select = styled(ReactSelect<Option, IsMulti, Group>)<{
+  const SelectStyled = styled(ReactSelect<Option, IsMulti, Group>)<{
     themeOptions: IThemeOptions;
   }>`
     appearance: none;
@@ -70,7 +72,6 @@ export function PropertyDropDownValidator<
     font-family: ${(props) => props.themeOptions.typography.get(FontGroups.inputLabel)?.font};
     font-weight: ${(props) => props.themeOptions.typography.get(FontGroups.inputLabel)?.weight};
     color: ${(props) => props.themeOptions.typography.get(FontGroups.input)?.color};
-    overflow: visible;
   `;
 
   return (
@@ -79,12 +80,12 @@ export function PropertyDropDownValidator<
       control={control}
       render={({ field }) => {
         return (
-          <Select
+          <SelectStyled
             {...field}
+            options={optionsMap}
             defaultValue={optionsMap[selectedIndex] as Option}
             formatOptionLabel={formatOptionLabel}
             themeOptions={coreTheme}
-            options={optionsMap}
             onChange={handleChange}
             styles={{
               singleValue: (base) => ({
@@ -93,7 +94,6 @@ export function PropertyDropDownValidator<
               }),
               menu: (baseStyles) => ({
                 ...baseStyles,
-                zIndex: baseStyles.isSelected ? 9999 : baseStyles.zIndex,
               }),
               control: (baseStyles) => {
                 return {

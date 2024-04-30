@@ -2,6 +2,8 @@ import { getPrettyName } from './getPrettyName';
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
 import { IRuleConfigEntity } from './IRuleConfigEntity';
 import { FormatNames } from '../components/naming/FormatNames';
+import { propertyOptions } from '../components/validators/PropertyDropDownValidator2';
+
 export const getFields = (collection: IRuleConfigEntity[]) => {
   return collection
     .filter((x) => x.ruleType !== 'none')
@@ -15,10 +17,12 @@ export const getFields = (collection: IRuleConfigEntity[]) => {
           validationResult: ValidatorTypes.Optional,
         },
         [FormatNames.PropertyDropDownValidatorId]: {
-          value: {
-            value: 1,
-            label: 'house',
-          },
+          value: propertyOptions
+            .map((option, index) => ({
+              label: option,
+              value: index,
+            }))
+            .find((o) => o.label === 'house'),
           validationResult: ValidatorTypes.Optional,
         },
         [`${FormatNames.RangeFieldValidatorId}`]: {

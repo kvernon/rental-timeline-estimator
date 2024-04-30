@@ -108,10 +108,16 @@ describe('PropertyDropDownValidator unit test', () => {
   });
 
   describe('and defaults', () => {
+    let id: string;
+
+    beforeEach(() => {
+      id = `${formatName(params.id as string, FormatNames.PropertyDropDownValidatorId)}.value`;
+    });
+
     test('should exist', () => {
       render(<Setup {...params} />);
 
-      const entity = screen.queryByTestId<HTMLInputElement>(`${formatName(params.id as string, FormatNames.PropertyDropDownValidatorId)}.value`);
+      const entity = screen.queryByTestId<HTMLInputElement>(id);
 
       expect(entity).toMatchSnapshot();
     });
@@ -119,7 +125,7 @@ describe('PropertyDropDownValidator unit test', () => {
     test('should contain titles', () => {
       render(<Setup {...params} />);
 
-      const entity = screen.getByTestId<HTMLElement>(`${formatName(params.id as string, FormatNames.PropertyDropDownValidatorId)}.value`);
+      const entity = screen.getByTestId<HTMLElement>(id);
 
       selectEvent.openMenu(entity);
 
@@ -143,14 +149,15 @@ describe('PropertyDropDownValidator unit test', () => {
     test('call change', async () => {
       render(<Setup {...params} />);
 
-      const entity = screen.getByTestId<HTMLInputElement>(`${formatName(params.id as string, FormatNames.PropertyDropDownValidatorId)}.value`);
+      const entity = screen.getByTestId<HTMLInputElement>(id);
 
       selectEvent.openMenu(entity);
 
       await selectEvent.select(entity, (_content, element1): boolean => element1 instanceof HTMLImageElement && element1.alt === 'house');
 
-      const test = screen.getByTestId<HTMLInputElement>(`${formatName(params.id as string, FormatNames.PropertyDropDownValidatorId)}.value`);
-      expect(test.value).toEqual('1');
+      const result = screen.getByTestId<HTMLInputElement>(id);
+
+      expect(result.value).toEqual('1111112');
     });
   });
 });

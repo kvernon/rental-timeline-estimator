@@ -86,9 +86,9 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
       {...props}
       ref={ref}
       direction="row"
+      marginBottom={'20px'}
       spacing={2}
       flexGrow={1}
-      marginBottom={'20px'}
       style={{
         ...props.style,
         zIndex: props.index,

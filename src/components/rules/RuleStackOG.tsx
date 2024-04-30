@@ -78,7 +78,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
   const { isValid } = useStackValidationChildren(props.validationType, [titleDropDownValidator, rangeFieldValidator]);
 
   return (
-    <StackBase {...props} ref={ref} direction="row" spacing={2} flexGrow={1} marginBottom={'20px'}>
+    <StackBase {...props} ref={ref} direction="row" marginBottom={'20px'} spacing={2} flexGrow={1}>
       <DragPlaceholder role={'drag-handle'} data-movable-handle />
       <Stack id={`${props.id}-sub`} direction="column" paddingTop={'10px'} paddingLeft={'17px'} paddingBottom={'20px'} paddingRight={'17px'}>
         {titleDropDownValidator}
