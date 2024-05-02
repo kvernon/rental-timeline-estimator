@@ -193,6 +193,13 @@ describe('RulesCollection unit tests', () => {
             label: 'label one',
           },
         },
+        propertyDropDown: {
+          validationResult: ValidatorTypes.Valid,
+          value: {
+            value: 0,
+            label: 'house',
+          },
+        },
         rangeFieldValidator: {
           validationResult: ValidatorTypes.Valid,
           value: 3,
@@ -205,6 +212,13 @@ describe('RulesCollection unit tests', () => {
           value: {
             value: 2,
             label: 'label two',
+          },
+        },
+        propertyDropDown: {
+          validationResult: ValidatorTypes.Valid,
+          value: {
+            value: 0,
+            label: 'house',
           },
         },
         rangeFieldValidator: {
@@ -283,6 +297,7 @@ describe('RulesCollection unit tests', () => {
             {
               max: 2,
               ruleTitle: 'title',
+              property: 1,
               prefix: 'prefix',
               suffix: 'suffix',
               min: 1,
@@ -290,6 +305,7 @@ describe('RulesCollection unit tests', () => {
             {
               max: 3,
               ruleTitle: 'title-2',
+              property: 1,
               prefix: 'prefix',
               suffix: 'suffix',
               min: 2,
@@ -341,6 +357,13 @@ describe('RulesCollection unit tests', () => {
             rangeFieldValidator: {
               validationResult: ValidatorTypes.Valid,
               value: 0,
+            },
+            propertyDropDown: {
+              validationResult: ValidatorTypes.Valid,
+              value: {
+                label: 'house',
+                value: 0,
+              },
             },
             titleDropDown: {
               validationResult: ValidatorTypes.Valid,

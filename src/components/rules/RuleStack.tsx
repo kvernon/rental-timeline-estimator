@@ -43,13 +43,14 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
 
   useEffect(() => {
     const newVar = props.ruleStackValues.length === 0 ? null : props.ruleStackValues[selectedRuleStackValue];
+    console.log('[props.ruleStackValues, selectedRuleStackValue]', JSON.stringify(newVar), selectedRuleStackValue);
     setSelectedStack(newVar);
   }, [props.ruleStackValues, selectedRuleStackValue]);
 
   useEffect(() => {
     const newValue = props.ruleStackValues.length === 0 ? null : props.ruleStackValues[selectedRuleStackValue];
     if (JSON.stringify(newValue) !== JSON.stringify(selectedStack)) {
-      // console.log('[selectedRuleStackValue, selectedStack, ruleStackValues]', JSON.stringify(newValue));
+      console.log('[selectedRuleStackValue, selectedStack, ruleStackValues]', JSON.stringify(newValue));
       setSelectedStack(newValue);
     }
   }, [selectedRuleStackValue, selectedStack, props.ruleStackValues]);
@@ -98,7 +99,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
       <Stack id={`${props.id}-sub`} direction="column" paddingTop={'10px'} paddingLeft={'17px'} paddingBottom={'20px'} paddingRight={'17px'}>
         {titleDropDownValidator}
         <Stack direction="row" spacing={2} paddingTop={'10px'}>
-          <PropertyPicker id={props.id} />
+          <PropertyPicker id={props.id} defaultIndex={props.ruleStackValues[selectedRuleStackValue]?.property} />
           {rangeFieldValidator}
         </Stack>
       </Stack>

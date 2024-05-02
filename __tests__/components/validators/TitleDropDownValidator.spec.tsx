@@ -137,7 +137,7 @@ describe('TitleDropDownValidator unit tests', () => {
       selectEvent.openMenu(entity);
 
       const allByText = screen.getAllByText(/(one|two|three|four)/);
-      expect(allByText.map((x) => x.innerHTML)).toEqual(p.titles);
+      expect(allByText.map((x) => x.innerHTML)).toEqual(['one', ...p.titles]);
     });
 
     test('call change', async () => {

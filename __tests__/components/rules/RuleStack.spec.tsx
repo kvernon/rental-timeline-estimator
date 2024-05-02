@@ -6,13 +6,11 @@ import { ValidatorStackTypes } from '../../../src/components/validators/Validato
 import { IRuleStackProps } from '../../../src/components/rules/RuleStack';
 import { ValidatorTypes } from '../../../src/components/validators/ValidatorTypes';
 import { useStackValidationChildren } from '../../../src/components/hooks/useStackValidationChildren';
-
 import { RangeFieldValidator } from '../../../src/components/validators/RangeFieldValidator';
-
-jest.mock('../../../src/components/validators/TitleDropDownValidator');
 import { TitleDropDownValidator } from '../../../src/components/validators/TitleDropDownValidator';
 import { DeleteButton } from '../../../src/components/core/DeleteButton';
 
+jest.mock('../../../src/components/validators/TitleDropDownValidator');
 jest.mock('../../../src/components/core/DragPlaceHolder', () => {
   return {
     DragPlaceholder: jest.fn().mockReturnValue(<div>DragPlaceholder</div>),
@@ -149,6 +147,7 @@ describe('RuleStack unit tests', () => {
             min: 3,
             prefix: 'prefix-one',
             ruleTitle: 'rule-title-one',
+            property: 1,
             max: 7,
             suffix: 'suffix-one',
           },
@@ -156,6 +155,7 @@ describe('RuleStack unit tests', () => {
             min: 8,
             prefix: 'prefix-two',
             ruleTitle: 'rule-title-two',
+            property: 1,
             max: 20,
             suffix: 'suffix-two',
           },

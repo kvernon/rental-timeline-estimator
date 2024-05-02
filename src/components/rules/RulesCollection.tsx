@@ -45,11 +45,20 @@ export const RulesCollection = function (collectionProps: IRuleCollectionProps):
     if (JSON.stringify(possibleRemainingChoices) !== JSON.stringify(remainingChoices)) {
       setRemainingChoices(possibleRemainingChoices);
     }
+
+    console.log('possibleChoices', possibleChoices);
   }, [fieldItems, possibleChoices, remainingChoices]);
 
   const onClick = () => {
     const index = possibleChoices.findIndex((F) => F.ruleTitle === remainingChoices[0].ruleTitle);
     const fieldItem: IFieldType = {
+      propertyDropDown: {
+        value: {
+          value: index === -1 ? 1 : index,
+          label: 'house',
+        },
+        validationResult: ValidatorTypes.Valid,
+      },
       titleDropDown: {
         value: {
           value: index === -1 ? 0 : index,
@@ -93,6 +102,7 @@ export const RulesCollection = function (collectionProps: IRuleCollectionProps):
             index={index ? fieldItems.length - index : fieldItems.length}
             key={value?.titleDropDown?.value?.label}
             id={`${collectionProps.title}.${index}`}
+            defaultIndex={possibleChoices.findIndex((x) => x.ruleTitle === value.titleDropDown.value?.label) || 0}
             ruleStackValues={possibleChoices}
             validationType={collectionProps.validationType}
             removeClick={() => {

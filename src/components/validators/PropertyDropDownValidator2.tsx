@@ -8,17 +8,17 @@ import { ValidatorTypes } from './ValidatorTypes';
 import { Controller, useFormContext } from 'react-hook-form';
 import { formatName } from '../naming/FormatName';
 import { FormatNames } from '../naming/FormatNames';
+import { ITitleDropDownOption } from './TitleDropDownValidator';
 
 export const propertyOptions = ['apartment', 'house'];
 
 export interface IPropertyDropDownParams {
   id?: string;
+  defaultIndex?: number;
   onChange?: (value: IPropertyDropDownOption) => void;
 }
 
-export interface IPropertyDropDownOption {
-  label: string;
-  value: number;
+export interface IPropertyDropDownOption extends ITitleDropDownOption {
   image: string;
 }
 
@@ -46,7 +46,7 @@ export function PropertyDropDownValidator<
     return { value: idx, label: title, image: `/images/${title}.jpg` };
   }) as (Option | Group)[];
 
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [selectedIndex, setSelectedIndex] = useState<number>(props.defaultIndex || 1);
 
   useEffect(() => {
     setValue(inputValidationValue, selectedIndex, { shouldDirty: true, shouldValidate: true, shouldTouch: true });
@@ -83,7 +83,7 @@ export function PropertyDropDownValidator<
           <SelectStyled
             {...field}
             options={optionsMap}
-            defaultValue={optionsMap[selectedIndex] as Option}
+            value={optionsMap[selectedIndex] as Option}
             formatOptionLabel={formatOptionLabel}
             themeOptions={coreTheme}
             onChange={handleChange}

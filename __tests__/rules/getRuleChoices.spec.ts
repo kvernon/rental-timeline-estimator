@@ -32,6 +32,7 @@ describe('getRuleChoices unit tests', () => {
           min: 0,
           max: 1,
           prefix: 'prefix',
+          property: 0,
           ruleTitle: 'Big Thing Purchase',
           suffix: 'suffix',
         },

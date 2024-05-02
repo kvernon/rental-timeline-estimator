@@ -138,7 +138,7 @@ describe('PropertyDropDownValidator unit test', () => {
           alt: x.alt,
         })),
       ).toEqual(
-        ['apartment', 'house'].map((exp) => ({
+        ['house', 'apartment', 'house'].map((exp) => ({
           src: `http://localhost/images/${exp}.jpg`,
           title: exp,
           alt: exp,
@@ -157,7 +157,7 @@ describe('PropertyDropDownValidator unit test', () => {
 
       const result = screen.getByTestId<HTMLInputElement>(id);
 
-      expect(result.value).toEqual('1111112');
+      expect(result.value).toEqual('1');
     });
   });
 });

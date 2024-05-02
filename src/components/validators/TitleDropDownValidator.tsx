@@ -28,7 +28,7 @@ const rule: RuleEval = (v: number, options: { min?: number; max?: number }) =>
   v > (options?.min || 0) ? ValidatorTypes.Valid : ValidatorTypes.Invalid;
 
 export const TitleDropDownValidator = function (props: ITitleDropDownParams) {
-  const { control, setValue, getValues } = useFormContext();
+  const { control, setValue } = useFormContext();
   const coreTheme = useTheme() as IThemeOptions;
 
   const selectUuid = props.id || window.crypto.randomUUID();
@@ -40,7 +40,7 @@ export const TitleDropDownValidator = function (props: ITitleDropDownParams) {
   const [selectedIndex, setSelectedIndex] = useState<number>(props.defaultIndex || 0);
   const [evaluated, setEvaluated] = useState(evaluateValidation(props.validationType, rule, selectedIndex));
 
-  const [watcherResult] = useWatcher<ITitleDropDownOption>([inputValidationValue]);
+  const [watcherValueResult] = useWatcher<ITitleDropDownOption>([inputValidationValue]);
 
   useEffect(() => {
     setValue(inputValidationValue, selectedIndex, { shouldDirty: true, shouldValidate: true, shouldTouch: true });
@@ -54,21 +54,18 @@ export const TitleDropDownValidator = function (props: ITitleDropDownParams) {
 
     if (JSON.stringify(optionsMap) !== JSON.stringify(map)) {
       setOptionsMap(map);
+      console.log('here', map);
     }
   }, [props.titles, optionsMap]);
 
   useEffect(() => {
-    console.log('useEffect::[watcherResult, ...]', inputValidationValue);
     const eventResult = evaluateValidation(props.validationType, rule, selectedIndex);
 
     if (evaluated.validationResult !== eventResult.validationResult) {
       setEvaluated(eventResult);
       setValue(inputValidationResult, evaluated.validationResult);
     }
-
-    const storedResult = getValues(inputValidationResult);
-    console.log('useEffect::[watcherResult, ...]', inputValidationResult, storedResult);
-  }, [watcherResult, evaluated, inputValidationResult, props.validationType, setValue, selectedIndex]);
+  }, [watcherValueResult, evaluated, inputValidationResult, props.validationType, setValue, selectedIndex]);
 
   const handleChange = (option: SingleValue<ITitleDropDownOption | unknown>): void => {
     const value = (option as ITitleDropDownOption).value;
@@ -101,7 +98,7 @@ export const TitleDropDownValidator = function (props: ITitleDropDownParams) {
           <Select
             {...field}
             isMulti={false}
-            defaultValue={optionsMap[selectedIndex]}
+            value={optionsMap[selectedIndex]}
             themeOptions={coreTheme}
             options={optionsMap}
             onChange={handleChange}

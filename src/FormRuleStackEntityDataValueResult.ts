@@ -8,6 +8,7 @@ export interface IEntityDataValueResult<T> {
 
 export class FormRuleStackEntityDataValueResult<T> implements IEntityDataValueResult<T>, IRuleStackEntity {
   ruleTitle: string;
+  property: 0 | 1;
   min?: number;
   max?: number;
   prefix?: string;
@@ -18,6 +19,7 @@ export class FormRuleStackEntityDataValueResult<T> implements IEntityDataValueRe
   constructor() {
     this.ruleTitle = '';
     this.validationResult = ValidatorTypes.Invalid;
+    this.property = 0;
   }
 }
 

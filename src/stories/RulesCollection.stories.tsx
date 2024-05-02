@@ -45,6 +45,7 @@ Basics.args = {
   possibleChoices: [
     {
       ruleTitle: 'ruleTitle',
+      property: 0,
       suffix: 'suffix',
       prefix: 'prefix',
       min: 0,
@@ -52,6 +53,7 @@ Basics.args = {
     },
     {
       ruleTitle: 'some other rule title',
+      property: 0,
       suffix: 'suffix',
       prefix: 'prefix',
       min: 0,
@@ -59,6 +61,7 @@ Basics.args = {
     },
     {
       ruleTitle: 'one more rule title',
+      property: 0,
       suffix: 'suffix',
       prefix: 'prefix',
       min: 0,
