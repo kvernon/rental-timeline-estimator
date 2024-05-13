@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { TitleDropDownValidatorName } from '../naming/TitleDropDownValidatorName';
-import { Controller, useFormContext } from 'react-hook-form';
 import ReactSelect, { SingleValue } from 'react-select';
 import { useTheme } from '@emotion/react';
 import { IThemeOptions } from '../../theming/IThemeOptions';
 import { evaluateValidation, RuleEval } from './evaluatateValidation';
 import { ValidatorTypes } from './ValidatorTypes';
-import { useWatcher } from '../hooks/useWatcher';
 import { FontGroups } from '../../theming/fontGroups';
 import { ValidatorStackTypes } from './ValidatorStackTypes';
 import styled from '@emotion/styled';
@@ -28,24 +25,14 @@ const rule: RuleEval = (v: number, options: { min?: number; max?: number }) =>
   v > (options?.min || 0) ? ValidatorTypes.Valid : ValidatorTypes.Invalid;
 
 export const TitleDropDownValidator = function (props: ITitleDropDownParams) {
-  const { control, setValue } = useFormContext();
   const coreTheme = useTheme() as IThemeOptions;
 
   const selectUuid = props.id || window.crypto.randomUUID();
-  const inputValidationValue = `${TitleDropDownValidatorName(selectUuid)}.value`;
-  const inputValidationResult = `${TitleDropDownValidatorName(selectUuid)}.validationResult`;
 
   const [optionsMap, setOptionsMap] = useState<ITitleDropDownOption[]>([]);
 
   const [selectedIndex, setSelectedIndex] = useState<number>(props.defaultIndex || 0);
   const [evaluated, setEvaluated] = useState(evaluateValidation(props.validationType, rule, selectedIndex));
-
-  const [watcherValueResult] = useWatcher<ITitleDropDownOption>([inputValidationValue]);
-
-  useEffect(() => {
-    setValue(inputValidationValue, selectedIndex, { shouldDirty: true, shouldValidate: true, shouldTouch: true });
-    setValue(inputValidationResult, evaluateValidation(props.validationType, rule, selectedIndex).validationResult);
-  }, []);
 
   useEffect(() => {
     const map = props.titles.map((title: string, idx: number): ITitleDropDownOption => {
@@ -63,14 +50,12 @@ export const TitleDropDownValidator = function (props: ITitleDropDownParams) {
 
     if (evaluated.validationResult !== eventResult.validationResult) {
       setEvaluated(eventResult);
-      setValue(inputValidationResult, evaluated.validationResult);
     }
-  }, [watcherValueResult, evaluated, inputValidationResult, props.validationType, setValue, selectedIndex]);
+  }, [evaluated, props.validationType, selectedIndex]);
 
   const handleChange = (option: SingleValue<ITitleDropDownOption | unknown>): void => {
     const value = (option as ITitleDropDownOption).value;
     if (value !== selectedIndex) {
-      setValue(inputValidationValue, option);
       setSelectedIndex(value);
     }
   };
@@ -90,48 +75,41 @@ export const TitleDropDownValidator = function (props: ITitleDropDownParams) {
   `;
 
   return (
-    <Controller
-      name={inputValidationValue}
-      control={control}
-      render={({ field }) => {
-        return (
-          <Select
-            {...field}
-            isMulti={false}
-            value={optionsMap[selectedIndex]}
-            themeOptions={coreTheme}
-            options={optionsMap}
-            onChange={handleChange}
-            styles={{
-              singleValue: (base) => ({
-                ...base,
-                color: `${coreTheme.typography.get(FontGroups.input)?.color}`,
-              }),
-              menu: (baseStyles) => ({
-                ...baseStyles,
-                zIndex: baseStyles.isSelected ? 9999 : baseStyles.zIndex,
-              }),
-              control: (baseStyles) => {
-                return {
-                  ...baseStyles,
-                  overflow: 'visible',
-                  transition: 'background-color 0.4s ease-out',
-                  backgroundColor: `${coreTheme.palette.validation[evaluated.validationResultName].background}41`,
-                  height: '59px',
-                  borderColor: `${coreTheme.palette.inputBackground}`,
-                  border: `1px solid ${coreTheme.palette.panelBackground}`,
-                  borderRadius: '0.3rem',
-                  color: `${coreTheme.typography.get(FontGroups.input)?.color}`,
-                  ':hover': {
-                    backgroundColor: `${coreTheme.palette.validation[evaluated.validationResultName].background}81`,
-                    borderColor: `${coreTheme.palette.inputBackgroundFocus}`,
-                    color: `${coreTheme.palette.inputBackgroundFocus}`,
-                  },
-                };
-              },
-            }}
-          />
-        );
+    <Select
+      {...props}
+      name={selectUuid}
+      isMulti={false}
+      value={optionsMap[selectedIndex]}
+      themeOptions={coreTheme}
+      options={optionsMap}
+      onChange={handleChange}
+      styles={{
+        singleValue: (base) => ({
+          ...base,
+          color: `${coreTheme.typography.get(FontGroups.input)?.color}`,
+        }),
+        menu: (baseStyles) => ({
+          ...baseStyles,
+          zIndex: baseStyles.isSelected ? 9999 : baseStyles.zIndex,
+        }),
+        control: (baseStyles) => {
+          return {
+            ...baseStyles,
+            overflow: 'visible',
+            transition: 'background-color 0.4s ease-out',
+            backgroundColor: `${coreTheme.palette.validation[evaluated.validationResultName].background}41`,
+            height: '59px',
+            borderColor: `${coreTheme.palette.inputBackground}`,
+            border: `1px solid ${coreTheme.palette.panelBackground}`,
+            borderRadius: '0.3rem',
+            color: `${coreTheme.typography.get(FontGroups.input)?.color}`,
+            ':hover': {
+              backgroundColor: `${coreTheme.palette.validation[evaluated.validationResultName].background}81`,
+              borderColor: `${coreTheme.palette.inputBackgroundFocus}`,
+              color: `${coreTheme.palette.inputBackgroundFocus}`,
+            },
+          };
+        },
       }}
     />
   );

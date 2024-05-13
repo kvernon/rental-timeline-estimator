@@ -2,7 +2,7 @@
 
 exports[`TitleDropDownValidator unit tests and defaults should exist 1`] = `
 <input
-  name="titleDropDownTested.value"
+  name="Tested"
   type="hidden"
   value=""
 />
