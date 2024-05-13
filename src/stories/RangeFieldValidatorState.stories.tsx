@@ -2,21 +2,21 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 import React from 'react';
 import { ValidatorStackTypes } from '../components/validators/ValidatorStackTypes';
 import { IEventResult } from '../components/validators/IEventResult';
-import { RenderRangeFieldValidator } from './RenderRangeFieldValidator';
+import { RenderRangeFieldValidatorState } from './RenderRangeFieldValidatorState';
 
-const meta: ComponentMeta<typeof RenderRangeFieldValidator> = {
+const meta: ComponentMeta<typeof RenderRangeFieldValidatorState> = {
   /* 👇 The title prop is optional.
    * See https://storybook.js.org/docs/react/configure/overview#configure-story-loading
    * to learn how to generate automatic titles
    */
   title: 'Example/RangeFieldValidator',
-  component: RenderRangeFieldValidator,
+  component: RenderRangeFieldValidatorState,
 };
 
 export default meta;
 
-const Template: ComponentStory<typeof RenderRangeFieldValidator> = (args) => {
-  return <RenderRangeFieldValidator {...args} />;
+const Template: ComponentStory<typeof RenderRangeFieldValidatorState> = (args) => {
+  return <RenderRangeFieldValidatorState {...args} />;
 };
 
 export const Optional = Template.bind({});

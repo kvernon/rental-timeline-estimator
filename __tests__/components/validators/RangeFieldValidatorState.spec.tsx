@@ -9,15 +9,26 @@ jest.mock('@emotion/react', () => {
   };
 });
 
+import { IRangeFieldValidatorProps } from '../../../src/components/validators/IRangeFieldValidatorProps';
+import { FormProvider, useForm } from 'react-hook-form';
 import React from 'react';
 import { configure, fireEvent, render, screen } from '@testing-library/react';
 import { ValidatorStackTypes } from '../../../src/components/validators/ValidatorStackTypes';
 import '@testing-library/jest-dom';
-import { RangeFieldValidator } from '../../../src/components/validators/RangeFieldValidator';
+import { RangeFieldValidatorState } from '../../../src/components/validators/RangeFieldValidatorState';
 import { IThemeOptions } from '../../../src/theming/IThemeOptions';
 import { ITypography } from '../../../src/theming/ITypography';
 
-describe('RangeFieldValidator unit tests', () => {
+const RangeFieldValidatorSetup = (props: IRangeFieldValidatorProps) => {
+  const methods = useForm({ mode: 'onBlur' });
+  return (
+    <FormProvider {...methods}>
+      <RangeFieldValidatorState {...props} />
+    </FormProvider>
+  );
+};
+
+describe('RangeFieldValidatorState unit tests', () => {
   let typographyMock: jest.Mocked<ITypography>;
 
   const validationColorOptionalRight = '#0000FF';
@@ -67,9 +78,9 @@ describe('RangeFieldValidator unit tests', () => {
     describe('and Required', () => {
       describe('and value not supplied', () => {
         test('should be the following', () => {
-          render(<RangeFieldValidator id={'Test'} validationType={ValidatorStackTypes.Required} />);
+          render(<RangeFieldValidatorSetup id={'Test'} validationType={ValidatorStackTypes.Required} />);
 
-          const entity = screen.getByTestId<HTMLInputElement>('rangeFieldValidatorTest');
+          const entity = screen.getByTestId<HTMLInputElement>('rangeFieldValidatorTest.value');
 
           expect(entity.value).toEqual('');
 
@@ -78,13 +89,13 @@ describe('RangeFieldValidator unit tests', () => {
       });
       describe('and value supplied', () => {
         test('should be the following', () => {
-          render(<RangeFieldValidator id={'Test'} defaultValue={20} validationType={ValidatorStackTypes.Required} />);
+          render(<RangeFieldValidatorSetup id={'Test'} defaultValue={20} validationType={ValidatorStackTypes.Required} />);
 
-          const entity = screen.getByTestId<HTMLInputElement>('rangeFieldValidatorTest');
+          const entity = screen.getByTestId<HTMLInputElement>('rangeFieldValidatorTest.value');
 
           expect(entity.value).toEqual('20');
 
-          expect(entity).toHaveStyle('background-color:rgba(255, 0, 0, 0.255)');
+          expect(entity).toHaveStyle('background-color:rgba(255, 0, 0, 0.506)');
         });
       });
     });
@@ -92,9 +103,9 @@ describe('RangeFieldValidator unit tests', () => {
     describe('and Optional', () => {
       describe('and value not supplied', () => {
         test('should be the following', () => {
-          render(<RangeFieldValidator id={'Test'} validationType={ValidatorStackTypes.Optional} />);
+          render(<RangeFieldValidatorSetup id={'Test'} validationType={ValidatorStackTypes.Optional} />);
 
-          const entity = screen.getByTestId<HTMLInputElement>('rangeFieldValidatorTest');
+          const entity = screen.getByTestId<HTMLInputElement>('rangeFieldValidatorTest.value');
 
           expect(entity.value).toEqual('');
 
@@ -103,13 +114,13 @@ describe('RangeFieldValidator unit tests', () => {
       });
       describe('and value supplied', () => {
         test('should be the following', () => {
-          render(<RangeFieldValidator id={'Test'} defaultValue={2} validationType={ValidatorStackTypes.Optional} />);
+          render(<RangeFieldValidatorSetup id={'Test'} defaultValue={2} validationType={ValidatorStackTypes.Optional} />);
 
-          const entity = screen.getByTestId<HTMLInputElement>('rangeFieldValidatorTest');
+          const entity = screen.getByTestId<HTMLInputElement>('rangeFieldValidatorTest.value');
 
           expect(entity.value).toEqual('2');
 
-          expect(entity).toHaveStyle('background-color:rgba(0, 0, 255, 0.255)');
+          expect(entity).toHaveStyle('background-color:rgba(0, 0, 255, 0.506)');
         });
       });
     });
@@ -119,9 +130,9 @@ describe('RangeFieldValidator unit tests', () => {
     describe('and Required', () => {
       describe('and valid with rule', () => {
         test('should be the following', () => {
-          render(<RangeFieldValidator id={'Test'} validationType={ValidatorStackTypes.Required} />);
+          render(<RangeFieldValidatorSetup id={'Test'} validationType={ValidatorStackTypes.Required} />);
 
-          const entity = screen.getByTestId<HTMLInputElement>('rangeFieldValidatorTest');
+          const entity = screen.getByTestId<HTMLInputElement>('rangeFieldValidatorTest.value');
 
           const value = 1;
 
@@ -140,9 +151,9 @@ describe('RangeFieldValidator unit tests', () => {
       });
       describe('and invalid with rule', () => {
         test('should be the following', () => {
-          render(<RangeFieldValidator id={'Test'} validationType={ValidatorStackTypes.Required} />);
+          render(<RangeFieldValidatorSetup id={'Test'} validationType={ValidatorStackTypes.Required} />);
 
-          const entity = screen.getByTestId<HTMLInputElement>('rangeFieldValidatorTest');
+          const entity = screen.getByTestId<HTMLInputElement>('rangeFieldValidatorTest.value');
 
           const value = -1;
 
@@ -163,9 +174,9 @@ describe('RangeFieldValidator unit tests', () => {
     describe('and Optional', () => {
       describe('and valid with rule', () => {
         test('should be the following', () => {
-          render(<RangeFieldValidator id={'Test'} validationType={ValidatorStackTypes.Optional} />);
+          render(<RangeFieldValidatorSetup id={'Test'} validationType={ValidatorStackTypes.Optional} />);
 
-          const entity = screen.getByTestId<HTMLInputElement>('rangeFieldValidatorTest');
+          const entity = screen.getByTestId<HTMLInputElement>('rangeFieldValidatorTest.value');
 
           const value = 1;
 
@@ -184,9 +195,9 @@ describe('RangeFieldValidator unit tests', () => {
       });
       describe('and invalid with rule', () => {
         test('should be the following', () => {
-          render(<RangeFieldValidator id={'Test'} validationType={ValidatorStackTypes.Optional} />);
+          render(<RangeFieldValidatorSetup id={'Test'} validationType={ValidatorStackTypes.Optional} />);
 
-          const entity = screen.getByTestId<HTMLInputElement>('rangeFieldValidatorTest');
+          const entity = screen.getByTestId<HTMLInputElement>('rangeFieldValidatorTest.value');
 
           const value = -1;
 

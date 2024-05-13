@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react';
-import { RangeFieldValidator } from '../../../src/components/validators/RangeFieldValidator';
+import { RangeFieldValidatorState } from '../../../src/components/validators/RangeFieldValidatorState';
 import { ValidatorStackTypes } from '../../../src/components/validators/ValidatorStackTypes';
 import React from 'react';
 import { useChildrenIdsList } from '../../../src/components/hooks/useChildrenIdsList';
@@ -29,16 +29,16 @@ describe('useChildrenIdsList unit tests', () => {
     test('should get the children results', async () => {
       const { result } = renderHook(() =>
         useChildrenIdsList([
-          <RangeFieldValidator id="One" validationType={ValidatorStackTypes.Required} />,
-          <RangeFieldValidator id="Two" validationType={ValidatorStackTypes.Optional} />,
+          <RangeFieldValidatorState id="One" validationType={ValidatorStackTypes.Required} />,
+          <RangeFieldValidatorState id="Two" validationType={ValidatorStackTypes.Optional} />,
         ]),
       );
 
       expect(result.current).toEqual(
         expect.arrayContaining([
           [
-            { id: 'One', type: 'RangeFieldValidator' },
-            { id: 'Two', type: 'RangeFieldValidator' },
+            { id: 'One', type: 'RangeFieldValidatorState' },
+            { id: 'Two', type: 'RangeFieldValidatorState' },
           ],
         ]),
       );

@@ -7,9 +7,11 @@ import { useStackValidationChildren } from '../../src/components/hooks/useStackV
 import { ValidatorTypes } from '../../src/components/validators/ValidatorTypes';
 import { ValidatorStackName } from '../../src/components/naming/ValidatorStackName';
 
-jest.mock('../../src/components/validators/RangeFieldValidator', () => {
+jest.mock('../../src/components/validators/RangeFieldValidatorState', () => {
   return {
-    RangeFieldValidator: jest.fn((p: IRangeFieldValidatorProps) => <input type="number" id={p.id} value={p.defaultValue} name={p.title}></input>),
+    RangeFieldValidatorState: jest.fn((p: IRangeFieldValidatorProps) => (
+      <input type="number" id={p.id} value={p.defaultValue} name={p.title}></input>
+    )),
   };
 });
 jest.mock('react-hook-form', () => {
