@@ -1,6 +1,6 @@
 import React from 'react';
 import { renderHook } from '@testing-library/react';
-import { RangeFieldValidator } from '../../../src/components/validators/RangeFieldValidator';
+import { RangeFieldValidatorState } from '../../../src/components/validators/RangeFieldValidatorState';
 import { ValidatorStackTypes } from '../../../src/components/validators/ValidatorStackTypes';
 import { ValidatorTypes } from '../../../src/components/validators/ValidatorTypes';
 import { useStackValidationChildren } from '../../../src/components/hooks/useStackValidationChildren';
@@ -79,8 +79,8 @@ describe('useStackValidationChildren has children unit tests', () => {
 
       const { result } = renderHook(() =>
         useStackValidationChildren(ValidatorStackTypes.Optional, [
-          <RangeFieldValidator id="One" validationType={ValidatorStackTypes.Optional} />,
-          <RangeFieldValidator id="Two" validationType={ValidatorStackTypes.Optional} />,
+          <RangeFieldValidatorState id="One" validationType={ValidatorStackTypes.Optional} />,
+          <RangeFieldValidatorState id="Two" validationType={ValidatorStackTypes.Optional} />,
         ]),
       );
 

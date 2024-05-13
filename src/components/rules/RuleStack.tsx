@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { ValidationBar } from '../validators/ValidationBar';
 import { TitleDropDownValidator, ITitleDropDownOption } from '../validators/TitleDropDownValidator';
 import { PropertyDropDownValidator } from '../validators/PropertyDropDownValidator';
-import { RangeFieldValidator } from '../validators/RangeFieldValidator';
+import { RangeFieldValidatorState } from '../validators/RangeFieldValidatorState';
 import { DeleteButton } from '../core/DeleteButton';
 import { DragPlaceholder } from '../core/DragPlaceHolder';
 import { useStackValidationChildren } from '../hooks/useStackValidationChildren';
@@ -70,7 +70,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
   );
 
   const rangeFieldValidator = (
-    <RangeFieldValidator
+    <RangeFieldValidatorState
       id={`${props.id}`}
       min={selectedStack?.min}
       max={selectedStack?.max}

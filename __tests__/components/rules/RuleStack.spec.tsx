@@ -6,7 +6,7 @@ import { ValidatorStackTypes } from '../../../src/components/validators/Validato
 import { IRuleStackProps } from '../../../src/components/rules/RuleStack';
 import { ValidatorTypes } from '../../../src/components/validators/ValidatorTypes';
 import { useStackValidationChildren } from '../../../src/components/hooks/useStackValidationChildren';
-import { RangeFieldValidator } from '../../../src/components/validators/RangeFieldValidator';
+import { RangeFieldValidatorState } from '../../../src/components/validators/RangeFieldValidatorState';
 import { TitleDropDownValidator } from '../../../src/components/validators/TitleDropDownValidator';
 import { DeleteButton } from '../../../src/components/core/DeleteButton';
 
@@ -23,9 +23,9 @@ jest.mock('../../../src/components/validators/ValidationBar', () => {
   };
 });
 
-jest.mock('../../../src/components/validators/RangeFieldValidator', () => {
+jest.mock('../../../src/components/validators/RangeFieldValidatorState', () => {
   return {
-    RangeFieldValidator: jest.fn((p) => <input type="number" id={`rangeFieldValidator${p.id}`} />),
+    RangeFieldValidatorState: jest.fn((p) => <input type="number" id={`rangeFieldValidator${p.id}`} />),
   };
 });
 jest.mock('../../../src/components/validators/PropertyDropDownValidator', () => {
@@ -115,7 +115,7 @@ describe('RuleStack unit tests', () => {
       const entity = screen.getByTestId<HTMLElement>(`rangeFieldValidator${props.id}`);
 
       expect(entity).toBeInTheDocument();
-      expect(RangeFieldValidator).toHaveBeenCalledWith(
+      expect(RangeFieldValidatorState).toHaveBeenCalledWith(
         {
           id: props.id,
           min: undefined,
@@ -183,7 +183,7 @@ describe('RuleStack unit tests', () => {
           {},
         );
 
-        expect(RangeFieldValidator).toHaveBeenNthCalledWith(
+        expect(RangeFieldValidatorState).toHaveBeenNthCalledWith(
           1,
           {
             id: 'RuleStack2',
@@ -204,7 +204,7 @@ describe('RuleStack unit tests', () => {
           target: { value },
         });
 
-        expect(RangeFieldValidator).toHaveBeenNthCalledWith(
+        expect(RangeFieldValidatorState).toHaveBeenNthCalledWith(
           2,
           {
             id: 'RuleStack2',

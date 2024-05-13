@@ -15,7 +15,7 @@ import React from 'react';
 import { configure, fireEvent, render, screen } from '@testing-library/react';
 import { ValidatorStackTypes } from '../../../src/components/validators/ValidatorStackTypes';
 import '@testing-library/jest-dom';
-import { RangeFieldValidator } from '../../../src/components/validators/RangeFieldValidator';
+import { RangeFieldValidatorState } from '../../../src/components/validators/RangeFieldValidatorState';
 import { IThemeOptions } from '../../../src/theming/IThemeOptions';
 import { ITypography } from '../../../src/theming/ITypography';
 
@@ -23,7 +23,7 @@ const RangeFieldValidatorSetup = (props: IRangeFieldValidatorProps) => {
   const methods = useForm({ mode: 'onBlur' });
   return (
     <FormProvider {...methods}>
-      <RangeFieldValidator {...props} />
+      <RangeFieldValidatorState {...props} />
     </FormProvider>
   );
 };

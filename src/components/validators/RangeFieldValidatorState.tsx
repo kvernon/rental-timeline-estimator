@@ -134,7 +134,7 @@ const InputLabel = styled.label<{
   }
 `;
 
-export const RangeFieldValidator = (props: IRangeFieldValidatorProps) => {
+export const RangeFieldValidatorState = (props: IRangeFieldValidatorProps) => {
   const coreTheme = useTheme() as IThemeOptions;
 
   const { register, setValue, formState, setFocus } = useFormContext();

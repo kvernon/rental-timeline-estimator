@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Stack } from '../core/Stack';
-import { RangeFieldValidator } from '../validators/RangeFieldValidator';
+import { RangeFieldValidatorState } from '../validators/RangeFieldValidatorState';
 import { IRangeFieldValidatorProps } from '../validators/IRangeFieldValidatorProps';
 import { ValidatorStackName } from '../naming/ValidatorStackName';
 import styled from '@emotion/styled';
@@ -23,7 +23,7 @@ const StackPosition = styled(Stack)`
   z-index: 2;
 `;
 
-const ZRangeFieldValidator = styled(RangeFieldValidator)`
+const ZRangeFieldValidator = styled(RangeFieldValidatorState)`
   z-index: 4;
 `;
 

@@ -28,7 +28,7 @@ jest.mock('react-hook-form', () => {
 });
 
 import { ValidatorTypes } from '../../../src/components/validators/ValidatorTypes';
-import { RangeFieldValidator } from '../../../src/components/validators/RangeFieldValidator';
+import { RangeFieldValidatorState } from '../../../src/components/validators/RangeFieldValidatorState';
 import { ValidatorStack } from '../../../src/components/validators/ValidatorStack';
 import { IValidatorPanelProps } from '../../../src/components/validators/IValidatorPanelProps';
 import { IThemeOptions } from '../../../src/theming/IThemeOptions';
@@ -139,7 +139,7 @@ describe('ValidatorStack unit tests', () => {
 
           render(
             <ValidatorStackSetup id={'foo'} panelValidatorStackType={panelValidatorStackType}>
-              <RangeFieldValidator validationType={ValidatorStackTypes.Optional} id="something" defaultValue={undefined} />
+              <RangeFieldValidatorState validationType={ValidatorStackTypes.Optional} id="something" defaultValue={undefined} />
             </ValidatorStackSetup>,
           );
 
@@ -163,7 +163,7 @@ describe('ValidatorStack unit tests', () => {
 
           render(
             <ValidatorStackSetup id={'foo'} panelValidatorStackType={panelValidatorStackType}>
-              <RangeFieldValidator validationType={ValidatorStackTypes.Optional} id="something" defaultValue={undefined} />
+              <RangeFieldValidatorState validationType={ValidatorStackTypes.Optional} id="something" defaultValue={undefined} />
             </ValidatorStackSetup>,
           );
 
