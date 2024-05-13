@@ -9,24 +9,24 @@ updates:
     groups:
       jest:
         patterns:
-        - @testing-library/*
-        - @types/chance
-        - @types/jest
-        - @types/jsdom
+        - "@testing-library/*"
+        - "@types/chance"
+        - "@types/jest"
+        - "@types/jsdom"
         - chance
         - jest*
         - jsdom
         - ts-jest
       style:
         patterns:
-        - @emotion/*
+        - "@emotion/*"
       story:
         patterns:
-        - @storybook/*
-        - @mdx-js/react
+        - "@storybook/*"
+        - "@mdx-js/react"
       dev:
         patterns:
-        - @commitlint/*
+        - "@commitlint/*"
         - husky
         - lint-staged
         - semantic-*
@@ -36,16 +36,16 @@ updates:
           - prettier
       webpack:
         patterns:
-          - @types/webpack
+          - "@types/webpack"
           - eslint-webpack-plugin
           - html-webpack-plugin
           - ts-loader
           - webpack*
       core:
         patterns:
-        - @types/node
-        - @types/react
-        - @types/react-dom
+        - "@types/node"
+        - "@types/react"
+        - "@types/react-dom"
         - react
         - react-dom
         - typescript
