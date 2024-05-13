@@ -4,32 +4,17 @@ import '@testing-library/jest-dom';
 import { configure, render, screen } from '@testing-library/react';
 import React from 'react';
 import { ValidatorStackTypes } from '../../../src/components/validators/ValidatorStackTypes';
-import { TitleDropDownValidatorName } from '../../../src/components/naming/TitleDropDownValidatorName';
 import { TitleDropDownValidator, ITitleDropDownParams } from '../../../src/components/validators/TitleDropDownValidator';
-import { FormProvider, useForm } from 'react-hook-form';
 import { IThemeOptions } from '../../../src/theming/IThemeOptions';
 import { ITypography } from '../../../src/theming/ITypography';
 import selectEvent from 'react-select-event';
-import { ValidatorTypes } from '../../../src/components/validators/ValidatorTypes';
 
 const Setup = (props: ITitleDropDownParams) => {
-  const methods = useForm({
-    mode: 'onBlur',
-    defaultValues: {
-      [`${TitleDropDownValidatorName(props.id as string)}`]: {
-        value: {
-          value: props.defaultIndex || 0,
-          label: props.titles[props.defaultIndex || 0],
-        },
-        validationResult: props.validationType === ValidatorStackTypes.Optional ? ValidatorTypes.Optional : ValidatorTypes.Invalid,
-      },
-    },
-  });
-
   return (
-    <FormProvider {...methods}>
+    <form role="form">
+      <label htmlFor="Tested">property</label>
       <TitleDropDownValidator {...props} />
-    </FormProvider>
+    </form>
   );
 };
 
@@ -112,7 +97,7 @@ describe('TitleDropDownValidator unit tests', () => {
 
       render(<Setup {...p} />);
 
-      const entity = screen.queryByTestId<HTMLInputElement>(`${TitleDropDownValidatorName(p.id as string)}.value`);
+      const entity = screen.queryByTestId<HTMLInputElement>(p.id as string);
 
       expect(entity).toMatchSnapshot();
     });
@@ -129,7 +114,7 @@ describe('TitleDropDownValidator unit tests', () => {
       render(<Setup {...p} />);
     });
 
-    const translatedId = `${TitleDropDownValidatorName(p.id as string)}.value`;
+    const translatedId = `${p.id as string}`;
 
     test('should contain titles', () => {
       const entity = screen.getByTestId<HTMLElement>(translatedId);
