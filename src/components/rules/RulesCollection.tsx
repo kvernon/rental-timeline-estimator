@@ -13,6 +13,9 @@ import { IThemeOptions } from '../../theming/IThemeOptions';
 import { IRuleStackEntity } from './IRuleStackEntity';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
 
+/**
+ * Notes: rules collections should be the item that deals with the smart controls, not the items above
+ */
 export const RulesCollection = function (collectionProps: IRuleCollectionProps): ReactNode {
   const coreTheme = useTheme() as IThemeOptions;
 

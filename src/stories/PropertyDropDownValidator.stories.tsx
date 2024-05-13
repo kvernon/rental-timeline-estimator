@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { PropertyDropDownValidator } from '../components/validators/PropertyDropDownValidator2';
+import { PropertyDropDownValidator } from '../components/validators/PropertyDropDownValidator';
 import React from 'react';
 
 export default {

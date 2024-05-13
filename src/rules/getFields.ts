@@ -2,7 +2,7 @@ import { getPrettyName } from './getPrettyName';
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
 import { IRuleConfigEntity } from './IRuleConfigEntity';
 import { FormatNames } from '../components/naming/FormatNames';
-import { propertyOptions } from '../components/validators/PropertyDropDownValidator2';
+import { propertyOptions } from '../components/validators/PropertyDropDownValidator';
 
 export const getFields = (collection: IRuleConfigEntity[]) => {
   return collection

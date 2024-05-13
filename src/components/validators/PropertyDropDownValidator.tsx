@@ -1,14 +1,21 @@
-import ReactSelect, { GroupBase, Props } from 'react-select';
+import ReactSelect, { GroupBase, SingleValue } from 'react-select';
 import styled from '@emotion/styled';
 import React, { ReactNode } from 'react';
 import { FontGroups } from '../../theming/fontGroups';
 import { useTheme } from '@emotion/react';
 import { IThemeOptions } from '../../theming/IThemeOptions';
 import { ValidatorTypes } from './ValidatorTypes';
+import { ITitleDropDownOption } from './TitleDropDownValidator';
 
-export interface IOption {
-  label: string;
-  value: number;
+export const propertyOptions = ['apartment', 'house'];
+
+export interface IPropertyDropDownParams {
+  id?: string;
+  defaultIndex?: number;
+  onChange?: (value: IPropertyDropDownOption) => void;
+}
+
+export interface IPropertyDropDownOption extends ITitleDropDownOption {
   image: string;
 }
 
@@ -16,22 +23,23 @@ const Img = styled.img`
   padding: 0;
 `;
 
-export function PropertyDropDownValidator<
-  Option extends IOption,
-  IsMulti extends boolean = false,
-  Group extends GroupBase<Option> = GroupBase<Option>,
->(props: Props<Option, IsMulti, Group>) {
-  const optionsMap = ['apartment', 'house'].map((title: string, idx: number) => {
+/**
+ * not a react-form-hook component. The heavy should not take place here
+ * @param props
+ * @constructor
+ */
+export function PropertyDropDownValidator(props: IPropertyDropDownParams) {
+  const optionsMap = propertyOptions.map((title: string, idx: number) => {
     return { value: idx, label: title, image: `/images/${title}.jpg` };
-  }) as (Option | Group)[];
+  }) as IPropertyDropDownOption[];
 
-  const formatOptionLabel = (data: Option): ReactNode => {
+  const formatOptionLabel = (data: IPropertyDropDownOption): ReactNode => {
     return <Img src={data.image} alt={data.label} title={data.label} />;
   };
 
   const coreTheme = useTheme() as IThemeOptions;
 
-  const SelectStyled = styled(ReactSelect<Option, IsMulti, Group>)`
+  const SelectStyled = styled(ReactSelect<IPropertyDropDownOption, false, GroupBase<IPropertyDropDownOption>>)`
     appearance: none;
     white-space: pre-wrap;
     width: 100%;
@@ -41,8 +49,12 @@ export function PropertyDropDownValidator<
   return (
     <SelectStyled
       {...props}
+      name={props.id}
+      onChange={(a: SingleValue<IPropertyDropDownOption>) => {
+        if (a && props.onChange) props?.onChange(a);
+      }}
       options={optionsMap}
-      defaultValue={optionsMap[1] as Option}
+      defaultValue={optionsMap[1]}
       formatOptionLabel={formatOptionLabel}
       styles={{
         control: (baseStyles) => {

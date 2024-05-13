@@ -3,7 +3,7 @@ import { Stack } from '../core/Stack';
 import React, { useEffect, useState } from 'react';
 import { ValidationBar } from '../validators/ValidationBar';
 import { TitleDropDownValidator, ITitleDropDownOption } from '../validators/TitleDropDownValidator';
-import { PropertyDropDownValidator } from '../validators/PropertyDropDownValidator2';
+import { PropertyDropDownValidator } from '../validators/PropertyDropDownValidator';
 import { RangeFieldValidator } from '../validators/RangeFieldValidator';
 import { DeleteButton } from '../core/DeleteButton';
 import { DragPlaceholder } from '../core/DragPlaceHolder';
