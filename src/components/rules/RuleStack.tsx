@@ -2,8 +2,8 @@ import styled from '@emotion/styled';
 import { Stack } from '../core/Stack';
 import React, { useEffect, useState } from 'react';
 import { ValidationBar } from '../validators/ValidationBar';
-import { IOption, TitleDropDownValidator } from '../validators/TitleDropDownValidator';
-import { PropertyDropDown } from '../PropertyDropDown';
+import { TitleDropDownValidator, ITitleDropDownOption } from '../validators/TitleDropDownValidator';
+import { PropertyDropDownValidator } from '../validators/PropertyDropDownValidator';
 import { RangeFieldValidator } from '../validators/RangeFieldValidator';
 import { DeleteButton } from '../core/DeleteButton';
 import { DragPlaceholder } from '../core/DragPlaceHolder';
@@ -14,6 +14,8 @@ import { ValidatorStackTypes } from '../validators/ValidatorStackTypes';
 export interface IRuleStackProps {
   id: string;
 
+  index?: number;
+
   ruleStackValues: IRuleStackEntity[];
 
   validationType: ValidatorStackTypes;
@@ -21,10 +23,12 @@ export interface IRuleStackProps {
   defaultIndex?: number;
 
   removeClick?: (evt: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+
+  style?: React.CSSProperties;
 }
 
 // https://stackoverflow.com/a/69830024 (example on making drop down w/ image)
-const PropertyPicker = styled(PropertyDropDown)`
+const PropertyPicker = styled(PropertyDropDownValidator)`
   width: 147px;
 `;
 
@@ -39,18 +43,19 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
 
   useEffect(() => {
     const newVar = props.ruleStackValues.length === 0 ? null : props.ruleStackValues[selectedRuleStackValue];
+    console.log('[props.ruleStackValues, selectedRuleStackValue]', JSON.stringify(newVar), selectedRuleStackValue);
     setSelectedStack(newVar);
   }, [props.ruleStackValues, selectedRuleStackValue]);
 
   useEffect(() => {
     const newValue = props.ruleStackValues.length === 0 ? null : props.ruleStackValues[selectedRuleStackValue];
     if (JSON.stringify(newValue) !== JSON.stringify(selectedStack)) {
-      // console.log('[selectedRuleStackValue, selectedStack, ruleStackValues]', JSON.stringify(newValue));
+      console.log('[selectedRuleStackValue, selectedStack, ruleStackValues]', JSON.stringify(newValue));
       setSelectedStack(newValue);
     }
   }, [selectedRuleStackValue, selectedStack, props.ruleStackValues]);
 
-  const onChange = (valueOption: IOption) => {
+  const onChange = (valueOption: ITitleDropDownOption) => {
     setSelectedRuleStackValue(valueOption.value);
   };
 
@@ -78,12 +83,23 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
   const { isValid } = useStackValidationChildren(props.validationType, [titleDropDownValidator, rangeFieldValidator]);
 
   return (
-    <StackBase {...props} ref={ref} direction="row" spacing={2} flexGrow={1} marginBottom={'20px'}>
+    <StackBase
+      {...props}
+      ref={ref}
+      direction="row"
+      marginBottom={'20px'}
+      spacing={2}
+      flexGrow={1}
+      style={{
+        ...props.style,
+        zIndex: props.index,
+      }}
+    >
       <DragPlaceholder role={'drag-handle'} data-movable-handle />
       <Stack id={`${props.id}-sub`} direction="column" paddingTop={'10px'} paddingLeft={'17px'} paddingBottom={'20px'} paddingRight={'17px'}>
         {titleDropDownValidator}
         <Stack direction="row" spacing={2} paddingTop={'10px'}>
-          <PropertyPicker id={props.id} />
+          <PropertyPicker id={props.id} defaultIndex={props.ruleStackValues[selectedRuleStackValue]?.property} />
           {rangeFieldValidator}
         </Stack>
       </Stack>

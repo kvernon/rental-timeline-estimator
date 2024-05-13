@@ -61,6 +61,13 @@ describe('getFields unit tests', () => {
                   value: 1,
                 },
               },
+              propertyDropDown: {
+                validationResult: 2,
+                value: {
+                  label: 'house',
+                  value: 1,
+                },
+              },
             },
           ]);
         });
@@ -104,6 +111,13 @@ describe('getFields unit tests', () => {
                   value: 1,
                 },
               },
+              propertyDropDown: {
+                validationResult: ValidatorTypes.Optional,
+                value: {
+                  label: 'house',
+                  value: 1,
+                },
+              },
             },
             {
               rangeFieldValidator: {
@@ -115,6 +129,13 @@ describe('getFields unit tests', () => {
                 value: {
                   label: expectedLabelHold,
                   value: 2,
+                },
+              },
+              propertyDropDown: {
+                validationResult: ValidatorTypes.Optional,
+                value: {
+                  label: 'house',
+                  value: 1,
                 },
               },
             },

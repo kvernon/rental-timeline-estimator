@@ -50,6 +50,7 @@ const commonArguments: IRuleStackProps = {
   ruleStackValues: [
     {
       prefix: '$',
+      property: 0,
       suffix: '%',
       ruleTitle: 'None',
       max: 1,
@@ -57,6 +58,7 @@ const commonArguments: IRuleStackProps = {
     },
     {
       prefix: '$',
+      property: 0,
       suffix: '%',
       ruleTitle: 'Example Rule For Money',
       min: 10,
@@ -64,6 +66,7 @@ const commonArguments: IRuleStackProps = {
     },
     {
       prefix: '$',
+      property: 0,
       suffix: '%',
       ruleTitle: 'Example Rule For Percent',
       min: 0,

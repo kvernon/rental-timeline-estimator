@@ -1,8 +1,9 @@
 import { IEntityDataValueResult } from '../../FormRuleStackEntityDataValueResult';
-import { IOption } from '../validators/TitleDropDownValidator';
+import { ITitleDropDownOption } from '../validators/TitleDropDownValidator';
 
 export interface IFieldType {
-  titleDropDown: IEntityDataValueResult<IOption>;
+  propertyDropDown: IEntityDataValueResult<ITitleDropDownOption>;
+  titleDropDown: IEntityDataValueResult<ITitleDropDownOption>;
   rangeFieldValidator: IEntityDataValueResult<number>;
 }
 

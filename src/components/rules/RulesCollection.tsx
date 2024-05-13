@@ -13,6 +13,9 @@ import { IThemeOptions } from '../../theming/IThemeOptions';
 import { IRuleStackEntity } from './IRuleStackEntity';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
 
+/**
+ * Notes: rules collections should be the item that deals with the smart controls, not the items above
+ */
 export const RulesCollection = function (collectionProps: IRuleCollectionProps): ReactNode {
   const coreTheme = useTheme() as IThemeOptions;
 
@@ -28,6 +31,7 @@ export const RulesCollection = function (collectionProps: IRuleCollectionProps):
   const [possibleChoices, setPossibleChoices] = useState(collectionProps.possibleChoices || []);
 
   const CardContentForList = styled(CardContent)`
+    /*position: relative;*/
     padding: 0;
   `;
 
@@ -44,11 +48,20 @@ export const RulesCollection = function (collectionProps: IRuleCollectionProps):
     if (JSON.stringify(possibleRemainingChoices) !== JSON.stringify(remainingChoices)) {
       setRemainingChoices(possibleRemainingChoices);
     }
+
+    console.log('possibleChoices', possibleChoices);
   }, [fieldItems, possibleChoices, remainingChoices]);
 
   const onClick = () => {
     const index = possibleChoices.findIndex((F) => F.ruleTitle === remainingChoices[0].ruleTitle);
     const fieldItem: IFieldType = {
+      propertyDropDown: {
+        value: {
+          value: index === -1 ? 1 : index,
+          label: 'house',
+        },
+        validationResult: ValidatorTypes.Valid,
+      },
       titleDropDown: {
         value: {
           value: index === -1 ? 0 : index,
@@ -89,8 +102,10 @@ export const RulesCollection = function (collectionProps: IRuleCollectionProps):
         renderItem={({ value, props, index }) => (
           <RuleStack
             {...props}
+            index={index ? fieldItems.length - index : fieldItems.length}
             key={value?.titleDropDown?.value?.label}
             id={`${collectionProps.title}.${index}`}
+            defaultIndex={possibleChoices.findIndex((x) => x.ruleTitle === value.titleDropDown.value?.label) || 0}
             ruleStackValues={possibleChoices}
             validationType={collectionProps.validationType}
             removeClick={() => {
