@@ -3,7 +3,7 @@ import React from 'react';
 import { ValidatorStack } from '../components/validators/ValidatorStack';
 import { ValidatorStackTypes } from '../components/validators/ValidatorStackTypes';
 import { FormProvider, useForm } from 'react-hook-form';
-import { RangeFieldValidatorState } from '../components/validators/RangeFieldValidatorState';
+import { RangeFieldValidator } from '../components/validators/RangeFieldValidator';
 import { DevTool } from '@hookform/devtools';
 import { IValidatorPanelProps } from '../components/validators/IValidatorPanelProps';
 import { RangeFieldValidatorName } from '../components/naming/RangeFieldValidatorName';
@@ -46,7 +46,7 @@ const Builder = (arg: IValidatorPanelProps) => {
 const Template: ComponentStory<typeof Builder> = (args) => {
   return (
     <Builder {...args}>
-      <RangeFieldValidatorState
+      <RangeFieldValidator
         id={args.id + '_1'}
         min={1}
         max={7}
@@ -55,7 +55,7 @@ const Template: ComponentStory<typeof Builder> = (args) => {
         prefix={'prefix'}
         validationType={args.panelValidatorStackType}
       />
-      <RangeFieldValidatorState
+      <RangeFieldValidator
         id={args.id + '_2'}
         min={1}
         max={7}

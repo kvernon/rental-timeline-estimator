@@ -84,7 +84,7 @@ describe('RangeFieldValidator unit tests', () => {
 
           expect(entity.value).toEqual('20');
 
-          expect(entity).toHaveStyle('background-color:rgba(255, 0, 0, 0.255)');
+          expect(entity).toHaveStyle('background-color:rgba(0, 255, 0, 0.255)');
         });
       });
     });
@@ -109,7 +109,7 @@ describe('RangeFieldValidator unit tests', () => {
 
           expect(entity.value).toEqual('2');
 
-          expect(entity).toHaveStyle('background-color:rgba(0, 0, 255, 0.255)');
+          expect(entity).toHaveStyle('background-color:rgba(0, 255, 0, 0.255)');
         });
       });
     });

@@ -6,7 +6,7 @@ import { IRangeFieldValidatorProps } from '../components/validators/IRangeFieldV
 import { FormProvider, useForm } from 'react-hook-form';
 import { ValidatorStackName } from '../components/naming/ValidatorStackName';
 import { DevTool } from '@hookform/devtools';
-import { RangeFieldValidatorState } from '../components/validators/RangeFieldValidatorState';
+import { RangeFieldValidator } from '../components/validators/RangeFieldValidator';
 import { IFormRuleStackEntityDataValueResult } from '../FormRuleStackEntityDataValueResult';
 
 interface ITheseProps extends IRangeFieldValidatorProps {
@@ -40,14 +40,14 @@ const Builder = (arg: ITheseProps) => {
       <DevTool control={methods.control} placement="top-left" />
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <ValidationPanel panelType={arg.panelType} title={arg.title as string} id={arg.id}>
-          <RangeFieldValidatorState
+          <RangeFieldValidator
             id={arg.id}
             min={arg.min}
             max={arg.max}
             suffix={arg.suffix}
             title={arg.title}
             prefix={arg.prefix}
-            onBlur={arg.onBlur}
+            onChange={arg.onChange}
             validationType={arg.validationType}
           />
         </ValidationPanel>

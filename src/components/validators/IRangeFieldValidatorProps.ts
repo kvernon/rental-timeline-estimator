@@ -1,8 +1,8 @@
 import { ValidatorStackTypes } from './ValidatorStackTypes';
-import { IRangeFieldValidatorBlur } from './IRangeFieldValidatorBlur';
+import { IRangeFieldValidatorChange } from './IRangeFieldValidatorChange';
 import { FontGroups } from '../../theming/fontGroups';
 
-export interface IRangeFieldValidatorProps extends IRangeFieldValidatorBlur {
+export interface IRangeFieldValidatorProps extends IRangeFieldValidatorChange {
   inputFontGroup?: FontGroups;
   inputLabelFontGroup?: FontGroups;
   validationType: ValidatorStackTypes;
