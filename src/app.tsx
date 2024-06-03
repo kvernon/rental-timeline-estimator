@@ -4,7 +4,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { ValidatorStackTypes } from './components/validators/ValidatorStackTypes';
 import { options } from './theming/theme';
 import { ValidationPanel } from './components/panels/ValidationPanel';
-import { RangeFieldValidatorState } from './components/validators/RangeFieldValidatorState';
+import { RangeFieldValidator } from './components/validators/RangeFieldValidator';
 import { RangeFieldValidatorName } from './components/naming/RangeFieldValidatorName';
 import { IRangeFieldValidatorProps } from './components/validators/IRangeFieldValidatorProps';
 import { RulesCollection } from './components/rules/RulesCollection';
@@ -100,8 +100,8 @@ export const App = function () {
         <DevTool control={methods.control} placement="bottom-right" />
         <GoalPanel hasSpinner={false} useUnderlineOnly={true} {...goalProps} />
         <ValidationPanel id={'savings'} panelType={ValidatorStackTypes.Optional} title={'Savings Plan'}>
-          <RangeFieldValidatorState {...savingsAtStartProps} />
-          <RangeFieldValidatorState {...savedMonthly} />
+          <RangeFieldValidator {...savingsAtStartProps} />
+          <RangeFieldValidator {...savedMonthly} />
         </ValidationPanel>
         <RulesStack direction={'row'} flexGrow={2}>
           <RulesCollectionWidth

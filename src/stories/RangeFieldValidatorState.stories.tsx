@@ -2,27 +2,27 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 import React from 'react';
 import { ValidatorStackTypes } from '../components/validators/ValidatorStackTypes';
 import { IEventResult } from '../components/validators/IEventResult';
-import { RenderRangeFieldValidatorState } from './RenderRangeFieldValidatorState';
+import { RenderRangeFieldValidator } from './RenderRangeFieldValidator';
 
-const meta: ComponentMeta<typeof RenderRangeFieldValidatorState> = {
+const meta: ComponentMeta<typeof RenderRangeFieldValidator> = {
   /* 👇 The title prop is optional.
    * See https://storybook.js.org/docs/react/configure/overview#configure-story-loading
    * to learn how to generate automatic titles
    */
   title: 'Example/RangeFieldValidator',
-  component: RenderRangeFieldValidatorState,
+  component: RenderRangeFieldValidator,
 };
 
 export default meta;
 
-const Template: ComponentStory<typeof RenderRangeFieldValidatorState> = (args) => {
-  return <RenderRangeFieldValidatorState {...args} />;
+const Template: ComponentStory<typeof RenderRangeFieldValidator> = (args) => {
+  return <RenderRangeFieldValidator {...args} />;
 };
 
 export const Optional = Template.bind({});
 Optional.args = {
   id: 'Optional',
-  onBlur: (evt: IEventResult<number>) => console.log(evt),
+  onChange: (evt: IEventResult<number>) => console.log(evt),
   validationType: ValidatorStackTypes.Optional,
   prefix: '$',
   suffix: 'Optional',
@@ -37,7 +37,7 @@ OptionalNoTitle.args = {
   prefix: '$',
   suffix: 'Optional',
   validationType: ValidatorStackTypes.Optional,
-  onBlur: (evt: IEventResult<number>) => console.log(evt),
+  onChange: (evt: IEventResult<number>) => console.log(evt),
   max: 7,
   min: 3,
 };
@@ -47,7 +47,7 @@ OptionalNoSuffix.args = {
   id: 'OptionalNoSuffix',
   prefix: '$',
   validationType: ValidatorStackTypes.Optional,
-  onBlur: (evt: IEventResult<number>) => console.log(evt),
+  onChange: (evt: IEventResult<number>) => console.log(evt),
   max: 7,
   min: 3,
 };
@@ -56,7 +56,7 @@ export const OptionalNothing = Template.bind({});
 OptionalNothing.args = {
   id: 'OptionalNothing',
   validationType: ValidatorStackTypes.Optional,
-  onBlur: (evt: IEventResult<number>) => console.log(evt),
+  onChange: (evt: IEventResult<number>) => console.log(evt),
   max: 7,
   min: 3,
 };
@@ -67,7 +67,7 @@ Required.args = {
   prefix: 'Required',
   suffix: '%',
   validationType: ValidatorStackTypes.Required,
-  onBlur: (evt: IEventResult<number>) => console.log(evt),
+  onChange: (evt: IEventResult<number>) => console.log(evt),
   max: 7,
   min: 3,
 };
@@ -78,7 +78,7 @@ RequiredNoTitle.args = {
   prefix: 'Required',
   suffix: '%',
   validationType: ValidatorStackTypes.Required,
-  onBlur: (evt: IEventResult<number>) => console.log(evt),
+  onChange: (evt: IEventResult<number>) => console.log(evt),
   max: 7,
   min: 3,
 };
@@ -87,7 +87,7 @@ RequiredNoSuffix.args = {
   id: 'RequiredNoSuffix',
   prefix: 'Required',
   validationType: ValidatorStackTypes.Required,
-  onBlur: (evt: IEventResult<number>) => console.log(evt),
+  onChange: (evt: IEventResult<number>) => console.log(evt),
   max: 7,
   min: 3,
 };
@@ -96,7 +96,7 @@ export const RequiredNothing = Template.bind({});
 RequiredNothing.args = {
   id: 'RequiredNothing',
   validationType: ValidatorStackTypes.Required,
-  onBlur: (evt: IEventResult<number>) => console.log(evt),
+  onChange: (evt: IEventResult<number>) => console.log(evt),
   max: 7,
   min: 3,
 };
@@ -105,7 +105,7 @@ export const RequiredMixed = Template.bind({});
 RequiredMixed.args = {
   id: 'RequiredMixed',
   validationType: ValidatorStackTypes.Required,
-  onBlur: (evt: IEventResult<number>) => console.log(evt),
+  onChange: (evt: IEventResult<number>) => console.log(evt),
   max: 7,
   min: 3,
   overrideValidationType: ValidatorStackTypes.Optional,

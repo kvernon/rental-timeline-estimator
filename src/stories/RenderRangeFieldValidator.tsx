@@ -1,7 +1,7 @@
 import { IRangeFieldValidatorProps } from '../components/validators/IRangeFieldValidatorProps';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { RangeFieldValidatorState } from '../components/validators/RangeFieldValidatorState';
+import { RangeFieldValidator } from '../components/validators/RangeFieldValidator';
 import { DevTool } from '@hookform/devtools';
 import { RangeFieldValidatorName } from '../components/naming/RangeFieldValidatorName';
 import { ValidatorStackTypes } from '../components/validators/ValidatorStackTypes';
@@ -12,7 +12,7 @@ export interface IRenderRangeFieldValidatorProps extends IRangeFieldValidatorPro
   overrideValidationType?: ValidatorStackTypes;
 }
 
-export const RenderRangeFieldValidatorState = (arg: IRenderRangeFieldValidatorProps): React.ReactElement => {
+export const RenderRangeFieldValidator = (arg: IRenderRangeFieldValidatorProps): React.ReactElement => {
   const validatorStackTypes = arg.overrideValidationType || arg.validationType;
   const methods = useForm<IFormRuleStackEntityDataValueResult<number>>({
     mode: 'onBlur',
@@ -28,14 +28,14 @@ export const RenderRangeFieldValidatorState = (arg: IRenderRangeFieldValidatorPr
     <FormProvider {...methods}>
       <DevTool control={methods.control} placement="top-left" />
       <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <RangeFieldValidatorState
+        <RangeFieldValidator
           id={arg.id}
           min={arg.min}
           max={arg.max}
           suffix={arg.suffix}
           title={arg.title}
           prefix={arg.prefix}
-          onBlur={arg.onBlur}
+          onChange={arg.onChange}
           validationType={arg.validationType}
         />
         <input type="submit" />

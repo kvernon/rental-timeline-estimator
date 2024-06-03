@@ -1,7 +1,6 @@
 import { IRangeFieldValidatorProps } from './IRangeFieldValidatorProps';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ValidatorTypes } from './ValidatorTypes';
-import { RangeFieldValidatorName } from '../naming/RangeFieldValidatorName';
 import { evaluateValidation } from './evaluatateValidation';
 import { FontGroups } from '../../theming/fontGroups';
 import { IThemeOptions } from '../../theming/IThemeOptions';
@@ -13,24 +12,49 @@ import { FormControl } from '../core/FormControl';
 import { InputBox } from '../core/InputBox';
 import { toValidatorType } from './ToValidatorType';
 import { isInRange } from './IsInRange';
+import { formatName } from '../naming/FormatName';
+import { FormatNames } from '../naming/FormatNames';
 
 export const RangeFieldValidator = (props: IRangeFieldValidatorProps) => {
   const coreTheme = useTheme() as IThemeOptions;
 
   const [isFormValid, setIsFormValid] = useState<ValidatorTypes>(toValidatorType(props.validationType));
   const [inputValue, setInputValue] = useState<number | undefined>(props.defaultValue);
-  const rangeFieldId = RangeFieldValidatorName(props.id);
+  const rangeFieldId = formatName(props.id, FormatNames.RangeFieldValidatorId);
 
   const message = `Range between ${props.min || 0} and ${props.max || 100}`;
 
   const onUpdate = (newValue: number | undefined): void => {
-    setInputValue(newValue);
-    const eventResult = evaluateValidation(props.validationType, isInRange, newValue, {
+    if (newValue !== inputValue) {
+      setInputValue(newValue);
+
+      const eventResult = evaluateValidation(props.validationType, isInRange, newValue, {
+        min: props.min,
+        max: props.max,
+      });
+
+      setIsFormValid(eventResult.validationResult);
+
+      if (props.onChange) {
+        props.onChange({
+          id: rangeFieldId,
+          value: newValue,
+          ...eventResult,
+        });
+      }
+    }
+  };
+
+  useEffect(() => {
+    const isValidNew = evaluateValidation(props.validationType, isInRange, inputValue, {
       min: props.min,
       max: props.max,
     });
-    setIsFormValid(eventResult.validationResult);
-  };
+
+    if (isValidNew.validationResult !== isFormValid) {
+      setIsFormValid(isValidNew.validationResult);
+    }
+  }, [inputValue, props.max, props.min, props.validationType, isFormValid]);
 
   return (
     <FormControl>
@@ -46,7 +70,12 @@ export const RangeFieldValidator = (props: IRangeFieldValidatorProps) => {
       )}
       <InputBox id={`${rangeFieldId}-box`}>
         {props.prefix && (
-          <InputSpanPaddingLeft themeOptions={coreTheme} className="prefix" fontGroup={props.inputFontGroup ?? FontGroups.input} title={props.title}>
+          <InputSpanPaddingLeft
+            themeOptions={coreTheme}
+            className="prefix"
+            fontGroup={props.inputFontGroup ?? props.inputLabelFontGroup ?? FontGroups.inputLabel}
+            title={props.title}
+          >
             {props.prefix}
           </InputSpanPaddingLeft>
         )}

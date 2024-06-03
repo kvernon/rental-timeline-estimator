@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Stack } from '../core/Stack';
-import { RangeFieldValidatorState } from '../validators/RangeFieldValidatorState';
+
+import { RangeFieldValidator } from '../validators/RangeFieldValidator';
 import { IRangeFieldValidatorProps } from '../validators/IRangeFieldValidatorProps';
 import { ValidatorStackName } from '../naming/ValidatorStackName';
 import styled from '@emotion/styled';
 import { Spinner } from '../core/Spinner';
 import { RangeFieldValidatorName } from '../naming/RangeFieldValidatorName';
+import { Stack } from '../core/Stack';
 
 const TopStack = styled.div`
   height: 275px;
@@ -23,7 +24,7 @@ const StackPosition = styled(Stack)`
   z-index: 2;
 `;
 
-const ZRangeFieldValidator = styled(RangeFieldValidatorState)`
+const ZRangeFieldValidator = styled(RangeFieldValidator)`
   z-index: 4;
 `;
 
