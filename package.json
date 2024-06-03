@@ -36,8 +36,8 @@
   "dependencies": {
     "@cubedelement.com/realty-investor-timeline": "^4.0.1",
     "@emotion-icons/fa-solid": "^3.14.0",
-    "@emotion/react": "^11.11.0",
-    "@emotion/styled": "^11.11.0",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "emotion-icons": "^3.27.0",
     "lodash.get": "^4.4.2",
     "react": "^18.2.0",
