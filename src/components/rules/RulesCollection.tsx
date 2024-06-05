@@ -5,8 +5,7 @@ import { arrayMove, arrayRemove, List } from 'react-movable';
 import styled from '@emotion/styled';
 import { CardContent } from '../core/CardContent';
 import { RuleStack } from './RuleStack';
-import { useFieldArray, useFormContext } from 'react-hook-form';
-import { IAry, IFieldType } from './FormInterfaces';
+import { IFieldType } from './FormInterfaces';
 import { AddListButton } from '../core/AddListButton';
 import { useTheme } from '@emotion/react';
 import { IThemeOptions } from '../../theming/IThemeOptions';
@@ -19,14 +18,7 @@ import { ValidatorTypes } from '../validators/ValidatorTypes';
 export const RulesCollection = function (collectionProps: IRuleCollectionProps): ReactNode {
   const coreTheme = useTheme() as IThemeOptions;
 
-  const methods = useFormContext<IAry<string>>();
-
-  const { fields, swap, append, remove } = useFieldArray({
-    name: `${collectionProps.title}`,
-    control: methods.control,
-  });
-
-  const [fieldItems, setFieldItems] = React.useState<IFieldType[]>(fields);
+  const [fieldItems, setFieldItems] = React.useState<IFieldType[]>(collectionProps.activeChoices || []);
 
   const [possibleChoices, setPossibleChoices] = useState(collectionProps.possibleChoices || []);
 
@@ -76,7 +68,6 @@ export const RulesCollection = function (collectionProps: IRuleCollectionProps):
     };
 
     setFieldItems((old) => [...old, fieldItem]);
-    append(fieldItem);
   };
 
   return (
@@ -84,7 +75,6 @@ export const RulesCollection = function (collectionProps: IRuleCollectionProps):
       <List
         onChange={({ oldIndex, newIndex }) => {
           console.log('List::onChange', { oldIndex, newIndex });
-          swap(oldIndex, newIndex);
           setPossibleChoices((choices) => {
             const newChoices = [...choices];
             const oldEntity = newChoices[oldIndex + 1];
@@ -110,7 +100,6 @@ export const RulesCollection = function (collectionProps: IRuleCollectionProps):
             validationType={collectionProps.validationType}
             removeClick={() => {
               setFieldItems(typeof index !== 'undefined' ? arrayRemove(fieldItems, index) : fieldItems);
-              remove(index);
             }}
           />
         )}
