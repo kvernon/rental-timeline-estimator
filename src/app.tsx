@@ -109,6 +109,7 @@ export const App = function () {
             title={purchaseConfig.panelTitle}
             validationType={ValidatorStackTypes.Optional}
             possibleChoices={getRuleChoices(purchaseConfig.collection)}
+            activeChoices={getFields(purchaseConfig.collection)}
           />
           <RulesCollectionWidth
             id={'holdRules'}

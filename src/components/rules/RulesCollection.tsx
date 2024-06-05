@@ -5,7 +5,7 @@ import { arrayMove, arrayRemove, List } from 'react-movable';
 import styled from '@emotion/styled';
 import { CardContent } from '../core/CardContent';
 import { RuleStack } from './RuleStack';
-import { IFieldType } from './FormInterfaces';
+import { IFieldType } from './IFieldType';
 import { AddListButton } from '../core/AddListButton';
 import { useTheme } from '@emotion/react';
 import { IThemeOptions } from '../../theming/IThemeOptions';

@@ -1,6 +1,6 @@
 import { ValidatorStackTypes } from '../validators/ValidatorStackTypes';
 import { IRuleStackEntity } from './IRuleStackEntity';
-import { IFieldType } from './FormInterfaces';
+import { IFieldType } from './IFieldType';
 
 export interface IRuleCollectionProps {
   id: string;

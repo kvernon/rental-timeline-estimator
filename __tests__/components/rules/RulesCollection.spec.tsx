@@ -9,7 +9,7 @@ import { RuleStack } from '../../../src/components/rules/RuleStack';
 import { CardContent } from '../../../src/components/core/CardContent';
 import { AddListButton } from '../../../src/components/core/AddListButton';
 import { userEvent } from '@testing-library/user-event';
-import { IFieldType } from '../../../src/components/rules/FormInterfaces';
+import { IFieldType } from '../../../src/components/rules/IFieldType';
 import { ValidatorTypes } from '../../../src/components/validators/ValidatorTypes';
 
 jest.mock('react-movable', () => {
