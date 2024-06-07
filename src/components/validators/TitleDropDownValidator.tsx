@@ -41,7 +41,7 @@ export const TitleDropDownValidator = function (props: ITitleDropDownParams) {
 
     if (JSON.stringify(optionsMap) !== JSON.stringify(map)) {
       setOptionsMap(map);
-      console.log('here', map);
+      //console.log('here', map);
     }
   }, [props.titles, optionsMap]);
 
@@ -57,6 +57,9 @@ export const TitleDropDownValidator = function (props: ITitleDropDownParams) {
     const value = (option as ITitleDropDownOption).value;
     if (value !== selectedIndex) {
       setSelectedIndex(value);
+      if (props.onChange) {
+        props.onChange({ value, label: optionsMap[value].label });
+      }
     }
   };
 

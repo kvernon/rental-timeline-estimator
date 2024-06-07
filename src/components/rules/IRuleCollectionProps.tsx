@@ -8,4 +8,5 @@ export interface IRuleCollectionProps {
   validationType: ValidatorStackTypes;
   possibleChoices: IRuleStackEntity[];
   activeChoices?: IFieldType[];
+  onChange?: (results: IFieldType[]) => void;
 }

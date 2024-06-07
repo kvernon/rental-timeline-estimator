@@ -27,6 +27,12 @@ export const RulesCollection = function (collectionProps: IRuleCollectionProps):
     padding: 0;
   `;
 
+  useEffect(() => {
+    if (collectionProps.onChange) {
+      collectionProps.onChange(fieldItems);
+    }
+  }, [collectionProps, fieldItems]);
+
   const [showButton, setShowButton] = useState(false);
 
   const [remainingChoices, setRemainingChoices] = useState<IRuleStackEntity[]>([]);
@@ -41,10 +47,10 @@ export const RulesCollection = function (collectionProps: IRuleCollectionProps):
       setRemainingChoices(possibleRemainingChoices);
     }
 
-    console.log('possibleChoices', possibleChoices);
+    //console.log('possibleChoices', possibleChoices);
   }, [fieldItems, possibleChoices, remainingChoices]);
 
-  const onClick = () => {
+  const addEntityOnClick = () => {
     const index = possibleChoices.findIndex((F) => F.ruleTitle === remainingChoices[0].ruleTitle);
     const fieldItem: IFieldType = {
       propertyDropDown: {
@@ -105,7 +111,7 @@ export const RulesCollection = function (collectionProps: IRuleCollectionProps):
         )}
       />
 
-      {showButton && <AddListButton role={`add button for ${collectionProps.title}`} theme={coreTheme} onClick={onClick} label="Add" />}
+      {showButton && <AddListButton role={`add button for ${collectionProps.title}`} theme={coreTheme} onClick={addEntityOnClick} label="Add" />}
     </CardListLayout>
   );
 };
