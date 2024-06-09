@@ -5,9 +5,9 @@ import { ValidatorTypes } from '../validators/ValidatorTypes';
 const solve = (panelValidatorStackType: ValidatorStackTypes): ValidatorTypes => {
   if (panelValidatorStackType === ValidatorStackTypes.Optional) {
     return ValidatorTypes.Optional;
-  } else {
-    return ValidatorTypes.Invalid;
   }
+
+  return ValidatorTypes.Invalid;
 };
 
 export const useValid = (panelValidatorStackType: ValidatorStackTypes = ValidatorStackTypes.Optional): [ValidatorTypes] => {
@@ -17,7 +17,7 @@ export const useValid = (panelValidatorStackType: ValidatorStackTypes = Validato
     const newEval = solve(panelValidatorStackType);
 
     if (newEval !== isValid) {
-      // console.log('useValid::useEffect [panelValidatorStackType, isValid]');
+      console.log('useValid::useEffect [panelValidatorStackType, isValid]', newEval);
       setIsValid(newEval);
     }
   }, [panelValidatorStackType, isValid]);

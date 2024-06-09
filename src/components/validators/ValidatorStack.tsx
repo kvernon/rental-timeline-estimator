@@ -39,7 +39,7 @@ export const ValidatorStack = function (props: IValidatorPanelProps) {
         id: x.props.id,
       })),
     );
-  }, [isValidDefault]);
+  }, [props.children, isValidDefault]);
 
   useMemo(() => {
     setIsValid(() => {
