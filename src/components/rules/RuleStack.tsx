@@ -43,12 +43,6 @@ const StackBase = styled(Stack)`
   background-color: #4f41b9;
 `;
 
-/*
-  TODO: need to update with:
-  all items going to some value collection save (property, title, input)
-  need to validate, the isValid item
- */
-
 /**
  * RuleStack is used to help show the rule and it's options. The user will decide what those values will be.
  * All options are supplied using {@link IRuleStackProps.ruleStackValues}. They'll get sprinkled in between all titles
