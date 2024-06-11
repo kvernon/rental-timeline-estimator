@@ -6,7 +6,7 @@
   "types": "./dist/src/index.d.ts",
   "scripts": {
     "clean": "rimraf ./dist",
-    "build": "tsc",
+    "build": "tsc -project tsconfig.json",
     "build:dev_test": "tsc --project tsconfig-dev.json",
     "lint": "eslint --config .eslintrc.js --ext .js,.jsx,.ts,.tsx .",
     "lint:fix": "eslint --config .eslintrc.js --ext .js,.jsx,.ts,.tsx . --fix",

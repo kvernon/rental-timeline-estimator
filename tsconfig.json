@@ -4,8 +4,15 @@
   "compilerOptions": {
     "outDir": "./dist"
   },
-  "exclude": ["node_modules", "dist", "./jest.config.ts",
+  "include": [ "src"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "./jest.config.ts",
     "__tests__",
-    "**/*.spec.ts"
+    "**/*.spec.tsx",
+    "**/*.spec.ts",
+    "**/__mocks__",
+    "**/__snapshots__"
   ]
 }
