@@ -16,4 +16,3 @@ lint-staged.config.js
 .jestcache/
 .husky
 .gitignore
-babel.config.js
