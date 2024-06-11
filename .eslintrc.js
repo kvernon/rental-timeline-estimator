@@ -25,14 +25,6 @@ module.exports = {
         'no-console': 0,
       },
     },
-    {
-      files: ['stories/**'],
-      plugins: ['plugin:storybook/recommended'],
-      rules: {
-        '@typescript-eslint/no-var-requires': 0,
-        'no-console': 0,
-      },
-    },
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
