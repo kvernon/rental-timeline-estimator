@@ -21,24 +21,33 @@ export const RangeFieldValidator = (props: IRangeFieldValidatorProps) => {
   const [isFormValid, setIsFormValid] = useState<ValidatorTypes>(toValidatorType(props.validationType));
   const [inputValue, setInputValue] = useState<number | undefined>(props.defaultValue);
   const rangeFieldId = formatName(props.id, FormatNames.RangeFieldValidatorId);
+  const [min] = useState<number>(props.min || 0);
 
-  const message = `Range between ${props.min || 0} and ${props.max || 100}`;
+  const message = `Range between ${min} and ${props.max || 100}`;
 
-  const onUpdate = (newValue: number | undefined): void => {
-    if (newValue !== inputValue) {
-      setInputValue(newValue);
+  const onUpdate = (newValue: string): void => {
+    const newIntValue = parseInt(newValue);
 
-      const eventResult = evaluateValidation(props.validationType, isInRange, newValue, {
-        min: props.min,
-        max: props.max,
-      });
+    const eventResult = evaluateValidation(props.validationType, isInRange, isNaN(newIntValue) ? min - 1 : newIntValue, {
+      min: min,
+      max: props.max,
+    });
+
+    if (isNaN(newIntValue)) {
+      setInputValue(undefined);
+
+      setIsFormValid(eventResult.validationResult);
+    }
+
+    if (newIntValue !== inputValue) {
+      setInputValue(newIntValue);
 
       setIsFormValid(eventResult.validationResult);
 
       if (props.onChange) {
         props.onChange({
           id: rangeFieldId,
-          value: newValue,
+          value: newIntValue,
           ...eventResult,
         });
       }
@@ -47,14 +56,14 @@ export const RangeFieldValidator = (props: IRangeFieldValidatorProps) => {
 
   useEffect(() => {
     const isValidNew = evaluateValidation(props.validationType, isInRange, inputValue, {
-      min: props.min,
+      min: min,
       max: props.max,
     });
 
     if (isValidNew.validationResult !== isFormValid) {
       setIsFormValid(isValidNew.validationResult);
     }
-  }, [inputValue, props.max, props.min, props.validationType, isFormValid]);
+  }, [inputValue, props.max, min, props.validationType, isFormValid]);
 
   return (
     <FormControl>
@@ -83,16 +92,15 @@ export const RangeFieldValidator = (props: IRangeFieldValidatorProps) => {
           hasSpinner={props.hasSpinner}
           useUnderlineOnly={props.useUnderlineOnly}
           useTransparent={!!props.useTransparent}
-          onBlur={(evt) => onUpdate(parseInt(evt.target.value))}
-          onChange={(evt) => onUpdate(parseInt(evt.target.value))}
+          onBlur={(evt) => onUpdate(evt.target.value)}
+          onChange={(evt) => onUpdate(evt.target.value)}
           validationType={isFormValid}
           themeOptions={coreTheme}
           fontGroup={props.inputFontGroup}
           id={rangeFieldId}
           type="number"
-          value={inputValue}
-          defaultValue={props.defaultValue}
-          min={props.min}
+          value={inputValue || ''}
+          min={min}
           max={props.max}
           title={message}
         />

@@ -5,7 +5,6 @@ import { RuleStack } from '../../../src/components/rules/RuleStack';
 import { ValidatorStackTypes } from '../../../src/components/validators/ValidatorStackTypes';
 import { IRuleStackProps } from '../../../src/components/rules/RuleStack';
 import { ValidatorTypes } from '../../../src/components/validators/ValidatorTypes';
-import { useStackValidationChildren } from '../../../src/components/hooks/useStackValidationChildren';
 import { RangeFieldValidator } from '../../../src/components/validators/RangeFieldValidator';
 import { TitleDropDownValidator } from '../../../src/components/validators/TitleDropDownValidator';
 import { DeleteButton } from '../../../src/components/core/DeleteButton';
@@ -34,11 +33,8 @@ jest.mock('../../../src/components/validators/PropertyDropDownValidator', () => 
   };
 });
 
-jest.mock('../../../src/components/hooks/useStackValidationChildren');
-
 describe('RuleStack unit tests', () => {
   let props: IRuleStackProps;
-  const useStackValidationChildrenMock = jest.mocked(useStackValidationChildren);
 
   beforeEach(() => {
     configure({ testIdAttribute: 'id' });
@@ -50,17 +46,12 @@ describe('RuleStack unit tests', () => {
   });
 
   describe('should be setup with the basics', () => {
-    let expectedValidationType: ValidatorTypes;
-
     beforeEach(() => {
       props = {
         id: 'RuleStack2',
         ruleStackValues: [],
         validationType: ValidatorStackTypes.Required,
       };
-
-      expectedValidationType = ValidatorTypes.Invalid;
-      useStackValidationChildrenMock.mockReturnValue({ isValid: expectedValidationType, isValidCollection: [] });
 
       render(<RuleStack {...props} />);
     });
@@ -81,12 +72,7 @@ describe('RuleStack unit tests', () => {
     test('should generate with ValidationBar', () => {
       const entity = screen.getByText<HTMLDivElement>(/ValidationBar/);
 
-      expect(entity).toHaveTextContent(expectedValidationType.toString());
-
-      expect(useStackValidationChildrenMock).toHaveBeenCalledWith(props.validationType, expect.arrayContaining([]));
-
-      // would like to supply the mocked components in to test...
-      expect((useStackValidationChildrenMock.mock.calls[0][1] as []).length).toEqual(2);
+      expect(entity).toHaveTextContent(ValidatorTypes.Optional.toString());
     });
 
     test('should generate with TitleDropDownValidator', () => {
@@ -120,6 +106,7 @@ describe('RuleStack unit tests', () => {
           id: props.id,
           min: undefined,
           max: undefined,
+          onChange: expect.any(Function),
           prefix: undefined,
           suffix: undefined,
           validationType: props.validationType,
@@ -136,7 +123,6 @@ describe('RuleStack unit tests', () => {
   });
 
   describe('and using component', () => {
-    let expectedValidationType: ValidatorTypes;
     const removeClickMock: jest.MockedFn<(evt: React.MouseEvent<HTMLDivElement, MouseEvent>) => void> = jest.fn();
 
     beforeEach(() => {
@@ -164,9 +150,6 @@ describe('RuleStack unit tests', () => {
         removeClick: removeClickMock,
       };
 
-      expectedValidationType = ValidatorTypes.Invalid;
-      useStackValidationChildrenMock.mockReturnValue({ isValid: expectedValidationType, isValidCollection: [] });
-
       render(<RuleStack {...props} />);
     });
 
@@ -189,6 +172,7 @@ describe('RuleStack unit tests', () => {
             id: 'RuleStack2',
             max: undefined,
             min: undefined,
+            onChange: expect.any(Function),
             prefix: undefined,
             suffix: undefined,
             validationType: props.validationType,
@@ -210,6 +194,7 @@ describe('RuleStack unit tests', () => {
             id: 'RuleStack2',
             max: 7,
             min: 3,
+            onChange: expect.any(Function),
             prefix: 'prefix-one',
             suffix: 'suffix-one',
             validationType: props.validationType,

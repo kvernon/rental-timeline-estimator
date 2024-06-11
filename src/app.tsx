@@ -109,12 +109,19 @@ export const App = function () {
             title={purchaseConfig.panelTitle}
             validationType={ValidatorStackTypes.Optional}
             possibleChoices={getRuleChoices(purchaseConfig.collection)}
+            activeChoices={getFields(purchaseConfig.collection)}
+            onChange={(evt) => {
+              console.log('purchaseRules', JSON.stringify(evt));
+            }}
           />
           <RulesCollectionWidth
             id={'holdRules'}
             title={holdConfig.panelTitle}
             validationType={ValidatorStackTypes.Optional}
             possibleChoices={getRuleChoices(holdConfig.collection)}
+            onChange={(evt) => {
+              console.log('holdRules', JSON.stringify(evt));
+            }}
           />
         </RulesStack>
       </FormProvider>

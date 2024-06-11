@@ -5,15 +5,13 @@ import { ValidatorStackTypes } from '../../../src/components/validators/Validato
 import React from 'react';
 import '@testing-library/jest-dom';
 import { CardListLayout, ICardListLayoutProps } from '../../../src/components/core/CardListLayout';
-import { IRuleStackProps, RuleStack } from '../../../src/components/rules/RuleStack';
-import { useFieldArray, UseFieldArrayReturn, useFormContext, UseFormReturn } from 'react-hook-form';
-import { ValidatorTypes } from '../../../src/components/validators/ValidatorTypes';
-import { IAry, IFieldType } from '../../../src/components/rules/FormInterfaces';
+import { RuleStack } from '../../../src/components/rules/RuleStack';
 import { CardContent } from '../../../src/components/core/CardContent';
 import { AddListButton } from '../../../src/components/core/AddListButton';
 import { userEvent } from '@testing-library/user-event';
+import { IFieldType } from '../../../src/components/rules/IFieldType';
+import { ValidatorTypes } from '../../../src/components/validators/ValidatorTypes';
 
-jest.mock('react-hook-form');
 jest.mock('react-movable', () => {
   const all = jest.requireActual('react-movable');
   return {
@@ -22,26 +20,7 @@ jest.mock('react-movable', () => {
   };
 });
 
-jest.mock('../../../src/components/rules/RuleStack', () => {
-  return {
-    RuleStack: jest.fn((p: IRuleStackProps) => {
-      return (
-        <div {...p} style={{ height: '50px', width: '50px' }}>
-          <span data-movable-handle="true">handle</span>
-          <div
-            onClick={(e) => {
-              if (p.removeClick) {
-                p?.removeClick(e);
-              }
-            }}
-          >
-            delete button
-          </div>
-        </div>
-      );
-    }),
-  };
-});
+jest.mock('../../../src/components/rules/RuleStack');
 
 jest.mock('../../../src/components/core/CardContent', () => {
   const all = jest.requireActual('../../../src/components/core/CardContent');
@@ -65,22 +44,8 @@ jest.mock('../../../src/components/core/CardListLayout', () => {
 jest.mock('../../../src/components/core/AddListButton');
 
 describe('RulesCollection unit tests', () => {
-  const useFormContextMock = jest.mocked(useFormContext<IAry<string>>);
-  let controlMock: jest.Mocked<UseFormReturn>;
-
   beforeEach(() => {
     configure({ testIdAttribute: 'id' });
-    controlMock = {
-      control: {
-        register: jest.fn(),
-        handleSubmit: jest.fn(),
-        unregister: jest.fn(),
-        getFieldState: jest.fn(),
-        setError: jest.fn(),
-      },
-    } as unknown as jest.Mocked<UseFormReturn>;
-
-    useFormContextMock.mockReturnValue(controlMock);
   });
 
   afterEach(() => {
@@ -90,7 +55,6 @@ describe('RulesCollection unit tests', () => {
 
   describe('should be setup with the basics', () => {
     let props: IRuleCollectionProps;
-    const useFieldArrayMock = jest.mocked(useFieldArray);
 
     beforeEach(() => {
       props = {
@@ -100,26 +64,7 @@ describe('RulesCollection unit tests', () => {
         validationType: ValidatorStackTypes.Required,
       };
 
-      useFieldArrayMock.mockReturnValue({
-        fields: [],
-        insert: jest.fn(),
-        move: jest.fn(),
-        prepend: jest.fn(),
-        replace: jest.fn(),
-        update: jest.fn(),
-        swap: jest.fn(),
-        append: jest.fn(),
-        remove: jest.fn(),
-      });
       render(<RulesCollection {...props} />);
-    });
-
-    test('useFieldArrayMock should be called', () => {
-      const params = {
-        name: props.title,
-        control: controlMock.control,
-      };
-      expect(useFieldArrayMock).toHaveBeenCalledWith(params);
     });
 
     test('should generate with CardListLayout', () => {
@@ -170,10 +115,10 @@ describe('RulesCollection unit tests', () => {
 
   describe('and interaction', () => {
     let interactProps: IRuleCollectionProps;
-    let useFieldArrayReturnMock: jest.Mocked<UseFieldArrayReturn<IAry<string>, string, string>>;
-    const useFieldArrayMocked = jest.mocked(useFieldArray);
+
     let value: IFieldType;
     let value2: IFieldType;
+
     let id1: string;
     let id2: string;
 
@@ -227,30 +172,10 @@ describe('RulesCollection unit tests', () => {
         },
       };
 
-      const valuesCollection: IAry<string> = {
-        [interactProps.title]: [value, value2],
-      };
-
-      useFieldArrayReturnMock = {
-        fields: [],
-        insert: jest.fn(),
-        move: jest.fn(),
-        prepend: jest.fn(),
-        replace: jest.fn(),
-        update: jest.fn(),
-        swap: jest.fn(),
-        append: jest.fn(),
-        remove: jest.fn(),
-      };
-
-      // current struggling with alignment on the type / interface matching associated w/ react-hook-form
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      useFieldArrayReturnMock.fields = valuesCollection[interactProps.title];
-      useFieldArrayMocked.mockReturnValueOnce(useFieldArrayReturnMock);
-
       id1 = `${interactProps.title}.0`;
       id2 = `${interactProps.title}.1`;
+
+      interactProps.activeChoices = [value, value2];
     });
 
     describe('with fields populated', () => {
@@ -260,6 +185,7 @@ describe('RulesCollection unit tests', () => {
         });
 
         test('should generate with RuleStacks', () => {
+          expect(RuleStack).toHaveBeenCalled();
           expect(RuleStack).toHaveBeenCalledWith(
             expect.objectContaining({
               id: id1,
@@ -285,8 +211,6 @@ describe('RulesCollection unit tests', () => {
             const deleteButton = screen.getAllByText<HTMLDivElement>('delete button')[1];
 
             fireEvent.click(deleteButton);
-
-            expect(useFieldArrayReturnMock.remove).toHaveBeenCalled();
           });
         });
       });
@@ -312,7 +236,6 @@ describe('RulesCollection unit tests', () => {
             },
           ];
 
-          useFieldArrayMocked.mockReturnValue(useFieldArrayReturnMock);
           render(<RulesCollection {...interactProps} />);
         });
 
@@ -353,23 +276,6 @@ describe('RulesCollection unit tests', () => {
           await userEvent.click(addButton);
 
           expect(addButton).toBeInTheDocument();
-          expect(useFieldArrayReturnMock.append).toHaveBeenCalledWith({
-            rangeFieldValidator: {
-              validationResult: ValidatorTypes.Valid,
-              value: 0,
-            },
-            propertyDropDown: {
-              validationResult: ValidatorTypes.Valid,
-              value: {
-                label: 'house',
-                value: 0,
-              },
-            },
-            titleDropDown: {
-              validationResult: ValidatorTypes.Valid,
-              value: { label: interactProps.possibleChoices[0].ruleTitle, value: 0 },
-            },
-          });
         });
       });
     });

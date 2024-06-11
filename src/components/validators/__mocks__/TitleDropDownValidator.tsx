@@ -1,5 +1,6 @@
 import type { ITitleDropDownParams } from '../TitleDropDownValidator';
 import React from 'react';
+import { ValidatorTypes } from '../ValidatorTypes';
 
 export const TitleDropDownValidator = jest.fn((p: ITitleDropDownParams) => {
   function handleChange(event: { currentTarget: HTMLSelectElement }): void {
@@ -7,7 +8,7 @@ export const TitleDropDownValidator = jest.fn((p: ITitleDropDownParams) => {
     const option = { label: p.titles[value], value };
 
     if (p.onChange) {
-      p.onChange(option);
+      p.onChange({ ...option, validationResult: ValidatorTypes.Valid });
     }
   }
 

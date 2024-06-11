@@ -39,7 +39,7 @@ export const ValidatorStack = function (props: IValidatorPanelProps) {
         id: x.props.id,
       })),
     );
-  }, [isValidDefault]);
+  }, [props.children, isValidDefault]);
 
   useMemo(() => {
     setIsValid(() => {
@@ -60,7 +60,7 @@ export const ValidatorStack = function (props: IValidatorPanelProps) {
   return (
     <Stack id={ValidatorStackName(props.id)} direction="row">
       <Stack spacing={2} id={props.id} flexGrow={1} paddingLeft={'25px'} paddingTop={'25px'} paddingBottom={'25px'} paddingRight={'25px'}>
-        {children.map((child) => cloneElement(child, { ...child.props, onChange: chg, key: child.key }))}
+        {children.map((child, idx) => cloneElement(child, { ...child.props, onChange: chg, key: child.key || idx }))}
       </Stack>
       <ValidationBar isValid={isValid} />
     </Stack>

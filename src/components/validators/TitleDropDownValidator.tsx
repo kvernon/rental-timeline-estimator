@@ -13,12 +13,16 @@ export interface ITitleDropDownParams {
   defaultIndex?: number;
   id?: string;
   validationType: ValidatorStackTypes;
-  onChange?: (value: ITitleDropDownOption) => void;
+  onChange?: (value: ITitleDropDownOptionChange) => void;
 }
 
 export interface ITitleDropDownOption {
   label: string;
   value: number;
+}
+
+export interface ITitleDropDownOptionChange extends ITitleDropDownOption {
+  validationResult: ValidatorTypes;
 }
 
 const rule: RuleEval = (v: number, options: { min?: number; max?: number }) =>
@@ -41,7 +45,7 @@ export const TitleDropDownValidator = function (props: ITitleDropDownParams) {
 
     if (JSON.stringify(optionsMap) !== JSON.stringify(map)) {
       setOptionsMap(map);
-      console.log('here', map);
+      //console.log('here', map);
     }
   }, [props.titles, optionsMap]);
 
@@ -56,7 +60,11 @@ export const TitleDropDownValidator = function (props: ITitleDropDownParams) {
   const handleChange = (option: SingleValue<ITitleDropDownOption | unknown>): void => {
     const value = (option as ITitleDropDownOption).value;
     if (value !== selectedIndex) {
+      const eventResult = evaluateValidation(props.validationType, rule, value);
       setSelectedIndex(value);
+      if (props.onChange) {
+        props.onChange({ value, label: optionsMap[value].label, validationResult: eventResult.validationResult });
+      }
     }
   };
 
