@@ -9,14 +9,18 @@ import { ITitleDropDownOption } from './TitleDropDownValidator';
 
 export const propertyOptions = ['apartment', 'house'];
 
+export interface IPropertyDropDownOption extends ITitleDropDownOption {
+  image: string;
+}
+
+export interface IPropertyDropDownOptionChange extends IPropertyDropDownOption {
+  validationResult: ValidatorTypes;
+}
+
 export interface IPropertyDropDownParams {
   id?: string;
   defaultIndex?: number;
-  onChange?: (value: IPropertyDropDownOption) => void;
-}
-
-export interface IPropertyDropDownOption extends ITitleDropDownOption {
-  image: string;
+  onChange?: (value: IPropertyDropDownOptionChange) => void;
 }
 
 const Img = styled.img`
@@ -51,7 +55,7 @@ export function PropertyDropDownValidator(props: IPropertyDropDownParams) {
       {...props}
       name={props.id}
       onChange={(a: SingleValue<IPropertyDropDownOption>) => {
-        if (a && props.onChange) props?.onChange(a);
+        if (a && props.onChange) props?.onChange({ ...a, validationResult: ValidatorTypes.Valid });
       }}
       options={optionsMap}
       defaultValue={optionsMap[1]}

@@ -3,7 +3,7 @@ import { Stack } from '../core/Stack';
 import React, { useEffect, useState } from 'react';
 import { ValidationBar } from '../validators/ValidationBar';
 import { TitleDropDownValidator, ITitleDropDownOptionChange } from '../validators/TitleDropDownValidator';
-import { IPropertyDropDownOption, PropertyDropDownValidator } from '../validators/PropertyDropDownValidator';
+import { IPropertyDropDownOptionChange, PropertyDropDownValidator } from '../validators/PropertyDropDownValidator';
 import { RangeFieldValidator } from '../validators/RangeFieldValidator';
 import { DeleteButton } from '../core/DeleteButton';
 import { DragPlaceholder } from '../core/DragPlaceHolder';
@@ -58,7 +58,6 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
 
   useEffect(() => {
     const newVar = props.ruleStackValues.length === 0 ? null : props.ruleStackValues[selectedRuleTitleIndex];
-    //console.log('[props.ruleStackValues, selectedRuleStackValue]', JSON.stringify(newVar), selectedRuleStackValue);
     setSelectedValueOptions(newVar);
   }, [props.ruleStackValues, selectedRuleTitleIndex]);
 
@@ -88,7 +87,6 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
   useEffect(() => {
     const newValue = props.ruleStackValues.length === 0 ? null : props.ruleStackValues[selectedRuleTitleIndex];
     if (JSON.stringify(newValue) !== JSON.stringify(selectedValueOptions)) {
-      //console.log('[selectedRuleStackValue, selectedStack, ruleStackValues]', JSON.stringify(newValue));
       setSelectedValueOptions(newValue);
     }
   }, [selectedRuleTitleIndex, selectedValueOptions, props.ruleStackValues]);
@@ -107,12 +105,12 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
     }
   };
 
-  const propertyDropDownOnChange = (valueOption: IPropertyDropDownOption) => {
+  const propertyDropDownOnChange = (valueOption: IPropertyDropDownOptionChange) => {
     if (data.propertyDropDown?.value?.value !== valueOption.value) {
       const f: IFieldType = { ...data };
       f.propertyDropDown = {
         value: { value: valueOption.value, label: valueOption.label },
-        validationResult: ValidatorTypes.Valid,
+        validationResult: valueOption.validationResult,
       };
 
       setData(f);
