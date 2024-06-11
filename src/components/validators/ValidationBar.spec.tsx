@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { ValidatorTypes } from '../../../src/components/validators/ValidatorTypes';
+import { ValidatorTypes } from './ValidatorTypes';
 import type { Theme } from '@emotion/react';
 
 const useTheme: jest.MockedFn<() => Theme> = jest.fn();
@@ -13,9 +13,9 @@ jest.mock('@emotion/react', () => {
   };
 });
 
-import { ValidationBar } from '../../../src/components/validators/ValidationBar';
-import { IThemeOptions } from '../../../src/theming/IThemeOptions';
-import { ITypography } from '../../../src/theming/ITypography';
+import { ValidationBar } from './ValidationBar';
+import { IThemeOptions } from '../../theming/IThemeOptions';
+import { ITypography } from '../../theming/ITypography';
 
 describe('ValidationBar unit tests', () => {
   let typographyMock: jest.Mocked<ITypography>;

@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react';
-import { RangeFieldValidator } from '../../../src/components/validators/RangeFieldValidator';
-import { ValidatorStackTypes } from '../../../src/components/validators/ValidatorStackTypes';
+import { RangeFieldValidator } from '../validators/RangeFieldValidator';
+import { ValidatorStackTypes } from '../validators/ValidatorStackTypes';
 import React from 'react';
-import { useChildrenIdsList } from '../../../src/components/hooks/useChildrenIdsList';
+import { useChildrenIdsList } from './useChildrenIdsList';
 
 jest.mock('react', () => {
   const requireActual = jest.requireActual('react');

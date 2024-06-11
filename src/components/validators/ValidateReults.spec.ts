@@ -1,6 +1,6 @@
-import { ValidateResults } from '../../../src/components/validators/ValidateResults';
-import { ValidatorTypes } from '../../../src/components/validators/ValidatorTypes';
-import { ValidatorStackTypes } from '../../../src/components/validators/ValidatorStackTypes';
+import { ValidateResults } from './ValidateResults';
+import { ValidatorTypes } from './ValidatorTypes';
+import { ValidatorStackTypes } from './ValidatorStackTypes';
 
 describe('ValidateResults unit tests', () => {
   describe('and Optional', () => {

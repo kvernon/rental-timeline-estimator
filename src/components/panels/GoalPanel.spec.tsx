@@ -1,13 +1,13 @@
 import { configure, render, screen } from '@testing-library/react';
-import { GoalPanel } from '../../src/components/panels/GoalPanel';
+import { GoalPanel } from './GoalPanel';
 import React from 'react';
-import { IRangeFieldValidatorProps } from '../../src/components/validators/IRangeFieldValidatorProps';
-import { ValidatorStackTypes } from '../../src/components/validators/ValidatorStackTypes';
-import { useStackValidationChildren } from '../../src/components/hooks/useStackValidationChildren';
-import { ValidatorTypes } from '../../src/components/validators/ValidatorTypes';
-import { ValidatorStackName } from '../../src/components/naming/ValidatorStackName';
+import { IRangeFieldValidatorProps } from '../validators/IRangeFieldValidatorProps';
+import { ValidatorStackTypes } from '../validators/ValidatorStackTypes';
+import { useStackValidationChildren } from '../hooks/useStackValidationChildren';
+import { ValidatorTypes } from '../validators/ValidatorTypes';
+import { ValidatorStackName } from '../naming/ValidatorStackName';
 
-jest.mock('../../src/components/validators/RangeFieldValidator', () => {
+jest.mock('../validators/RangeFieldValidator', () => {
   return {
     RangeFieldValidator: jest.fn((p: IRangeFieldValidatorProps) => <input type="number" id={p.id} value={p.defaultValue} name={p.title}></input>),
   };
@@ -25,7 +25,7 @@ jest.mock('react-hook-form', () => {
   };
 });
 
-jest.mock('../../src/components/hooks/useStackValidationChildren');
+jest.mock('../hooks/useStackValidationChildren');
 
 describe('GoalPanel unit test', () => {
   afterEach(() => {

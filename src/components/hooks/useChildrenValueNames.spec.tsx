@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react';
-import { useChildrenValueNames } from '../../../src/components/hooks/useChildrenValueNames';
+import { useChildrenValueNames } from './useChildrenValueNames';
 
 jest.mock('react', () => {
   const requireActual = jest.requireActual('react');

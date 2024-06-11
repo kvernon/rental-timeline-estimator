@@ -1,6 +1,6 @@
 import React from 'react';
 import { configure, render, screen } from '@testing-library/react';
-import { Spinner } from '../../../src/components/core/Spinner';
+import { Spinner } from './Spinner';
 
 describe('Spinner unit tests', () => {
   beforeEach(() => {

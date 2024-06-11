@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { DragPlaceholder } from '../../../src/components/core/DragPlaceHolder';
+import { DragPlaceholder } from './DragPlaceHolder';
 import React from 'react';
 
 describe('DragPlaceHolder unit tests', () => {

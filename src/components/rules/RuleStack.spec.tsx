@@ -1,33 +1,33 @@
 import React from 'react';
 import { cleanup, configure, fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { RuleStack } from '../../../src/components/rules/RuleStack';
-import { ValidatorStackTypes } from '../../../src/components/validators/ValidatorStackTypes';
-import { IRuleStackProps } from '../../../src/components/rules/RuleStack';
-import { ValidatorTypes } from '../../../src/components/validators/ValidatorTypes';
-import { RangeFieldValidator } from '../../../src/components/validators/RangeFieldValidator';
-import { TitleDropDownValidator } from '../../../src/components/validators/TitleDropDownValidator';
-import { DeleteButton } from '../../../src/components/core/DeleteButton';
+import { RuleStack } from './RuleStack';
+import { ValidatorStackTypes } from '../validators/ValidatorStackTypes';
+import { IRuleStackProps } from './RuleStack';
+import { ValidatorTypes } from '../validators/ValidatorTypes';
+import { RangeFieldValidator } from '../validators/RangeFieldValidator';
+import { TitleDropDownValidator } from '../validators/TitleDropDownValidator';
+import { DeleteButton } from '../core/DeleteButton';
 
-jest.mock('../../../src/components/validators/TitleDropDownValidator');
-jest.mock('../../../src/components/core/DragPlaceHolder', () => {
+jest.mock('../validators/TitleDropDownValidator');
+jest.mock('../core/DragPlaceHolder', () => {
   return {
     DragPlaceholder: jest.fn().mockReturnValue(<div>DragPlaceholder</div>),
   };
 });
-jest.mock('../../../src/components/core/DeleteButton');
-jest.mock('../../../src/components/validators/ValidationBar', () => {
+jest.mock('../core/DeleteButton');
+jest.mock('../validators/ValidationBar', () => {
   return {
     ValidationBar: jest.fn((props) => <div>ValidationBar ${props?.isValid}</div>),
   };
 });
 
-jest.mock('../../../src/components/validators/RangeFieldValidator', () => {
+jest.mock('../validators/RangeFieldValidator', () => {
   return {
     RangeFieldValidator: jest.fn((p) => <input type="number" id={`rangeFieldValidator${p.id}`} />),
   };
 });
-jest.mock('../../../src/components/validators/PropertyDropDownValidator', () => {
+jest.mock('../validators/PropertyDropDownValidator', () => {
   return {
     PropertyDropDownValidator: jest.fn().mockReturnValue(<select id={'PropertyDropDownValidator'}></select>),
   };
