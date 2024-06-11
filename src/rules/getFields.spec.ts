@@ -1,12 +1,12 @@
-import { getFields } from '../../src/rules/getFields';
+import { getFields } from './getFields';
 import { HoldRuleTypes, PurchaseRuleTypes } from '@cubedelement.com/realty-investor-timeline';
 
-jest.mock('../../src/rules/getPrettyName', () => ({
+jest.mock('./getPrettyName', () => ({
   getPrettyName: jest.fn(),
 }));
 
-import { getPrettyName } from '../../src/rules/getPrettyName';
-import { ValidatorTypes } from '../../src/components/validators/ValidatorTypes';
+import { getPrettyName } from './getPrettyName';
+import { ValidatorTypes } from '../components/validators/ValidatorTypes';
 
 describe('getFields unit tests', () => {
   describe('and success', () => {

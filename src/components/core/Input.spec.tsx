@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import React from 'react';
-import { Input } from '../../../src/components/core/input';
+import { Input } from './input';
 
 describe('input unit tests', () => {
   describe('and defaults', () => {

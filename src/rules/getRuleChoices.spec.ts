@@ -1,10 +1,10 @@
-import { getRuleChoices } from '../../src/rules/getRuleChoices';
+import { getRuleChoices } from './getRuleChoices';
 
-jest.mock('../../src/rules/getPrettyName', () => ({
+jest.mock('./getPrettyName', () => ({
   getPrettyName: jest.fn(),
 }));
 
-import { getPrettyName } from '../../src/rules/getPrettyName';
+import { getPrettyName } from './getPrettyName';
 
 describe('getRuleChoices unit tests', () => {
   describe('and success', () => {

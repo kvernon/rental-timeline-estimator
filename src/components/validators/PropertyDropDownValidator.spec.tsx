@@ -1,9 +1,9 @@
 import { configure, render, screen } from '@testing-library/react';
 import React from 'react';
-import { IPropertyDropDownParams, PropertyDropDownValidator } from '../../../src/components/validators/PropertyDropDownValidator';
+import { IPropertyDropDownParams, PropertyDropDownValidator } from './PropertyDropDownValidator';
 import { Theme, useTheme } from '@emotion/react';
-import { IThemeOptions } from '../../../src/theming/IThemeOptions';
-import { ITypography } from '../../../src/theming/ITypography';
+import { IThemeOptions } from '../../theming/IThemeOptions';
+import { ITypography } from '../../theming/ITypography';
 import selectEvent from 'react-select-event';
 import '@testing-library/jest-dom';
 

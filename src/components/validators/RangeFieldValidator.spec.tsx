@@ -11,11 +11,11 @@ jest.mock('@emotion/react', () => {
 
 import React from 'react';
 import { configure, fireEvent, render, screen } from '@testing-library/react';
-import { ValidatorStackTypes } from '../../../src/components/validators/ValidatorStackTypes';
+import { ValidatorStackTypes } from './ValidatorStackTypes';
 import '@testing-library/jest-dom';
-import { RangeFieldValidator } from '../../../src/components/validators/RangeFieldValidator';
-import { IThemeOptions } from '../../../src/theming/IThemeOptions';
-import { ITypography } from '../../../src/theming/ITypography';
+import { RangeFieldValidator } from './RangeFieldValidator';
+import { IThemeOptions } from '../../theming/IThemeOptions';
+import { ITypography } from '../../theming/ITypography';
 
 describe('RangeFieldValidator unit tests', () => {
   let typographyMock: jest.Mocked<ITypography>;

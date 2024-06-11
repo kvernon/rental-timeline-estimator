@@ -1,4 +1,4 @@
-import { ValidatorTypes } from '../../../src/components/validators/ValidatorTypes';
+import { ValidatorTypes } from './ValidatorTypes';
 
 describe('ValidatorTypes unit tests', () => {
   describe('and Invalid', () => {

@@ -3,10 +3,10 @@ import '@testing-library/jest-dom';
 
 import { configure, render, screen } from '@testing-library/react';
 import React from 'react';
-import { ValidatorStackTypes } from '../../../src/components/validators/ValidatorStackTypes';
-import { TitleDropDownValidator, ITitleDropDownParams } from '../../../src/components/validators/TitleDropDownValidator';
-import { IThemeOptions } from '../../../src/theming/IThemeOptions';
-import { ITypography } from '../../../src/theming/ITypography';
+import { ValidatorStackTypes } from './ValidatorStackTypes';
+import { TitleDropDownValidator, ITitleDropDownParams } from './TitleDropDownValidator';
+import { IThemeOptions } from '../../theming/IThemeOptions';
+import { ITypography } from '../../theming/ITypography';
 import selectEvent from 'react-select-event';
 
 const Setup = (props: ITitleDropDownParams) => {

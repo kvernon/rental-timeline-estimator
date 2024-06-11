@@ -1,10 +1,10 @@
 import React from 'react';
-import { App } from '../src/app';
+import { App } from './app';
 import { configure, render, screen } from '@testing-library/react';
 import { matchers } from '@emotion/jest';
 import '@testing-library/jest-dom';
 
-jest.mock('../src/components/validators/TitleDropDownValidator');
+jest.mock('./components/validators/TitleDropDownValidator');
 
 expect.extend(matchers);
 

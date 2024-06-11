@@ -8,7 +8,7 @@ module.exports = {
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier', 'eslint:recommended'],
   overrides: [
     {
-      files: ['__tests__/**', '**/__mocks__/**'],
+      files: ['__tests__/**', '**/__mocks__/**', '**/**/*.spec.ts'],
       env: {
         jest: true,
         'jest/globals': true,

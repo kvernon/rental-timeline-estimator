@@ -1,4 +1,4 @@
-import { ValidatorStackTypes } from '../../../src/components/validators/ValidatorStackTypes';
+import { ValidatorStackTypes } from './ValidatorStackTypes';
 import React from 'react';
 import { configure, fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -22,13 +22,13 @@ jest.mock('react', () => {
   };
 });
 
-import { RangeFieldValidator } from '../../../src/components/validators/RangeFieldValidator';
-import { ValidatorStack } from '../../../src/components/validators/ValidatorStack';
-import { IValidatorPanelProps } from '../../../src/components/validators/IValidatorPanelProps';
-import { IThemeOptions } from '../../../src/theming/IThemeOptions';
-import { ITypography } from '../../../src/theming/ITypography';
+import { RangeFieldValidator } from './RangeFieldValidator';
+import { ValidatorStack } from './ValidatorStack';
+import { IValidatorPanelProps } from './IValidatorPanelProps';
+import { IThemeOptions } from '../../theming/IThemeOptions';
+import { ITypography } from '../../theming/ITypography';
 
-jest.mock('../../../src/components/validators/RangeFieldValidator');
+jest.mock('./RangeFieldValidator');
 
 const ValidatorStackSetup = (props: IValidatorPanelProps) => {
   return (

@@ -1,9 +1,9 @@
 import { renderHook } from '@testing-library/react';
-import { useWatcher } from '../../../src/components/hooks/useWatcher';
+import { useWatcher } from './useWatcher';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { FieldValues, watchMock, WatchObserver } from 'react-hook-form';
-import { ValidatorTypes } from '../../../src/components/validators/ValidatorTypes';
+import { ValidatorTypes } from '../validators/ValidatorTypes';
 
 jest.mock('react', () => {
   const requireActual = jest.requireActual('react');

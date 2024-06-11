@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react';
-import { ValidatorStackTypes } from '../../../src/components/validators/ValidatorStackTypes';
-import { useValid } from '../../../src/components/hooks/useValid';
-import { ValidatorTypes } from '../../../src/components/validators/ValidatorTypes';
+import { ValidatorStackTypes } from '../validators/ValidatorStackTypes';
+import { useValid } from './useValid';
+import { ValidatorTypes } from '../validators/ValidatorTypes';
 
 jest.mock('react', () => {
   const requireActual = jest.requireActual('react');

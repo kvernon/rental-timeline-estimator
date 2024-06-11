@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { DeleteButton } from '../../../src/components/core/DeleteButton';
+import { DeleteButton } from './DeleteButton';
 import React from 'react';
 
 describe('DeletePlaceHolder unit tests', () => {

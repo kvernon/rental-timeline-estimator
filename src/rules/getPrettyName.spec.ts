@@ -1,4 +1,4 @@
-import { getPrettyName } from '../../src/rules/getPrettyName';
+import { getPrettyName } from './getPrettyName';
 
 describe('getPrettyName unit tests', () => {
   describe('and empty', () => {

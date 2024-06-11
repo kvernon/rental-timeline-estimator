@@ -1,19 +1,19 @@
 import React from 'react';
 import { renderHook } from '@testing-library/react';
-import { RangeFieldValidator } from '../../../src/components/validators/RangeFieldValidator';
-import { ValidatorStackTypes } from '../../../src/components/validators/ValidatorStackTypes';
-import { ValidatorTypes } from '../../../src/components/validators/ValidatorTypes';
-import { useStackValidationChildren } from '../../../src/components/hooks/useStackValidationChildren';
+import { RangeFieldValidator } from '../validators/RangeFieldValidator';
+import { ValidatorStackTypes } from '../validators/ValidatorStackTypes';
+import { ValidatorTypes } from '../validators/ValidatorTypes';
+import { useStackValidationChildren } from './useStackValidationChildren';
 
-import { useChildrenValueNames } from '../../../src/components/hooks/useChildrenValueNames';
-import { useWatcher } from '../../../src/components/hooks/useWatcher';
-import { useChildrenIdsList } from '../../../src/components/hooks/useChildrenIdsList';
-import { useValid } from '../../../src/components/hooks/useValid';
+import { useChildrenValueNames } from './useChildrenValueNames';
+import { useWatcher } from './useWatcher';
+import { useChildrenIdsList } from './useChildrenIdsList';
+import { useValid } from './useValid';
 
-jest.mock('../../../src/components/hooks/useChildrenValueNames');
-jest.mock('../../../src/components/hooks/useWatcher');
-jest.mock('../../../src/components/hooks/useChildrenIdsList');
-jest.mock('../../../src/components/hooks/useValid');
+jest.mock('./useChildrenValueNames');
+jest.mock('./useWatcher');
+jest.mock('./useChildrenIdsList');
+jest.mock('./useValid');
 
 jest.mock('react', () => {
   const requireActual = jest.requireActual('react');
