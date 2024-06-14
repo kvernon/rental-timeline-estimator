@@ -79,8 +79,8 @@ describe('useStackValidationChildren has children unit tests', () => {
 
       const { result } = renderHook(() =>
         useStackValidationChildren(ValidatorStackTypes.Optional, [
-          <RangeFieldValidator id="One" validationType={ValidatorStackTypes.Optional} />,
-          <RangeFieldValidator id="Two" validationType={ValidatorStackTypes.Optional} />,
+          <RangeFieldValidator key="one" id="One" validationType={ValidatorStackTypes.Optional} />,
+          <RangeFieldValidator key="two" id="Two" validationType={ValidatorStackTypes.Optional} />,
         ]),
       );
 

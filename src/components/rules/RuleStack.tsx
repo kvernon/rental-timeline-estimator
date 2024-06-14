@@ -45,8 +45,8 @@ const StackBase = styled(Stack)`
 
 /**
  * RuleStack is used to help show the rule and it's options. The user will decide what those values will be.
- * All options are supplied using {@link IRuleStackProps.ruleStackValues}. They'll get sprinkled in between all titles
- * and the range input. If there is a supplied index, it'll be {@link IRuleStackProps.defaultIndex}, otherwise it's 0.
+ * All options are supplied using {@link IRuleStackProps#ruleStackValues}. They'll get sprinkled in between all titles
+ * and the range input. If there is a supplied index, it'll be {@link IRuleStackProps#defaultIndex}, otherwise it's 0.
  */
 export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref: React.Ref<HTMLDivElement>) {
   const [selectedRuleTitleIndex, setSelectedRuleTitleIndex] = useState<number>(props.defaultIndex || 0);
@@ -82,7 +82,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
     if (isValid !== possibleValue) {
       setIsValid(possibleValue);
     }
-  }, [data, isValid]);
+  }, [data, isValid, isValidDefault]);
 
   useEffect(() => {
     const newValue = props.ruleStackValues.length === 0 ? null : props.ruleStackValues[selectedRuleTitleIndex];

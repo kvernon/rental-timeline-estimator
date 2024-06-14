@@ -29,8 +29,8 @@ describe('useChildrenIdsList unit tests', () => {
     test('should get the children results', async () => {
       const { result } = renderHook(() =>
         useChildrenIdsList([
-          <RangeFieldValidator id="One" validationType={ValidatorStackTypes.Required} />,
-          <RangeFieldValidator id="Two" validationType={ValidatorStackTypes.Optional} />,
+          <RangeFieldValidator key="one" id="One" validationType={ValidatorStackTypes.Required} />,
+          <RangeFieldValidator key="two" id="Two" validationType={ValidatorStackTypes.Optional} />,
         ]),
       );
 
