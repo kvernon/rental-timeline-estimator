@@ -1,35 +1,35 @@
-const {resolve} = require('path');
+const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 console.log('webpack-common-config is used');
 
 export const copyPlugin = new CopyPlugin({
-  patterns: [{ from: 'images', to: 'images' }]
+  patterns: [{ from: 'images', to: 'images' }],
 });
 
 module.exports = {
-  entry: "./src/index.tsx",
+  entry: './src/index.tsx',
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: "ts-loader",
+        use: 'ts-loader',
         exclude: /node_modules/,
       },
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: ['.tsx', '.ts', '.js'],
   },
   output: {
-    filename: "bundle.js",
-    path: resolve(__dirname, "dist"),
+    filename: 'bundle.js',
+    path: resolve(__dirname, 'dist'),
   },
   plugins: [
     new HtmlWebpackPlugin({
       inject: false,
-      title: "Realty Investor Timeline",
+      title: 'Realty Investor Timeline',
       templateContent: ({ htmlWebpackPlugin }) =>
         `
       <html lang="en">
@@ -52,6 +52,6 @@ module.exports = {
       </html>
     `,
     }),
-    copyPlugin
+    copyPlugin,
   ],
 };
