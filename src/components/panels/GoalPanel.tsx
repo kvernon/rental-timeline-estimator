@@ -34,30 +34,30 @@ export const GoalPanel = (props: IRangeFieldValidatorProps) => {
   const [width, setWidth] = useState<number | undefined>();
   const [height, setHeight] = useState<number | undefined>();
 
-  const getPosition = () => {
-    const ele = document.getElementById(`${RangeFieldValidatorName(props.id)}-box`);
-
-    const x = ele?.getBoundingClientRect().x;
-    setX(x);
-
-    const y = ele?.getBoundingClientRect().y;
-    setY(y);
-
-    const width = ele?.getBoundingClientRect()?.width;
-    setWidth(width);
-
-    const height = ele?.getBoundingClientRect()?.height;
-    setHeight(height);
-  };
-
   useEffect(() => {
+    const getPosition = () => {
+      const ele = document.getElementById(`${RangeFieldValidatorName(props.id)}-box`);
+
+      const x = ele?.getBoundingClientRect().x;
+      setX(x);
+
+      const y = ele?.getBoundingClientRect().y;
+      setY(y);
+
+      const width = ele?.getBoundingClientRect()?.width;
+      setWidth(width);
+
+      const height = ele?.getBoundingClientRect()?.height;
+      setHeight(height);
+    };
+
     getPosition();
     window.addEventListener('resize', getPosition);
 
     return () => {
       window.removeEventListener('resize', getPosition);
     };
-  }, []);
+  }, [props.id]);
 
   return (
     <TopStack id={ValidatorStackName(props.id)}>

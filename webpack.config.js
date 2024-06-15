@@ -1,11 +1,11 @@
-const {resolve} = require('path');
+const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = (env, argv) => {
-  console.log(env)
-  console.log(argv)
+  console.log('env', env);
+  console.log('argv', argv);
   return {
     entry: './src/index.tsx',
     module: {
@@ -14,7 +14,7 @@ module.exports = (env, argv) => {
           test: /\.tsx?$/,
           use: 'ts-loader',
           exclude: /node_modules/,
-        }
+        },
       ],
     },
     resolve: {
@@ -28,7 +28,7 @@ module.exports = (env, argv) => {
       new HtmlWebpackPlugin({
         inject: false,
         title: 'Realty Investor Timeline',
-        templateContent: ({htmlWebpackPlugin}) =>
+        templateContent: ({ htmlWebpackPlugin }) =>
           `
       <html lang="en">
         <head>
@@ -48,15 +48,17 @@ module.exports = (env, argv) => {
           <div id="root"></div>
         </body>
       </html>
-    `
+    `,
       }),
       new ESLintPlugin({
         extensions: ['.tsx', '.ts'],
-        exclude: 'node_modules'
+        exclude: 'node_modules',
+        configType: 'flat',
+        eslintPath: 'eslint/use-at-your-own-risk'
       }),
       new CopyPlugin({
-        patterns: [{ from: 'images', to: 'images' }]
-      })
+        patterns: [{ from: 'images', to: 'images' }],
+      }),
     ],
   };
 };
