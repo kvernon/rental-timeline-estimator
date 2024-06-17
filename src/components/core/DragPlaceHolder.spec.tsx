@@ -14,11 +14,11 @@ describe('DragPlaceHolder unit tests', () => {
     const expectedStyle = `
       transition: background 0.4s ease-out;
       width: 20px;
-      background-color: #383838;
+      background-color: rgb(110, 110, 110);
       opacity: 1;
       background-image: radial-gradient(ellipse farthest-corner at 4px 4px, #202030, #202030 50%, transparent 50%);
       background-size: 4px 4px;
-      cursor: pointer;`;
+      cursor: move;`;
 
     expect(entity).toHaveStyle(expectedStyle);
   });

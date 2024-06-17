@@ -73,7 +73,7 @@ describe('RangeFieldValidator unit tests', () => {
 
           expect(entity.value).toEqual('');
 
-          expect(entity).toHaveStyle('background-color:rgba(255, 0, 0, 0.255)');
+          expect(entity).toHaveStyle('background-color:rgba(255, 0, 0, 0.506)');
         });
       });
       describe('and value supplied', () => {
@@ -84,7 +84,7 @@ describe('RangeFieldValidator unit tests', () => {
 
           expect(entity.value).toEqual('20');
 
-          expect(entity).toHaveStyle('background-color:rgba(0, 255, 0, 0.255)');
+          expect(entity).toHaveStyle('background-color:rgba(0, 255, 0, 0.506)');
         });
       });
     });
@@ -98,7 +98,7 @@ describe('RangeFieldValidator unit tests', () => {
 
           expect(entity.value).toEqual('');
 
-          expect(entity).toHaveStyle('background-color:rgba(0, 0, 255, 0.255)');
+          expect(entity).toHaveStyle('background-color:rgba(0, 0, 255, 0.506)');
         });
       });
       describe('and value supplied', () => {
@@ -109,7 +109,7 @@ describe('RangeFieldValidator unit tests', () => {
 
           expect(entity.value).toEqual('2');
 
-          expect(entity).toHaveStyle('background-color:rgba(0, 255, 0, 0.255)');
+          expect(entity).toHaveStyle('background-color:rgba(0, 255, 0, 0.506)');
         });
       });
     });
@@ -135,7 +135,7 @@ describe('RangeFieldValidator unit tests', () => {
 
           expect(entity.value).toEqual(value.toString());
 
-          expect(entity).toHaveStyle('background-color:rgba(0, 255, 0, 0.255)');
+          expect(entity).toHaveStyle('background-color:rgba(0, 255, 0, 0.506)');
         });
       });
       describe('and invalid with rule', () => {
@@ -156,7 +156,7 @@ describe('RangeFieldValidator unit tests', () => {
 
           expect(entity.value).toEqual(value.toString());
 
-          expect(entity).toHaveStyle('background-color:rgba(255, 0, 0, 0.255)');
+          expect(entity).toHaveStyle('background-color:rgba(255, 0, 0, 0.506)');
         });
       });
     });
@@ -179,7 +179,7 @@ describe('RangeFieldValidator unit tests', () => {
 
           expect(entity.value).toEqual(value.toString());
 
-          expect(entity).toHaveStyle('background-color:rgba(0, 255, 0, 0.255)');
+          expect(entity).toHaveStyle('background-color:rgba(0, 255, 0, 0.506)');
         });
       });
       describe('and invalid with rule', () => {
@@ -200,7 +200,7 @@ describe('RangeFieldValidator unit tests', () => {
 
           expect(entity.value).toEqual(value.toString());
 
-          expect(entity).toHaveStyle('background-color:rgba(255, 0, 0, 0.255)');
+          expect(entity).toHaveStyle('background-color:rgba(255, 0, 0, 0.506)');
         });
       });
     });

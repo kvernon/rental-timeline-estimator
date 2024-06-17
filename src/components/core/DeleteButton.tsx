@@ -5,7 +5,7 @@ import React from 'react';
 const DeleteButtonArea = styled.div`
   transition: background 0.4s ease-out;
   width: 45px;
-  background: #520606;
+  background: rgb(82, 6, 6);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -13,7 +13,7 @@ const DeleteButtonArea = styled.div`
   cursor: pointer;
 
   :hover {
-    background: #7e0a0a;
+    background: rgb(126, 10, 10);
   }
 `;
 
