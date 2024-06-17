@@ -72,7 +72,7 @@ describe('RuleStack unit tests', () => {
     test('should generate with ValidationBar', () => {
       const entity = screen.getByText<HTMLDivElement>(/ValidationBar/);
 
-      expect(entity).toHaveTextContent(ValidatorTypes.Optional.toString());
+      expect(entity).toHaveTextContent(ValidatorTypes.Invalid.toString());
     });
 
     test('should generate with TitleDropDownValidator', () => {
