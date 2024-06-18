@@ -70,12 +70,9 @@ _image: User Settings_
 1. https://testing-library.com/
 2. https://reactjs.org/
 3. https://create-react-app.dev/
-4. https://stackoverflow.com/questions/65243256/react-hook-form-submit-a-form-with-nested-components-or-extract-fields-of-neste
-5. https://react-select.com/typescript
-6. https://react-hook-form.com/api/useformcontext/
-7. https://emotion.sh/docs/@emotion/styled
-8. https://zustand-demo.pmnd.rs/
-9. https://konstantinlebedev.com/solid-in-react/
-10. https://www.everydayreact.com/articles/solid-principles-in-react
-11. https://github.com/tajo/react-movable
-12. note: styling seems to work: https://codesandbox.io/s/clever-wing-skxhlr... might be a problem with react-select
+4. https://react-select.com/typescript
+5. https://emotion.sh/docs/@emotion/styled
+6. https://konstantinlebedev.com/solid-in-react/
+7. https://www.everydayreact.com/articles/solid-principles-in-react
+8. https://github.com/tajo/react-movable
+9. note: styling seems to work: https://codesandbox.io/s/clever-wing-skxhlr... might be a problem with react-select

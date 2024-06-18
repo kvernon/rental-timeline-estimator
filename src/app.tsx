@@ -1,6 +1,5 @@
 import React from 'react';
 import { ThemeProvider } from '@emotion/react';
-import { FormProvider, useForm } from 'react-hook-form';
 import { ValidatorStackTypes } from './components/validators/ValidatorStackTypes';
 import { options } from './theming/theme';
 import { ValidationPanel } from './components/panels/ValidationPanel';
@@ -8,7 +7,6 @@ import { RangeFieldValidator } from './components/validators/RangeFieldValidator
 import { RangeFieldValidatorName } from './components/naming/RangeFieldValidatorName';
 import { IRangeFieldValidatorProps } from './components/validators/IRangeFieldValidatorProps';
 import { RulesCollection } from './components/rules/RulesCollection';
-import { DevTool } from '@hookform/devtools';
 import { Stack } from './components/core/Stack';
 import { Page } from './components/core/Page';
 import { ValidatorTypes } from './components/validators/ValidatorTypes';
@@ -55,7 +53,8 @@ export const App = function () {
     useUnderlineOnly: false,
   };
 
-  const methods = useForm({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const methods = {
     mode: 'all',
     reValidateMode: 'onBlur',
     criteriaMode: 'all',
@@ -75,7 +74,7 @@ export const App = function () {
       [purchaseConfig.panelTitle]: getFields(purchaseConfig.collection),
       [holdConfig.panelTitle]: [],
     },
-  });
+  };
 
   const RulesStack = styled(Stack)`
     width: unset;
@@ -95,9 +94,18 @@ export const App = function () {
 
   return (
     <ThemeProvider theme={options}>
-      <FormProvider {...methods}>
+      \
+      <form
+        name="sim"
+        onChange={(evt) => {
+          console.log('onChange', evt);
+        }}
+        onSubmit={(evt) => {
+          evt.preventDefault();
+          console.log('submit', evt);
+        }}
+      >
         <Page />
-        <DevTool control={methods.control} placement="bottom-right" />
         <GoalPanel hasSpinner={false} useUnderlineOnly={true} {...goalProps} />
         <ValidationPanel id={'savings'} panelType={ValidatorStackTypes.Optional} title={'Savings Plan'}>
           <RangeFieldValidator {...savingsAtStartProps} />
@@ -124,7 +132,8 @@ export const App = function () {
             }}
           />
         </RulesStack>
-      </FormProvider>
+        <button type="submit">Save</button>
+      </form>
     </ThemeProvider>
   );
 };
