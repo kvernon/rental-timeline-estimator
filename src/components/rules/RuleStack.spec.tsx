@@ -42,6 +42,7 @@ describe('RuleStack unit tests', () => {
 
   afterEach(() => {
     cleanup();
+    props.onUpdate = jest.fn();
     jest.clearAllMocks();
   });
 
@@ -148,6 +149,7 @@ describe('RuleStack unit tests', () => {
         ],
         validationType: ValidatorStackTypes.Required,
         removeClick: removeClickMock,
+        onUpdate: jest.fn(),
       };
 
       render(<RuleStack {...props} />);
@@ -221,6 +223,29 @@ describe('RuleStack unit tests', () => {
         fireEvent.click(deleteButton);
 
         expect(removeClickMock).toHaveBeenCalled();
+      });
+    });
+    describe('and update', () => {
+      test('and should update range validator', async () => {
+        const entity = screen.getByTestId<HTMLElement>(`titleDropDownValidator${props.id}`);
+
+        const value = 1;
+
+        fireEvent.change(entity, {
+          target: { value },
+        });
+
+        expect(props.onUpdate).toHaveBeenCalledWith({
+          propertyDropDown: {},
+          rangeFieldValidator: {},
+          titleDropDown: {
+            validationResult: ValidatorTypes.Valid,
+            value: {
+              label: 'rule-title-two',
+              value: 1,
+            },
+          },
+        });
       });
     });
   });

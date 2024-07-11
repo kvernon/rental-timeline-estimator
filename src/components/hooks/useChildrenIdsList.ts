@@ -17,7 +17,7 @@ export const useChildrenIdsList = (children: React.ReactElement<IIdentifier>[] |
     const current = JSON.stringify(theChildrenIds);
     if (newIn !== current) {
       // console.log('useChildrenIdsList::useEffect [children, theChildrenIds]');
-      setTheChildrenIds(identifiers);
+      setTheChildrenIds(() => identifiers);
     }
   }, [children, theChildrenIds]);
 

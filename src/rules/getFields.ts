@@ -2,9 +2,9 @@ import { getPrettyName } from './getPrettyName';
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
 import { IRuleConfigEntity } from './IRuleConfigEntity';
 import { propertyOptions } from '../components/validators/PropertyDropDownValidator';
-import { IFieldType } from '../components/rules/IFieldType';
+import { IFieldTypeProperties } from '../components/rules/IFieldTypeProperties';
 
-export const getFields = (collection: IRuleConfigEntity[]): IFieldType[] => {
+export const getFields = (collection: IRuleConfigEntity[]): IFieldTypeProperties[] => {
   return collection
     .filter((x) => x.ruleType !== 'none')
     .map((choice: IRuleConfigEntity, index: number) => {

@@ -9,7 +9,7 @@ import { RuleStack } from './RuleStack';
 import { CardContent } from '../core/CardContent';
 import { AddListButton } from '../core/AddListButton';
 import { userEvent } from '@testing-library/user-event';
-import { IFieldType } from './IFieldType';
+import { IFieldTypeProperties } from './IFieldTypeProperties';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
 
 jest.mock('react-movable', () => {
@@ -116,8 +116,8 @@ describe('RulesCollection unit tests', () => {
   describe('and interaction', () => {
     let interactProps: IRuleCollectionProps;
 
-    let value: IFieldType;
-    let value2: IFieldType;
+    let value: IFieldTypeProperties;
+    let value2: IFieldTypeProperties;
 
     let id1: string;
     let id2: string;
@@ -276,6 +276,8 @@ describe('RulesCollection unit tests', () => {
           await userEvent.click(addButton);
 
           expect(addButton).toBeInTheDocument();
+
+          expect(RuleStack).toHaveBeenCalledTimes(10);
         });
       });
     });

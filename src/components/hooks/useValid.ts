@@ -18,7 +18,7 @@ export const useValid = (panelValidatorStackType: ValidatorStackTypes = Validato
 
     if (newEval !== isValid) {
       console.log('useValid::useEffect [panelValidatorStackType, isValid]', newEval);
-      setIsValid(newEval);
+      setIsValid(() => newEval);
     }
   }, [panelValidatorStackType, isValid]);
 

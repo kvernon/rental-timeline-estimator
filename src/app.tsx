@@ -94,12 +94,8 @@ export const App = function () {
 
   return (
     <ThemeProvider theme={options}>
-      \
       <form
         name="sim"
-        onChange={(evt) => {
-          console.log('onChange', evt);
-        }}
         onSubmit={(evt) => {
           evt.preventDefault();
           console.log('submit', evt);
