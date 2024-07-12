@@ -17,6 +17,8 @@ import { getRuleChoices } from './rules/getRuleChoices';
 import { holdConfig } from './rules/holdRuleConfig';
 import { GoalPanel } from './components/panels/GoalPanel';
 import { FontGroups } from './theming/fontGroups';
+import { IFieldTypeProperties } from './components/rules/IFieldTypeProperties';
+import { IEventResult } from './components/validators/IEventResult';
 
 export const App = function () {
   const goalProps: IRangeFieldValidatorProps = {
@@ -92,20 +94,72 @@ export const App = function () {
     width: 80%;
   `;
 
+  const [goal, setGoal] = React.useState<IEventResult<number>>({
+    value: goalProps?.defaultValue,
+    validationResult: ValidatorTypes.Valid,
+    validationResultName: ValidatorTypes[ValidatorTypes.Valid],
+  });
+  const [moSavings, setMoSavings] = React.useState<IEventResult<number>>({
+    value: savedMonthly?.defaultValue,
+    validationResult: ValidatorTypes.Optional,
+    validationResultName: ValidatorTypes[ValidatorTypes.Optional],
+  });
+  const [savedAtStart, setSavedAtStart] = React.useState<IEventResult<number>>({
+    value: savingsAtStartProps?.defaultValue,
+    validationResult: ValidatorTypes.Optional,
+    validationResultName: ValidatorTypes[ValidatorTypes.Optional],
+  });
+
+  const [purchaseRules, setPurchaseRules] = React.useState<IFieldTypeProperties[]>(getFields(purchaseConfig.collection));
+  const [holdRules, setHoldRules] = React.useState<IFieldTypeProperties[]>([]);
+
   return (
     <ThemeProvider theme={options}>
       <form
         name="sim"
         onSubmit={(evt) => {
           evt.preventDefault();
-          console.log('submit', evt);
+          //console.log('submit', evt);
+          console.log('submit goal', goal);
+          console.log('submit moSavings', moSavings);
+          console.log('submit savedAtStart', savedAtStart);
+          console.log('submit purchaseRules:', purchaseRules);
+          console.log('submit holdRules', holdRules);
         }}
       >
         <Page />
-        <GoalPanel hasSpinner={false} useUnderlineOnly={true} {...goalProps} />
+        <GoalPanel
+          hasSpinner={false}
+          useUnderlineOnly={true}
+          {...goalProps}
+          defaultValue={goal.value}
+          onChange={(e) => {
+            if (e.value !== goal.value) {
+              setGoal(e);
+            }
+          }}
+        />
         <ValidationPanel id={'savings'} panelType={ValidatorStackTypes.Optional} title={'Savings Plan'}>
-          <RangeFieldValidator {...savingsAtStartProps} />
-          <RangeFieldValidator {...savedMonthly} />
+          <RangeFieldValidator
+            {...savingsAtStartProps}
+            defaultValue={savedAtStart.value}
+            onChange={(e) => {
+              console.log('savings', e);
+              if (e.value !== moSavings.value) {
+                setMoSavings(e);
+              }
+            }}
+          />
+          <RangeFieldValidator
+            {...savedMonthly}
+            defaultValue={moSavings.value}
+            onChange={(e) => {
+              console.log('moSaving', e);
+              if (e.value !== savedAtStart.value) {
+                setSavedAtStart(e);
+              }
+            }}
+          />
         </ValidationPanel>
         <RulesStack direction={'row'} flexGrow={2}>
           <RulesCollectionWidth
@@ -113,9 +167,9 @@ export const App = function () {
             title={purchaseConfig.panelTitle}
             validationType={ValidatorStackTypes.Optional}
             possibleChoices={getRuleChoices(purchaseConfig.collection)}
-            activeChoices={getFields(purchaseConfig.collection)}
+            activeChoices={purchaseRules}
             onChange={(evt) => {
-              console.log('purchaseRules', JSON.stringify(evt));
+              setPurchaseRules(evt);
             }}
           />
           <RulesCollectionWidth
@@ -123,8 +177,9 @@ export const App = function () {
             title={holdConfig.panelTitle}
             validationType={ValidatorStackTypes.Optional}
             possibleChoices={getRuleChoices(holdConfig.collection)}
+            activeChoices={holdRules}
             onChange={(evt) => {
-              console.log('holdRules', JSON.stringify(evt));
+              setHoldRules(evt);
             }}
           />
         </RulesStack>
