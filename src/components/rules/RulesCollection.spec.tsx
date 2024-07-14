@@ -281,5 +281,48 @@ describe('RulesCollection unit tests', () => {
         });
       });
     });
+
+    describe('and maxing', () => {
+      beforeEach(() => {
+        interactProps.possibleChoices = [
+          {
+            max: 2,
+            ruleTitle: 'title',
+            property: 1,
+            prefix: 'prefix',
+            suffix: 'suffix',
+            min: 1,
+          },
+          {
+            max: 3,
+            ruleTitle: 'title-2',
+            property: 1,
+            prefix: 'prefix',
+            suffix: 'suffix',
+            min: 2,
+          },
+        ];
+
+        interactProps.activeChoices = [
+          {
+            titleDropDown: { value: { value: 0, label: 'title' } },
+            propertyDropDown: {},
+            rangeFieldValidator: {},
+          },
+          {
+            titleDropDown: { value: { value: 1, label: 'title-2' } },
+            propertyDropDown: {},
+            rangeFieldValidator: {},
+          },
+        ];
+
+        render(<RulesCollection {...interactProps} />);
+      });
+
+      test.only('should hide add button', () => {
+        const addButton = screen.queryByRole<HTMLButtonElement>('log');
+        expect(addButton).not.toBeInTheDocument();
+      });
+    });
   });
 });
