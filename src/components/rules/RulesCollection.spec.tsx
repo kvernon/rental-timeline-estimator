@@ -319,9 +319,9 @@ describe('RulesCollection unit tests', () => {
         render(<RulesCollection {...interactProps} />);
       });
 
-      test.only('should hide add button', () => {
-        const addButton = screen.queryByRole<HTMLButtonElement>('log');
-        expect(addButton).not.toBeInTheDocument();
+      test('should hide add button', () => {
+        const AddListButtonCtor = jest.mocked(AddListButton);
+        expect(AddListButtonCtor).not.toHaveBeenCalled();
       });
     });
   });

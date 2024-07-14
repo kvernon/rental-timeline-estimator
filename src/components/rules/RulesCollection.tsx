@@ -135,7 +135,6 @@ export const RulesCollection = function (collectionProps: IRuleCollectionProps):
           />
         )}
       />
-
       {showButton && <AddListButton role={`add button for ${collectionProps.title}`} theme={coreTheme} onClick={addEntityOnClick} label="Add" />}
     </CardListLayout>
   );
