@@ -1,16 +1,18 @@
 import { IRuleCollectionProps } from './IRuleCollectionProps';
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import { CardListLayout } from '../core/CardListLayout';
 import { arrayMove, arrayRemove, List } from 'react-movable';
 import styled from '@emotion/styled';
 import { CardContent } from '../core/CardContent';
 import { RuleStack } from './RuleStack';
-import { IFieldType } from './IFieldType';
+import { defaultFieldItem, IFieldTypeProperties } from './IFieldTypeProperties';
 import { AddListButton } from '../core/AddListButton';
 import { useTheme } from '@emotion/react';
 import { IThemeOptions } from '../../theming/IThemeOptions';
 import { IRuleStackEntity } from './IRuleStackEntity';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
+import { areSameFieldType } from './areSameFieldType';
+import isEqual from 'lodash.isequal';
 
 /**
  * Notes: rules collections should be the item that deals with the smart controls, not the items above
@@ -18,12 +20,13 @@ import { ValidatorTypes } from '../validators/ValidatorTypes';
 export const RulesCollection = function (collectionProps: IRuleCollectionProps): ReactNode {
   const coreTheme = useTheme() as IThemeOptions;
 
-  const [fieldItems, setFieldItems] = React.useState<IFieldType[]>(collectionProps.activeChoices || []);
+  const hiddenElement = useRef<HTMLInputElement>(null);
+
+  const [fieldItems, setFieldItems] = React.useState<IFieldTypeProperties[]>(collectionProps.activeChoices || []);
 
   const [possibleChoices, setPossibleChoices] = useState(collectionProps.possibleChoices || []);
 
   const CardContentForList = styled(CardContent)`
-    /*position: relative;*/
     padding: 0;
   `;
 
@@ -31,6 +34,14 @@ export const RulesCollection = function (collectionProps: IRuleCollectionProps):
     if (collectionProps.onChange) {
       collectionProps.onChange(fieldItems);
     }
+    hiddenElement.current?.dispatchEvent(
+      new CustomEvent<IFieldTypeProperties[]>('change', {
+        bubbles: true,
+        cancelable: false,
+        composed: true,
+        detail: fieldItems,
+      }),
+    );
   }, [collectionProps, fieldItems]);
 
   const [showButton, setShowButton] = useState(false);
@@ -43,7 +54,7 @@ export const RulesCollection = function (collectionProps: IRuleCollectionProps):
     });
 
     setShowButton(fieldItems.length === 0 || possibleRemainingChoices.filter((x) => x.ruleTitle.toLowerCase() !== 'none').length > 0);
-    if (JSON.stringify(possibleRemainingChoices) !== JSON.stringify(remainingChoices)) {
+    if (!isEqual(possibleRemainingChoices, remainingChoices)) {
       setRemainingChoices(possibleRemainingChoices);
     }
 
@@ -52,7 +63,7 @@ export const RulesCollection = function (collectionProps: IRuleCollectionProps):
 
   const addEntityOnClick = () => {
     const index = possibleChoices.findIndex((F) => F.ruleTitle === remainingChoices[0].ruleTitle);
-    const fieldItem: IFieldType = {
+    const fieldItem: IFieldTypeProperties = {
       propertyDropDown: {
         value: {
           value: index === -1 ? 1 : index,
@@ -72,7 +83,7 @@ export const RulesCollection = function (collectionProps: IRuleCollectionProps):
         validationResult: ValidatorTypes.Valid,
       },
     };
-
+    console.log('addEntityOnClick');
     setFieldItems((old) => [...old, fieldItem]);
   };
 
@@ -99,18 +110,25 @@ export const RulesCollection = function (collectionProps: IRuleCollectionProps):
           <RuleStack
             {...props}
             index={index ? fieldItems.length - index : fieldItems.length}
-            key={value?.titleDropDown?.value?.label}
+            key={index + (value?.titleDropDown?.value?.label || '-key')}
             id={`${collectionProps.title}.${index}`}
             defaultIndex={possibleChoices.findIndex((x) => x.ruleTitle === value.titleDropDown.value?.label) || 0}
             ruleStackValues={possibleChoices}
             validationType={collectionProps.validationType}
+            onUpdate={(evt: { data: IFieldTypeProperties; change: 'title' | 'property' | 'range' | 'none' }) => {
+              if (index !== undefined && !areSameFieldType(fieldItems[index], evt.data) && !areSameFieldType(evt.data, defaultFieldItem)) {
+                const updated = [...fieldItems];
+                updated[index] = evt.data;
+                console.log('I am updating', updated);
+                setFieldItems(updated);
+              }
+            }}
             removeClick={() => {
               setFieldItems(typeof index !== 'undefined' ? arrayRemove(fieldItems, index) : fieldItems);
             }}
           />
         )}
       />
-
       {showButton && <AddListButton role={`add button for ${collectionProps.title}`} theme={coreTheme} onClick={addEntityOnClick} label="Add" />}
     </CardListLayout>
   );

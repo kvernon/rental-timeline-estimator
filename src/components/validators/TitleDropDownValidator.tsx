@@ -62,6 +62,7 @@ export const TitleDropDownValidator = function (props: ITitleDropDownParams) {
     if (value !== selectedIndex) {
       const eventResult = evaluateValidation(props.validationType, rule, value);
       setSelectedIndex(value);
+
       if (props.onChange) {
         props.onChange({ value, label: optionsMap[value].label, validationResult: eventResult.validationResult });
       }

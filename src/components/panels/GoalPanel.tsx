@@ -39,16 +39,16 @@ export const GoalPanel = (props: IRangeFieldValidatorProps) => {
       const ele = document.getElementById(`${RangeFieldValidatorName(props.id)}-box`);
 
       const x = ele?.getBoundingClientRect().x;
-      setX(x);
+      setX(() => x);
 
       const y = ele?.getBoundingClientRect().y;
-      setY(y);
+      setY(() => y);
 
       const width = ele?.getBoundingClientRect()?.width;
-      setWidth(width);
+      setWidth(() => width);
 
       const height = ele?.getBoundingClientRect()?.height;
-      setHeight(height);
+      setHeight(() => height);
     };
 
     getPosition();

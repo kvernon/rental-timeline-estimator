@@ -15,22 +15,6 @@ export const ValidatorStack = function (props: IValidatorPanelProps) {
   const [isValid, setIsValid] = useState<ValidatorTypes>(isValidDefault);
   const [isValidCollection, setIsValidCollection] = useState<{ id: string; isValid: ValidatorTypes }[]>([]);
 
-  const chg: onChangeType = (evt: IEventResult<number>) => {
-    const index = isValidCollection.findIndex((x) => formatName(x.id, FormatNames.RangeFieldValidatorId) === evt.id);
-
-    if (index !== -1) {
-      const entity = isValidCollection[index];
-      if (entity && entity.isValid !== evt.validationResult) {
-        // get all
-        const newed = [...isValidCollection];
-        // update at index
-        newed[index] = { id: entity.id, isValid: evt.validationResult };
-        // save
-        setIsValidCollection(newed);
-      }
-    }
-  };
-
   useEffect(() => {
     const children = Array.isArray(props.children) ? props.children : [props.children];
     setIsValidCollection(
@@ -60,7 +44,29 @@ export const ValidatorStack = function (props: IValidatorPanelProps) {
   return (
     <Stack id={ValidatorStackName(props.id)} direction="row">
       <Stack spacing={2} id={props.id} flexGrow={1} paddingLeft={'25px'} paddingTop={'25px'} paddingBottom={'25px'} paddingRight={'25px'}>
-        {children.map((child, idx) => cloneElement(child, { ...child.props, onChange: chg, key: child.key || idx }))}
+        {children.map((child, idx) => {
+          const chg: onChangeType = (evt: IEventResult<number>) => {
+            const index = isValidCollection.findIndex((x) => formatName(x.id, FormatNames.RangeFieldValidatorId) === evt.id);
+
+            if (index !== -1) {
+              const entity = isValidCollection[index];
+              if (entity && entity.isValid !== evt.validationResult) {
+                // get all
+                const newed = [...isValidCollection];
+                // update at index
+                newed[index] = { id: entity.id, isValid: evt.validationResult };
+                // save
+                setIsValidCollection(newed);
+              }
+            }
+
+            if (child.props.onChange) {
+              child.props.onChange(evt);
+            }
+          };
+
+          return cloneElement(child, { ...child.props, onChange: chg, key: child.key || idx });
+        })}
       </Stack>
       <ValidationBar isValid={isValid} />
     </Stack>

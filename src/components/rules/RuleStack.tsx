@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Stack } from '../core/Stack';
 import React, { useEffect, useState } from 'react';
 import { ValidationBar } from '../validators/ValidationBar';
-import { TitleDropDownValidator, ITitleDropDownOptionChange } from '../validators/TitleDropDownValidator';
+import { TitleDropDownValidator, ITitleDropDownOptionChange, ITitleDropDownOption } from '../validators/TitleDropDownValidator';
 import { IPropertyDropDownOptionChange, PropertyDropDownValidator } from '../validators/PropertyDropDownValidator';
 import { RangeFieldValidator } from '../validators/RangeFieldValidator';
 import { DeleteButton } from '../core/DeleteButton';
@@ -12,8 +12,10 @@ import { ValidatorStackTypes } from '../validators/ValidatorStackTypes';
 import { onChangeType } from '../validators/IRangeFieldValidatorChange';
 import { IEventResult } from '../validators/IEventResult';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
-import { IFieldType } from './IFieldType';
+import { defaultFieldItem, IFieldTypeProperties } from './IFieldTypeProperties';
 import { useValid } from '../hooks/useValid';
+import { IEntityDataValueResult } from '../../FormRuleStackEntityDataValueResult';
+import { areSameFieldType } from './areSameFieldType';
 
 export interface IRuleStackProps {
   id: string;
@@ -30,7 +32,7 @@ export interface IRuleStackProps {
 
   style?: React.CSSProperties;
 
-  onUpdate?: (evt: IFieldType) => void;
+  onUpdate?: (evt: { data: IFieldTypeProperties; change: 'title' | 'property' | 'range' | 'none' }) => void;
 }
 
 // https://stackoverflow.com/a/69830024 (example on making drop down w/ image)
@@ -54,7 +56,11 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
   const [isValid, setIsValid] = useState<ValidatorTypes>(isValidDefault);
 
   const [selectedValueOptions, setSelectedValueOptions] = useState<IRuleStackEntity | null>(null);
-  const [data, setData] = useState<IFieldType>({ titleDropDown: {}, rangeFieldValidator: {}, propertyDropDown: {} });
+
+  const [dataTitle, setDataTitle] = useState<IEntityDataValueResult<ITitleDropDownOption>>({});
+  const [dataProperty, setDataProperty] = useState<IEntityDataValueResult<ITitleDropDownOption>>({});
+  const [dataRange, setDataRange] = useState<IEntityDataValueResult<number>>({});
+  const [dataChange, setDataChange] = useState<'title' | 'property' | 'range' | 'none'>('none');
 
   useEffect(() => {
     const newVar = props.ruleStackValues.length === 0 ? null : props.ruleStackValues[selectedRuleTitleIndex];
@@ -62,11 +68,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
   }, [props.ruleStackValues, selectedRuleTitleIndex]);
 
   useEffect(() => {
-    const checkOptions: (ValidatorTypes | undefined)[] = [
-      data.rangeFieldValidator?.validationResult,
-      data.titleDropDown?.validationResult,
-      data.propertyDropDown?.validationResult,
-    ];
+    const checkOptions: (ValidatorTypes | undefined)[] = [dataRange?.validationResult, dataTitle?.validationResult, dataProperty?.validationResult];
 
     const predicate = (value: ValidatorTypes | undefined): value is ValidatorTypes => value !== undefined;
     const verified: ValidatorTypes[] = checkOptions.filter(predicate);
@@ -82,7 +84,17 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
     if (isValid !== possibleValue) {
       setIsValid(possibleValue);
     }
-  }, [data, isValid, isValidDefault]);
+
+    const response = {
+      rangeFieldValidator: dataRange,
+      titleDropDown: dataTitle,
+      propertyDropDown: dataProperty,
+    };
+
+    if (props.onUpdate && !areSameFieldType(response, defaultFieldItem)) {
+      props.onUpdate({ data: response, change: dataChange });
+    }
+  }, [dataRange, dataTitle, dataProperty, isValid, isValidDefault, props]);
 
   useEffect(() => {
     const newValue = props.ruleStackValues.length === 0 ? null : props.ruleStackValues[selectedRuleTitleIndex];
@@ -92,28 +104,24 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
   }, [selectedRuleTitleIndex, selectedValueOptions, props.ruleStackValues]);
 
   const titleDropDownOnChange = (valueOption: ITitleDropDownOptionChange) => {
-    if (data.titleDropDown?.value?.value !== valueOption.value) {
+    if (dataTitle?.value?.value !== valueOption.value) {
       // update the index
       setSelectedRuleTitleIndex(valueOption.value);
-      const f: IFieldType = { ...data };
-      f.titleDropDown = {
+      setDataTitle({
         value: { value: valueOption.value, label: valueOption.label },
         validationResult: valueOption.validationResult,
-      };
-
-      setData(f);
+      });
+      setDataChange('title');
     }
   };
 
   const propertyDropDownOnChange = (valueOption: IPropertyDropDownOptionChange) => {
-    if (data.propertyDropDown?.value?.value !== valueOption.value) {
-      const f: IFieldType = { ...data };
-      f.propertyDropDown = {
+    if (dataProperty?.value?.value !== valueOption.value) {
+      setDataProperty({
         value: { value: valueOption.value, label: valueOption.label },
         validationResult: valueOption.validationResult,
-      };
-
-      setData(f);
+      });
+      setDataChange('property');
     }
   };
 
@@ -128,14 +136,12 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
   );
 
   const rangeFieldValidatorOnChange: onChangeType = (evt: IEventResult<number>): void => {
-    if (data.rangeFieldValidator?.value !== evt.value) {
-      const f: IFieldType = { ...data };
-      f.rangeFieldValidator = {
+    if (dataRange?.value !== evt.value) {
+      setDataRange({
         value: evt.value,
         validationResult: evt.validationResult,
-      };
-
-      setData(f);
+      });
+      setDataChange('range');
     }
   };
 

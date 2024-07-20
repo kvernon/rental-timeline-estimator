@@ -92,8 +92,14 @@ export const RangeFieldValidator = (props: IRangeFieldValidatorProps) => {
           hasSpinner={props.hasSpinner}
           useUnderlineOnly={props.useUnderlineOnly}
           useTransparent={!!props.useTransparent}
-          onBlur={(evt) => onUpdate(evt.target.value)}
-          onChange={(evt) => onUpdate(evt.target.value)}
+          onBlur={(evt) => {
+            evt.stopPropagation();
+            onUpdate(evt.target.value);
+          }}
+          onChange={(evt) => {
+            evt.stopPropagation();
+            onUpdate(evt.target.value);
+          }}
           validationType={isFormValid}
           themeOptions={coreTheme}
           fontGroup={props.inputFontGroup}

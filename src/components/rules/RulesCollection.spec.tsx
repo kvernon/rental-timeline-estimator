@@ -9,7 +9,7 @@ import { RuleStack } from './RuleStack';
 import { CardContent } from '../core/CardContent';
 import { AddListButton } from '../core/AddListButton';
 import { userEvent } from '@testing-library/user-event';
-import { IFieldType } from './IFieldType';
+import { IFieldTypeProperties } from './IFieldTypeProperties';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
 
 jest.mock('react-movable', () => {
@@ -116,8 +116,8 @@ describe('RulesCollection unit tests', () => {
   describe('and interaction', () => {
     let interactProps: IRuleCollectionProps;
 
-    let value: IFieldType;
-    let value2: IFieldType;
+    let value: IFieldTypeProperties;
+    let value2: IFieldTypeProperties;
 
     let id1: string;
     let id2: string;
@@ -276,7 +276,52 @@ describe('RulesCollection unit tests', () => {
           await userEvent.click(addButton);
 
           expect(addButton).toBeInTheDocument();
+
+          expect(RuleStack).toHaveBeenCalledTimes(10);
         });
+      });
+    });
+
+    describe('and maxing', () => {
+      beforeEach(() => {
+        interactProps.possibleChoices = [
+          {
+            max: 2,
+            ruleTitle: 'title',
+            property: 1,
+            prefix: 'prefix',
+            suffix: 'suffix',
+            min: 1,
+          },
+          {
+            max: 3,
+            ruleTitle: 'title-2',
+            property: 1,
+            prefix: 'prefix',
+            suffix: 'suffix',
+            min: 2,
+          },
+        ];
+
+        interactProps.activeChoices = [
+          {
+            titleDropDown: { value: { value: 0, label: 'title' } },
+            propertyDropDown: {},
+            rangeFieldValidator: {},
+          },
+          {
+            titleDropDown: { value: { value: 1, label: 'title-2' } },
+            propertyDropDown: {},
+            rangeFieldValidator: {},
+          },
+        ];
+
+        render(<RulesCollection {...interactProps} />);
+      });
+
+      test('should hide add button', () => {
+        const AddListButtonCtor = jest.mocked(AddListButton);
+        expect(AddListButtonCtor).not.toHaveBeenCalled();
       });
     });
   });
