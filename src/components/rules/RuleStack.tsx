@@ -32,7 +32,7 @@ export interface IRuleStackProps {
 
   style?: React.CSSProperties;
 
-  onUpdate?: (evt: IFieldTypeProperties) => void;
+  onUpdate?: (evt: { data: IFieldTypeProperties; change: 'title' | 'property' | 'range' | 'none' }) => void;
 }
 
 // https://stackoverflow.com/a/69830024 (example on making drop down w/ image)
@@ -60,6 +60,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
   const [dataTitle, setDataTitle] = useState<IEntityDataValueResult<ITitleDropDownOption>>({});
   const [dataProperty, setDataProperty] = useState<IEntityDataValueResult<ITitleDropDownOption>>({});
   const [dataRange, setDataRange] = useState<IEntityDataValueResult<number>>({});
+  const [dataChange, setDataChange] = useState<'title' | 'property' | 'range' | 'none'>('none');
 
   useEffect(() => {
     const newVar = props.ruleStackValues.length === 0 ? null : props.ruleStackValues[selectedRuleTitleIndex];
@@ -91,7 +92,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
     };
 
     if (props.onUpdate && !areSameFieldType(response, defaultFieldItem)) {
-      props.onUpdate(response);
+      props.onUpdate({ data: response, change: dataChange });
     }
   }, [dataRange, dataTitle, dataProperty, isValid, isValidDefault, props]);
 
@@ -110,6 +111,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
         value: { value: valueOption.value, label: valueOption.label },
         validationResult: valueOption.validationResult,
       });
+      setDataChange('title');
     }
   };
 
@@ -119,6 +121,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
         value: { value: valueOption.value, label: valueOption.label },
         validationResult: valueOption.validationResult,
       });
+      setDataChange('property');
     }
   };
 
@@ -138,6 +141,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
         value: evt.value,
         validationResult: evt.validationResult,
       });
+      setDataChange('range');
     }
   };
 

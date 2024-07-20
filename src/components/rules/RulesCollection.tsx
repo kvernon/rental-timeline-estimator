@@ -115,16 +115,10 @@ export const RulesCollection = function (collectionProps: IRuleCollectionProps):
             defaultIndex={possibleChoices.findIndex((x) => x.ruleTitle === value.titleDropDown.value?.label) || 0}
             ruleStackValues={possibleChoices}
             validationType={collectionProps.validationType}
-            onUpdate={(evt: IFieldTypeProperties) => {
-              console.log('RulesCollection::RuleStack::onUpdate index:', index, evt);
-              console.log(
-                'are different',
-                index !== undefined && !areSameFieldType(fieldItems[index], evt),
-                !areSameFieldType(evt, defaultFieldItem),
-              );
-              if (index !== undefined && !areSameFieldType(fieldItems[index], evt) && !areSameFieldType(evt, defaultFieldItem)) {
+            onUpdate={(evt: { data: IFieldTypeProperties; change: 'title' | 'property' | 'range' | 'none' }) => {
+              if (index !== undefined && !areSameFieldType(fieldItems[index], evt.data) && !areSameFieldType(evt.data, defaultFieldItem)) {
                 const updated = [...fieldItems];
-                updated[index] = evt;
+                updated[index] = evt.data;
                 console.log('I am updating', updated);
                 setFieldItems(updated);
               }
