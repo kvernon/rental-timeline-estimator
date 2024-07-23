@@ -1,9 +1,9 @@
-import { IThemeOptions } from '../../theming/IThemeOptions';
 import { Theme, useTheme } from '@emotion/react';
 import { ITypography } from '../../theming/ITypography';
+import { IThemeOptions } from '../../theming/IThemeOptions';
 import { render, screen } from '@testing-library/react';
+import { ITitleDropDownParams, TitleDropDownValidator } from './TitleDropDownValidator';
 import React from 'react';
-import { IPropertyDropDownParams, PropertyDropDownValidator, propertyOptions } from './PropertyDropDownValidator';
 import '@testing-library/jest-dom';
 import selectEvent from 'react-select-event';
 import { ValidatorTypes } from './ValidatorTypes';
@@ -17,9 +17,9 @@ jest.mock('@emotion/react', () => {
   };
 });
 
-describe('PropertyDropDownValidator unit test', () => {
+describe('TitleDropDownValidator unit test', () => {
   let typographyMock: jest.Mocked<ITypography>;
-  let params: IPropertyDropDownParams;
+  let params: ITitleDropDownParams;
 
   const validationColorOptionalRight = '#0000FF';
   const validationColorValidMiddle = '#00FF00';
@@ -78,109 +78,72 @@ describe('PropertyDropDownValidator unit test', () => {
     } as jest.Mocked<IThemeOptions>);
 
     params = {
-      title: 'Tested',
+      title: 'Title Drop',
+      optionTitles: [],
       onChange: jest.fn(),
     };
   });
 
   describe('and defaults', () => {
     test('should render', () => {
-      render(<PropertyDropDownValidator title={params.title} />);
+      render(<TitleDropDownValidator {...params} />);
 
       const actual = screen.getByLabelText<HTMLInputElement>(params.title);
 
       expect(actual).toBeInTheDocument();
     });
 
-    test('should contain options with house selected', () => {
-      render(<PropertyDropDownValidator title={params.title} />);
+    describe('and options', () => {
+      describe('and empty', () => {
+        test('should have no options', () => {
+          render(<TitleDropDownValidator {...params} />);
 
-      const element = screen.getByLabelText<HTMLInputElement>(params.title);
+          const element = screen.getByLabelText<HTMLInputElement>(params.title);
 
-      selectEvent.openMenu(element);
+          selectEvent.openMenu(element);
 
-      const allByText = screen.getAllByRole<HTMLImageElement>('img');
+          const emptyNode = screen.getByText<HTMLDivElement>('No options');
 
-      expect(
-        allByText.map((x) => ({
-          src: x.src,
-          title: x.title,
-          alt: x.alt,
-        })),
-      ).toEqual(
-        ['house', 'apartment', 'house'].map((exp) => ({
-          src: `http://localhost/images/${exp}.jpg`,
-          title: exp,
-          alt: exp,
-        })),
-      );
+          expect(emptyNode).toBeInTheDocument();
+        });
+      });
+
+      describe('and populated', () => {
+        test('should have no options', () => {
+          params.optionTitles = ['one'];
+
+          render(<TitleDropDownValidator {...params} />);
+
+          const element = screen.getByLabelText<HTMLInputElement>(params.title);
+
+          selectEvent.openMenu(element);
+
+          const options = screen.getAllByRole<HTMLDivElement>('option');
+
+          options.forEach((e, i) => {
+            expect(e).toHaveTextContent(params.optionTitles[i]);
+          });
+        });
+      });
     });
   });
 
   describe('and value prop is updated', () => {
-    test('should contain options with apartment selected', () => {
-      params.value = {
-        value: {
-          value: 0,
-          label: propertyOptions[0],
-        },
-
-        validationResult: ValidatorTypes.Valid,
-      };
-
-      render(<PropertyDropDownValidator title={params.title} value={params.value} />);
-
-      const element = screen.getByLabelText<HTMLInputElement>(params.title);
-
-      selectEvent.openMenu(element);
-
-      const allByText = screen.getAllByRole<HTMLImageElement>('img');
-
-      expect(
-        allByText.map((x) => ({
-          src: x.src,
-          title: x.title,
-          alt: x.alt,
-        })),
-      ).toEqual(
-        ['apartment', 'apartment', 'house'].map((exp) => ({
-          src: `http://localhost/images/${exp}.jpg`,
-          title: exp,
-          alt: exp,
-        })),
-      );
-    });
-  });
-
-  describe('and value is selected', () => {
-    test('onChange should be called', async () => {
+    test('should receive updated entry', () => {
+      params.optionTitles = ['one', 'two', 'three'];
       params.value = {
         value: {
           value: 1,
-          label: propertyOptions[1],
+          label: params.optionTitles[1],
         },
-
         validationResult: ValidatorTypes.Valid,
       };
 
-      render(<PropertyDropDownValidator title={params.title} value={params.value} onChange={params.onChange} />);
+      render(<TitleDropDownValidator title={params.title} value={params.value} optionTitles={params.optionTitles} onChange={params.onChange} />);
 
       const element = screen.getByLabelText<HTMLInputElement>(params.title);
 
-      selectEvent.openMenu(element);
-
-      await selectEvent.select(element, (_content, element1): boolean => {
-        return element1 instanceof HTMLImageElement && element1.alt === 'apartment';
-      });
-
-      expect(params.onChange).toHaveBeenCalledWith({
-        validationResult: ValidatorTypes.Valid,
-        value: {
-          image: '/images/apartment.jpg',
-          label: 'apartment',
-          value: 0,
-        },
-      });
+      expect(element.value).toEqual('');
     });
   });
 });

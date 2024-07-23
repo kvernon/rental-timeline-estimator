@@ -32,7 +32,10 @@ export function PropertyDropDownValidator(props: IPropertyDropDownParams) {
     <ReactSelect<IPropertyDropDownOption, false, GroupBase<IPropertyDropDownOption>>
       aria-label={props.title}
       onChange={(a: SingleValue<IPropertyDropDownOption>) => {
-        if (a && props.onChange) props?.onChange({ value: a, validationResult: ValidatorTypes.Valid });
+        console.log(a, props.onChange);
+        if (a && props.onChange) {
+          props.onChange({ value: a, validationResult: ValidatorTypes.Valid });
+        }
       }}
       value={getDataValue(props.value?.value?.label || propertyOptions[defaultValue], props.value?.value?.value || defaultValue)}
       options={optionsMap}
