@@ -27,7 +27,7 @@ export function RangeFieldValidator(props: IRangeFieldValidatorProps) {
           {props.title}
         </InputLabel>
       )}
-      <InputBox>
+      <InputBox id={`${props.id}-box`}>
         {props.prefix && (
           <InputSpanPaddingLeft
             themeOptions={coreTheme}

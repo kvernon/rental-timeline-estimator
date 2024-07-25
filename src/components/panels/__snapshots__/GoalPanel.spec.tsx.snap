@@ -1,0 +1,229 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GoalPanel unit test should render 1`] = `
+.emotion-0 {
+  height: 275px;
+  display: block;
+  width: 100%;
+  overflow: visible;
+  float: left;
+  position: relative;
+}
+
+.emotion-1 {
+  width: 950px;
+  height: 950px;
+  left: 240px;
+  top: -332px;
+  float: left;
+  position: absolute;
+  background-image: radial-gradient(rgba(199, 159, 0, 0.3) 0%, rgba(61, 61, 61, 0.01) 62%, transparent 67%);
+  border-radius: 50%;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  z-index: -1;
+  -webkit-animation-name: spin;
+  animation-name: spin;
+  -webkit-animation-duration: 300s;
+  animation-duration: 300s;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+}
+
+.emotion-1::after,
+.emotion-1::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: center;
+  border-radius: 50%;
+  -webkit-mask-image: radial-gradient(rgba(0, 0, 0, 1) 65%, transparent 80%);
+  mask-image: radial-gradient(rgba(0, 0, 0, 1) 65%, transparent 80%);
+}
+
+.emotion-1::before {
+  background: repeating-conic-gradient(from 0deg, rgb(199, 159, 0, 0.3) 0deg 10deg, transparent 10deg 15deg);
+  -webkit-mask-image: radial-gradient(rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 36%, transparent 65%);
+  mask-image: radial-gradient(rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 36%, transparent 65%);
+  -webkit-animation: rotate 720s linear,scale 3s linear infinite;
+  animation: rotate 720s linear,scale 3s linear infinite;
+}
+
+.emotion-2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  padding-bottom: 25px;
+  margin-bottom: 0;
+  padding-top: 25px;
+  padding-left: 20%;
+  padding-right: 20%;
+  position: relative;
+  width: auto;
+  min-height: 0;
+  z-index: 2;
+}
+
+.emotion-3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  color: #ffffffff;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  margin: 5px 5px 24px 5px;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100%;
+}
+
+.emotion-3:last-child {
+  margin: 5px;
+}
+
+.emotion-4 {
+  font-family: child;
+  font-size: child;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  color: child;
+  white-space: nowrap;
+  padding: 5px;
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  transform: none;
+  overflow: visible;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  -webkit-box-flex: 2;
+  -webkit-flex-grow: 2;
+  -ms-flex-positive: 2;
+  flex-grow: 2;
+}
+
+.emotion-4:focus {
+  color: #9ee5ff;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-content: space-evenly;
+  -ms-flex-line-pack: space-evenly;
+  align-content: space-evenly;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100%;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  height: 43px;
+}
+
+.emotion-6 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  text-align: right;
+  width: 100%;
+  height: 59px;
+  border-radius: 0.3rem;
+  -webkit-transition: border-color 0.4s ease-out;
+  transition: border-color 0.4s ease-out;
+  border-color: white;
+  border-width: 0px 0px 5px 0;
+  font-family: child;
+  font-size: child;
+  color: child;
+  background-color: transparent;
+  border-color: #FF0000;
+}
+
+.emotion-6[type=number]::-webkit-inner-spin-button,
+.emotion-6[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.emotion-6:hover {
+  border-color: #FF0000;
+}
+
+<div
+  aria-label="Goal Panel"
+  class="emotion-0"
+>
+  <div
+    class="emotion-1"
+    shape="[object Object]"
+  />
+  <div
+    class="emotion-2"
+    spacing="2"
+  >
+    <div
+      aria-controls="goal"
+      class="emotion-3"
+      id="goal-form-control"
+      role="input-control"
+    >
+      <label
+        class="emotion-4"
+        direction="row"
+        for="goal"
+      >
+        Goal
+      </label>
+      <div
+        class="emotion-5"
+        id="goal-box"
+      >
+        <input
+          aria-label="Goal"
+          class="emotion-6"
+          id="goal"
+          required=""
+          type="number"
+          value=""
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
