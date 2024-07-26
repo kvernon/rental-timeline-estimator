@@ -18,8 +18,8 @@ jest.mock('@emotion/react', () => {
 });
 
 describe('TitleDropDownValidator unit test', () => {
-  let typographyMock: jest.Mocked<ITypography>;
   let params: ITitleDropDownParams;
+  let typographyMock: jest.Mocked<ITypography>;
 
   const validationColorOptionalRight = '#0000FF';
   const validationColorValidMiddle = '#00FF00';
