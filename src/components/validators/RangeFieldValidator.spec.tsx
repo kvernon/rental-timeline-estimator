@@ -4,8 +4,8 @@ import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { ValidatorTypes } from './ValidatorTypes';
 import { IThemeOptions } from '../../theming/IThemeOptions';
-import { ITypography } from '../../theming/ITypography';
 import { RangeFieldValidator } from './RangeFieldValidator';
+import { themeMock } from '../../../__tests__/ThemeMock';
 
 jest.mock('../core/InputLabel');
 jest.mock('../core/InputBox');
@@ -23,11 +23,6 @@ jest.mock('@emotion/react', () => {
 describe('input-range unit tests', () => {
   const id = 'id-for-input';
   const title = 'the title';
-  let typographyMock: jest.Mocked<ITypography>;
-
-  const validationColorOptionalRight = '#0000FF';
-  const validationColorValidMiddle = '#00FF00';
-  const validationColorInvalidLeft = '#FF0000';
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -35,42 +30,7 @@ describe('input-range unit tests', () => {
   });
 
   beforeEach(() => {
-    typographyMock = {
-      parent: {
-        allPopulated: jest.fn(),
-        font: 'p',
-        color: 'p',
-        size: 'p',
-      },
-      get: jest.fn().mockReturnValue({
-        font: 'child',
-        color: 'child',
-        size: 'child',
-      }),
-    };
-
-    jest.mocked(useTheme).mockReturnValue({
-      palette: {
-        validation: {
-          Invalid: {
-            validationColor: validationColorInvalidLeft,
-            background: validationColorInvalidLeft,
-            backgroundFocus: validationColorInvalidLeft,
-          },
-          Valid: {
-            validationColor: validationColorValidMiddle,
-            background: validationColorValidMiddle,
-            backgroundFocus: validationColorValidMiddle,
-          },
-          Optional: {
-            validationColor: validationColorOptionalRight,
-            background: validationColorOptionalRight,
-            backgroundFocus: validationColorOptionalRight,
-          },
-        },
-      },
-      typography: typographyMock,
-    } as unknown as IThemeOptions);
+    jest.mocked(useTheme).mockReturnValue(themeMock as jest.Mocked<IThemeOptions>);
   });
 
   describe('and defaults', () => {

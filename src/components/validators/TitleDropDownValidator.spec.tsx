@@ -1,5 +1,4 @@
 import { Theme, useTheme } from '@emotion/react';
-import { ITypography } from '../../theming/ITypography';
 import { IThemeOptions } from '../../theming/IThemeOptions';
 import { render, screen } from '@testing-library/react';
 import { ITitleDropDownParams, TitleDropDownValidator } from './TitleDropDownValidator';
@@ -7,6 +6,7 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import selectEvent from 'react-select-event';
 import { ValidatorTypes } from './ValidatorTypes';
+import { themeMock } from '../../../__tests__/ThemeMock';
 
 jest.mock('@emotion/react', () => {
   const requireActual = jest.requireActual('@emotion/react');
@@ -19,63 +19,13 @@ jest.mock('@emotion/react', () => {
 
 describe('TitleDropDownValidator unit test', () => {
   let params: ITitleDropDownParams;
-  let typographyMock: jest.Mocked<ITypography>;
-
-  const validationColorOptionalRight = '#0000FF';
-  const validationColorValidMiddle = '#00FF00';
-  const validationColorInvalidLeft = '#FF0000';
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   beforeEach(() => {
-    const useThemeMock = jest.mocked(useTheme);
-    typographyMock = {
-      parent: {
-        allPopulated: jest.fn(),
-        font: 'p',
-        color: 'p',
-        size: 'p',
-      },
-      get: jest.fn().mockReturnValue({
-        font: 'child',
-        color: 'child',
-        size: 'child',
-      }),
-    };
-
-    useThemeMock.mockReturnValue({
-      palette: {
-        pageBackground: 'pageBackground',
-        panelBackground: 'panelBackground',
-        panelShadow: 'panelShadow',
-
-        inputBackgroundBadFocus: 'inputBackgroundBadFocus',
-        inputBackgroundBad: 'inputBackgroundBad',
-        inputBackground: 'inputBackground',
-        inputBackgroundFocus: 'inputBackgroundFocus',
-
-        validation: {
-          Invalid: {
-            validationColor: validationColorInvalidLeft,
-            background: validationColorInvalidLeft,
-            backgroundFocus: validationColorInvalidLeft,
-          },
-          Valid: {
-            validationColor: validationColorValidMiddle,
-            background: validationColorValidMiddle,
-            backgroundFocus: validationColorValidMiddle,
-          },
-          Optional: {
-            validationColor: validationColorOptionalRight,
-            background: validationColorOptionalRight,
-            backgroundFocus: validationColorOptionalRight,
-          },
-        },
-      },
-      typography: typographyMock,
-    } as jest.Mocked<IThemeOptions>);
+    jest.mocked(useTheme).mockReturnValue(themeMock as jest.Mocked<IThemeOptions>);
 
     params = {
       title: 'Title Drop',
