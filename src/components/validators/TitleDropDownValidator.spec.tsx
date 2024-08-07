@@ -8,15 +8,6 @@ import selectEvent from 'react-select-event';
 import { ValidatorTypes } from './ValidatorTypes';
 import { themeMock } from '../../../__tests__/ThemeMock';
 
-jest.mock('@emotion/react', () => {
-  const requireActual = jest.requireActual('@emotion/react');
-  const useTheme: jest.MockedFn<() => Theme> = jest.fn();
-  return {
-    ...requireActual,
-    useTheme,
-  };
-});
-
 describe('TitleDropDownValidator unit test', () => {
   let params: ITitleDropDownParams;
 

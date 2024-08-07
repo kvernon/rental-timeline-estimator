@@ -9,6 +9,7 @@ export const RangeFieldValidator = jest.fn((p: IRangeFieldValidatorProps) => {
       id={p.id}
       value={p.value?.value}
       name={p.title}
+      aria-label={p.title}
       onChange={(e) => {
         if (p.onChange)
           p.onChange({

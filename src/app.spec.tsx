@@ -3,6 +3,8 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { App } from './app';
 
+jest.mock('./components/core/Page');
+
 describe('App unit tests', () => {
   describe('and App', () => {
     describe('and success', () => {

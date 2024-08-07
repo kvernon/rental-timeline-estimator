@@ -1,4 +1,4 @@
-import { Theme, useTheme } from '@emotion/react';
+import { useTheme } from '@emotion/react';
 import React from 'react';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -11,14 +11,6 @@ jest.mock('../core/InputLabel');
 jest.mock('../core/InputBox');
 jest.mock('../core/FormControl');
 jest.mock('../core/InputSpanPaddingLeft');
-jest.mock('@emotion/react', () => {
-  const requireActual = jest.requireActual('@emotion/react');
-  const useTheme: jest.MockedFn<() => Theme> = jest.fn();
-  return {
-    ...requireActual,
-    useTheme,
-  };
-});
 
 describe('input-range unit tests', () => {
   const id = 'id-for-input';

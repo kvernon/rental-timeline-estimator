@@ -2,22 +2,15 @@ import React from 'react';
 import ReactSelect, { GroupBase, SingleValue } from 'react-select';
 import { IPropertyDropDownOption } from '../core/IPropertyDropDownOption';
 import { formatOptionLabel } from '../core/formatOptionLabel';
-import { IEventResult } from './IEventResult';
-import { ISelectOption } from '../core/ISelectOption';
 import { ValidatorTypes } from './ValidatorTypes';
 import { useTheme } from '@emotion/react';
 import { IThemeOptions } from '../../theming/IThemeOptions';
 import { FontGroups } from '../../theming/fontGroups';
+import { IPropertyDropDownParams } from './IPropertyDropDownParams';
 
 const getDataValue = (title: string, value: number): IPropertyDropDownOption => {
   return { value, label: title, image: `/images/${title}.jpg` };
 };
-
-export interface IPropertyDropDownParams {
-  title: string;
-  value?: IEventResult<ISelectOption>;
-  onChange?: (inputData: IEventResult<ISelectOption>) => void;
-}
 
 export const propertyOptions = ['apartment', 'house'];
 

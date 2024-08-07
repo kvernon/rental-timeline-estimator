@@ -1,22 +1,13 @@
 import { IThemeOptions } from '../../theming/IThemeOptions';
-import { Theme, useTheme } from '@emotion/react';
-import { ITypography } from '../../theming/ITypography';
+import { useTheme } from '@emotion/react';
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { IPropertyDropDownParams, PropertyDropDownValidator, propertyOptions } from './PropertyDropDownValidator';
+import { PropertyDropDownValidator, propertyOptions } from './PropertyDropDownValidator';
 import '@testing-library/jest-dom';
 import selectEvent from 'react-select-event';
 import { ValidatorTypes } from './ValidatorTypes';
 import { themeMock } from '../../../__tests__/ThemeMock';
-
-jest.mock('@emotion/react', () => {
-  const requireActual = jest.requireActual('@emotion/react');
-  const useTheme: jest.MockedFn<() => Theme> = jest.fn();
-  return {
-    ...requireActual,
-    useTheme,
-  };
-});
+import { IPropertyDropDownParams } from './IPropertyDropDownParams';
 
 describe('PropertyDropDownValidator unit test', () => {
   let params: IPropertyDropDownParams;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { CardListLayout } from '../core/CardListLayout';
-import { List } from 'react-movable'; //?
+import { List } from 'react-movable';
 import { IEventResult } from '../validators/IEventResult';
 import { ISelectOption } from '../core/ISelectOption';
 import { onChangeArray } from './onChangeArray';

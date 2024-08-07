@@ -2,20 +2,11 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { ValidatorTypes } from './ValidatorTypes';
-import type { Theme } from '@emotion/react';
-
-const useTheme: jest.MockedFn<() => Theme> = jest.fn();
-jest.mock('@emotion/react', () => {
-  const requireActual = jest.requireActual('@emotion/react');
-  return {
-    ...requireActual,
-    useTheme,
-  };
-});
 
 import { ValidationBar } from './ValidationBar';
 import { IThemeOptions } from '../../theming/IThemeOptions';
 import { themeMock } from '../../../__tests__/ThemeMock';
+import { useTheme } from '@emotion/react';
 
 describe('ValidationBar unit tests', () => {
   beforeAll(() => {

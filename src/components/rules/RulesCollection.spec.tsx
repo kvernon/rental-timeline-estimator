@@ -2,20 +2,12 @@ import React from 'react';
 import { cleanup, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { IRulesCollectionProps, RulesCollection } from './RulesCollection';
-import { Theme, useTheme } from '@emotion/react';
+import { useTheme } from '@emotion/react';
 import { themeMock } from '../../../__tests__/ThemeMock';
 import { IThemeOptions } from '../../theming/IThemeOptions';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
 
 jest.mock('../core/CardListLayout');
-jest.mock('@emotion/react', () => {
-  const requireActual = jest.requireActual('@emotion/react');
-  const useTheme: jest.MockedFn<() => Theme> = jest.fn();
-  return {
-    ...requireActual,
-    useTheme,
-  };
-});
 
 describe('RulesCollection unit tests', () => {
   beforeEach(() => {
