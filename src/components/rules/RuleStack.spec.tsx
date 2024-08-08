@@ -11,7 +11,9 @@ import { IRuleStackProps } from './IRuleStackProps';
 import { RangeFieldValidator } from '../validators/RangeFieldValidator';
 import { PropertyDropDownValidator } from '../validators/PropertyDropDownValidator';
 import { DeleteButton } from '../core/DeleteButton';
+import { getValidationResult } from './getValidationResult';
 
+jest.mock('../rules/getValidationResult');
 jest.mock('../validators/TitleDropDownValidator');
 jest.mock('../validators/RangeFieldValidator');
 jest.mock('../validators/PropertyDropDownValidator');
@@ -33,6 +35,7 @@ function getRuleName(index: number) {
 
 describe('RuleStack unit tests', () => {
   beforeEach(() => {
+    jest.mocked(getValidationResult).mockReturnValue(ValidatorTypes.Optional);
     jest.mocked(useTheme).mockReturnValue(themeMock as jest.Mocked<IThemeOptions>);
   });
 
@@ -43,6 +46,7 @@ describe('RuleStack unit tests', () => {
 
   describe('should be setup with the basics', () => {
     let props: IRuleStackProps;
+
     beforeEach(() => {
       props = {
         index: 0,
@@ -71,6 +75,11 @@ describe('RuleStack unit tests', () => {
 
     test('should generate with ValidationBar', () => {
       const entity = screen.getByText<HTMLDivElement>(/ValidationBar/);
+
+      expect(jest.mocked(getValidationResult)).toHaveBeenCalledWith(
+        [ValidatorTypes.Optional, ValidatorTypes.Optional, ValidatorTypes.Optional],
+        false,
+      );
 
       expect(entity).toHaveTextContent(ValidatorTypes.Optional.toString());
     });
@@ -129,6 +138,7 @@ describe('RuleStack unit tests', () => {
     beforeEach(() => {
       props = {
         index: 0,
+        required: true,
         ruleStackValues: [
           {
             min: 3,
@@ -159,7 +169,12 @@ describe('RuleStack unit tests', () => {
     test('should generate with ValidationBar', () => {
       const entity = screen.getByText<HTMLDivElement>(/ValidationBar/);
 
-      expect(entity).toHaveTextContent(ValidatorTypes.Invalid.toString());
+      expect(jest.mocked(getValidationResult)).toHaveBeenCalledWith(
+        [ValidatorTypes.Valid, ValidatorTypes.Valid, ValidatorTypes.Invalid],
+        props.required,
+      );
+
+      expect(entity).toHaveTextContent(ValidatorTypes.Optional.toString());
     });
 
     test('should generate with TitleDropDownValidator', () => {
