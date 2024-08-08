@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 import { Stack } from '../core/Stack';
 import React, { useEffect, useState } from 'react';
-import { DeleteButton } from '../core/DeleteButton';
-import { PropertyDropDownValidator } from '../validators/PropertyDropDownValidator';
 import { ValidationBar } from '../validators/ValidationBar';
 import { TitleDropDownValidator } from '../validators/TitleDropDownValidator';
+import { PropertyDropDownValidator } from '../validators/PropertyDropDownValidator';
+import { RangeFieldValidator } from '../validators/RangeFieldValidator';
+import { DeleteButton } from '../core/DeleteButton';
 import { IRuleStackProps } from './IRuleStackProps';
 import { DragPlaceholder } from '../core/DragPlaceHolder';
-import { RangeFieldValidator } from '../validators/RangeFieldValidator';
 import { IRuleStackEntity } from './IRuleStackEntity';
 import { getValidationResult } from './getValidationResult';
 
