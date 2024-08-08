@@ -26,6 +26,7 @@ const StackBase = styled(Stack)`
 export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref: React.Ref<HTMLDivElement>) {
   const [selectedRuleTitleIndex] = useState<number>(props.value.title?.value?.value || 0);
   const [selectedValueOptions, setSelectedValueOptions] = useState<IRuleStackEntity | null>(null);
+  const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
   const [value, setValue] = useState<{
     title: IEventResult<ISelectOption>;
     property: IEventResult<ISelectOption>;
@@ -36,6 +37,12 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
     const newVar = props.ruleStackValues.length === 0 ? null : props.ruleStackValues[selectedRuleTitleIndex];
     setSelectedValueOptions(newVar);
   }, [props.ruleStackValues, selectedRuleTitleIndex]);
+
+  useEffect(() => {
+    if (isDataLoaded && props.onUpdate) {
+      props.onUpdate(value);
+    }
+  }, [value, isDataLoaded, props]);
 
   const injectProps = { ...props };
 
@@ -48,6 +55,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
           validationResult: valueOption.validationResult,
         },
       });
+      setIsDataLoaded(true);
     }
   };
 
@@ -60,6 +68,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
           validationResult: valueOption.validationResult,
         },
       });
+      setIsDataLoaded(true);
     }
   };
 
@@ -81,6 +90,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
           validationResult: evt.value.validationResult,
         },
       });
+      setIsDataLoaded(true);
     }
   };
 
@@ -98,7 +108,8 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
     />
   );
 
-  //delete injectProps.onUpdate;
+  delete injectProps.onUpdate;
+
   return (
     <StackBase
       {...injectProps}
@@ -110,7 +121,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
       style={{
         ...props.style,
       }}
-      aria-label="Rule"
+      aria-label={`Rule Number ${props.index}`}
     >
       <DragPlaceholder role={'drag-handle'} data-movable-handle />
       <Stack direction="column" paddingTop={'10px'} paddingLeft={'17px'} paddingBottom={'20px'} paddingRight={'17px'}>

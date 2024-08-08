@@ -7,7 +7,7 @@ export const TitleDropDownValidator = jest.fn((p: ITitleDropDownParams) => {
     const value = parseInt(event.currentTarget.value);
 
     if (p.onChange) {
-      p.onChange({ value: { value, label: '' }, validationResult: ValidatorTypes.Valid });
+      p.onChange({ value: { value, label: p.optionTitles[value] }, validationResult: ValidatorTypes.Valid });
     }
   }
 

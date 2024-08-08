@@ -27,6 +27,10 @@ jest.mock('../validators/ValidationBar', () => {
   };
 });
 
+function getRuleName(index: number) {
+  return `Rule Number ${index}`;
+}
+
 describe('RuleStack unit tests', () => {
   beforeEach(() => {
     jest.mocked(useTheme).mockReturnValue(themeMock as jest.Mocked<IThemeOptions>);
@@ -41,6 +45,7 @@ describe('RuleStack unit tests', () => {
     let props: IRuleStackProps;
     beforeEach(() => {
       props = {
+        index: 0,
         ruleStackValues: [{ ruleTitle: 'title' }, { ruleTitle: 'nothing' }],
         value: {
           title: { value: undefined, validationResult: ValidatorTypes.Optional },
@@ -52,7 +57,7 @@ describe('RuleStack unit tests', () => {
     });
 
     test('should generate with StackBase', () => {
-      const entity = screen.getByLabelText<HTMLDivElement>(`Rule`);
+      const entity = screen.getByLabelText<HTMLDivElement>(getRuleName(props.index));
 
       expect(entity).toHaveStyle('background-color: #4f41b9');
       expect(entity).toHaveStyle('padding-left:0');
@@ -71,7 +76,7 @@ describe('RuleStack unit tests', () => {
     });
 
     test('should generate with TitleDropDownValidator', () => {
-      const entity = screen.getByLabelText<HTMLDivElement>(`Rule`);
+      const entity = screen.getByLabelText<HTMLDivElement>(getRuleName(props.index));
 
       expect(entity).toBeInTheDocument();
       expect(TitleDropDownValidator).toHaveBeenCalledWith(
@@ -120,8 +125,10 @@ describe('RuleStack unit tests', () => {
 
   describe('and value supplied', () => {
     let props: IRuleStackProps;
+
     beforeEach(() => {
       props = {
+        index: 0,
         ruleStackValues: [
           {
             min: 3,
@@ -156,7 +163,7 @@ describe('RuleStack unit tests', () => {
     });
 
     test('should generate with TitleDropDownValidator', () => {
-      const entity = screen.getByLabelText<HTMLDivElement>(`Rule`);
+      const entity = screen.getByLabelText<HTMLDivElement>(getRuleName(props.index));
 
       expect(entity).toBeInTheDocument();
       expect(TitleDropDownValidator).toHaveBeenCalledWith(
@@ -209,16 +216,36 @@ describe('RuleStack unit tests', () => {
   describe('and using component', () => {
     const removeClickMock: jest.MockedFn<(evt: React.MouseEvent<HTMLDivElement, MouseEvent>) => void> = jest.fn();
     let props: IRuleStackProps;
+
     beforeEach(() => {
       props = {
+        index: 0,
         value: {
-          title: { value: undefined, validationResult: ValidatorTypes.Optional },
-          property: { value: undefined, validationResult: ValidatorTypes.Optional },
-          range: { value: undefined, validationResult: ValidatorTypes.Optional },
+          property: { value: { value: 0, label: 'property' }, validationResult: ValidatorTypes.Valid },
+          range: { value: 1, validationResult: ValidatorTypes.Valid },
+          title: { value: { value: 1, label: 'nothing' }, validationResult: ValidatorTypes.Invalid },
         },
-        ruleStackValues: [],
+        ruleStackValues: [
+          {
+            min: 3,
+            prefix: 'prefix-one',
+            ruleTitle: 'rule-title-one',
+            property: 1,
+            max: 7,
+            suffix: 'suffix-one',
+          },
+          {
+            min: 8,
+            prefix: 'prefix-two',
+            ruleTitle: 'rule-title-two',
+            property: 1,
+            max: 20,
+            suffix: 'suffix-two',
+          },
+        ],
         required: true,
         removeClick: removeClickMock,
+        onUpdate: jest.fn(),
       };
 
       render(<RuleStack {...props} />);
@@ -239,6 +266,119 @@ describe('RuleStack unit tests', () => {
         fireEvent.click(deleteButton);
 
         expect(removeClickMock).toHaveBeenCalled();
+      });
+    });
+
+    describe('and title change', () => {
+      test('and should update range validator', async () => {
+        expect(TitleDropDownValidator).toHaveBeenCalledWith(
+          {
+            title: 'Rule Title',
+            value: props.value.title,
+            optionTitles: props.ruleStackValues.map((x) => x.ruleTitle),
+            onChange: expect.any(Function),
+          },
+          {},
+        );
+
+        expect(RangeFieldValidator).toHaveBeenCalledWith(
+          {
+            min: props.ruleStackValues[1].min,
+            max: props.ruleStackValues[1].max,
+            prefix: props.ruleStackValues[1].prefix,
+            suffix: props.ruleStackValues[1].suffix,
+            onChange: expect.any(Function),
+            required: false,
+            id: 'rule-range',
+            title: 'Rule Range',
+            showTitle: false,
+          },
+          {},
+        );
+
+        const entity = screen.getByLabelText<HTMLSelectElement>(`Rule Title`);
+
+        const value = 0;
+
+        fireEvent.change(entity, {
+          target: { value },
+        });
+
+        expect(props.onUpdate).toHaveBeenCalledTimes(1);
+        expect(props.onUpdate).toHaveBeenNthCalledWith(1, {
+          ...props.value,
+          title: {
+            value: { value, label: props.ruleStackValues.map((x) => x.ruleTitle)[value] },
+            validationResult: ValidatorTypes.Valid,
+          },
+        });
+      });
+    });
+
+    describe('and property change', () => {
+      test('and should update range validator', async () => {
+        expect(PropertyDropDownValidator).toHaveBeenCalledWith(
+          {
+            className: expect.any(String),
+            title: 'Property Picker',
+            value: props.value.property,
+            onChange: expect.any(Function),
+          },
+          {},
+        );
+
+        const entity = screen.getByLabelText<HTMLSelectElement>(`Property Picker`);
+
+        const value = 0;
+
+        fireEvent.change(entity, {
+          target: { value },
+        });
+
+        expect(props.onUpdate).toHaveBeenCalledTimes(1);
+        expect(props.onUpdate).toHaveBeenNthCalledWith(1, {
+          ...props.value,
+          property: {
+            value: { value, label: 'apartment' },
+            validationResult: ValidatorTypes.Valid,
+          },
+        });
+      });
+    });
+
+    describe('and range change', () => {
+      test('and should update range validator', async () => {
+        expect(RangeFieldValidator).toHaveBeenCalledWith(
+          {
+            min: props.ruleStackValues[1].min,
+            max: props.ruleStackValues[1].max,
+            prefix: props.ruleStackValues[1].prefix,
+            suffix: props.ruleStackValues[1].suffix,
+            onChange: expect.any(Function),
+            required: false,
+            id: 'rule-range',
+            title: 'Rule Range',
+            showTitle: false,
+          },
+          {},
+        );
+
+        const entity = screen.getByLabelText<HTMLInputElement>(`Rule Range`);
+
+        const value = 55;
+
+        fireEvent.change(entity, {
+          target: { value },
+        });
+
+        expect(props.onUpdate).toHaveBeenCalledTimes(1);
+        expect(props.onUpdate).toHaveBeenNthCalledWith(1, {
+          ...props.value,
+          range: {
+            value,
+            validationResult: ValidatorTypes.Valid,
+          },
+        });
       });
     });
   });
