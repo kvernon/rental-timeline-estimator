@@ -81,7 +81,7 @@ describe('onChangeArray unit tests', () => {
 
             const expected = [values[1], values[0]];
 
-            const actual = onChangeArray(values, 0, -1);
+            const actual = onChangeArray(values, 0, 1);
 
             expect(actual).toEqual(expected);
           });
