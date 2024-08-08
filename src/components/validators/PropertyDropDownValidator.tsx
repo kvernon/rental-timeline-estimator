@@ -25,7 +25,6 @@ export function PropertyDropDownValidator(props: IPropertyDropDownParams) {
     <ReactSelect<IPropertyDropDownOption, false, GroupBase<IPropertyDropDownOption>>
       aria-label={props.title}
       onChange={(a: SingleValue<IPropertyDropDownOption>) => {
-        console.log(a, props.onChange);
         if (a && props.onChange) {
           props.onChange({ value: a, validationResult: ValidatorTypes.Valid });
         }
