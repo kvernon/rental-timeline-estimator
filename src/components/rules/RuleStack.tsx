@@ -4,12 +4,12 @@ import { Stack } from '../core/Stack';
 import { DeleteButton } from '../core/DeleteButton';
 import { PropertyDropDownValidator } from '../validators/PropertyDropDownValidator';
 import { ValidationBar } from '../validators/ValidationBar';
-import { ValidatorTypes } from '../validators/ValidatorTypes';
 import { TitleDropDownValidator } from '../validators/TitleDropDownValidator';
 import { IRuleStackProps } from './IRuleStackProps';
 import { DragPlaceholder } from '../core/DragPlaceHolder';
 import { RangeFieldValidator } from '../validators/RangeFieldValidator';
 import { IRuleStackEntity } from './IRuleStackEntity';
+import { getValidationResult } from './getValidationResult';
 
 const PropertyPicker = styled(PropertyDropDownValidator)`
   width: 147px;
@@ -19,21 +19,6 @@ const StackBase = styled(Stack)`
   padding-left: 0;
   background-color: #4f41b9;
 `;
-
-const getValidationResult = (validations: ValidatorTypes[], isRequired: boolean): ValidatorTypes => {
-  if (!validations || validations.length === 0) {
-    return isRequired ? ValidatorTypes.Invalid : ValidatorTypes.Optional;
-  }
-
-  if (validations.some((x) => x === ValidatorTypes.Invalid)) {
-    return ValidatorTypes.Invalid;
-  }
-  if (validations.every((x) => x === ValidatorTypes.Optional)) {
-    return ValidatorTypes.Optional;
-  }
-
-  return ValidatorTypes.Valid;
-};
 
 export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref: React.Ref<HTMLDivElement>) {
   const [selectedRuleTitleIndex] = useState<number>(props.value.title?.value?.value || 0);
