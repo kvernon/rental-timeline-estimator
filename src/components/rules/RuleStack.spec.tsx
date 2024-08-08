@@ -108,6 +108,7 @@ describe('RuleStack unit tests', () => {
         {},
       );
     });
+
     test('should generate with DeleteButton', () => {
       const entity = screen.getByRole<HTMLDivElement>('delete-button');
 
@@ -120,8 +121,22 @@ describe('RuleStack unit tests', () => {
     beforeEach(() => {
       props = {
         ruleStackValues: [
-          { ruleTitle: 'title', max: 90, min: 5, property: 1, prefix: 'pre', suffix: 'x' },
-          { ruleTitle: 'nothing', max: 80, min: 15, property: 1, prefix: 'pre2', suffix: 'x2' },
+          {
+            min: 3,
+            prefix: 'prefix-one',
+            ruleTitle: 'rule-title-one',
+            property: 1,
+            max: 7,
+            suffix: 'suffix-one',
+          },
+          {
+            min: 8,
+            prefix: 'prefix-two',
+            ruleTitle: 'rule-title-two',
+            property: 1,
+            max: 20,
+            suffix: 'suffix-two',
+          },
         ],
         value: {
           property: { value: { value: 0, label: 'property' }, validationResult: ValidatorTypes.Valid },
