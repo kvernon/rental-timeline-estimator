@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useTheme } from '@emotion/react';
 import { RuleStack } from './RuleStack';
@@ -10,6 +10,7 @@ import { IThemeOptions } from '../../theming/IThemeOptions';
 import { IRuleStackProps } from './IRuleStackProps';
 import { RangeFieldValidator } from '../validators/RangeFieldValidator';
 import { PropertyDropDownValidator } from '../validators/PropertyDropDownValidator';
+import { DeleteButton } from '../core/DeleteButton';
 
 jest.mock('../validators/TitleDropDownValidator');
 jest.mock('../validators/RangeFieldValidator');
@@ -77,7 +78,7 @@ describe('RuleStack unit tests', () => {
         {
           title: 'Rule Title',
           value: props.value.title,
-          /*          onChange: expect.any(Function),*/
+          onChange: expect.any(Function),
           optionTitles: props.ruleStackValues.map((x) => x.ruleTitle),
         },
         {},
@@ -104,6 +105,7 @@ describe('RuleStack unit tests', () => {
           required: false,
           title: 'Rule Range',
           showTitle: false,
+          onChange: expect.any(Function),
         },
         {},
       );
@@ -162,6 +164,7 @@ describe('RuleStack unit tests', () => {
           title: 'Rule Title',
           value: props.value.title,
           optionTitles: props.ruleStackValues.map((x) => x.ruleTitle),
+          onChange: expect.any(Function),
         },
         {},
       );
@@ -176,6 +179,7 @@ describe('RuleStack unit tests', () => {
           className: expect.any(String),
           title: 'Property Picker',
           value: props.value.property,
+          onChange: expect.any(Function),
         },
         {},
       );
@@ -191,7 +195,7 @@ describe('RuleStack unit tests', () => {
           max: props.ruleStackValues[1].max,
           prefix: props.ruleStackValues[1].prefix,
           suffix: props.ruleStackValues[1].suffix,
-
+          onChange: expect.any(Function),
           required: false,
           id: 'rule-range',
           title: 'Rule Range',
@@ -199,6 +203,43 @@ describe('RuleStack unit tests', () => {
         },
         {},
       );
+    });
+  });
+
+  describe('and using component', () => {
+    const removeClickMock: jest.MockedFn<(evt: React.MouseEvent<HTMLDivElement, MouseEvent>) => void> = jest.fn();
+    let props: IRuleStackProps;
+    beforeEach(() => {
+      props = {
+        value: {
+          title: { value: undefined, validationResult: ValidatorTypes.Optional },
+          property: { value: undefined, validationResult: ValidatorTypes.Optional },
+          range: { value: undefined, validationResult: ValidatorTypes.Optional },
+        },
+        ruleStackValues: [],
+        required: true,
+        removeClick: removeClickMock,
+      };
+
+      render(<RuleStack {...props} />);
+    });
+
+    describe('and press delete', () => {
+      test('should call removeClick', () => {
+        const deleteButton = screen.getByRole<HTMLDivElement>('delete-button');
+        expect(deleteButton.innerHTML).toEqual('This is the delete button');
+
+        expect(jest.mocked(DeleteButton)).toHaveBeenCalledWith(
+          {
+            onClick: expect.any(Function),
+          },
+          {},
+        );
+
+        fireEvent.click(deleteButton);
+
+        expect(removeClickMock).toHaveBeenCalled();
+      });
     });
   });
 });

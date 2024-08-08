@@ -10,6 +10,9 @@ import { IRuleStackProps } from './IRuleStackProps';
 import { DragPlaceholder } from '../core/DragPlaceHolder';
 import { IRuleStackEntity } from './IRuleStackEntity';
 import { getValidationResult } from './getValidationResult';
+import { ISelectOption } from '../core/ISelectOption';
+import { IEventResult } from '../validators/IEventResult';
+import { IRangeFieldValidatorEvent } from '../validators/IRangeFieldValidatorEvent';
 
 const PropertyPicker = styled(PropertyDropDownValidator)`
   width: 147px;
@@ -23,6 +26,11 @@ const StackBase = styled(Stack)`
 export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref: React.Ref<HTMLDivElement>) {
   const [selectedRuleTitleIndex] = useState<number>(props.value.title?.value?.value || 0);
   const [selectedValueOptions, setSelectedValueOptions] = useState<IRuleStackEntity | null>(null);
+  const [value, setValue] = useState<{
+    title: IEventResult<ISelectOption>;
+    property: IEventResult<ISelectOption>;
+    range: IEventResult<number>;
+  }>(props.value);
 
   useEffect(() => {
     const newVar = props.ruleStackValues.length === 0 ? null : props.ruleStackValues[selectedRuleTitleIndex];
@@ -31,14 +39,50 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
 
   const injectProps = { ...props };
 
+  const titleDropDownOnChange = (valueOption: IEventResult<ISelectOption>) => {
+    if (valueOption.value && value.title?.value !== valueOption.value) {
+      setValue({
+        ...props.value,
+        title: {
+          value: { value: valueOption.value?.value, label: valueOption.value?.label },
+          validationResult: valueOption.validationResult,
+        },
+      });
+    }
+  };
+
+  const propertyDropDownOnChange = (valueOption: IEventResult<ISelectOption>) => {
+    if (valueOption.value && value.property?.value !== valueOption.value) {
+      setValue({
+        ...props.value,
+        property: {
+          value: { value: valueOption.value.value, label: valueOption.value.label },
+          validationResult: valueOption.validationResult,
+        },
+      });
+    }
+  };
+
   const titleDropDownValidator = (
     <TitleDropDownValidator
-      /*onChange={(evt) => titleDropDownOnChange(evt)}*/
+      onChange={(evt) => titleDropDownOnChange(evt)}
       title="Rule Title"
       value={props.value.title}
       optionTitles={props.ruleStackValues.map((x) => x.ruleTitle)}
     />
   );
+
+  const rangeFieldValidatorOnChange = (evt: IRangeFieldValidatorEvent): void => {
+    if (evt.value && value.range?.value !== evt.value.value) {
+      setValue({
+        ...props.value,
+        range: {
+          value: evt.value.value,
+          validationResult: evt.value.validationResult,
+        },
+      });
+    }
+  };
 
   const rangeFieldValidator = (
     <RangeFieldValidator
@@ -49,6 +93,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
       max={selectedValueOptions?.max}
       prefix={selectedValueOptions?.prefix}
       suffix={selectedValueOptions?.suffix}
+      onChange={(evt) => rangeFieldValidatorOnChange(evt)}
       required={false}
     />
   );
@@ -71,7 +116,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
       <Stack direction="column" paddingTop={'10px'} paddingLeft={'17px'} paddingBottom={'20px'} paddingRight={'17px'}>
         {titleDropDownValidator}
         <Stack direction="row" spacing={2} paddingTop={'10px'}>
-          <PropertyPicker title="Property Picker" value={props.value.property} />
+          <PropertyPicker title="Property Picker" value={props.value.property} onChange={(evt) => propertyDropDownOnChange(evt)} />
           {rangeFieldValidator}
         </Stack>
       </Stack>
@@ -81,7 +126,13 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
           props.required || false,
         )}
       />
-      <DeleteButton />
+      <DeleteButton
+        onClick={(evt) => {
+          if (props.removeClick) {
+            props.removeClick(evt);
+          }
+        }}
+      />
     </StackBase>
   );
 });

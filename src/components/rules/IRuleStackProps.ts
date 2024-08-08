@@ -12,4 +12,5 @@ export interface IRuleStackProps {
   };
   ruleStackValues: IRuleStackEntity[];
   required?: boolean;
+  removeClick?: (evt: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
