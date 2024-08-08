@@ -1,33 +1,16 @@
-import { ValidatorStackTypes } from './ValidatorStackTypes';
-import { IRangeFieldValidatorChange } from './IRangeFieldValidatorChange';
+import { IRangeFieldValidatorEvent } from './IRangeFieldValidatorEvent';
 import { FontGroups } from '../../theming/fontGroups';
 
-export interface IRangeFieldValidatorProps extends IRangeFieldValidatorChange {
+export interface IRangeFieldValidatorProps extends IRangeFieldValidatorEvent {
+  direction?: 'row' | 'column';
+  hasSpinner?: boolean;
   inputFontGroup?: FontGroups;
   inputLabelFontGroup?: FontGroups;
-  validationType: ValidatorStackTypes;
-  direction?: 'row' | 'column';
-  title?: string;
+  onChange?: (inputData: IRangeFieldValidatorEvent) => void;
   prefix?: string;
+  showTitle?: boolean;
   suffix?: string;
-  /**
-   * will default to 0
-   */
-  min?: number;
-
-  /**
-   * will default to 100
-   */
-  max?: number;
-
-  /**
-   * will default to 0
-   */
-  defaultValue?: number;
-
-  hasSpinner?: boolean;
-
-  useUnderlineOnly?: boolean;
-
+  title: string;
   useTransparent?: boolean;
+  useUnderlineOnly?: boolean;
 }

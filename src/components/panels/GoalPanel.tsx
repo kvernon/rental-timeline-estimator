@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import { RangeFieldValidator } from '../validators/RangeFieldValidator';
 import { IRangeFieldValidatorProps } from '../validators/IRangeFieldValidatorProps';
-import { ValidatorStackName } from '../naming/ValidatorStackName';
 import styled from '@emotion/styled';
 import { Spinner } from '../core/Spinner';
-import { RangeFieldValidatorName } from '../naming/RangeFieldValidatorName';
 import { Stack } from '../core/Stack';
 
 const TopStack = styled.div`
@@ -36,7 +34,7 @@ export const GoalPanel = (props: IRangeFieldValidatorProps) => {
 
   useEffect(() => {
     const getPosition = () => {
-      const ele = document.getElementById(`${RangeFieldValidatorName(props.id)}-box`);
+      const ele = document.getElementById(`${props.id}-box`);
 
       const x = ele?.getBoundingClientRect().x;
       setX(() => x);
@@ -60,9 +58,9 @@ export const GoalPanel = (props: IRangeFieldValidatorProps) => {
   }, [props.id]);
 
   return (
-    <TopStack id={ValidatorStackName(props.id)}>
+    <TopStack aria-label={'Goal Panel'}>
       <Spinner shape={{ x, width, y, height }} />
-      <StackPosition spacing={2} id={props.id} paddingLeft={'20%'} paddingTop={'25px'} paddingBottom={'25px'} paddingRight={'20%'}>
+      <StackPosition spacing={2} paddingLeft={'20%'} paddingTop={'25px'} paddingBottom={'25px'} paddingRight={'20%'}>
         <ZRangeFieldValidator {...props} id={props.id} direction={'row'} useUnderlineOnly hasSpinner={false} useTransparent={true} />
       </StackPosition>
     </TopStack>
