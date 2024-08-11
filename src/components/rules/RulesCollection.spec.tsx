@@ -109,13 +109,13 @@ describe('RulesCollection unit tests', () => {
       };
 
       jest.mocked(getRemainingValues).mockReturnValue([{ index: 1, entity: props.possibleChoices[1] }]);
-
-      render(<RulesCollection {...props} />);
     });
 
     describe('should render RuleStacks', () => {
       describe('and displaying the add button', () => {
         test('it should show', () => {
+          render(<RulesCollection {...props} />);
+
           const addButton = screen.queryByLabelText<HTMLButtonElement>(`Add button for ${props.title}`);
           screen.debug();
           const AddListButtonCtor = jest.mocked(AddListButton);
@@ -134,36 +134,76 @@ describe('RulesCollection unit tests', () => {
       });
 
       describe('and clicking the button', () => {
-        test('it should fire update', async () => {
-          const addButton = screen.getByLabelText<HTMLButtonElement>(`Add button for ${props.title}`);
+        describe('and not required', () => {
+          test('it should fire update', async () => {
+            render(<RulesCollection {...props} />);
 
-          expect(addButton).toBeInTheDocument();
+            const addButton = screen.getByLabelText<HTMLButtonElement>(`Add button for ${props.title}`);
 
-          await userEvent.click(addButton);
+            expect(addButton).toBeInTheDocument();
 
-          const expected = [...props.values];
+            await userEvent.click(addButton);
 
-          const added: {
-            title: IEventResult<ISelectOption>;
-            property: IEventResult<ISelectOption>;
-            range: IEventResult<number>;
-          } = {
-            title: {
-              value: { value: 1, label: props.possibleChoices[1].ruleTitle },
-              validationResult: ValidatorTypes.Valid,
-            },
-            property: {
-              value: { value: props.possibleChoices[1].property, label: 'house' },
-              validationResult: ValidatorTypes.Valid,
-            },
-            range: {
-              validationResult: ValidatorTypes.Valid,
-            },
-          };
+            const added: {
+              title: IEventResult<ISelectOption>;
+              property: IEventResult<ISelectOption>;
+              range: IEventResult<number>;
+            } = {
+              title: {
+                value: { value: 1, label: props.possibleChoices[1].ruleTitle },
+                validationResult: ValidatorTypes.Valid,
+              },
+              property: {
+                value: { value: props.possibleChoices[1].property, label: 'house' },
+                validationResult: ValidatorTypes.Valid,
+              },
+              range: {
+                validationResult: ValidatorTypes.Valid,
+              },
+            };
 
-          expected.push(added);
+            const expected = [...props.values];
+            expected.push(added);
 
-          expect(props.onChange).toHaveBeenCalledWith(expected);
+            expect(props.onChange).toHaveBeenCalledWith(expected);
+          });
+        });
+
+        describe('and required', () => {
+          test('it should fire update', async () => {
+            props.required = true;
+
+            render(<RulesCollection {...props} />);
+
+            const addButton = screen.getByLabelText<HTMLButtonElement>(`Add button for ${props.title}`);
+
+            expect(addButton).toBeInTheDocument();
+
+            await userEvent.click(addButton);
+
+            const added: {
+              title: IEventResult<ISelectOption>;
+              property: IEventResult<ISelectOption>;
+              range: IEventResult<number>;
+            } = {
+              title: {
+                value: { value: 1, label: props.possibleChoices[1].ruleTitle },
+                validationResult: ValidatorTypes.Valid,
+              },
+              property: {
+                value: { value: props.possibleChoices[1].property, label: 'house' },
+                validationResult: ValidatorTypes.Valid,
+              },
+              range: {
+                validationResult: ValidatorTypes.Invalid,
+              },
+            };
+
+            const expected = [...props.values];
+            expected.push(added);
+
+            expect(props.onChange).toHaveBeenCalledWith(expected);
+          });
         });
       });
     });
