@@ -10,6 +10,7 @@ import { IThemeOptions } from '../../theming/IThemeOptions';
 import { useTheme } from '@emotion/react';
 import { getRemainingValues } from './getRemainingValues';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
+import { RuleStack } from './RuleStack';
 
 export interface IRulesCollectionProps {
   required?: boolean;
@@ -29,7 +30,7 @@ export interface IRulesCollectionProps {
   possibleChoices: IRuleStackEntity[];
 }
 
-export function RulesCollection(props: IRulesCollectionProps) {
+export function RulesCollection(componentProps: IRulesCollectionProps) {
   const [showButton, setShowButton] = useState(false);
 
   const coreTheme = useTheme() as IThemeOptions;
@@ -37,46 +38,59 @@ export function RulesCollection(props: IRulesCollectionProps) {
   useEffect(() => {
     setShowButton(
       getRemainingValues(
-        props.possibleChoices,
-        props.values.map((x) => x.title),
+        componentProps.possibleChoices,
+        componentProps.values.map((x) => x.title),
       ).length > 0,
     );
-  }, [props]);
+  }, [componentProps]);
 
   return (
-    <CardListLayout title={props.title}>
+    <CardListLayout title={componentProps.title}>
       <List
         renderList={({ children, props }) => (
           <div aria-label={'render-list'} {...props}>
             {children}
           </div>
         )}
-        renderItem={({ value, props, index }) => (
-          <div aria-label={value.title.value?.label || index?.toString()} {...props} key={`${props.key}`}>
-            {JSON.stringify(value)}
-          </div>
-        )}
-        values={props.values}
+        renderItem={({ value, props, index }) => {
+          return (
+            <RuleStack
+              ruleStackValues={[]}
+              index={index as number}
+              value={value}
+              {...props}
+              onUpdate={(evt) => {
+                if (index !== undefined && componentProps.onChange) {
+                  console.log('onUpdate', index, evt);
+                  const newed = [...componentProps.values];
+                  newed[index] = evt;
+                  componentProps.onChange(newed);
+                }
+              }}
+            />
+          );
+        }}
+        values={componentProps.values}
         onChange={({ oldIndex, newIndex }) => {
-          if (props.onChange) {
-            props.onChange(onChangeArray(props.values, oldIndex, newIndex));
+          if (componentProps.onChange) {
+            componentProps.onChange(onChangeArray(componentProps.values, oldIndex, newIndex));
           }
         }}
       />
       {showButton && (
         <AddListButton
-          role={`Add button for ${props.title}`}
+          role={`Add button for ${componentProps.title}`}
           label="Add"
           theme={coreTheme}
           onClick={function (): void {
-            if (props.onChange) {
+            if (componentProps.onChange) {
               const remaining = getRemainingValues(
-                props.possibleChoices,
-                props.values.map((x) => x.title),
+                componentProps.possibleChoices,
+                componentProps.values.map((x) => x.title),
               );
 
-              props.onChange([
-                ...props.values,
+              componentProps.onChange([
+                ...componentProps.values,
                 {
                   title: {
                     value: {
@@ -92,7 +106,7 @@ export function RulesCollection(props: IRulesCollectionProps) {
                     },
                     validationResult: ValidatorTypes.Valid,
                   },
-                  range: { validationResult: props.required ? ValidatorTypes.Invalid : ValidatorTypes.Valid },
+                  range: { validationResult: componentProps.required ? ValidatorTypes.Invalid : ValidatorTypes.Valid },
                 },
               ]);
             }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { IRulesCollectionProps, RulesCollection } from './RulesCollection';
 import { useTheme } from '@emotion/react';
@@ -15,6 +15,7 @@ import { ISelectOption } from '../core/ISelectOption';
 jest.mock('../core/CardListLayout');
 jest.mock('../core/AddListButton');
 jest.mock('./getRemainingValues');
+jest.mock('./RuleStack');
 
 describe('RulesCollection unit tests', () => {
   beforeEach(() => {
@@ -68,8 +69,13 @@ describe('RulesCollection unit tests', () => {
       render(<RulesCollection {...props} />);
     });
 
-    test('should render correctly', () => {
-      const ruleItemEntity = screen.getByLabelText(props.values[0].title?.value?.label as string);
+    test('should render list', () => {
+      const ruleItemEntity = screen.getByLabelText('render-list');
+      expect(ruleItemEntity).toBeInTheDocument();
+    });
+
+    test('should render first item', () => {
+      const ruleItemEntity = screen.getByLabelText(`Rule Number 0`);
       expect(ruleItemEntity).toBeInTheDocument();
     });
   });
@@ -205,6 +211,24 @@ describe('RulesCollection unit tests', () => {
             expect(props.onChange).toHaveBeenCalledWith(expected);
           });
         });
+      });
+    });
+
+    describe('and updating input', () => {
+      test('should call update', () => {
+        render(<RulesCollection {...props} />);
+        const input = screen.getByLabelText<HTMLButtonElement>(`Rule Range`);
+
+        expect(input).toBeInTheDocument();
+
+        fireEvent.change(input, { target: { value: '40' } });
+
+        expect(props.onChange).toHaveBeenCalledWith([
+          {
+            ...props.values[0],
+            range: { value: 40, validationResult: ValidatorTypes.Valid },
+          },
+        ]);
       });
     });
   });
