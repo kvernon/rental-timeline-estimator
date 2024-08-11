@@ -10,7 +10,6 @@ export const RuleStack = jest.fn((p: IRuleStackProps) => {
   delete updatedP.ruleStackValues;
   delete updatedP.validationType;
 
-  console.log('Render', p.onUpdate);
   return (
     <div {...updatedP} style={{ height: '50px', width: '50px' }} aria-label={`Rule Number ${p.index}`}>
       <span data-movable-handle="true">handle</span>

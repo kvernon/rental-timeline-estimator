@@ -61,7 +61,6 @@ export function RulesCollection(componentProps: IRulesCollectionProps) {
               {...props}
               onUpdate={(evt) => {
                 if (index !== undefined && componentProps.onChange) {
-                  console.log('onUpdate', index, evt);
                   const newed = [...componentProps.values];
                   newed[index] = evt;
                   componentProps.onChange(newed);
