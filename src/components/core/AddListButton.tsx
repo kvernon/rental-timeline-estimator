@@ -35,10 +35,6 @@ export interface IAddListButtonProps {
   onClick: () => void;
 }
 
-export const AddListButton = (p: IAddListButtonProps) => {
-  return (
-    <StyledButton type="button" role={p.role} onClick={p.onClick} theme={p.theme}>
-      {p.label}
-    </StyledButton>
-  );
-};
+export function AddListButton(p: IAddListButtonProps) {
+  return <StyledButton type="button" role="button" aria-label={p.role} onClick={p.onClick} theme={p.theme} title={p.label} />;
+}

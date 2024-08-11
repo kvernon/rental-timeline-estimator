@@ -50,7 +50,10 @@ describe('RuleStack unit tests', () => {
     beforeEach(() => {
       props = {
         index: 0,
-        ruleStackValues: [{ ruleTitle: 'title' }, { ruleTitle: 'nothing' }],
+        ruleStackValues: [
+          { ruleTitle: 'title', property: 0 },
+          { ruleTitle: 'nothing', property: 1 },
+        ],
         value: {
           title: { value: undefined, validationResult: ValidatorTypes.Optional },
           property: { value: undefined, validationResult: ValidatorTypes.Optional },
