@@ -1,4 +1,4 @@
-import { Theme, useTheme } from '@emotion/react';
+import { useTheme } from '@emotion/react';
 import { IThemeOptions } from '../../theming/IThemeOptions';
 import { render, screen } from '@testing-library/react';
 import { ITitleDropDownParams, TitleDropDownValidator } from './TitleDropDownValidator';
