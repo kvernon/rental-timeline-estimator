@@ -28,6 +28,7 @@ export const RuleStack = jest.fn((p: IRuleStackProps) => {
         }}
       />
       <div
+        role={'delete-button'}
         onClick={(e) => {
           if (p.removeClick) {
             p?.removeClick(e);

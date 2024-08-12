@@ -58,6 +58,22 @@ export function RulesCollection(componentProps: IRulesCollectionProps) {
                   componentProps.onChange(newed);
                 }
               }}
+              removeClick={() => {
+                if (index !== undefined && componentProps.onChange) {
+                  const newed = [
+                    ...componentProps.values.map((x) => {
+                      const y: IRuleValues<IEventValue<ISelectOption>, IEventValue<number>> = {
+                        title: x.title,
+                        property: x.property,
+                        range: x.range,
+                      };
+                      return y;
+                    }),
+                  ];
+                  newed.splice(index, 1);
+                  componentProps.onChange(newed);
+                }
+              }}
             />
           );
         }}

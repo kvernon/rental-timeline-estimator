@@ -140,7 +140,7 @@ describe('RulesCollection unit tests', () => {
         });
       });
 
-      describe('and clicking the button', () => {
+      describe('and clicking add the button', () => {
         describe('and not required', () => {
           test('it should fire update', async () => {
             render(<RulesCollection {...props} />);
@@ -230,6 +230,19 @@ describe('RulesCollection unit tests', () => {
             range: { value: 40 },
           },
         ]);
+      });
+    });
+
+    describe('and removing a rule', () => {
+      test('should call update', () => {
+        render(<RulesCollection {...props} />);
+        const ruleItemDelete = screen.getByRole('delete-button');
+
+        expect(ruleItemDelete).toBeInTheDocument();
+
+        fireEvent.click(ruleItemDelete);
+
+        expect(props.onChange).toHaveBeenCalledWith([]);
       });
     });
   });
