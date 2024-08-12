@@ -11,9 +11,8 @@ import { DragPlaceholder } from '../core/DragPlaceHolder';
 import { IRuleStackEntity } from './IRuleStackEntity';
 import { getValidationResult } from './getValidationResult';
 import { ISelectOption } from '../core/ISelectOption';
-import { IEventValue } from '../validators/IEventResult';
+import { IEventResult, IEventValue } from '../validators/IEventResult';
 import { IRangeFieldValidatorEvent } from '../validators/IRangeFieldValidatorEvent';
-import { IRuleValuesResult } from './IRuleValuesResult';
 import { IRuleValues } from './IRuleValues';
 
 const PropertyPicker = styled(PropertyDropDownValidator)`
@@ -29,7 +28,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
   const [selectedRuleTitleIndex] = useState<number>(props.value.title?.value?.value || 0);
   const [selectedValueOptions, setSelectedValueOptions] = useState<IRuleStackEntity | null>(null);
   const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
-  const [value, setValue] = useState<IRuleValuesResult>(props.value);
+  const [value, setValue] = useState<IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>>(props.value);
 
   useEffect(() => {
     const newVar = props.ruleStackValues.length === 0 ? null : props.ruleStackValues[selectedRuleTitleIndex];

@@ -1,6 +1,8 @@
 import { onChangeArray } from './onChangeArray';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
-import { IRuleValuesResult } from './IRuleValuesResult';
+import { IRuleValues } from './IRuleValues';
+import { ISelectOption } from '../core/ISelectOption';
+import { IEventResult } from '../validators/IEventResult';
 
 describe('onChangeArray unit tests', () => {
   describe('and empty array', () => {
@@ -13,7 +15,7 @@ describe('onChangeArray unit tests', () => {
     describe('and populated', () => {
       describe('and invalid oldMove', () => {
         test('should return same array', () => {
-          const values: IRuleValuesResult[] = [
+          const values: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>[] = [
             {
               title: { validationResult: ValidatorTypes.Valid, value: { value: 1, label: 'one' } },
               property: { validationResult: ValidatorTypes.Valid, value: { value: 1, label: 'property' } },
@@ -29,7 +31,7 @@ describe('onChangeArray unit tests', () => {
       describe('and valid oldMove', () => {
         describe('and invalid newMove', () => {
           test('should return same array', () => {
-            const values: IRuleValuesResult[] = [
+            const values: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>[] = [
               {
                 title: { validationResult: ValidatorTypes.Valid, value: { value: 1, label: 'one' } },
                 property: {
@@ -47,7 +49,7 @@ describe('onChangeArray unit tests', () => {
         });
         describe('and valid newMove', () => {
           test('should return updated array', () => {
-            const values: IRuleValuesResult[] = [
+            const values: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>[] = [
               {
                 title: { validationResult: ValidatorTypes.Valid, value: { value: 1, label: 'one' } },
                 property: {

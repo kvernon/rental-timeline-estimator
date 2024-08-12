@@ -2,7 +2,6 @@ import React from 'react';
 import ReactSelect, { GroupBase, SingleValue } from 'react-select';
 import { ISelectOption } from '../core/ISelectOption';
 import { IEventResult, IEventValue } from './IEventResult';
-import { ValidatorTypes } from './ValidatorTypes';
 
 export interface ITitleDropDownParams {
   title: string;

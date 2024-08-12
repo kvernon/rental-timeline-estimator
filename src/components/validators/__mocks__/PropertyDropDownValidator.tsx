@@ -1,6 +1,4 @@
 import React from 'react';
-import { ValidatorTypes } from '../ValidatorTypes';
-
 import { IPropertyDropDownParams } from '../IPropertyDropDownParams';
 
 const properties = ['apartment', 'house'];

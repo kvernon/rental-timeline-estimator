@@ -1,6 +1,5 @@
 import { IRuleStackProps } from '../IRuleStackProps';
 import React from 'react';
-import { ValidatorTypes } from '../../validators/ValidatorTypes';
 
 export const RuleStack = jest.fn((p: IRuleStackProps) => {
   const updatedP: Record<string, unknown> = { ...p };

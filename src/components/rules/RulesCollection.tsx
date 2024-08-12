@@ -10,6 +10,8 @@ import { ValidatorTypes } from '../validators/ValidatorTypes';
 import { RuleStack } from './RuleStack';
 import { IRulesCollectionProps } from './IRulesCollectionProps';
 import { IRuleValues } from './IRuleValues';
+import { ISelectOption } from '../core/ISelectOption';
+import { IEventValue } from '../validators/IEventResult';
 
 export function RulesCollection(componentProps: IRulesCollectionProps) {
   const [showButton, setShowButton] = useState(false);
@@ -44,7 +46,7 @@ export function RulesCollection(componentProps: IRulesCollectionProps) {
                 if (index !== undefined && componentProps.onChange) {
                   const newed = [
                     ...componentProps.values.map((x) => {
-                      const y: IRuleValues = {
+                      const y: IRuleValues<IEventValue<ISelectOption>, IEventValue<number>> = {
                         title: x.title,
                         property: x.property,
                         range: x.range,

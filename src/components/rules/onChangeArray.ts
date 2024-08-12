@@ -1,6 +1,12 @@
-import { IRuleValuesResult } from './IRuleValuesResult';
+import { IRuleValues } from './IRuleValues';
+import { ISelectOption } from '../core/ISelectOption';
+import { IEventResult } from '../validators/IEventResult';
 
-export function onChangeArray(values: IRuleValuesResult[], oldIndex: number, newIndex: number): IRuleValuesResult[] {
+export function onChangeArray(
+  values: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>[],
+  oldIndex: number,
+  newIndex: number,
+): IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>[] {
   if (values.length === 0) {
     return [];
   }
