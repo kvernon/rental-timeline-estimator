@@ -124,7 +124,7 @@ describe('RulesCollection unit tests', () => {
           render(<RulesCollection {...props} />);
 
           const addButton = screen.queryByLabelText<HTMLButtonElement>(`Add button for ${props.title}`);
-          screen.debug();
+
           const AddListButtonCtor = jest.mocked(AddListButton);
           expect(AddListButtonCtor).toHaveBeenCalledWith(
             {
