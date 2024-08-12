@@ -39,9 +39,9 @@ export const themeMock = {
       size: 'p',
     },
     get: jest.fn().mockReturnValue({
-      font: 'child',
-      color: 'child',
-      size: 'child',
+      font: 'font',
+      color: 'color',
+      size: 'size',
     }),
   },
 };
