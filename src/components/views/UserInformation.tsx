@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { GoalPanel } from '../panels/GoalPanel';
 import { RangeValidationPanel } from '../panels/RangeValidationPanel';
 import { RulesCollection } from '../rules/RulesCollection';
@@ -6,6 +6,10 @@ import { RangeFieldValidator } from '../validators/RangeFieldValidator';
 import { Stack } from '../core/Stack';
 import styled from '@emotion/styled';
 import { IUserInformationProps } from './IUserInformationProps';
+import { IRuleValues } from '../rules/IRuleValues';
+import { IEventResult } from '../validators/IEventResult';
+import { ISelectOption } from '../core/ISelectOption';
+import { ValidatorTypes } from '../validators/ValidatorTypes';
 
 const RulesStack = styled(Stack)`
   width: unset;
@@ -24,6 +28,21 @@ const RulesCollectionWidth = styled(RulesCollection)`
 `;
 
 export function UserInformation(props: IUserInformationProps) {
+  const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
+  const [value, setValue] = useState<{
+    goal: IEventResult<number>;
+    savedAtStart: IEventResult<number>;
+    moSavings: IEventResult<number>;
+    purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>[];
+    holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>[];
+  }>(props.values);
+
+  useEffect(() => {
+    if (isDataLoaded && props.onChange) {
+      props.onChange(value);
+    }
+  }, [value, isDataLoaded, props]);
+
   return (
     <form aria-label={props.title}>
       <GoalPanel
@@ -33,10 +52,16 @@ export function UserInformation(props: IUserInformationProps) {
         required={true}
         title="Your Monthly Goal"
         showTitle={false}
-        value={props.values.goal}
+        value={value.goal}
         hasSpinner={false}
         useUnderlineOnly={true}
         id="goal-panel"
+        onChange={(e) => {
+          const n = { ...value };
+          n.goal.value = e.value?.value;
+          setValue(n);
+          setIsDataLoaded(true);
+        }}
       />
 
       <RangeValidationPanel title="Savings">
@@ -49,8 +74,14 @@ export function UserInformation(props: IUserInformationProps) {
           hasSpinner={true}
           useUnderlineOnly={false}
           showTitle={true}
-          value={props.values.savedAtStart}
+          value={value.savedAtStart}
           id="amount-saved-at-start"
+          onChange={(e) => {
+            const n = { ...value };
+            n.savedAtStart.value = e.value?.value;
+            setValue(n);
+            setIsDataLoaded(true);
+          }}
         />
         <RangeFieldValidator
           min={0}
@@ -61,14 +92,71 @@ export function UserInformation(props: IUserInformationProps) {
           hasSpinner={true}
           showTitle={true}
           useUnderlineOnly={false}
-          value={props.values.moSavings}
+          value={value.moSavings}
           id="amount-saved-per-month"
+          onChange={(e) => {
+            const n = { ...value };
+            n.moSavings.value = e.value?.value;
+            setValue(n);
+            setIsDataLoaded(true);
+          }}
         />
       </RangeValidationPanel>
 
       <RulesStack direction={'row'} flexGrow={2}>
-        <RulesCollection title="Purchase Rules" values={props.values.purchaseRules} possibleChoices={props.choices.purchaseRules} />
-        <RulesCollectionWidth title="Hold Rules" values={props.values.holdRules} possibleChoices={props.choices.holdRules} />
+        <RulesCollection
+          title="Purchase Rules"
+          values={value.purchaseRules}
+          possibleChoices={props.choices.purchaseRules}
+          onChange={(e) => {
+            const n: {
+              goal: IEventResult<number>;
+              savedAtStart: IEventResult<number>;
+              moSavings: IEventResult<number>;
+              purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>[];
+              holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>[];
+            } = { ...value };
+            n.purchaseRules = e.map((x) => {
+              const wResult: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>> = {
+                ...x,
+                title: { value: x.title.value, validationResult: ValidatorTypes.Valid },
+                property: { value: x.property.value, validationResult: ValidatorTypes.Valid },
+                range: { value: x.range.value, validationResult: ValidatorTypes.Valid },
+              };
+
+              return wResult;
+            });
+            setValue(n);
+            setIsDataLoaded(true);
+          }}
+        />
+
+        <RulesCollectionWidth
+          title="Hold Rules"
+          values={value.holdRules}
+          possibleChoices={props.choices.holdRules}
+          onChange={(e) => {
+            const n: {
+              goal: IEventResult<number>;
+              savedAtStart: IEventResult<number>;
+              moSavings: IEventResult<number>;
+              purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>[];
+              holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>[];
+            } = { ...value };
+            n.holdRules = e.map((x) => {
+              const wResult: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>> = {
+                ...x,
+                title: { value: x.title.value, validationResult: ValidatorTypes.Valid },
+                property: { value: x.property.value, validationResult: ValidatorTypes.Valid },
+                range: { value: x.range.value, validationResult: ValidatorTypes.Valid },
+              };
+
+              return wResult;
+            });
+            setValue(n);
+            setIsDataLoaded(true);
+          }}
+        />
       </RulesStack>
     </form>
   );

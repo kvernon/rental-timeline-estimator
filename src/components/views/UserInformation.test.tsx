@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { UserInformation } from './UserInformation';
 import React from 'react';
 import '@testing-library/jest-dom';
@@ -14,13 +14,13 @@ jest.mock('../rules/RulesCollection');
 jest.mock('../validators/RangeFieldValidator');
 
 describe('UserInformation unit tests', () => {
+  let props: IUserInformationProps;
+
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  describe('and and defaults', () => {
-    let props: IUserInformationProps;
-
+  describe('and defaults', () => {
     describe('and success', () => {
       beforeEach(() => {
         props = {
@@ -44,7 +44,7 @@ describe('UserInformation unit tests', () => {
       });
 
       test('should goal panel', () => {
-        const entity = screen.getByLabelText<HTMLDivElement>('Goal Panel');
+        const entity = screen.getByLabelText<HTMLInputElement>('Goal Panel');
 
         expect(GoalPanel).toHaveBeenCalledWith(
           {
@@ -58,6 +58,7 @@ describe('UserInformation unit tests', () => {
             title: 'Your Monthly Goal',
             useUnderlineOnly: true,
             value: { validationResult: ValidatorTypes.Valid },
+            onChange: expect.any(Function),
           },
           {},
         );
@@ -87,6 +88,7 @@ describe('UserInformation unit tests', () => {
             showTitle: true,
             useUnderlineOnly: false,
             value: { validationResult: ValidatorTypes.Valid },
+            onChange: expect.any(Function),
           },
           {},
         );
@@ -112,6 +114,7 @@ describe('UserInformation unit tests', () => {
             showTitle: true,
             useUnderlineOnly: false,
             value: { validationResult: ValidatorTypes.Valid },
+            onChange: expect.any(Function),
           },
           {},
         );
@@ -128,6 +131,7 @@ describe('UserInformation unit tests', () => {
             title: 'Purchase Rules',
             values: [],
             possibleChoices: [],
+            onChange: expect.any(Function),
           },
           {},
         );
@@ -145,9 +149,80 @@ describe('UserInformation unit tests', () => {
             title: 'Hold Rules',
             values: [],
             possibleChoices: [],
+            onChange: expect.any(Function),
           },
           {},
         );
+      });
+    });
+  });
+
+  describe('and interaction', () => {
+    beforeEach(() => {
+      props = {
+        onChange: jest.fn(),
+        choices: { holdRules: [], purchaseRules: [] },
+        title: 'UserInput Test',
+        values: {
+          goal: { validationResult: ValidatorTypes.Valid },
+          savedAtStart: { validationResult: ValidatorTypes.Valid },
+          moSavings: { validationResult: ValidatorTypes.Valid },
+          purchaseRules: [
+            {
+              title: { value: { value: 0, label: 'one' }, validationResult: ValidatorTypes.Valid },
+              property: { value: { value: 0, label: 'one' }, validationResult: ValidatorTypes.Valid },
+              range: { value: 50, validationResult: ValidatorTypes.Valid },
+            },
+          ],
+          holdRules: [
+            {
+              title: { value: { value: 0, label: 'one' }, validationResult: ValidatorTypes.Valid },
+              property: { value: { value: 0, label: 'one' }, validationResult: ValidatorTypes.Valid },
+              range: { value: 50, validationResult: ValidatorTypes.Valid },
+            },
+          ],
+        },
+      };
+      render(<UserInformation {...props} />);
+    });
+
+    describe('and goal', () => {
+      test('should fire update', () => {
+        const entity = screen.getByLabelText<HTMLInputElement>('Goal Panel');
+
+        fireEvent.change(entity, { target: { value: '40' } });
+
+        expect(props.onChange).toHaveBeenCalled();
+      });
+    });
+
+    describe('and savings', () => {
+      test('should fire update', () => {
+        const entity = screen.getByLabelText<HTMLInputElement>('Amount Saved at Start');
+
+        fireEvent.change(entity, { target: { value: '40' } });
+
+        expect(props.onChange).toHaveBeenCalled();
+      });
+    });
+
+    describe('and monthly savings', () => {
+      test('should fire update', () => {
+        const entity = screen.getByLabelText<HTMLInputElement>('Amount Saved Per Month');
+
+        fireEvent.change(entity, { target: { value: '40' } });
+
+        expect(props.onChange).toHaveBeenCalled();
+      });
+    });
+
+    describe('and purchase rules', () => {
+      test('should fire update', () => {
+        const entity = screen.getByLabelText<HTMLInputElement>('Purchase Rules');
+
+        fireEvent.click(entity);
+
+        expect(props.onChange).toHaveBeenCalled();
       });
     });
   });
