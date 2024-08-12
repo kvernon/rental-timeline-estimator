@@ -1,34 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { CardListLayout } from '../core/CardListLayout';
 import { List } from 'react-movable';
-import { IEventResult } from '../validators/IEventResult';
-import { ISelectOption } from '../core/ISelectOption';
 import { onChangeArray } from './onChangeArray';
 import { AddListButton } from '../core/AddListButton';
-import { IRuleStackEntity } from './IRuleStackEntity';
 import { IThemeOptions } from '../../theming/IThemeOptions';
 import { useTheme } from '@emotion/react';
 import { getRemainingValues } from './getRemainingValues';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
 import { RuleStack } from './RuleStack';
-
-export interface IRulesCollectionProps {
-  required?: boolean;
-  title: string;
-  values: {
-    title: IEventResult<ISelectOption>;
-    property: IEventResult<ISelectOption>;
-    range: IEventResult<number>;
-  }[];
-  onChange?: (
-    inputData: {
-      title: IEventResult<ISelectOption>;
-      property: IEventResult<ISelectOption>;
-      range: IEventResult<number>;
-    }[],
-  ) => void;
-  possibleChoices: IRuleStackEntity[];
-}
+import { IRulesCollectionProps } from './IRulesCollectionProps';
+import { IRuleValues } from './IRuleValues';
 
 export function RulesCollection(componentProps: IRulesCollectionProps) {
   const [showButton, setShowButton] = useState(false);
@@ -61,7 +42,16 @@ export function RulesCollection(componentProps: IRulesCollectionProps) {
               {...props}
               onUpdate={(evt) => {
                 if (index !== undefined && componentProps.onChange) {
-                  const newed = [...componentProps.values];
+                  const newed = [
+                    ...componentProps.values.map((x) => {
+                      const y: IRuleValues = {
+                        title: x.title,
+                        property: x.property,
+                        range: x.range,
+                      };
+                      return y;
+                    }),
+                  ];
                   newed[index] = evt;
                   componentProps.onChange(newed);
                 }

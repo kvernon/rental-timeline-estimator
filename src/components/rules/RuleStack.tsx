@@ -11,8 +11,10 @@ import { DragPlaceholder } from '../core/DragPlaceHolder';
 import { IRuleStackEntity } from './IRuleStackEntity';
 import { getValidationResult } from './getValidationResult';
 import { ISelectOption } from '../core/ISelectOption';
-import { IEventResult } from '../validators/IEventResult';
+import { IEventValue } from '../validators/IEventResult';
 import { IRangeFieldValidatorEvent } from '../validators/IRangeFieldValidatorEvent';
+import { IRuleValuesResult } from './IRuleValuesResult';
+import { IRuleValues } from './IRuleValues';
 
 const PropertyPicker = styled(PropertyDropDownValidator)`
   width: 147px;
@@ -27,11 +29,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
   const [selectedRuleTitleIndex] = useState<number>(props.value.title?.value?.value || 0);
   const [selectedValueOptions, setSelectedValueOptions] = useState<IRuleStackEntity | null>(null);
   const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
-  const [value, setValue] = useState<{
-    title: IEventResult<ISelectOption>;
-    property: IEventResult<ISelectOption>;
-    range: IEventResult<number>;
-  }>(props.value);
+  const [value, setValue] = useState<IRuleValuesResult>(props.value);
 
   useEffect(() => {
     const newVar = props.ruleStackValues.length === 0 ? null : props.ruleStackValues[selectedRuleTitleIndex];
@@ -40,32 +38,36 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
 
   useEffect(() => {
     if (isDataLoaded && props.onUpdate) {
-      props.onUpdate(value);
+      props.onUpdate({
+        range: { value: value.range.value },
+        property: { value: value.property.value },
+        title: { value: value.title.value },
+      });
     }
   }, [value, isDataLoaded, props]);
 
   const injectProps = { ...props };
 
-  const titleDropDownOnChange = (valueOption: IEventResult<ISelectOption>) => {
+  const titleDropDownOnChange = (valueOption: IEventValue<ISelectOption>) => {
     if (valueOption.value && value.title?.value !== valueOption.value) {
       setValue({
         ...props.value,
         title: {
           value: { value: valueOption.value?.value, label: valueOption.value?.label },
-          validationResult: valueOption.validationResult,
+          validationResult: value.title.validationResult,
         },
       });
       setIsDataLoaded(true);
     }
   };
 
-  const propertyDropDownOnChange = (valueOption: IEventResult<ISelectOption>) => {
+  const propertyDropDownOnChange = (valueOption: IEventValue<ISelectOption>) => {
     if (valueOption.value && value.property?.value !== valueOption.value) {
       setValue({
         ...props.value,
         property: {
           value: { value: valueOption.value.value, label: valueOption.value.label },
-          validationResult: valueOption.validationResult,
+          validationResult: value.property.validationResult,
         },
       });
       setIsDataLoaded(true);

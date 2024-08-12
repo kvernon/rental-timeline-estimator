@@ -1,7 +1,6 @@
 import { onChangeArray } from './onChangeArray';
-import { IEventResult } from '../validators/IEventResult';
-import { ISelectOption } from '../core/ISelectOption';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
+import { IRuleValuesResult } from './IRuleValuesResult';
 
 describe('onChangeArray unit tests', () => {
   describe('and empty array', () => {
@@ -14,11 +13,7 @@ describe('onChangeArray unit tests', () => {
     describe('and populated', () => {
       describe('and invalid oldMove', () => {
         test('should return same array', () => {
-          const values: {
-            title: IEventResult<ISelectOption>;
-            property: IEventResult<ISelectOption>;
-            range: IEventResult<number>;
-          }[] = [
+          const values: IRuleValuesResult[] = [
             {
               title: { validationResult: ValidatorTypes.Valid, value: { value: 1, label: 'one' } },
               property: { validationResult: ValidatorTypes.Valid, value: { value: 1, label: 'property' } },
@@ -34,11 +29,7 @@ describe('onChangeArray unit tests', () => {
       describe('and valid oldMove', () => {
         describe('and invalid newMove', () => {
           test('should return same array', () => {
-            const values: {
-              title: IEventResult<ISelectOption>;
-              property: IEventResult<ISelectOption>;
-              range: IEventResult<number>;
-            }[] = [
+            const values: IRuleValuesResult[] = [
               {
                 title: { validationResult: ValidatorTypes.Valid, value: { value: 1, label: 'one' } },
                 property: {
@@ -56,11 +47,7 @@ describe('onChangeArray unit tests', () => {
         });
         describe('and valid newMove', () => {
           test('should return updated array', () => {
-            const values: {
-              title: IEventResult<ISelectOption>;
-              property: IEventResult<ISelectOption>;
-              range: IEventResult<number>;
-            }[] = [
+            const values: IRuleValuesResult[] = [
               {
                 title: { validationResult: ValidatorTypes.Valid, value: { value: 1, label: 'one' } },
                 property: {

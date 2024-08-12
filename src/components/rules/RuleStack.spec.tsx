@@ -324,10 +324,10 @@ describe('RuleStack unit tests', () => {
 
         expect(props.onUpdate).toHaveBeenCalledTimes(1);
         expect(props.onUpdate).toHaveBeenNthCalledWith(1, {
-          ...props.value,
+          property: { value: props.value.property.value },
+          range: { value: props.value.range.value },
           title: {
             value: { value, label: props.ruleStackValues.map((x) => x.ruleTitle)[value] },
-            validationResult: ValidatorTypes.Valid,
           },
         });
       });
@@ -355,10 +355,10 @@ describe('RuleStack unit tests', () => {
 
         expect(props.onUpdate).toHaveBeenCalledTimes(1);
         expect(props.onUpdate).toHaveBeenNthCalledWith(1, {
-          ...props.value,
+          title: { value: props.value.title.value },
+          range: { value: props.value.range.value },
           property: {
             value: { value, label: 'apartment' },
-            validationResult: ValidatorTypes.Valid,
           },
         });
       });
@@ -391,10 +391,10 @@ describe('RuleStack unit tests', () => {
 
         expect(props.onUpdate).toHaveBeenCalledTimes(1);
         expect(props.onUpdate).toHaveBeenNthCalledWith(1, {
-          ...props.value,
+          title: { value: props.value.title.value },
+          property: { value: props.value.property.value },
           range: {
             value,
-            validationResult: ValidatorTypes.Valid,
           },
         });
       });

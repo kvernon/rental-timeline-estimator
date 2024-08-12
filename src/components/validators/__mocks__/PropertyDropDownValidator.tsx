@@ -10,7 +10,7 @@ export const PropertyDropDownValidator = jest.fn((p: IPropertyDropDownParams) =>
     const value = parseInt(event.currentTarget.value);
 
     if (p.onChange) {
-      p.onChange({ value: { value, label: properties[value] }, validationResult: ValidatorTypes.Valid });
+      p.onChange({ value: { value, label: properties[value] } });
     }
   }
 

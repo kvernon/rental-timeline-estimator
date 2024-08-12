@@ -1,7 +1,7 @@
 import React from 'react';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IRulesCollectionProps, RulesCollection } from './RulesCollection';
+import { RulesCollection } from './RulesCollection';
 import { useTheme } from '@emotion/react';
 import { themeMock } from '../../../__tests__/ThemeMock';
 import { IThemeOptions } from '../../theming/IThemeOptions';
@@ -11,6 +11,7 @@ import { getRemainingValues } from './getRemainingValues';
 import userEvent from '@testing-library/user-event';
 import { IEventResult } from '../validators/IEventResult';
 import { ISelectOption } from '../core/ISelectOption';
+import { IRulesCollectionProps } from './IRulesCollectionProps';
 
 jest.mock('../core/CardListLayout');
 jest.mock('../core/AddListButton');
@@ -226,7 +227,7 @@ describe('RulesCollection unit tests', () => {
         expect(props.onChange).toHaveBeenCalledWith([
           {
             ...props.values[0],
-            range: { value: 40, validationResult: ValidatorTypes.Valid },
+            range: { value: 40 },
           },
         ]);
       });

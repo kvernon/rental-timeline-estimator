@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactSelect, { GroupBase, SingleValue } from 'react-select';
 import { ISelectOption } from '../core/ISelectOption';
-import { IEventResult } from './IEventResult';
+import { IEventResult, IEventValue } from './IEventResult';
 import { ValidatorTypes } from './ValidatorTypes';
 
 export interface ITitleDropDownParams {
   title: string;
   optionTitles: string[];
   value?: IEventResult<ISelectOption>;
-  onChange?: (inputData: IEventResult<ISelectOption>) => void;
+  onChange?: (inputData: IEventValue<ISelectOption>) => void;
 }
 
 function getDataValue(optionTitle: string[], label?: string): ISelectOption | undefined {
@@ -33,7 +33,7 @@ export function TitleDropDownValidator(props: ITitleDropDownParams) {
       )}
       defaultValue={getDataValue(props.optionTitles, props.value?.value?.label)}
       onChange={(a: SingleValue<ISelectOption>) => {
-        if (a && props.onChange) props?.onChange({ value: a, validationResult: ValidatorTypes.Valid });
+        if (a && props.onChange) props?.onChange({ value: a });
       }}
     />
   );

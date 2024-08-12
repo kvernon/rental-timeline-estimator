@@ -1,19 +1,6 @@
-import { IEventResult } from '../validators/IEventResult';
-import { ISelectOption } from '../core/ISelectOption';
+import { IRuleValuesResult } from './IRuleValuesResult';
 
-export function onChangeArray(
-  values: {
-    title: IEventResult<ISelectOption>;
-    property: IEventResult<ISelectOption>;
-    range: IEventResult<number>;
-  }[],
-  oldIndex: number,
-  newIndex: number,
-): {
-  title: IEventResult<ISelectOption>;
-  property: IEventResult<ISelectOption>;
-  range: IEventResult<number>;
-}[] {
+export function onChangeArray(values: IRuleValuesResult[], oldIndex: number, newIndex: number): IRuleValuesResult[] {
   if (values.length === 0) {
     return [];
   }

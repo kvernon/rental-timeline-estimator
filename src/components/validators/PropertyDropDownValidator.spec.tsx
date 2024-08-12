@@ -116,7 +116,6 @@ describe('PropertyDropDownValidator unit test', () => {
       });
 
       expect(params.onChange).toHaveBeenCalledWith({
-        validationResult: ValidatorTypes.Valid,
         value: {
           image: '/images/apartment.jpg',
           label: 'apartment',

@@ -2,17 +2,15 @@ import React from 'react';
 import { IEventResult } from '../validators/IEventResult';
 import { ISelectOption } from '../core/ISelectOption';
 import { IRuleStackEntity } from './IRuleStackEntity';
+import { IRuleValuesResult } from './IRuleValuesResult';
+import { IRuleValues } from './IRuleValues';
 
 export interface IRuleStackProps {
   index: number;
   style?: React.CSSProperties;
-  value: {
-    title: IEventResult<ISelectOption>;
-    property: IEventResult<ISelectOption>;
-    range: IEventResult<number>;
-  };
+  value: IRuleValuesResult;
   ruleStackValues: IRuleStackEntity[];
   required?: boolean;
   removeClick?: (evt: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-  onUpdate?: (evt: { title: IEventResult<ISelectOption>; property: IEventResult<ISelectOption>; range: IEventResult<number> }) => void;
+  onUpdate?: (evt: IRuleValues) => void;
 }

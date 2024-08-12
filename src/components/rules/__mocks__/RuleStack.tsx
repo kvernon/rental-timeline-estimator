@@ -23,7 +23,6 @@ export const RuleStack = jest.fn((p: IRuleStackProps) => {
               ...p.value,
               range: {
                 value: parseInt(e.target.value),
-                validationResult: ValidatorTypes.Valid,
               },
             });
           }
