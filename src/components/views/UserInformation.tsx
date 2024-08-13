@@ -10,6 +10,7 @@ import { IRuleValues } from '../rules/IRuleValues';
 import { IEventResult } from '../validators/IEventResult';
 import { ISelectOption } from '../core/ISelectOption';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
+import { FontGroups } from '../../theming/fontGroups';
 
 const RulesStack = styled(Stack)`
   width: unset;
@@ -46,12 +47,14 @@ export function UserInformation(props: IUserInformationProps) {
   return (
     <form aria-label={props.title}>
       <GoalPanel
+        inputFontGroup={FontGroups.inputGoal}
+        inputLabelFontGroup={FontGroups.inputGoalLabel}
         min={1000}
         max={100000}
         prefix={'$'}
         required={true}
         title="Your Monthly Goal"
-        showTitle={false}
+        showTitle={true}
         value={value.goal}
         hasSpinner={false}
         useUnderlineOnly={true}

@@ -54,7 +54,7 @@ module.exports = (env, argv) => {
         extensions: ['.tsx', '.ts'],
         exclude: 'node_modules',
         configType: 'flat',
-        eslintPath: 'eslint/use-at-your-own-risk'
+        eslintPath: 'eslint/use-at-your-own-risk',
       }),
       new CopyPlugin({
         patterns: [{ from: 'images', to: 'images' }],

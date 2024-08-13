@@ -7,6 +7,7 @@ import { IUserInformationProps } from './IUserInformationProps';
 import { RangeFieldValidator } from '../validators/RangeFieldValidator';
 import { GoalPanel } from '../panels/GoalPanel';
 import { RulesCollection } from '../rules/RulesCollection';
+import { FontGroups } from '../../theming/fontGroups';
 
 jest.mock('../panels/GoalPanel');
 jest.mock('../panels/RangeValidationPanel');
@@ -48,8 +49,10 @@ describe('UserInformation unit tests', () => {
 
         expect(GoalPanel).toHaveBeenCalledWith(
           {
+            inputFontGroup: FontGroups.inputGoal,
+            inputLabelFontGroup: FontGroups.inputGoalLabel,
             hasSpinner: false,
-            showTitle: false,
+            showTitle: true,
             id: 'goal-panel',
             max: 100000,
             min: 1000,
