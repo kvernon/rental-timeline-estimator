@@ -86,5 +86,45 @@ describe('TitleDropDownValidator unit test', () => {
 
       expect(element.value).toEqual('');
     });
+
+    describe('and onChange', () => {
+      test('should not be called', async () => {
+        params.optionTitles = ['one', 'two', 'three'];
+        params.value = {
+          value: {
+            value: 1,
+            label: params.optionTitles[1],
+          },
+          validationResult: ValidatorTypes.Valid,
+        };
+
+        render(<TitleDropDownValidator title={params.title} value={params.value} optionTitles={params.optionTitles} onChange={params.onChange} />);
+
+        const element = screen.getByLabelText(params.title);
+
+        await selectEvent.select(element, params.optionTitles[1]);
+
+        expect(params.onChange).toHaveBeenCalledTimes(0);
+      });
+
+      test('should be called', async () => {
+        params.optionTitles = ['one', 'two', 'three'];
+        params.value = {
+          value: {
+            value: 1,
+            label: params.optionTitles[1],
+          },
+          validationResult: ValidatorTypes.Valid,
+        };
+
+        render(<TitleDropDownValidator title={params.title} value={params.value} optionTitles={params.optionTitles} onChange={params.onChange} />);
+
+        const element = screen.getByLabelText(params.title);
+
+        await selectEvent.select(element, params.optionTitles[2]);
+
+        expect(params.onChange).toHaveBeenCalledTimes(1);
+      });
+    });
   });
 });

@@ -32,7 +32,7 @@ export function TitleDropDownValidator(props: ITitleDropDownParams) {
       )}
       defaultValue={getDataValue(props.optionTitles, props.value?.value?.label)}
       onChange={(a: SingleValue<ISelectOption>) => {
-        if (a && props.onChange) props?.onChange({ value: a });
+        if (a && props.onChange && a.value !== props.value?.value?.value) props?.onChange({ value: a });
       }}
     />
   );

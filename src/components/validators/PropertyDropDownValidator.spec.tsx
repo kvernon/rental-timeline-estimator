@@ -123,5 +123,28 @@ describe('PropertyDropDownValidator unit test', () => {
         },
       });
     });
+
+    test('onChange should not be called', async () => {
+      params.value = {
+        value: {
+          value: 1,
+          label: propertyOptions[1],
+        },
+
+        validationResult: ValidatorTypes.Valid,
+      };
+
+      render(<PropertyDropDownValidator title={params.title} value={params.value} onChange={params.onChange} />);
+
+      const element = screen.getByLabelText<HTMLInputElement>(params.title);
+
+      selectEvent.openMenu(element);
+
+      await selectEvent.select(element, (_content, element1): boolean => {
+        return element1 instanceof HTMLImageElement && element1.alt === params.value?.value?.label;
+      });
+
+      expect(params.onChange).toHaveBeenCalledTimes(0);
+    });
   });
 });

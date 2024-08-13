@@ -26,7 +26,10 @@ export function PropertyDropDownValidator(props: IPropertyDropDownParams) {
       aria-label={props.title}
       onChange={(a: SingleValue<IPropertyDropDownOption>) => {
         if (a && props.onChange) {
-          props.onChange({ value: a });
+          if (a.value !== props.value?.value?.value) {
+            console.log(a, props.value?.value);
+            props.onChange({ value: a });
+          }
         }
       }}
       value={getDataValue(props.value?.value?.label || propertyOptions[defaultValue], props.value?.value?.value || defaultValue)}
