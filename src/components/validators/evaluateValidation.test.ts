@@ -13,11 +13,11 @@ describe('evaluateValidation unit tests', () => {
       });
     });
 
-    describe('and value populated', () => {
+    describe('and value populated with options', () => {
       test(`should return rule ${ValidatorTypes[ValidatorTypes.Valid]}`, () => {
         const rule = jest.fn().mockReturnValue(ValidatorTypes.Valid);
 
-        const actual = evaluateValidation(false, rule, 1);
+        const actual = evaluateValidation(false, rule, 1, { min: 3, max: 4 });
 
         expect(actual).toEqual({ validationResult: ValidatorTypes.Valid, value: 1 });
       });
@@ -34,13 +34,15 @@ describe('evaluateValidation unit tests', () => {
       });
     });
 
-    describe('and value populated', () => {
+    describe('and value populated with options', () => {
       test(`should return rule ${ValidatorTypes[ValidatorTypes.Valid]}`, () => {
         const rule = jest.fn().mockReturnValue(ValidatorTypes.Valid);
 
-        const actual = evaluateValidation(true, rule, 1);
+        const actual = evaluateValidation(true, rule, 1, { min: 3, max: 4 });
 
         expect(actual).toEqual({ validationResult: ValidatorTypes.Valid, value: 1 });
+
+        expect(rule).toHaveBeenCalledWith(1, { min: 3, max: 4 });
       });
     });
   });
