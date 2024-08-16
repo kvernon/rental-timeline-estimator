@@ -228,5 +228,15 @@ describe('UserInformation unit tests', () => {
         expect(props.onChange).toHaveBeenCalled();
       });
     });
+
+    describe('and hold rules', () => {
+      test('should fire update', () => {
+        const entity = screen.getByLabelText<HTMLInputElement>('Hold Rules');
+
+        fireEvent.click(entity);
+
+        expect(props.onChange).toHaveBeenCalled();
+      });
+    });
   });
 });

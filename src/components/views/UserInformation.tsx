@@ -61,9 +61,11 @@ export function UserInformation(props: IUserInformationProps) {
         id="goal-panel"
         onChange={(e) => {
           const n = { ...value };
-          n.goal.value = e.value?.value;
-          setValue(n);
-          setIsDataLoaded(true);
+          if (n.goal.value !== e.value?.value) {
+            n.goal.value = e.value?.value;
+            setValue(n);
+            setIsDataLoaded(true);
+          }
         }}
       />
 
@@ -81,9 +83,11 @@ export function UserInformation(props: IUserInformationProps) {
           id="amount-saved-at-start"
           onChange={(e) => {
             const n = { ...value };
-            n.savedAtStart.value = e.value?.value;
-            setValue(n);
-            setIsDataLoaded(true);
+            if (n.savedAtStart.value !== e.value?.value) {
+              n.savedAtStart.value = e.value?.value;
+              setValue(n);
+              setIsDataLoaded(true);
+            }
           }}
         />
         <RangeFieldValidator
@@ -99,9 +103,11 @@ export function UserInformation(props: IUserInformationProps) {
           id="amount-saved-per-month"
           onChange={(e) => {
             const n = { ...value };
-            n.moSavings.value = e.value?.value;
-            setValue(n);
-            setIsDataLoaded(true);
+            if (n.moSavings.value !== e.value?.value) {
+              n.moSavings.value = e.value?.value;
+              setValue(n);
+              setIsDataLoaded(true);
+            }
           }}
         />
       </RangeValidationPanel>
@@ -129,8 +135,10 @@ export function UserInformation(props: IUserInformationProps) {
 
               return wResult;
             });
-            setValue(n);
-            setIsDataLoaded(true);
+            if (JSON.stringify(value.purchaseRules) !== JSON.stringify(n.purchaseRules)) {
+              setValue(n);
+              setIsDataLoaded(true);
+            }
           }}
         />
 
@@ -156,8 +164,10 @@ export function UserInformation(props: IUserInformationProps) {
 
               return wResult;
             });
-            setValue(n);
-            setIsDataLoaded(true);
+            if (JSON.stringify(value.holdRules) !== JSON.stringify(n.holdRules)) {
+              setValue(n);
+              setIsDataLoaded(true);
+            }
           }}
         />
       </RulesStack>

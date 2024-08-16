@@ -44,15 +44,19 @@ export function RangeFieldValidator(props: IRangeFieldValidatorProps) {
           useTransparent={!!props.useTransparent}
           onChange={(evt) => {
             if (props.onChange) {
-              const inputData = {
-                ...props,
-                value: {
-                  value: parseInt(evt.target.value),
-                  validationResult: ValidatorTypes.Valid,
-                },
-              };
-              delete inputData.onChange;
-              props.onChange(inputData);
+              const value = parseInt(evt.target.value);
+
+              if (value !== props.value?.value) {
+                const inputData = {
+                  ...props,
+                  value: {
+                    value,
+                    validationResult: ValidatorTypes.Valid,
+                  },
+                };
+                delete inputData.onChange;
+                props.onChange(inputData);
+              }
             }
           }}
           aria-label={props.title}
