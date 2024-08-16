@@ -140,7 +140,7 @@ describe('input-range unit tests', () => {
         max: 20,
         min: 10,
         required: true,
-        value: { value: 23, validationResult: ValidatorTypes.Valid },
+        value: { value: 23 },
       });
     });
   });

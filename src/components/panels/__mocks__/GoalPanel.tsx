@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { IRangeFieldValidatorProps } from '../../validators/IRangeFieldValidatorProps';
-import { ValidatorTypes } from '../../validators/ValidatorTypes';
 
 export const GoalPanel = jest.fn((p: IRangeFieldValidatorProps) => {
   return (
@@ -17,7 +16,7 @@ export const GoalPanel = jest.fn((p: IRangeFieldValidatorProps) => {
             id: p.id,
             min: p.min,
             max: p.max,
-            value: { value: parseInt(e.target.value), validationResult: ValidatorTypes.Valid },
+            value: { value: parseInt(e.target.value) },
           });
       }}
     />

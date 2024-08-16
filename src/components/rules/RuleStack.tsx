@@ -82,13 +82,13 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
     />
   );
 
-  const rangeFieldValidatorOnChange = (evt: IRangeFieldValidatorEvent): void => {
+  const rangeFieldValidatorOnChange = (evt: IRangeFieldValidatorEvent<IEventValue<number>>): void => {
     if (evt.value && value.range?.value !== evt.value.value) {
       setValue({
         ...props.value,
         range: {
           value: evt.value.value,
-          validationResult: evt.value.validationResult,
+          validationResult: value.range.validationResult,
         },
       });
       setIsDataLoaded(true);

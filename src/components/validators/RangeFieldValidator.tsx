@@ -51,7 +51,6 @@ export function RangeFieldValidator(props: IRangeFieldValidatorProps) {
                   ...props,
                   value: {
                     value,
-                    validationResult: ValidatorTypes.Valid,
                   },
                 };
                 delete inputData.onChange;

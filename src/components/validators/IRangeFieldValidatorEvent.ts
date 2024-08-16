@@ -1,6 +1,4 @@
-import { IEventResult } from './IEventResult';
-
-export interface IRangeFieldValidatorEvent {
+export interface IRangeFieldValidatorEvent<T> {
   id: string;
 
   /**
@@ -14,5 +12,5 @@ export interface IRangeFieldValidatorEvent {
 
   required?: boolean;
 
-  value?: IEventResult<number>;
+  value?: T;
 }

@@ -1,6 +1,5 @@
 import { IRangeFieldValidatorProps } from '../IRangeFieldValidatorProps';
 import React from 'react';
-import { ValidatorTypes } from '../ValidatorTypes';
 
 export const RangeFieldValidator = jest.fn((p: IRangeFieldValidatorProps) => {
   return (
@@ -16,7 +15,7 @@ export const RangeFieldValidator = jest.fn((p: IRangeFieldValidatorProps) => {
             id: p.id,
             min: p.min,
             max: p.max,
-            value: { value: parseInt(e.target.value), validationResult: ValidatorTypes.Valid },
+            value: { value: parseInt(e.target.value) },
           });
       }}
     />
