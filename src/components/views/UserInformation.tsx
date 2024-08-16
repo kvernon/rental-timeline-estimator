@@ -11,6 +11,8 @@ import { IEventResult } from '../validators/IEventResult';
 import { ISelectOption } from '../core/ISelectOption';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
 import { FontGroups } from '../../theming/fontGroups';
+import { evaluateValidation } from '../validators/evaluateValidation';
+import { isInRange } from '../validators/isInRange';
 
 const RulesStack = styled(Stack)`
   width: unset;
@@ -62,7 +64,7 @@ export function UserInformation(props: IUserInformationProps) {
         onChange={(e) => {
           const n = { ...value };
           if (n.goal.value !== e.value?.value) {
-            n.goal.value = e.value?.value;
+            n.goal = evaluateValidation(true, isInRange, e.value?.value, { min: 1000, max: 100000 });
             setValue(n);
             setIsDataLoaded(true);
           }
@@ -84,7 +86,7 @@ export function UserInformation(props: IUserInformationProps) {
           onChange={(e) => {
             const n = { ...value };
             if (n.savedAtStart.value !== e.value?.value) {
-              n.savedAtStart.value = e.value?.value;
+              n.savedAtStart = evaluateValidation(true, isInRange, e.value?.value, { min: 0, max: 9999999 });
               setValue(n);
               setIsDataLoaded(true);
             }
@@ -104,7 +106,7 @@ export function UserInformation(props: IUserInformationProps) {
           onChange={(e) => {
             const n = { ...value };
             if (n.moSavings.value !== e.value?.value) {
-              n.moSavings.value = e.value?.value;
+              n.moSavings = evaluateValidation(true, isInRange, e.value?.value, { min: 0, max: 9999999 });
               setValue(n);
               setIsDataLoaded(true);
             }

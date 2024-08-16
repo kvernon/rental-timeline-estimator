@@ -8,11 +8,15 @@ import { RangeFieldValidator } from '../validators/RangeFieldValidator';
 import { GoalPanel } from '../panels/GoalPanel';
 import { RulesCollection } from '../rules/RulesCollection';
 import { FontGroups } from '../../theming/fontGroups';
+import { evaluateValidation } from '../validators/evaluateValidation';
+import { isInRange } from '../validators/isInRange';
 
 jest.mock('../panels/GoalPanel');
 jest.mock('../panels/RangeValidationPanel');
 jest.mock('../rules/RulesCollection');
 jest.mock('../validators/RangeFieldValidator');
+jest.mock('../validators/evaluateValidation');
+jest.mock('../validators/isInRange');
 
 describe('UserInformation unit tests', () => {
   let props: IUserInformationProps;
@@ -162,6 +166,11 @@ describe('UserInformation unit tests', () => {
 
   describe('and interaction', () => {
     beforeEach(() => {
+      jest.mocked(evaluateValidation).mockImplementation((b, r, v) => ({
+        validationResult: ValidatorTypes.Optional,
+        value: v,
+      }));
+
       props = {
         onChange: jest.fn(),
         choices: { holdRules: [], purchaseRules: [] },
@@ -195,7 +204,29 @@ describe('UserInformation unit tests', () => {
 
         fireEvent.change(entity, { target: { value: '40' } });
 
-        expect(props.onChange).toHaveBeenCalled();
+        expect(props.onChange).toHaveBeenCalledWith({
+          goal: { value: 40, validationResult: ValidatorTypes.Optional },
+          holdRules: [
+            {
+              property: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
+              range: { validationResult: ValidatorTypes.Valid, value: 50 },
+              title: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
+            },
+          ],
+          moSavings: { validationResult: ValidatorTypes.Valid },
+          purchaseRules: [
+            {
+              property: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
+              range: { validationResult: ValidatorTypes.Valid, value: 50 },
+              title: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
+            },
+          ],
+          savedAtStart: { validationResult: ValidatorTypes.Valid },
+        });
+        expect(jest.mocked(evaluateValidation)).toHaveBeenCalledWith(true, isInRange, 40, {
+          max: 100000,
+          min: 1000,
+        });
       });
     });
 
@@ -205,7 +236,29 @@ describe('UserInformation unit tests', () => {
 
         fireEvent.change(entity, { target: { value: '40' } });
 
-        expect(props.onChange).toHaveBeenCalled();
+        expect(props.onChange).toHaveBeenCalledWith({
+          goal: { validationResult: ValidatorTypes.Valid },
+          holdRules: [
+            {
+              property: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
+              range: { validationResult: ValidatorTypes.Valid, value: 50 },
+              title: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
+            },
+          ],
+          moSavings: { validationResult: ValidatorTypes.Valid },
+          purchaseRules: [
+            {
+              property: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
+              range: { validationResult: ValidatorTypes.Valid, value: 50 },
+              title: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
+            },
+          ],
+          savedAtStart: { validationResult: 2, value: 40 },
+        });
+        expect(jest.mocked(evaluateValidation)).toHaveBeenCalledWith(true, isInRange, 40, {
+          max: 9999999,
+          min: 0,
+        });
       });
     });
 
@@ -215,7 +268,30 @@ describe('UserInformation unit tests', () => {
 
         fireEvent.change(entity, { target: { value: '40' } });
 
-        expect(props.onChange).toHaveBeenCalled();
+        expect(props.onChange).toHaveBeenCalledWith({
+          goal: { validationResult: ValidatorTypes.Valid },
+          holdRules: [
+            {
+              property: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
+              range: { validationResult: ValidatorTypes.Valid, value: 50 },
+              title: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
+            },
+          ],
+          moSavings: { validationResult: ValidatorTypes.Optional, value: 40 },
+          purchaseRules: [
+            {
+              property: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
+              range: { validationResult: ValidatorTypes.Valid, value: 50 },
+              title: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
+            },
+          ],
+          savedAtStart: { validationResult: ValidatorTypes.Valid },
+        });
+
+        expect(jest.mocked(evaluateValidation)).toHaveBeenCalledWith(true, isInRange, 40, {
+          max: 9999999,
+          min: 0,
+        });
       });
     });
 
