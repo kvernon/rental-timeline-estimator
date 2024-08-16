@@ -1,5 +1,5 @@
 import { ValidatorTypes } from './ValidatorTypes';
-import { evaluateValidation } from './evaluatateValidation';
+import { evaluateValidation } from './evaluateValidation';
 
 describe('evaluateValidation unit tests', () => {
   describe('and not required', () => {
