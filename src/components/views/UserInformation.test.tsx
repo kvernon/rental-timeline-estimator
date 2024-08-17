@@ -10,6 +10,8 @@ import { RulesCollection } from '../rules/RulesCollection';
 import { FontGroups } from '../../theming/fontGroups';
 import { evaluateValidation } from '../validators/evaluateValidation';
 import { isInRange } from '../validators/isInRange';
+import { getRulesValuesToRulesValuesResults } from './getRulesValuesToRulesValuesResults';
+import any = jasmine.any;
 
 jest.mock('../panels/GoalPanel');
 jest.mock('../panels/RangeValidationPanel');
@@ -17,6 +19,7 @@ jest.mock('../rules/RulesCollection');
 jest.mock('../validators/RangeFieldValidator');
 jest.mock('../validators/evaluateValidation');
 jest.mock('../validators/isInRange');
+jest.mock('./getRulesValuesToRulesValuesResults');
 
 describe('UserInformation unit tests', () => {
   let props: IUserInformationProps;
@@ -302,6 +305,8 @@ describe('UserInformation unit tests', () => {
         fireEvent.click(entity);
 
         expect(props.onChange).toHaveBeenCalled();
+
+        expect(jest.mocked(getRulesValuesToRulesValuesResults)).toHaveBeenCalledWith(false, expect.any(Object), props.choices.purchaseRules);
       });
     });
 
@@ -312,6 +317,8 @@ describe('UserInformation unit tests', () => {
         fireEvent.click(entity);
 
         expect(props.onChange).toHaveBeenCalled();
+
+        expect(jest.mocked(getRulesValuesToRulesValuesResults)).toHaveBeenCalledWith(false, expect.any(Object), props.choices.holdRules);
       });
     });
   });

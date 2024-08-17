@@ -9,10 +9,10 @@ import { IUserInformationProps } from './IUserInformationProps';
 import { IRuleValues } from '../rules/IRuleValues';
 import { IEventResult } from '../validators/IEventResult';
 import { ISelectOption } from '../core/ISelectOption';
-import { ValidatorTypes } from '../validators/ValidatorTypes';
 import { FontGroups } from '../../theming/fontGroups';
 import { evaluateValidation } from '../validators/evaluateValidation';
 import { isInRange } from '../validators/isInRange';
+import { getRulesValuesToRulesValuesResults } from './getRulesValuesToRulesValuesResults';
 
 const RulesStack = styled(Stack)`
   width: unset;
@@ -127,16 +127,7 @@ export function UserInformation(props: IUserInformationProps) {
               purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
               holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
             } = { ...value };
-            n.purchaseRules = e.map((x) => {
-              const wResult: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>> = {
-                ...x,
-                title: { value: x.title.value, validationResult: ValidatorTypes.Valid },
-                property: { value: x.property.value, validationResult: ValidatorTypes.Valid },
-                range: { value: x.range.value, validationResult: ValidatorTypes.Valid },
-              };
-
-              return wResult;
-            });
+            n.purchaseRules = getRulesValuesToRulesValuesResults(false, e, props.choices.purchaseRules);
             if (JSON.stringify(value.purchaseRules) !== JSON.stringify(n.purchaseRules)) {
               setValue(n);
               setIsDataLoaded(true);
@@ -156,16 +147,7 @@ export function UserInformation(props: IUserInformationProps) {
               purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
               holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
             } = { ...value };
-            n.holdRules = e.map((x) => {
-              const wResult: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>> = {
-                ...x,
-                title: { value: x.title.value, validationResult: ValidatorTypes.Valid },
-                property: { value: x.property.value, validationResult: ValidatorTypes.Valid },
-                range: { value: x.range.value, validationResult: ValidatorTypes.Valid },
-              };
-
-              return wResult;
-            });
+            n.holdRules = getRulesValuesToRulesValuesResults(false, e, props.choices.holdRules);
             if (JSON.stringify(value.holdRules) !== JSON.stringify(n.holdRules)) {
               setValue(n);
               setIsDataLoaded(true);
