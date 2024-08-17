@@ -37,7 +37,10 @@ export function RulesCollection(componentProps: IRulesCollectionProps) {
         renderItem={({ value, props, index }) => {
           return (
             <RuleStack
-              ruleStackValues={[]}
+              ruleStackValues={getRemainingValues(
+                componentProps.possibleChoices,
+                componentProps.values.map((x) => x.title),
+              ).map((x) => x.entity)}
               index={index as number}
               value={value}
               {...props}
