@@ -10,7 +10,7 @@ export const RulesCollection = jest.fn((componentProps: IRulesCollectionProps) =
       aria-label={componentProps.title}
       onClick={() => {
         if (componentProps.onChange) {
-          let inputData: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>[] = [];
+          let inputData: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[] = [];
 
           if (componentProps.values.length > 1) {
             // used to force a return

@@ -6,7 +6,6 @@ import { AddListButton } from '../core/AddListButton';
 import { IThemeOptions } from '../../theming/IThemeOptions';
 import { useTheme } from '@emotion/react';
 import { getRemainingValues } from './getRemainingValues';
-import { ValidatorTypes } from '../validators/ValidatorTypes';
 import { RuleStack } from './RuleStack';
 import { IRulesCollectionProps } from './IRulesCollectionProps';
 import { IRuleValues } from './IRuleValues';
@@ -46,7 +45,7 @@ export function RulesCollection(componentProps: IRulesCollectionProps) {
                 if (index !== undefined && componentProps.onChange) {
                   const newed = [
                     ...componentProps.values.map((x) => {
-                      const y: IRuleValues<IEventValue<ISelectOption>, IEventValue<number>> = {
+                      const y: IRuleValues<IEventValue<ISelectOption>, IEventValue<number | undefined>> = {
                         title: x.title,
                         property: x.property,
                         range: x.range,
@@ -62,7 +61,7 @@ export function RulesCollection(componentProps: IRulesCollectionProps) {
                 if (index !== undefined && componentProps.onChange) {
                   const newed = [
                     ...componentProps.values.map((x) => {
-                      const y: IRuleValues<IEventValue<ISelectOption>, IEventValue<number>> = {
+                      const y: IRuleValues<IEventValue<ISelectOption>, IEventValue<number | undefined>> = {
                         title: x.title,
                         property: x.property,
                         range: x.range,
@@ -104,16 +103,14 @@ export function RulesCollection(componentProps: IRulesCollectionProps) {
                       value: remaining[0].index,
                       label: remaining[0].entity.ruleTitle,
                     },
-                    validationResult: ValidatorTypes.Valid,
                   },
                   property: {
                     value: {
                       value: remaining[0].entity.property,
                       label: 'house',
                     },
-                    validationResult: ValidatorTypes.Valid,
                   },
-                  range: { validationResult: componentProps.required ? ValidatorTypes.Invalid : ValidatorTypes.Valid },
+                  range: { value: undefined },
                 },
               ]);
             }

@@ -3,10 +3,10 @@ import { ISelectOption } from '../core/ISelectOption';
 import { IEventResult } from '../validators/IEventResult';
 
 export function onChangeArray(
-  values: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>[],
+  values: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[],
   oldIndex: number,
   newIndex: number,
-): IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>[] {
+): IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[] {
   if (values.length === 0) {
     return [];
   }

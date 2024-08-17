@@ -6,7 +6,7 @@ import { IEventResult, IEventValue } from '../validators/IEventResult';
 export interface IRulesCollectionProps {
   required?: boolean;
   title: string;
-  values: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>[];
-  onChange?: (inputData: IRuleValues<IEventValue<ISelectOption>, IEventValue<number>>[]) => void;
+  values: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
+  onChange?: (inputData: IRuleValues<IEventValue<ISelectOption>, IEventValue<number | undefined>>[]) => void;
   possibleChoices: IRuleStackEntity[];
 }

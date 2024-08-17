@@ -5,11 +5,11 @@ import { IRuleStackEntity } from '../rules/IRuleStackEntity';
 
 export interface IUserInformationProps {
   values: {
-    goal: IEventResult<number>;
-    savedAtStart: IEventResult<number>;
-    moSavings: IEventResult<number>;
-    purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>[];
-    holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>[];
+    goal: IEventResult<number | undefined>;
+    savedAtStart: IEventResult<number | undefined>;
+    moSavings: IEventResult<number | undefined>;
+    purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
+    holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
   };
   choices: {
     purchaseRules: IRuleStackEntity[];
@@ -17,10 +17,10 @@ export interface IUserInformationProps {
   };
   title: string;
   onChange?: (updated: {
-    goal: IEventValue<number>;
-    savedAtStart: IEventValue<number>;
-    moSavings: IEventValue<number>;
-    purchaseRules: IRuleValues<IEventValue<ISelectOption>, IEventValue<number>>[];
-    holdRules: IRuleValues<IEventValue<ISelectOption>, IEventValue<number>>[];
+    goal: IEventValue<number | undefined>;
+    savedAtStart: IEventValue<number | undefined>;
+    moSavings: IEventValue<number | undefined>;
+    purchaseRules: IRuleValues<IEventValue<ISelectOption>, IEventValue<number | undefined>>[];
+    holdRules: IRuleValues<IEventValue<ISelectOption>, IEventValue<number | undefined>>[];
   }) => void;
 }

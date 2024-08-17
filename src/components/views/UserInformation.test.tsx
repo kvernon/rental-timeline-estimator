@@ -32,9 +32,9 @@ describe('UserInformation unit tests', () => {
           choices: { holdRules: [], purchaseRules: [] },
           title: 'UserInput Test',
           values: {
-            goal: { validationResult: ValidatorTypes.Valid },
-            savedAtStart: { validationResult: ValidatorTypes.Valid },
-            moSavings: { validationResult: ValidatorTypes.Valid },
+            goal: { value: undefined, validationResult: ValidatorTypes.Valid },
+            savedAtStart: { value: undefined, validationResult: ValidatorTypes.Valid },
+            moSavings: { value: undefined, validationResult: ValidatorTypes.Valid },
             purchaseRules: [],
             holdRules: [],
           },
@@ -176,9 +176,9 @@ describe('UserInformation unit tests', () => {
         choices: { holdRules: [], purchaseRules: [] },
         title: 'UserInput Test',
         values: {
-          goal: { validationResult: ValidatorTypes.Valid },
-          savedAtStart: { validationResult: ValidatorTypes.Valid },
-          moSavings: { validationResult: ValidatorTypes.Valid },
+          goal: { value: undefined, validationResult: ValidatorTypes.Valid },
+          savedAtStart: { value: undefined, validationResult: ValidatorTypes.Valid },
+          moSavings: { value: undefined, validationResult: ValidatorTypes.Valid },
           purchaseRules: [
             {
               title: { value: { value: 0, label: 'one' }, validationResult: ValidatorTypes.Valid },

@@ -33,11 +33,11 @@ const RulesCollectionWidth = styled(RulesCollection)`
 export function UserInformation(props: IUserInformationProps) {
   const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
   const [value, setValue] = useState<{
-    goal: IEventResult<number>;
-    savedAtStart: IEventResult<number>;
-    moSavings: IEventResult<number>;
-    purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>[];
-    holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>[];
+    goal: IEventResult<number | undefined>;
+    savedAtStart: IEventResult<number | undefined>;
+    moSavings: IEventResult<number | undefined>;
+    purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
+    holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
   }>(props.values);
 
   useEffect(() => {
@@ -121,14 +121,14 @@ export function UserInformation(props: IUserInformationProps) {
           possibleChoices={props.choices.purchaseRules}
           onChange={(e) => {
             const n: {
-              goal: IEventResult<number>;
-              savedAtStart: IEventResult<number>;
-              moSavings: IEventResult<number>;
-              purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>[];
-              holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>[];
+              goal: IEventResult<number | undefined>;
+              savedAtStart: IEventResult<number | undefined>;
+              moSavings: IEventResult<number | undefined>;
+              purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
+              holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
             } = { ...value };
             n.purchaseRules = e.map((x) => {
-              const wResult: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>> = {
+              const wResult: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>> = {
                 ...x,
                 title: { value: x.title.value, validationResult: ValidatorTypes.Valid },
                 property: { value: x.property.value, validationResult: ValidatorTypes.Valid },
@@ -150,14 +150,14 @@ export function UserInformation(props: IUserInformationProps) {
           possibleChoices={props.choices.holdRules}
           onChange={(e) => {
             const n: {
-              goal: IEventResult<number>;
-              savedAtStart: IEventResult<number>;
-              moSavings: IEventResult<number>;
-              purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>[];
-              holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>[];
+              goal: IEventResult<number | undefined>;
+              savedAtStart: IEventResult<number | undefined>;
+              moSavings: IEventResult<number | undefined>;
+              purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
+              holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
             } = { ...value };
             n.holdRules = e.map((x) => {
-              const wResult: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>> = {
+              const wResult: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>> = {
                 ...x,
                 title: { value: x.title.value, validationResult: ValidatorTypes.Valid },
                 property: { value: x.property.value, validationResult: ValidatorTypes.Valid },

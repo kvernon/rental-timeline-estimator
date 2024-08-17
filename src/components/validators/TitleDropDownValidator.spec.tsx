@@ -22,6 +22,7 @@ describe('TitleDropDownValidator unit test', () => {
       title: 'Title Drop',
       optionTitles: [],
       onChange: jest.fn(),
+      value: { value: { value: 0, label: '' }, validationResult: ValidatorTypes.Valid },
     };
   });
 

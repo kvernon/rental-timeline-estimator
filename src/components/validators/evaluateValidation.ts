@@ -15,8 +15,8 @@ export const evaluateValidation = (
   rule: RuleEval,
   selectedValue?: number,
   options?: { min?: number; max?: number },
-): IEventResult<number> => {
-  const validation: IEventResult<number> = {
+): IEventResult<number | undefined> => {
+  const validation: IEventResult<number | undefined> = {
     validationResult: ValidatorTypes.Invalid,
     value: selectedValue,
   };

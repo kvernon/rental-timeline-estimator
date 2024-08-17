@@ -3,6 +3,6 @@ import { ISelectOption } from '../core/ISelectOption';
 
 export interface IPropertyDropDownParams {
   title: string;
-  value?: IEventResult<ISelectOption>;
+  value: IEventResult<ISelectOption>;
   onChange?: (inputData: IEventValue<ISelectOption>) => void;
 }

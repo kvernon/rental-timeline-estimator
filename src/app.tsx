@@ -14,15 +14,15 @@ import { purchaseConfig } from './rules/purchaseRuleConfig';
 
 export const App = function () {
   const [userInfo] = React.useState<{
-    goal: IEventResult<number>;
-    savedAtStart: IEventResult<number>;
-    moSavings: IEventResult<number>;
-    purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>[];
-    holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>[];
+    goal: IEventResult<number | undefined>;
+    savedAtStart: IEventResult<number | undefined>;
+    moSavings: IEventResult<number | undefined>;
+    purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
+    holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
   }>({
     goal: { value: 3000, validationResult: ValidatorTypes.Valid },
-    savedAtStart: { validationResult: ValidatorTypes.Optional },
-    moSavings: { validationResult: ValidatorTypes.Optional },
+    savedAtStart: { value: undefined, validationResult: ValidatorTypes.Optional },
+    moSavings: { value: undefined, validationResult: ValidatorTypes.Optional },
     purchaseRules: [],
     holdRules: [],
   });

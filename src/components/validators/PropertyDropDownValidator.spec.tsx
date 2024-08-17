@@ -22,12 +22,13 @@ describe('PropertyDropDownValidator unit test', () => {
     params = {
       title: 'Tested',
       onChange: jest.fn(),
+      value: { value: { value: 0, label: '' }, validationResult: ValidatorTypes.Valid },
     };
   });
 
   describe('and defaults', () => {
     test('should render', () => {
-      render(<PropertyDropDownValidator title={params.title} />);
+      render(<PropertyDropDownValidator {...params} />);
 
       const actual = screen.getByLabelText<HTMLInputElement>(params.title);
 
@@ -35,7 +36,7 @@ describe('PropertyDropDownValidator unit test', () => {
     });
 
     test('should contain options with house selected', () => {
-      render(<PropertyDropDownValidator title={params.title} />);
+      render(<PropertyDropDownValidator {...params} />);
 
       const element = screen.getByLabelText<HTMLInputElement>(params.title);
 

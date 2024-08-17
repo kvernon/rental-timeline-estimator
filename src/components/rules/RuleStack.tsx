@@ -28,7 +28,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
   const [selectedRuleTitleIndex] = useState<number>(props.value.title?.value?.value || 0);
   const [selectedValueOptions, setSelectedValueOptions] = useState<IRuleStackEntity | null>(null);
   const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
-  const [value, setValue] = useState<IRuleValues<IEventResult<ISelectOption>, IEventResult<number>>>(props.value);
+  const [value, setValue] = useState<IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>>(props.value);
 
   useEffect(() => {
     const newVar = props.ruleStackValues.length === 0 ? null : props.ruleStackValues[selectedRuleTitleIndex];
@@ -82,7 +82,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
     />
   );
 
-  const rangeFieldValidatorOnChange = (evt: IRangeFieldValidatorEvent<IEventValue<number>>): void => {
+  const rangeFieldValidatorOnChange = (evt: IRangeFieldValidatorEvent<IEventValue<number | undefined>>): void => {
     if (evt.value && value.range?.value !== evt.value.value) {
       setValue({
         ...props.value,

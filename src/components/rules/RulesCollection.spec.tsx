@@ -9,9 +9,10 @@ import { ValidatorTypes } from '../validators/ValidatorTypes';
 import { AddListButton } from '../core/AddListButton';
 import { getRemainingValues } from './getRemainingValues';
 import userEvent from '@testing-library/user-event';
-import { IEventResult } from '../validators/IEventResult';
+import { IEventValue } from '../validators/IEventResult';
 import { ISelectOption } from '../core/ISelectOption';
 import { IRulesCollectionProps } from './IRulesCollectionProps';
+import { IRuleValues } from './IRuleValues';
 
 jest.mock('../core/CardListLayout');
 jest.mock('../core/AddListButton');
@@ -152,24 +153,22 @@ describe('RulesCollection unit tests', () => {
             await userEvent.click(addButton);
 
             const added: {
-              title: IEventResult<ISelectOption>;
-              property: IEventResult<ISelectOption>;
-              range: IEventResult<number>;
+              title: IEventValue<ISelectOption>;
+              property: IEventValue<ISelectOption>;
+              range: IEventValue<number | undefined>;
             } = {
               title: {
                 value: { value: 1, label: props.possibleChoices[1].ruleTitle },
-                validationResult: ValidatorTypes.Valid,
               },
               property: {
                 value: { value: props.possibleChoices[1].property, label: 'house' },
-                validationResult: ValidatorTypes.Valid,
               },
               range: {
-                validationResult: ValidatorTypes.Valid,
+                value: undefined,
               },
             };
 
-            const expected = [...props.values];
+            const expected = props.values.map((x) => ({ ...(x as IRuleValues<IEventValue<ISelectOption>, IEventValue<number | undefined>>) }));
             expected.push(added);
 
             expect(props.onChange).toHaveBeenCalledWith(expected);
@@ -189,24 +188,22 @@ describe('RulesCollection unit tests', () => {
             await userEvent.click(addButton);
 
             const added: {
-              title: IEventResult<ISelectOption>;
-              property: IEventResult<ISelectOption>;
-              range: IEventResult<number>;
+              title: IEventValue<ISelectOption>;
+              property: IEventValue<ISelectOption>;
+              range: IEventValue<number | undefined>;
             } = {
               title: {
                 value: { value: 1, label: props.possibleChoices[1].ruleTitle },
-                validationResult: ValidatorTypes.Valid,
               },
               property: {
                 value: { value: props.possibleChoices[1].property, label: 'house' },
-                validationResult: ValidatorTypes.Valid,
               },
               range: {
-                validationResult: ValidatorTypes.Invalid,
+                value: undefined,
               },
             };
 
-            const expected = [...props.values];
+            const expected = [...(props.values as IRuleValues<IEventValue<ISelectOption>, IEventValue<number | undefined>>[])];
             expected.push(added);
 
             expect(props.onChange).toHaveBeenCalledWith(expected);

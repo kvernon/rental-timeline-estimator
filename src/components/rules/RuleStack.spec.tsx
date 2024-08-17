@@ -55,8 +55,8 @@ describe('RuleStack unit tests', () => {
           { ruleTitle: 'nothing', property: 1 },
         ],
         value: {
-          title: { value: undefined, validationResult: ValidatorTypes.Optional },
-          property: { value: undefined, validationResult: ValidatorTypes.Optional },
+          title: { value: { value: 0, label: '' }, validationResult: ValidatorTypes.Optional },
+          property: { value: { value: 0, label: '' }, validationResult: ValidatorTypes.Optional },
           range: { value: undefined, validationResult: ValidatorTypes.Optional },
         },
       };

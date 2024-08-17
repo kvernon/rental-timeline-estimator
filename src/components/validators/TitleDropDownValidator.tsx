@@ -6,15 +6,11 @@ import { IEventResult, IEventValue } from './IEventResult';
 export interface ITitleDropDownParams {
   title: string;
   optionTitles: string[];
-  value?: IEventResult<ISelectOption>;
+  value: IEventResult<ISelectOption>;
   onChange?: (inputData: IEventValue<ISelectOption>) => void;
 }
 
-function getDataValue(optionTitle: string[], label?: string): ISelectOption | undefined {
-  if (!label || !optionTitle) {
-    return undefined;
-  }
-
+function getDataValue(optionTitle: string[], label: string): ISelectOption {
   const foundIndex = optionTitle.findIndex((x) => x === label);
 
   return { value: foundIndex, label };
@@ -30,9 +26,9 @@ export function TitleDropDownValidator(props: ITitleDropDownParams) {
           label: option,
         }),
       )}
-      defaultValue={getDataValue(props.optionTitles, props.value?.value?.label)}
+      defaultValue={getDataValue(props.optionTitles, props.value.value.label)}
       onChange={(a: SingleValue<ISelectOption>) => {
-        if (a && props.onChange && a.value !== props.value?.value?.value) props?.onChange({ value: a });
+        if (a && props.onChange && a.value !== props.value.value.value) props?.onChange({ value: a });
       }}
     />
   );
