@@ -30,7 +30,7 @@ const Select = styled(ReactSelect<ISelectOption, false, GroupBase<ISelectOption>
   font-family: ${(props) => props.themeOptions.typography.get(FontGroups.inputLabel)?.font};
   font-weight: ${(props) => props.themeOptions.typography.get(FontGroups.inputLabel)?.weight};
   width: 100%;
-  padding-left: 10px;
+  padding-left: 4px;
   color: ${(props) => props.themeOptions.typography.get(FontGroups.input)?.color};
   overflow: visible;
 `;
@@ -64,7 +64,7 @@ export function TitleDropDownValidator(props: ITitleDropDownParams) {
             overflow: 'visible',
             transition: 'background-color 0.4s ease-out',
             backgroundColor: `${coreTheme.palette.validation[validatorTypeName].background}41`,
-            height: '59px',
+            height: '60px',
             borderColor: `${coreTheme.palette.inputBackground}`,
             border: `1px solid ${coreTheme.palette.panelBackground}`,
             borderRadius: '0.3rem',

@@ -104,6 +104,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
       max={selectedValueOptions?.max}
       prefix={selectedValueOptions?.prefix}
       suffix={selectedValueOptions?.suffix}
+      useUnderlineOnly={false}
       onChange={(evt) => rangeFieldValidatorOnChange(evt)}
       required={false}
     />

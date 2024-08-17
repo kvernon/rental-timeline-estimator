@@ -122,6 +122,7 @@ describe('RuleStack unit tests', () => {
           required: false,
           title: 'Rule Range',
           showTitle: false,
+          useUnderlineOnly: false,
           onChange: expect.any(Function),
         },
         {},
@@ -225,6 +226,7 @@ describe('RuleStack unit tests', () => {
           id: 'rule-range',
           title: 'Rule Range',
           showTitle: false,
+          useUnderlineOnly: false,
         },
         {},
       );
@@ -310,6 +312,7 @@ describe('RuleStack unit tests', () => {
             id: 'rule-range',
             title: 'Rule Range',
             showTitle: false,
+            useUnderlineOnly: false,
           },
           {},
         );
@@ -377,6 +380,7 @@ describe('RuleStack unit tests', () => {
             id: 'rule-range',
             title: 'Rule Range',
             showTitle: false,
+            useUnderlineOnly: false,
           },
           {},
         );

@@ -7,12 +7,19 @@ import { useTheme } from '@emotion/react';
 import { IThemeOptions } from '../../theming/IThemeOptions';
 import { FontGroups } from '../../theming/fontGroups';
 import { IPropertyDropDownParams } from './IPropertyDropDownParams';
+import styled from '@emotion/styled';
 
 const getDataValue = (title: string, value: number): IPropertyDropDownOption => {
   return { value, label: title, image: `/images/${title}.jpg` };
 };
 
 export const propertyOptions = ['apartment', 'house'];
+
+const Select = styled(ReactSelect<IPropertyDropDownOption, false, GroupBase<IPropertyDropDownOption>>)`
+  width: 140px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+`;
 
 export function PropertyDropDownValidator(props: IPropertyDropDownParams) {
   const optionsMap = propertyOptions.map(getDataValue) as IPropertyDropDownOption[];
@@ -22,7 +29,7 @@ export function PropertyDropDownValidator(props: IPropertyDropDownParams) {
   const defaultValue = 1;
 
   return (
-    <ReactSelect<IPropertyDropDownOption, false, GroupBase<IPropertyDropDownOption>>
+    <Select
       aria-label={props.title}
       onChange={(a: SingleValue<IPropertyDropDownOption>) => {
         if (a && props.onChange) {
@@ -42,7 +49,7 @@ export function PropertyDropDownValidator(props: IPropertyDropDownParams) {
             marginLeft: '0',
             padding: '0',
             transition: 'background-color 0.4s ease-out',
-            height: '59px',
+            height: '60px',
             borderColor: `${coreTheme.palette.inputBackground}`,
             border: `1px solid ${coreTheme.palette.panelBackground}`,
             borderRadius: '0.3rem',
