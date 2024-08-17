@@ -77,7 +77,7 @@ describe('RulesCollection unit tests', () => {
     });
 
     test('should render first item', () => {
-      const ruleItemEntity = screen.getByLabelText(`Rule Number 0`);
+      const ruleItemEntity = screen.getByLabelText(`Rule Number 1`);
       expect(ruleItemEntity).toBeInTheDocument();
     });
   });

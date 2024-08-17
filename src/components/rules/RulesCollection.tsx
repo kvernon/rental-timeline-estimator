@@ -41,7 +41,7 @@ export function RulesCollection(componentProps: IRulesCollectionProps) {
                 componentProps.possibleChoices,
                 componentProps.values.map((x) => x.title),
               ).map((x) => x.entity)}
-              index={index as number}
+              index={index ? componentProps.values.length - index : componentProps.values.length}
               value={value}
               {...props}
               onUpdate={(evt) => {

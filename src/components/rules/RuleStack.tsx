@@ -121,6 +121,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
       flexGrow={1}
       style={{
         ...props.style,
+        zIndex: props.index,
       }}
       aria-label={`Rule Number ${props.index}`}
     >
