@@ -61,6 +61,9 @@ export function getRulesValuesToRulesValuesResults(
 
   const result: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[] = [];
   for (const x of map.values()) {
+    if (x.index === -1) {
+      continue;
+    }
     const y: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>> = {
       range: evaluateValidation(isRequired, isInRange, values[x.index].range.value, {
         min: x.entity.min,

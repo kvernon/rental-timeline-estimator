@@ -13,6 +13,7 @@ import { IEventValue } from '../validators/IEventResult';
 import { ISelectOption } from '../core/ISelectOption';
 import { IRulesCollectionProps } from './IRulesCollectionProps';
 import { IRuleValues } from './IRuleValues';
+import { propertyOptions } from '../validators/PropertyDropDownValidator';
 
 jest.mock('../core/CardListLayout');
 jest.mock('../core/AddListButton');
@@ -161,7 +162,10 @@ describe('RulesCollection unit tests', () => {
                 value: { value: 1, label: props.possibleChoices[1].ruleTitle },
               },
               property: {
-                value: { value: props.possibleChoices[1].property, label: 'house' },
+                value: {
+                  value: props.possibleChoices[1].property,
+                  label: propertyOptions[props.possibleChoices[1].property],
+                },
               },
               range: {
                 value: undefined,

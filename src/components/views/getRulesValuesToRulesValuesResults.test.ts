@@ -61,6 +61,7 @@ describe('getRulesValuesToRulesValuesResults unit tests', () => {
           ]);
         });
       });
+
       describe('and rules match', () => {
         test('should return populated with evaluated values', () => {
           jest.mocked(evaluateValidation).mockImplementation((b, r, v) => ({
@@ -80,6 +81,47 @@ describe('getRulesValuesToRulesValuesResults unit tests', () => {
             getRulesValuesToRulesValuesResults(false, values, [
               {
                 ruleTitle: 'fooood',
+                property: 0,
+              },
+            ]),
+          ).toEqual([
+            {
+              title: { value: { value: 0, label: 'fooood' }, validationResult: ValidatorTypes.Valid },
+              range: { value: 0, validationResult: ValidatorTypes.Invalid },
+              property: { value: { value: 0, label: '' }, validationResult: ValidatorTypes.Valid },
+            },
+          ]);
+
+          expect(jest.mocked(evaluateValidation)).toHaveBeenCalledWith(false, isInRange, 0, {
+            max: undefined,
+            min: undefined,
+          });
+        });
+      });
+
+      describe('and mixed rules match', () => {
+        test('should return populated with evaluated values', () => {
+          jest.mocked(evaluateValidation).mockImplementation((b, r, v) => ({
+            validationResult: ValidatorTypes.Invalid,
+            value: v,
+          }));
+
+          const values = [
+            {
+              title: { value: { value: 0, label: 'fooood' } },
+              range: { value: 0 },
+              property: { value: { value: 0, label: '' } },
+            },
+          ];
+
+          expect(
+            getRulesValuesToRulesValuesResults(false, values, [
+              {
+                ruleTitle: 'fooood',
+                property: 0,
+              },
+              {
+                ruleTitle: 'foooasddod',
                 property: 0,
               },
             ]),

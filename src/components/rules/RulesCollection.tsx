@@ -11,6 +11,7 @@ import { IRulesCollectionProps } from './IRulesCollectionProps';
 import { IRuleValues } from './IRuleValues';
 import { ISelectOption } from '../core/ISelectOption';
 import { IEventValue } from '../validators/IEventResult';
+import { propertyOptions } from '../validators/PropertyDropDownValidator';
 
 export function RulesCollection(componentProps: IRulesCollectionProps) {
   const [showButton, setShowButton] = useState(false);
@@ -110,7 +111,7 @@ export function RulesCollection(componentProps: IRulesCollectionProps) {
                   property: {
                     value: {
                       value: remaining[0].entity.property,
-                      label: 'house',
+                      label: propertyOptions[remaining[0].entity.property],
                     },
                   },
                   range: { value: undefined },
