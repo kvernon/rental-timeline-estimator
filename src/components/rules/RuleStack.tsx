@@ -31,6 +31,10 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
   const [value, setValue] = useState<IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>>(props.value);
 
   useEffect(() => {
+    setIsDataLoaded(false);
+  }, [props]);
+
+  useEffect(() => {
     const newVar = props.ruleStackValues.length === 0 ? null : props.ruleStackValues[selectedRuleTitleIndex];
     setSelectedValueOptions(newVar);
   }, [props.ruleStackValues, selectedRuleTitleIndex]);

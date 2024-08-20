@@ -64,7 +64,8 @@ export function getRulesValuesToRulesValuesResults(
     if (x.index === -1) {
       continue;
     }
-    const y: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>> = {
+
+    result[x.index] = {
       range: evaluateValidation(isRequired, isInRange, values[x.index].range.value, {
         min: x.entity.min,
         max: x.entity.max,
@@ -72,9 +73,7 @@ export function getRulesValuesToRulesValuesResults(
       property: { value: values[x.index].property.value, validationResult: ValidatorTypes.Valid },
       title: { value: values[x.index].title.value, validationResult: ValidatorTypes.Valid },
     };
-
-    result.push(y);
   }
 
-  return result;
+  return result.filter((x) => !!x);
 }

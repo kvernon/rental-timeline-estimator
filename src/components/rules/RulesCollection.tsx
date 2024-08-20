@@ -98,8 +98,7 @@ export function RulesCollection(componentProps: IRulesCollectionProps) {
                 componentProps.possibleChoices,
                 componentProps.values.map((x) => x.title),
               );
-
-              componentProps.onChange([
+              const updatedArray = [
                 ...componentProps.values,
                 {
                   title: {
@@ -116,7 +115,8 @@ export function RulesCollection(componentProps: IRulesCollectionProps) {
                   },
                   range: { value: undefined },
                 },
-              ]);
+              ];
+              componentProps.onChange(updatedArray);
             }
           }}
         />
