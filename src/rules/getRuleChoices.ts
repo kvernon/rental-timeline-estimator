@@ -1,6 +1,6 @@
 import { IRuleStackEntity } from '../components/rules/IRuleStackEntity';
-import { getPrettyName } from './getPrettyName';
 import { IRuleConfigEntity } from './IRuleConfigEntity';
+import { getPrettyName } from './getPrettyName';
 
 export const getRuleChoices = (choices: IRuleConfigEntity[]): IRuleStackEntity[] =>
   choices.map((c) => ({

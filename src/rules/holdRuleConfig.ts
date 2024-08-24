@@ -5,11 +5,6 @@ export const holdConfig: IRuleConfig = {
   panelTitle: 'Hold Rules',
   collection: [
     {
-      ruleType: HoldRuleTypes.None,
-      min: 0,
-      max: 1,
-    },
-    {
       ruleType: HoldRuleTypes.MinSellIfLowCashFlowPercent,
       min: 0,
       max: 100,

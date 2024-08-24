@@ -1,207 +1,146 @@
-import { Theme } from '@emotion/react';
-
-const useTheme: jest.MockedFn<() => Theme> = jest.fn();
-jest.mock('@emotion/react', () => {
-  const requireActual = jest.requireActual('@emotion/react');
-  return {
-    ...requireActual,
-    useTheme,
-  };
-});
-
+import { useTheme } from '@emotion/react';
 import React from 'react';
-import { configure, fireEvent, render, screen } from '@testing-library/react';
-import { ValidatorStackTypes } from './ValidatorStackTypes';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { RangeFieldValidator } from './RangeFieldValidator';
+import { ValidatorTypes } from './ValidatorTypes';
 import { IThemeOptions } from '../../theming/IThemeOptions';
-import { ITypography } from '../../theming/ITypography';
+import { RangeFieldValidator } from './RangeFieldValidator';
+import { themeMock } from '../../../__tests__/ThemeMock';
 
-describe('RangeFieldValidator unit tests', () => {
-  let typographyMock: jest.Mocked<ITypography>;
+jest.mock('../core/InputLabel');
+jest.mock('../core/InputBox');
+jest.mock('../core/FormControl');
+jest.mock('../core/InputSpanPaddingLeft');
 
-  const validationColorOptionalRight = '#0000FF';
-  const validationColorValidMiddle = '#00FF00';
-  const validationColorInvalidLeft = '#FF0000';
+describe('input-range unit tests', () => {
+  const id = 'id-for-input';
+  const title = 'the title';
+
+  afterEach(() => {
+    jest.clearAllMocks();
+    cleanup();
+  });
 
   beforeEach(() => {
-    configure({ testIdAttribute: 'id' });
-    typographyMock = {
-      parent: {
-        allPopulated: jest.fn(),
-        font: 'p',
-        color: 'p',
-        size: 'p',
-      },
-      get: jest.fn().mockReturnValue({
-        font: 'child',
-        color: 'child',
-        size: 'child',
-      }),
-    };
-    useTheme.mockReturnValue({
-      palette: {
-        validation: {
-          Invalid: {
-            validationColor: validationColorInvalidLeft,
-            background: validationColorInvalidLeft,
-            backgroundFocus: validationColorInvalidLeft,
-          },
-          Valid: {
-            validationColor: validationColorValidMiddle,
-            background: validationColorValidMiddle,
-            backgroundFocus: validationColorValidMiddle,
-          },
-          Optional: {
-            validationColor: validationColorOptionalRight,
-            background: validationColorOptionalRight,
-            backgroundFocus: validationColorOptionalRight,
-          },
-        },
-      },
-      typography: typographyMock,
-    } as unknown as IThemeOptions);
+    jest.mocked(useTheme).mockReturnValue(themeMock as jest.Mocked<IThemeOptions>);
   });
 
-  describe('and initialized', () => {
-    describe('and Required', () => {
-      describe('and value not supplied', () => {
-        test('should be the following', () => {
-          render(<RangeFieldValidator id={'Test'} validationType={ValidatorStackTypes.Required} />);
+  describe('and defaults', () => {
+    test('should render', () => {
+      render(<RangeFieldValidator id={id} title={title} />);
 
-          const entity = screen.getByTestId<HTMLInputElement>('rangeFieldValidatorTest');
+      const label = screen.queryByLabelText<HTMLLabelElement>('');
+      const actual = screen.getByLabelText<HTMLInputElement>(title);
 
-          expect(entity.value).toEqual('');
+      expect(actual.readOnly).toEqual(false);
+      expect(actual.required).toEqual(false);
+      expect(actual.type).toEqual('number');
+      expect(actual.min).toEqual('');
+      expect(actual.max).toEqual('');
+      expect(actual.value).toEqual('');
 
-          expect(entity).toHaveStyle('background-color:rgba(255, 0, 0, 0.506)');
-        });
-      });
-      describe('and value supplied', () => {
-        test('should be the following', () => {
-          render(<RangeFieldValidator id={'Test'} defaultValue={20} validationType={ValidatorStackTypes.Required} />);
-
-          const entity = screen.getByTestId<HTMLInputElement>('rangeFieldValidatorTest');
-
-          expect(entity.value).toEqual('20');
-
-          expect(entity).toHaveStyle('background-color:rgba(0, 255, 0, 0.506)');
-        });
-      });
-    });
-
-    describe('and Optional', () => {
-      describe('and value not supplied', () => {
-        test('should be the following', () => {
-          render(<RangeFieldValidator id={'Test'} validationType={ValidatorStackTypes.Optional} />);
-
-          const entity = screen.getByTestId<HTMLInputElement>('rangeFieldValidatorTest');
-
-          expect(entity.value).toEqual('');
-
-          expect(entity).toHaveStyle('background-color:rgba(0, 0, 255, 0.506)');
-        });
-      });
-      describe('and value supplied', () => {
-        test('should be the following', () => {
-          render(<RangeFieldValidator id={'Test'} defaultValue={2} validationType={ValidatorStackTypes.Optional} />);
-
-          const entity = screen.getByTestId<HTMLInputElement>('rangeFieldValidatorTest');
-
-          expect(entity.value).toEqual('2');
-
-          expect(entity).toHaveStyle('background-color:rgba(0, 255, 0, 0.506)');
-        });
-      });
+      expect(label).not.toBeInTheDocument();
     });
   });
 
-  describe('and altering data', () => {
-    describe('and Required', () => {
-      describe('and valid with rule', () => {
-        test('should be the following', () => {
-          render(<RangeFieldValidator id={'Test'} validationType={ValidatorStackTypes.Required} />);
+  describe('and formatting', () => {
+    test('and title with default of showTitle true', () => {
+      render(<RangeFieldValidator id={id} title={title} />);
 
-          const entity = screen.getByTestId<HTMLInputElement>('rangeFieldValidatorTest');
+      const label = screen.queryByText<HTMLLabelElement>(title);
 
-          const value = 1;
-
-          fireEvent.input(entity, {
-            target: {
-              value,
-            },
-          });
-
-          fireEvent.blur(entity);
-
-          expect(entity.value).toEqual(value.toString());
-
-          expect(entity).toHaveStyle('background-color:rgba(0, 255, 0, 0.506)');
-        });
-      });
-      describe('and invalid with rule', () => {
-        test('should be the following', () => {
-          render(<RangeFieldValidator id={'Test'} validationType={ValidatorStackTypes.Required} />);
-
-          const entity = screen.getByTestId<HTMLInputElement>('rangeFieldValidatorTest');
-
-          const value = -1;
-
-          fireEvent.input(entity, {
-            target: {
-              value,
-            },
-          });
-
-          fireEvent.blur(entity);
-
-          expect(entity.value).toEqual(value.toString());
-
-          expect(entity).toHaveStyle('background-color:rgba(255, 0, 0, 0.506)');
-        });
-      });
+      expect(label).toBeInTheDocument();
     });
-    describe('and Optional', () => {
-      describe('and valid with rule', () => {
-        test('should be the following', () => {
-          render(<RangeFieldValidator id={'Test'} validationType={ValidatorStackTypes.Optional} />);
 
-          const entity = screen.getByTestId<HTMLInputElement>('rangeFieldValidatorTest');
+    test('and title with default of showTitle true', () => {
+      render(<RangeFieldValidator id={id} title={title} showTitle={true} />);
 
-          const value = 1;
+      const label = screen.queryByText<HTMLLabelElement>(title);
 
-          fireEvent.input(entity, {
-            target: {
-              value,
-            },
-          });
+      expect(label).toBeInTheDocument();
+    });
 
-          fireEvent.blur(entity);
+    test('and title with default of showTitle false', () => {
+      render(<RangeFieldValidator id={id} title={title} showTitle={false} />);
 
-          expect(entity.value).toEqual(value.toString());
+      const label = screen.queryByText<HTMLLabelElement>(title);
 
-          expect(entity).toHaveStyle('background-color:rgba(0, 255, 0, 0.506)');
-        });
-      });
-      describe('and invalid with rule', () => {
-        test('should be the following', () => {
-          render(<RangeFieldValidator id={'Test'} validationType={ValidatorStackTypes.Optional} />);
+      expect(label).not.toBeInTheDocument();
+    });
 
-          const entity = screen.getByTestId<HTMLInputElement>('rangeFieldValidatorTest');
+    test('and prefix', () => {
+      const text = 'text';
 
-          const value = -1;
+      render(<RangeFieldValidator id={id} prefix={text} title={title} />);
 
-          fireEvent.input(entity, {
-            target: {
-              value,
-            },
-          });
+      const span = screen.queryByText<HTMLSpanElement>(text);
 
-          fireEvent.blur(entity);
+      expect(span).toBeInTheDocument();
+    });
 
-          expect(entity.value).toEqual(value.toString());
+    test('and suffix', () => {
+      const text = 'text';
 
-          expect(entity).toHaveStyle('background-color:rgba(255, 0, 0, 0.506)');
-        });
+      render(<RangeFieldValidator id={id} suffix={text} title={title} />);
+
+      const span = screen.queryByText<HTMLSpanElement>(text);
+
+      expect(span).toBeInTheDocument();
+    });
+  });
+
+  test('should render required', () => {
+    render(<RangeFieldValidator id={id} required={true} title={title} />);
+
+    const actual = screen.getByLabelText<HTMLInputElement>(title);
+
+    expect(actual.required).toEqual(true);
+  });
+
+  test('should use min max', () => {
+    const min = 10;
+    const max = 20;
+    render(<RangeFieldValidator id={id} min={min} max={max} title={title} />);
+
+    const actual = screen.getByLabelText<HTMLInputElement>(title);
+
+    expect(actual.min).toEqual(min.toString());
+    expect(actual.max).toEqual(max.toString());
+  });
+
+  describe('and interaction', () => {
+    test('should update value', () => {
+      render(<RangeFieldValidator id={id} title={title} />);
+      const actual = screen.getByLabelText<HTMLInputElement>(title);
+
+      fireEvent.change(actual, { target: { value: '23' } });
+      expect(actual.value).toBe('23');
+    });
+
+    test('should dispatch change', () => {
+      const onChangeMock = jest.fn();
+      render(
+        <RangeFieldValidator
+          id={id}
+          onChange={onChangeMock}
+          min={10}
+          max={20}
+          title={title}
+          value={{ value: 30, validationResult: ValidatorTypes.Valid }}
+          required={true}
+        />,
+      );
+      const actual = screen.getByLabelText<HTMLInputElement>(title);
+
+      fireEvent.change(actual, { target: { value: '23' } });
+
+      expect(onChangeMock).toHaveBeenCalledWith({
+        id,
+        title,
+        max: 20,
+        min: 10,
+        required: true,
+        value: { value: 23 },
       });
     });
   });

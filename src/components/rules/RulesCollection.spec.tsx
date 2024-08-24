@@ -1,51 +1,28 @@
-import { RulesCollection } from './RulesCollection';
-import { cleanup, configure, fireEvent, render, screen } from '@testing-library/react';
-import { IRuleCollectionProps } from './IRuleCollectionProps';
-import { ValidatorStackTypes } from '../validators/ValidatorStackTypes';
 import React from 'react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { CardListLayout, ICardListLayoutProps } from '../core/CardListLayout';
-import { RuleStack } from './RuleStack';
-import { CardContent } from '../core/CardContent';
-import { AddListButton } from '../core/AddListButton';
-import { userEvent } from '@testing-library/user-event';
-import { IFieldTypeProperties } from './IFieldTypeProperties';
+import { RulesCollection } from './RulesCollection';
+import { useTheme } from '@emotion/react';
+import { themeMock } from '../../../__tests__/ThemeMock';
+import { IThemeOptions } from '../../theming/IThemeOptions';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
+import { AddListButton } from '../core/AddListButton';
+import { getRemainingValues } from './getRemainingValues';
+import userEvent from '@testing-library/user-event';
+import { IEventValue } from '../validators/IEventResult';
+import { ISelectOption } from '../core/ISelectOption';
+import { IRulesCollectionProps } from './IRulesCollectionProps';
+import { IRuleValues } from './IRuleValues';
+import { propertyOptions } from '../validators/PropertyDropDownValidator';
 
-jest.mock('react-movable', () => {
-  const all = jest.requireActual('react-movable');
-  return {
-    ...all,
-    List: jest.mocked(all.List),
-  };
-});
-
-jest.mock('./RuleStack');
-
-jest.mock('../core/CardContent', () => {
-  const all = jest.requireActual('../../../src/components/core/CardContent');
-  return {
-    CardContent: jest.fn((p: ICardListLayoutProps) => {
-      return (
-        <all.CardContent id={p.id} role={'list-box'}>
-          {p.children}
-        </all.CardContent>
-      );
-    }),
-  };
-});
-
-jest.mock('../core/CardListLayout', () => {
-  return {
-    CardListLayout: jest.fn((p: ICardListLayoutProps) => <div id={p.id}>{p.children}</div>),
-  };
-});
-
+jest.mock('../core/CardListLayout');
 jest.mock('../core/AddListButton');
+jest.mock('./getRemainingValues');
+jest.mock('./RuleStack');
 
 describe('RulesCollection unit tests', () => {
   beforeEach(() => {
-    configure({ testIdAttribute: 'id' });
+    jest.mocked(useTheme).mockReturnValue(themeMock as jest.Mocked<IThemeOptions>);
   });
 
   afterEach(() => {
@@ -54,274 +31,239 @@ describe('RulesCollection unit tests', () => {
   });
 
   describe('should be setup with the basics', () => {
-    let props: IRuleCollectionProps;
+    let props: IRulesCollectionProps;
 
     beforeEach(() => {
       props = {
-        id: 'RulesCollection',
-        title: 'Rules Collection Test',
+        title: 'Rules Collection',
+        values: [],
         possibleChoices: [],
-        validationType: ValidatorStackTypes.Required,
       };
+
+      jest.mocked(getRemainingValues).mockReturnValue([]);
 
       render(<RulesCollection {...props} />);
     });
 
-    test('should generate with CardListLayout', () => {
-      const entity = screen.queryByTestId<HTMLElement>(props.id);
+    test('should render correctly', () => {
+      expect(screen.getByRole('log')).toBeInTheDocument();
+      expect(screen.getByLabelText(props.title)).toBeInTheDocument();
+    });
+  });
 
-      expect(entity).toBeInTheDocument();
-      expect(CardListLayout).toHaveBeenCalledWith(
-        expect.objectContaining({
-          id: props.id,
-          title: props.title,
+  describe('and values populated', () => {
+    let props: IRulesCollectionProps;
+
+    beforeEach(() => {
+      props = {
+        title: 'Rules Collection',
+        values: [
+          {
+            title: { value: { value: 0, label: 'one' }, validationResult: ValidatorTypes.Valid },
+            property: { value: { value: 0, label: 'apartment' }, validationResult: ValidatorTypes.Valid },
+            range: { value: 0, validationResult: ValidatorTypes.Valid },
+          },
+        ],
+        possibleChoices: [],
+      };
+
+      jest.mocked(getRemainingValues).mockReturnValue(
+        props.possibleChoices.map((x, i) => {
+          return { ...x, isDisabled: i === 1 };
         }),
-        {},
-      );
-    });
-
-    test('should generate with List', () => {
-      const entity = screen.queryByRole<HTMLElement>('list-box');
-
-      expect(entity).toBeInTheDocument();
-    });
-
-    test('should not generate with AddRemoveButton', () => {
-      expect(screen.queryByRole<HTMLElement>(`add remove button for ${props.title}`)).not.toBeInTheDocument();
-    });
-
-    test('should not generate CardContent', () => {
-      expect(CardContent).toHaveBeenCalledWith(
-        expect.objectContaining({
-          children: [],
-          className: expect.any(String),
-        }),
-        {},
       );
 
-      expect(screen.queryByRole<HTMLElement>('list box')).not.toBeInTheDocument();
+      render(<RulesCollection {...props} />);
     });
 
-    test('should not generate with RuleStack', () => {
-      const id = `${props.title}.0`;
+    test('should render list', () => {
+      const ruleItemEntity = screen.getByLabelText('render-list');
+      expect(ruleItemEntity).toBeInTheDocument();
+    });
 
-      expect(RuleStack).not.toHaveBeenCalled();
-
-      const entity = screen.queryByTestId<HTMLElement>(id);
-
-      expect(entity).not.toBeInTheDocument();
+    test('should render first item', () => {
+      const ruleItemEntity = screen.getByLabelText(`Rule Number 1`);
+      expect(ruleItemEntity).toBeInTheDocument();
     });
   });
 
   describe('and interaction', () => {
-    let interactProps: IRuleCollectionProps;
-
-    let value: IFieldTypeProperties;
-    let value2: IFieldTypeProperties;
-
-    let id1: string;
-    let id2: string;
+    let props: IRulesCollectionProps;
 
     beforeEach(() => {
-      interactProps = {
-        id: 'RulesCollection',
-        title: 'Rules Collection Test',
-        possibleChoices: [],
-        validationType: ValidatorStackTypes.Required,
+      props = {
+        title: 'Rules Collection',
+        values: [
+          {
+            title: { value: { value: 0, label: 'one' }, validationResult: ValidatorTypes.Valid },
+            property: { value: { value: 0, label: 'apartment' }, validationResult: ValidatorTypes.Valid },
+            range: { value: 0, validationResult: ValidatorTypes.Valid },
+          },
+        ],
+        possibleChoices: [
+          {
+            ruleTitle: 'one',
+            suffix: 'suf',
+            prefix: 'pre',
+            max: 20,
+            min: 10,
+            property: 0,
+          },
+          {
+            ruleTitle: 'two',
+            suffix: 'suff',
+            prefix: 'pree',
+            max: 40,
+            min: 20,
+            property: 1,
+          },
+        ],
+        onChange: jest.fn(),
       };
-
-      value = {
-        titleDropDown: {
-          validationResult: ValidatorTypes.Valid,
-          value: {
-            value: 1,
-            label: 'label one',
-          },
-        },
-        propertyDropDown: {
-          validationResult: ValidatorTypes.Valid,
-          value: {
-            value: 0,
-            label: 'house',
-          },
-        },
-        rangeFieldValidator: {
-          validationResult: ValidatorTypes.Valid,
-          value: 3,
-        },
-      };
-
-      value2 = {
-        titleDropDown: {
-          validationResult: ValidatorTypes.Valid,
-          value: {
-            value: 2,
-            label: 'label two',
-          },
-        },
-        propertyDropDown: {
-          validationResult: ValidatorTypes.Valid,
-          value: {
-            value: 0,
-            label: 'house',
-          },
-        },
-        rangeFieldValidator: {
-          validationResult: ValidatorTypes.Valid,
-          value: 4,
-        },
-      };
-
-      id1 = `${interactProps.title}.0`;
-      id2 = `${interactProps.title}.1`;
-
-      interactProps.activeChoices = [value, value2];
     });
 
-    describe('with fields populated', () => {
-      describe('should render RuleStacks', () => {
-        beforeEach(() => {
-          render(<RulesCollection {...interactProps} />);
-        });
-
-        test('should generate with RuleStacks', () => {
-          expect(RuleStack).toHaveBeenCalled();
-          expect(RuleStack).toHaveBeenCalledWith(
-            expect.objectContaining({
-              id: id1,
-              ruleStackValues: [],
-              onKeyDown: expect.any(Function),
+    describe('should render RuleStacks', () => {
+      describe('and displaying the add button', () => {
+        test('it should show', () => {
+          jest.mocked(getRemainingValues).mockReturnValue(
+            props.possibleChoices.map((x, i) => {
+              return { ...x, isDisabled: i === 1 };
             }),
-            {},
           );
 
-          const entity1 = screen.queryByTestId<HTMLElement>(id1);
-          const entity2 = screen.queryByTestId<HTMLElement>(id2);
-          expect(entity1).toBeInTheDocument();
-          expect(entity2).toBeInTheDocument();
-        });
+          render(<RulesCollection {...props} />);
 
-        test('should not generate CardContent', () => {
-          expect(CardContent).toHaveBeenCalled();
-          expect(screen.queryByRole<HTMLElement>('list-box')).toBeInTheDocument();
-        });
+          const addButton = screen.queryByLabelText<HTMLButtonElement>(`Add button for ${props.title}`);
 
-        describe('and remove', () => {
-          test('should be', () => {
-            const deleteButton = screen.getAllByText<HTMLDivElement>('delete button')[1];
-
-            fireEvent.click(deleteButton);
-          });
-        });
-      });
-
-      describe('and adding', () => {
-        beforeEach(() => {
-          interactProps.possibleChoices = [
+          const AddListButtonCtor = jest.mocked(AddListButton);
+          expect(AddListButtonCtor).toHaveBeenCalledWith(
             {
-              max: 2,
-              ruleTitle: 'title',
-              property: 1,
-              prefix: 'prefix',
-              suffix: 'suffix',
-              min: 1,
-            },
-            {
-              max: 3,
-              ruleTitle: 'title-2',
-              property: 1,
-              prefix: 'prefix',
-              suffix: 'suffix',
-              min: 2,
-            },
-          ];
-
-          render(<RulesCollection {...interactProps} />);
-        });
-
-        describe('and less than max', () => {
-          test('should show button', () => {
-            const addButton = screen.queryByRole<HTMLButtonElement>('log');
-            const AddListButtonCtor = jest.mocked(AddListButton);
-
-            expect(AddListButtonCtor).toHaveBeenCalledWith(
-              {
-                label: 'Add',
-                onClick: expect.any(Function),
-                role: 'add button for Rules Collection Test',
-                theme: {},
-              },
-              {},
-            );
-
-            expect(addButton).toBeInTheDocument();
-          });
-        });
-
-        test('should call when clicked', async () => {
-          const addButton = await screen.findByRole<HTMLButtonElement>('button');
-
-          const addButtonCtor = jest.mocked(AddListButton);
-
-          expect(addButtonCtor).toHaveBeenCalledWith(
-            {
+              role: `Add button for ${props.title}`,
               label: 'Add',
               onClick: expect.any(Function),
-              role: 'add button for Rules Collection Test',
-              theme: {},
+              theme: themeMock,
             },
             {},
           );
 
-          await userEvent.click(addButton);
-
           expect(addButton).toBeInTheDocument();
+        });
+      });
 
-          expect(RuleStack).toHaveBeenCalledTimes(10);
+      describe('and clicking add the button', () => {
+        describe('and not required', () => {
+          test('it should fire update', async () => {
+            jest.mocked(getRemainingValues).mockReturnValue(
+              props.possibleChoices.map((x, i) => {
+                return { ...x, isDisabled: i === 0 };
+              }),
+            );
+
+            render(<RulesCollection {...props} />);
+
+            const addButton = screen.getByLabelText<HTMLButtonElement>(`Add button for ${props.title}`);
+
+            expect(addButton).toBeInTheDocument();
+
+            await userEvent.click(addButton);
+
+            const added: {
+              title: IEventValue<ISelectOption>;
+              property: IEventValue<ISelectOption>;
+              range: IEventValue<number | undefined>;
+            } = {
+              title: {
+                value: { value: props.values[0].title.value.value, label: props.possibleChoices[1].ruleTitle },
+              },
+              property: {
+                value: {
+                  value: props.possibleChoices[1].property,
+                  label: propertyOptions[props.possibleChoices[1].property],
+                },
+              },
+              range: {
+                value: undefined,
+              },
+            };
+
+            const expected = props.values.map((x) => ({ ...(x as IRuleValues<IEventValue<ISelectOption>, IEventValue<number | undefined>>) }));
+            expected.push(added);
+
+            expect(props.onChange).toHaveBeenCalledWith(expected);
+          });
+        });
+
+        describe('and required', () => {
+          test('it should fire update', async () => {
+            jest.mocked(getRemainingValues).mockReturnValue(
+              props.possibleChoices.map((x, i) => {
+                return { ...x, isDisabled: i === 1 };
+              }),
+            );
+
+            props.required = true;
+
+            render(<RulesCollection {...props} />);
+
+            const addButton = screen.getByLabelText<HTMLButtonElement>(`Add button for ${props.title}`);
+
+            expect(addButton).toBeInTheDocument();
+
+            await userEvent.click(addButton);
+
+            const added: {
+              title: IEventValue<ISelectOption>;
+              property: IEventValue<ISelectOption>;
+              range: IEventValue<number | undefined>;
+            } = {
+              title: {
+                value: { value: 0, label: props.possibleChoices[0].ruleTitle },
+              },
+              property: {
+                value: { value: props.possibleChoices[0].property, label: 'apartment' },
+              },
+              range: {
+                value: undefined,
+              },
+            };
+
+            const expected = [...(props.values as IRuleValues<IEventValue<ISelectOption>, IEventValue<number | undefined>>[])];
+            expected.push(added);
+
+            expect(props.onChange).toHaveBeenCalledWith(expected);
+          });
         });
       });
     });
 
-    describe('and maxing', () => {
-      beforeEach(() => {
-        interactProps.possibleChoices = [
-          {
-            max: 2,
-            ruleTitle: 'title',
-            property: 1,
-            prefix: 'prefix',
-            suffix: 'suffix',
-            min: 1,
-          },
-          {
-            max: 3,
-            ruleTitle: 'title-2',
-            property: 1,
-            prefix: 'prefix',
-            suffix: 'suffix',
-            min: 2,
-          },
-        ];
+    describe('and updating input', () => {
+      test('should call update', () => {
+        render(<RulesCollection {...props} />);
+        const input = screen.getByLabelText<HTMLButtonElement>(`Rule Range`);
 
-        interactProps.activeChoices = [
-          {
-            titleDropDown: { value: { value: 0, label: 'title' } },
-            propertyDropDown: {},
-            rangeFieldValidator: {},
-          },
-          {
-            titleDropDown: { value: { value: 1, label: 'title-2' } },
-            propertyDropDown: {},
-            rangeFieldValidator: {},
-          },
-        ];
+        expect(input).toBeInTheDocument();
 
-        render(<RulesCollection {...interactProps} />);
+        fireEvent.change(input, { target: { value: '40' } });
+
+        expect(props.onChange).toHaveBeenCalledWith([
+          {
+            ...props.values[0],
+            range: { value: 40 },
+          },
+        ]);
       });
+    });
 
-      test('should hide add button', () => {
-        const AddListButtonCtor = jest.mocked(AddListButton);
-        expect(AddListButtonCtor).not.toHaveBeenCalled();
+    describe('and removing a rule', () => {
+      test('should call update', () => {
+        render(<RulesCollection {...props} />);
+        const ruleItemDelete = screen.getByRole('delete-button');
+
+        expect(ruleItemDelete).toBeInTheDocument();
+
+        fireEvent.click(ruleItemDelete);
+
+        expect(props.onChange).toHaveBeenCalledWith([]);
       });
     });
   });

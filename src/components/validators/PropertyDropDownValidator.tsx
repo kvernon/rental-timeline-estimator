@@ -1,64 +1,45 @@
+import React from 'react';
 import ReactSelect, { GroupBase, SingleValue } from 'react-select';
-import styled from '@emotion/styled';
-import React, { ReactNode } from 'react';
-import { FontGroups } from '../../theming/fontGroups';
+import { IPropertyDropDownOption } from '../core/IPropertyDropDownOption';
+import { formatOptionLabel } from '../core/formatOptionLabel';
+import { ValidatorTypes } from './ValidatorTypes';
 import { useTheme } from '@emotion/react';
 import { IThemeOptions } from '../../theming/IThemeOptions';
-import { ValidatorTypes } from './ValidatorTypes';
-import { ITitleDropDownOption } from './TitleDropDownValidator';
+import { FontGroups } from '../../theming/fontGroups';
+import { IPropertyDropDownParams } from './IPropertyDropDownParams';
+import styled from '@emotion/styled';
+
+const getDataValue = (title: string, value: number): IPropertyDropDownOption => {
+  return { value, label: title, image: `/images/${title}.jpg` };
+};
 
 export const propertyOptions = ['apartment', 'house'];
 
-export interface IPropertyDropDownOption extends ITitleDropDownOption {
-  image: string;
-}
-
-export interface IPropertyDropDownOptionChange extends IPropertyDropDownOption {
-  validationResult: ValidatorTypes;
-}
-
-export interface IPropertyDropDownParams {
-  id?: string;
-  defaultIndex?: number;
-  onChange?: (value: IPropertyDropDownOptionChange) => void;
-}
-
-const Img = styled.img`
-  padding: 0;
+const Select = styled(ReactSelect<IPropertyDropDownOption, false, GroupBase<IPropertyDropDownOption>>)`
+  width: 140px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 `;
 
-/**
- * not a react-form-hook component. The heavy should not take place here
- * @param props
- * @constructor
- */
 export function PropertyDropDownValidator(props: IPropertyDropDownParams) {
-  const optionsMap = propertyOptions.map((title: string, idx: number) => {
-    return { value: idx, label: title, image: `/images/${title}.jpg` };
-  }) as IPropertyDropDownOption[];
-
-  const formatOptionLabel = (data: IPropertyDropDownOption): ReactNode => {
-    return <Img src={data.image} alt={data.label} title={data.label} />;
-  };
+  const optionsMap = propertyOptions.map(getDataValue) as IPropertyDropDownOption[];
 
   const coreTheme = useTheme() as IThemeOptions;
 
-  const SelectStyled = styled(ReactSelect<IPropertyDropDownOption, false, GroupBase<IPropertyDropDownOption>>)`
-    appearance: none;
-    white-space: pre-wrap;
-    width: 100%;
-    padding-left: 10px;
-  `;
+  const defaultValue = 1;
 
   return (
-    <SelectStyled
-      {...props}
-      name={props.id}
+    <Select
+      aria-label={props.title}
       onChange={(a: SingleValue<IPropertyDropDownOption>) => {
-        if (a && props.onChange) props?.onChange({ ...a, validationResult: ValidatorTypes.Valid });
+        if (a && props.onChange) {
+          if (a.value !== props.value.value.value) {
+            props.onChange({ value: a });
+          }
+        }
       }}
+      value={getDataValue(props.value?.value?.label || propertyOptions[defaultValue], props.value.value.value || defaultValue)}
       options={optionsMap}
-      defaultValue={optionsMap[1]}
       formatOptionLabel={formatOptionLabel}
       styles={{
         control: (baseStyles) => {
@@ -68,7 +49,7 @@ export function PropertyDropDownValidator(props: IPropertyDropDownParams) {
             marginLeft: '0',
             padding: '0',
             transition: 'background-color 0.4s ease-out',
-            height: '59px',
+            height: '60px',
             borderColor: `${coreTheme.palette.inputBackground}`,
             border: `1px solid ${coreTheme.palette.panelBackground}`,
             borderRadius: '0.3rem',

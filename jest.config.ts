@@ -137,7 +137,7 @@ const jestConfig: JestConfigWithTsJest = {
   // testEnvironmentOptions: {},
 
   // Adds a location field to test results
-  // testLocationInResults: false,
+  testLocationInResults: true,
 
   // The glob patterns Jest uses to detect test files
   testMatch: ['<rootDir>/src/**/*.+(spec|test).[jt]s?(x)'],

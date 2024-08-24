@@ -1,7 +1,7 @@
 import { FontGroups } from './fontGroups';
 import { IThemeOptions } from './IThemeOptions';
 import { FontInformation } from './fontInformation';
-import { Typography } from './typography';
+import { Typography } from './Typography';
 
 export const options: IThemeOptions = {
   palette: {

@@ -1,25 +1,25 @@
 import React from 'react';
-import { App } from './app';
-import { configure, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { App } from './app';
+import { useTheme } from '@emotion/react';
+import { themeMock } from '../__tests__/ThemeMock';
+import { IThemeOptions } from './theming/IThemeOptions';
 
-jest.mock('./components/validators/TitleDropDownValidator');
+jest.mock('./components/core/Page');
+jest.mock('./components/views/UserInformation');
 
 describe('App unit tests', () => {
-  beforeAll(() => {
-    Object.defineProperty(window, 'crypto', {
-      value: { randomUUID: jest.fn().mockReturnValue('3') },
-    });
-    configure({ testIdAttribute: 'id' });
-  });
-
   describe('and App', () => {
+    beforeEach(() => {
+      jest.mocked(useTheme).mockReturnValue(themeMock as jest.Mocked<IThemeOptions>);
+    });
+
     describe('and success', () => {
       test('should create', () => {
         render(<App />);
-        expect(screen.getByTestId('validatorStackmonthToMonthGoal', {})).toBeInTheDocument();
-        expect(screen.getByTitle('Amount Saved at Start', {})).toBeInTheDocument();
-        expect(screen.getByTitle('Amount Saved Per Month', {})).toBeInTheDocument();
+
+        expect(screen.getByLabelText('User Information')).toBeInTheDocument();
       });
     });
   });

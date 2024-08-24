@@ -1,107 +1,46 @@
-import { configure, render, screen } from '@testing-library/react';
-import React from 'react';
-import { IPropertyDropDownParams, PropertyDropDownValidator } from './PropertyDropDownValidator';
-import { Theme, useTheme } from '@emotion/react';
 import { IThemeOptions } from '../../theming/IThemeOptions';
-import { ITypography } from '../../theming/ITypography';
-import selectEvent from 'react-select-event';
+import { useTheme } from '@emotion/react';
+import { render, screen } from '@testing-library/react';
+import React from 'react';
+import { PropertyDropDownValidator, propertyOptions } from './PropertyDropDownValidator';
 import '@testing-library/jest-dom';
-
-jest.mock('@emotion/react', () => {
-  const requireActual = jest.requireActual('@emotion/react');
-  const useTheme: jest.MockedFn<() => Theme> = jest.fn();
-  return {
-    ...requireActual,
-    useTheme,
-  };
-});
+import selectEvent from 'react-select-event';
+import { ValidatorTypes } from './ValidatorTypes';
+import { themeMock } from '../../../__tests__/ThemeMock';
+import { IPropertyDropDownParams } from './IPropertyDropDownParams';
 
 describe('PropertyDropDownValidator unit test', () => {
-  let typographyMock: jest.Mocked<ITypography>;
   let params: IPropertyDropDownParams;
-
-  const validationColorOptionalRight = '#0000FF';
-  const validationColorValidMiddle = '#00FF00';
-  const validationColorInvalidLeft = '#FF0000';
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   beforeEach(() => {
-    configure({ testIdAttribute: 'id' });
-    const useThemeMock = jest.mocked(useTheme);
-    typographyMock = {
-      parent: {
-        allPopulated: jest.fn(),
-        font: 'p',
-        color: 'p',
-        size: 'p',
-      },
-      get: jest.fn().mockReturnValue({
-        font: 'child',
-        color: 'child',
-        size: 'child',
-      }),
-    };
-
-    useThemeMock.mockReturnValue({
-      palette: {
-        pageBackground: 'pageBackground',
-        panelBackground: 'panelBackground',
-        panelShadow: 'panelShadow',
-
-        inputBackgroundBadFocus: 'inputBackgroundBadFocus',
-        inputBackgroundBad: 'inputBackgroundBad',
-        inputBackground: 'inputBackground',
-        inputBackgroundFocus: 'inputBackgroundFocus',
-
-        validation: {
-          Invalid: {
-            validationColor: validationColorInvalidLeft,
-            background: validationColorInvalidLeft,
-            backgroundFocus: validationColorInvalidLeft,
-          },
-          Valid: {
-            validationColor: validationColorValidMiddle,
-            background: validationColorValidMiddle,
-            backgroundFocus: validationColorValidMiddle,
-          },
-          Optional: {
-            validationColor: validationColorOptionalRight,
-            background: validationColorOptionalRight,
-            backgroundFocus: validationColorOptionalRight,
-          },
-        },
-      },
-      typography: typographyMock,
-    } as jest.Mocked<IThemeOptions>);
+    jest.mocked(useTheme).mockReturnValue(themeMock as jest.Mocked<IThemeOptions>);
 
     params = {
-      id: 'Tested',
+      title: 'Tested',
+      onChange: jest.fn(),
+      value: { value: { value: 0, label: '' }, validationResult: ValidatorTypes.Valid },
     };
   });
 
   describe('and defaults', () => {
-    test('should exist', () => {
-      render(
-        <form role="form">
-          <label htmlFor="Tested">property</label>
-          <PropertyDropDownValidator {...params} />
-        </form>,
-      );
-
-      const entity = screen.queryByTestId<HTMLInputElement>(params.id as string);
-
-      expect(entity).toMatchSnapshot();
-    });
-
-    test('should contain titles', () => {
+    test('should render', () => {
       render(<PropertyDropDownValidator {...params} />);
 
-      const entity = screen.getByTestId<HTMLElement>(params.id as string);
+      const actual = screen.getByLabelText<HTMLInputElement>(params.title);
 
-      selectEvent.openMenu(entity);
+      expect(actual).toBeInTheDocument();
+    });
+
+    test('should contain options with house selected', () => {
+      render(<PropertyDropDownValidator {...params} />);
+
+      const element = screen.getByLabelText<HTMLInputElement>(params.title);
+
+      selectEvent.openMenu(element);
 
       const allByText = screen.getAllByRole<HTMLImageElement>('img');
 
@@ -119,24 +58,94 @@ describe('PropertyDropDownValidator unit test', () => {
         })),
       );
     });
+  });
 
-    test('call change', async () => {
-      render(
-        <form role="form">
-          <label htmlFor="Tested">property</label>
-          <PropertyDropDownValidator {...params} />
-        </form>,
+  describe('and value prop is updated', () => {
+    test('should contain options with apartment selected', () => {
+      params.value = {
+        value: {
+          value: 0,
+          label: propertyOptions[0],
+        },
+
+        validationResult: ValidatorTypes.Valid,
+      };
+
+      render(<PropertyDropDownValidator title={params.title} value={params.value} />);
+
+      const element = screen.getByLabelText<HTMLInputElement>(params.title);
+
+      selectEvent.openMenu(element);
+
+      const allByText = screen.getAllByRole<HTMLImageElement>('img');
+
+      expect(
+        allByText.map((x) => ({
+          src: x.src,
+          title: x.title,
+          alt: x.alt,
+        })),
+      ).toEqual(
+        ['apartment', 'apartment', 'house'].map((exp) => ({
+          src: `http://localhost/images/${exp}.jpg`,
+          title: exp,
+          alt: exp,
+        })),
       );
+    });
+  });
 
-      const entity = screen.getByRole<HTMLInputElement>('combobox');
+  describe('and value is selected', () => {
+    test('onChange should be called', async () => {
+      params.value = {
+        value: {
+          value: 1,
+          label: propertyOptions[1],
+        },
 
-      selectEvent.openMenu(entity);
+        validationResult: ValidatorTypes.Valid,
+      };
 
-      await selectEvent.select(entity, (_content, element1): boolean => {
-        return element1 instanceof HTMLImageElement && element1.alt === 'house';
+      render(<PropertyDropDownValidator title={params.title} value={params.value} onChange={params.onChange} />);
+
+      const element = screen.getByLabelText<HTMLInputElement>(params.title);
+
+      selectEvent.openMenu(element);
+
+      await selectEvent.select(element, (_content, element1): boolean => {
+        return element1 instanceof HTMLImageElement && element1.alt === 'apartment';
       });
 
-      expect(screen.getByRole('form')).toHaveFormValues({ Tested: '1' });
+      expect(params.onChange).toHaveBeenCalledWith({
+        value: {
+          image: '/images/apartment.jpg',
+          label: 'apartment',
+          value: 0,
+        },
+      });
+    });
+
+    test('onChange should not be called', async () => {
+      params.value = {
+        value: {
+          value: 1,
+          label: propertyOptions[1],
+        },
+
+        validationResult: ValidatorTypes.Valid,
+      };
+
+      render(<PropertyDropDownValidator title={params.title} value={params.value} onChange={params.onChange} />);
+
+      const element = screen.getByLabelText<HTMLInputElement>(params.title);
+
+      selectEvent.openMenu(element);
+
+      await selectEvent.select(element, (_content, element1): boolean => {
+        return element1 instanceof HTMLImageElement && element1.alt === params.value?.value?.label;
+      });
+
+      expect(params.onChange).toHaveBeenCalledTimes(0);
     });
   });
 });
