@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CardListLayout } from '../core/CardListLayout';
-import { List } from 'react-movable';
+import { List, arrayMove } from 'react-movable';
 import { onChangeArray } from './onChangeArray';
 import { AddListButton } from '../core/AddListButton';
 import { IThemeOptions } from '../../theming/IThemeOptions';
@@ -15,7 +15,6 @@ import { propertyOptions } from '../validators/PropertyDropDownValidator';
 
 export function RulesCollection(componentProps: IRulesCollectionProps) {
   const [showButton, setShowButton] = useState(false);
-
   const coreTheme = useTheme() as IThemeOptions;
 
   useEffect(() => {
@@ -23,7 +22,7 @@ export function RulesCollection(componentProps: IRulesCollectionProps) {
       getRemainingValues(
         componentProps.possibleChoices,
         componentProps.values.map((x) => x.title),
-      ).length > 0,
+      ).filter((x) => !x.isDisabled).length > 0,
     );
   }, [componentProps]);
 
@@ -41,7 +40,7 @@ export function RulesCollection(componentProps: IRulesCollectionProps) {
               ruleStackValues={getRemainingValues(
                 componentProps.possibleChoices,
                 componentProps.values.map((x) => x.title),
-              ).map((x) => x.entity)}
+              )}
               index={index ? componentProps.values.length - index : componentProps.values.length}
               value={value}
               {...props}
@@ -83,6 +82,7 @@ export function RulesCollection(componentProps: IRulesCollectionProps) {
         values={componentProps.values}
         onChange={({ oldIndex, newIndex }) => {
           if (componentProps.onChange) {
+            arrayMove(componentProps.values, oldIndex, newIndex);
             componentProps.onChange(onChangeArray(componentProps.values, oldIndex, newIndex));
           }
         }}
@@ -97,20 +97,21 @@ export function RulesCollection(componentProps: IRulesCollectionProps) {
               const remaining = getRemainingValues(
                 componentProps.possibleChoices,
                 componentProps.values.map((x) => x.title),
-              );
+              ).filter((x) => !x.isDisabled);
+              const findIndex = remaining.findIndex((x) => !x.isDisabled);
               const updatedArray = [
                 ...componentProps.values,
                 {
                   title: {
                     value: {
-                      value: remaining[0].index,
-                      label: remaining[0].entity.ruleTitle,
+                      value: findIndex,
+                      label: remaining[findIndex].ruleTitle,
                     },
                   },
                   property: {
                     value: {
-                      value: remaining[0].entity.property,
-                      label: propertyOptions[remaining[0].entity.property],
+                      value: remaining[findIndex].property,
+                      label: propertyOptions[remaining[findIndex].property],
                     },
                   },
                   range: { value: undefined },

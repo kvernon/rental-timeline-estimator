@@ -7,21 +7,31 @@ import { IThemeOptions } from '../../theming/IThemeOptions';
 import { FontGroups } from '../../theming/fontGroups';
 import { useTheme } from '@emotion/react';
 import { ValidatorTypes } from './ValidatorTypes';
+import { ISelectOptionDisabled } from '../core/ISelectOptionDisabled';
+
+export interface IOptionTitle {
+  title: string;
+  isDisabled?: boolean;
+}
 
 export interface ITitleDropDownParams {
   title: string;
-  optionTitles: string[];
-  value: IEventResult<ISelectOption>;
-  onChange?: (inputData: IEventValue<ISelectOption>) => void;
+  optionTitles: IOptionTitle[];
+  value: IEventResult<ISelectOptionDisabled>;
+  onChange?: (inputData: IEventValue<ISelectOptionDisabled>) => void;
 }
 
-function getDataValue(optionTitle: string[], label: string): ISelectOption {
-  const foundIndex = optionTitle.findIndex((x) => x === label);
+function getDataValue(optionTitle: IOptionTitle[], label: string): ISelectOptionDisabled {
+  const foundIndex = optionTitle.findIndex((x) => x.title === label);
 
-  return { value: foundIndex, label };
+  if (foundIndex === -1) {
+    return { value: -1, label: 'None' };
+  }
+
+  return { value: foundIndex, label, isDisabled: optionTitle ? optionTitle[foundIndex].isDisabled : false };
 }
 
-const Select = styled(ReactSelect<ISelectOption, false, GroupBase<ISelectOption>>)<{
+const Select = styled(ReactSelect<ISelectOptionDisabled, false, GroupBase<ISelectOptionDisabled>>)<{
   themeOptions: IThemeOptions;
 }>`
   appearance: none;
@@ -37,18 +47,18 @@ const Select = styled(ReactSelect<ISelectOption, false, GroupBase<ISelectOption>
 
 export function TitleDropDownValidator(props: ITitleDropDownParams) {
   const coreTheme = useTheme() as IThemeOptions;
-
   return (
     <Select
       themeOptions={coreTheme}
       aria-label={props.title}
       options={(props.optionTitles || []).map(
-        (option: string, index: number): ISelectOption => ({
+        (option: IOptionTitle, index: number): ISelectOptionDisabled => ({
           value: index,
-          label: option,
+          label: option.title,
+          isDisabled: option.isDisabled || false,
         }),
       )}
-      defaultValue={getDataValue(props.optionTitles, props.value.value.label)}
+      value={getDataValue(props.optionTitles, props.value.value.label)}
       onChange={(a: SingleValue<ISelectOption>) => {
         if (a && props.onChange && a.value !== props.value.value.value) props?.onChange({ value: a });
       }}

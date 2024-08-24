@@ -2,6 +2,7 @@ const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = (env, argv) => {
   console.log('env', env);
@@ -24,7 +25,9 @@ module.exports = (env, argv) => {
       filename: 'bundle.js',
       path: resolve(__dirname, 'dist'),
     },
+    devtool: 'source-map',
     plugins: [
+      new webpack.SourceMapDevToolPlugin({}),
       new HtmlWebpackPlugin({
         inject: false,
         title: 'Realty Investor Timeline',

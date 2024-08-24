@@ -96,7 +96,10 @@ describe('RuleStack unit tests', () => {
           title: 'Rule Title',
           value: props.value.title,
           onChange: expect.any(Function),
-          optionTitles: props.ruleStackValues.map((x) => x.ruleTitle),
+          optionTitles: props.ruleStackValues.map((x) => ({
+            title: x.ruleTitle,
+            isDisabled: x.isDisabled,
+          })),
         },
         {},
       );
@@ -189,7 +192,10 @@ describe('RuleStack unit tests', () => {
         {
           title: 'Rule Title',
           value: props.value.title,
-          optionTitles: props.ruleStackValues.map((x) => x.ruleTitle),
+          optionTitles: props.ruleStackValues.map((x) => ({
+            title: x.ruleTitle,
+            isDisabled: x.isDisabled,
+          })),
           onChange: expect.any(Function),
         },
         {},
@@ -295,7 +301,10 @@ describe('RuleStack unit tests', () => {
           {
             title: 'Rule Title',
             value: props.value.title,
-            optionTitles: props.ruleStackValues.map((x) => x.ruleTitle),
+            optionTitles: props.ruleStackValues.map((x) => ({
+              title: x.ruleTitle,
+              isDisabled: x.isDisabled,
+            })),
             onChange: expect.any(Function),
           },
           {},

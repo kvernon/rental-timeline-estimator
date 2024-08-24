@@ -13,7 +13,7 @@ import { holdConfig } from './rules/holdRuleConfig';
 import { purchaseConfig } from './rules/purchaseRuleConfig';
 
 export const App = function () {
-  const [userInfo] = React.useState<{
+  const [userInfo, setUserInfo] = React.useState<{
     goal: IEventResult<number | undefined>;
     savedAtStart: IEventResult<number | undefined>;
     moSavings: IEventResult<number | undefined>;
@@ -30,12 +30,15 @@ export const App = function () {
   const [choices] = React.useState<{
     purchaseRules: IRuleStackEntity[];
     holdRules: IRuleStackEntity[];
-  }>({ holdRules: getRuleChoices(holdConfig.collection), purchaseRules: getRuleChoices(purchaseConfig.collection) });
+  }>({
+    holdRules: getRuleChoices(holdConfig.collection),
+    purchaseRules: getRuleChoices(purchaseConfig.collection),
+  });
 
   return (
     <ThemeProvider theme={options}>
       <Page />
-      <UserInformation values={userInfo} choices={choices} title="User Information" onChange={(e) => console.log(e)} />
+      <UserInformation values={userInfo} choices={choices} title="User Information" onChange={(e) => setUserInfo(e)} />
     </ThemeProvider>
   );
 };

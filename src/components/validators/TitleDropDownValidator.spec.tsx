@@ -1,8 +1,8 @@
+import React from 'react';
 import { useTheme } from '@emotion/react';
 import { IThemeOptions } from '../../theming/IThemeOptions';
 import { render, screen } from '@testing-library/react';
 import { ITitleDropDownParams, TitleDropDownValidator } from './TitleDropDownValidator';
-import React from 'react';
 import '@testing-library/jest-dom';
 import selectEvent from 'react-select-event';
 import { ValidatorTypes } from './ValidatorTypes';
@@ -52,7 +52,7 @@ describe('TitleDropDownValidator unit test', () => {
 
       describe('and populated', () => {
         test('should have no options', () => {
-          params.optionTitles = ['one'];
+          params.optionTitles = [{ title: 'one' }];
 
           render(<TitleDropDownValidator {...params} />);
 
@@ -63,7 +63,7 @@ describe('TitleDropDownValidator unit test', () => {
           const options = screen.getAllByRole<HTMLDivElement>('option');
 
           options.forEach((e, i) => {
-            expect(e).toHaveTextContent(params.optionTitles[i]);
+            expect(e).toHaveTextContent(params.optionTitles[i].title);
           });
         });
       });
@@ -72,11 +72,11 @@ describe('TitleDropDownValidator unit test', () => {
 
   describe('and value prop is updated', () => {
     test('should receive updated entry', () => {
-      params.optionTitles = ['one', 'two', 'three'];
+      params.optionTitles = [{ title: 'one' }, { title: 'two' }, { title: 'three' }];
       params.value = {
         value: {
           value: 1,
-          label: params.optionTitles[1],
+          label: params.optionTitles[1].title,
         },
         validationResult: ValidatorTypes.Valid,
       };
@@ -90,11 +90,11 @@ describe('TitleDropDownValidator unit test', () => {
 
     describe('and onChange', () => {
       test('should not be called', async () => {
-        params.optionTitles = ['one', 'two', 'three'];
+        params.optionTitles = [{ title: 'one' }, { title: 'two' }, { title: 'three' }];
         params.value = {
           value: {
             value: 1,
-            label: params.optionTitles[1],
+            label: params.optionTitles[1].title,
           },
           validationResult: ValidatorTypes.Valid,
         };
@@ -103,17 +103,17 @@ describe('TitleDropDownValidator unit test', () => {
 
         const element = screen.getByLabelText(params.title);
 
-        await selectEvent.select(element, params.optionTitles[1]);
+        await selectEvent.select(element, params.optionTitles[1].title);
 
         expect(params.onChange).toHaveBeenCalledTimes(0);
       });
 
       test('should be called', async () => {
-        params.optionTitles = ['one', 'two', 'three'];
+        params.optionTitles = [{ title: 'one' }, { title: 'two' }, { title: 'three' }];
         params.value = {
           value: {
             value: 1,
-            label: params.optionTitles[1],
+            label: params.optionTitles[1].title,
           },
           validationResult: ValidatorTypes.Valid,
         };
@@ -122,7 +122,7 @@ describe('TitleDropDownValidator unit test', () => {
 
         const element = screen.getByLabelText(params.title);
 
-        await selectEvent.select(element, params.optionTitles[2]);
+        await selectEvent.select(element, params.optionTitles[2].title);
 
         expect(params.onChange).toHaveBeenCalledTimes(1);
       });

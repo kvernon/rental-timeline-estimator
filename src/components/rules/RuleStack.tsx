@@ -53,13 +53,14 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
 
   const titleDropDownOnChange = (valueOption: IEventValue<ISelectOption>) => {
     if (valueOption.value && value.title?.value !== valueOption.value) {
-      setValue({
+      const newVar = {
         ...props.value,
         title: {
           value: { value: valueOption.value?.value, label: valueOption.value?.label },
           validationResult: value.title.validationResult,
         },
-      });
+      };
+      setValue(newVar);
       setIsDataLoaded(true);
     }
   };
@@ -80,9 +81,9 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
   const titleDropDownValidator = (
     <TitleDropDownValidator
       onChange={(evt) => titleDropDownOnChange(evt)}
-      title="Rule Title"
+      title={`Rule Title`}
       value={props.value.title}
-      optionTitles={props.ruleStackValues.map((x) => x.ruleTitle)}
+      optionTitles={props.ruleStackValues.map((x) => ({ title: x.ruleTitle, isDisabled: x.isDisabled }))}
     />
   );
 

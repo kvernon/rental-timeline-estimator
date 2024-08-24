@@ -67,7 +67,11 @@ describe('RulesCollection unit tests', () => {
         possibleChoices: [],
       };
 
-      jest.mocked(getRemainingValues).mockReturnValue([{ index: 1, entity: props.possibleChoices[1] }]);
+      jest.mocked(getRemainingValues).mockReturnValue(
+        props.possibleChoices.map((x, i) => {
+          return { ...x, isDisabled: i === 1 };
+        }),
+      );
 
       render(<RulesCollection {...props} />);
     });
@@ -116,13 +120,17 @@ describe('RulesCollection unit tests', () => {
         ],
         onChange: jest.fn(),
       };
-
-      jest.mocked(getRemainingValues).mockReturnValue([{ index: 1, entity: props.possibleChoices[1] }]);
     });
 
     describe('should render RuleStacks', () => {
       describe('and displaying the add button', () => {
         test('it should show', () => {
+          jest.mocked(getRemainingValues).mockReturnValue(
+            props.possibleChoices.map((x, i) => {
+              return { ...x, isDisabled: i === 1 };
+            }),
+          );
+
           render(<RulesCollection {...props} />);
 
           const addButton = screen.queryByLabelText<HTMLButtonElement>(`Add button for ${props.title}`);
@@ -145,6 +153,12 @@ describe('RulesCollection unit tests', () => {
       describe('and clicking add the button', () => {
         describe('and not required', () => {
           test('it should fire update', async () => {
+            jest.mocked(getRemainingValues).mockReturnValue(
+              props.possibleChoices.map((x, i) => {
+                return { ...x, isDisabled: i === 0 };
+              }),
+            );
+
             render(<RulesCollection {...props} />);
 
             const addButton = screen.getByLabelText<HTMLButtonElement>(`Add button for ${props.title}`);
@@ -159,7 +173,7 @@ describe('RulesCollection unit tests', () => {
               range: IEventValue<number | undefined>;
             } = {
               title: {
-                value: { value: 1, label: props.possibleChoices[1].ruleTitle },
+                value: { value: props.values[0].title.value.value, label: props.possibleChoices[1].ruleTitle },
               },
               property: {
                 value: {
@@ -181,6 +195,12 @@ describe('RulesCollection unit tests', () => {
 
         describe('and required', () => {
           test('it should fire update', async () => {
+            jest.mocked(getRemainingValues).mockReturnValue(
+              props.possibleChoices.map((x, i) => {
+                return { ...x, isDisabled: i === 1 };
+              }),
+            );
+
             props.required = true;
 
             render(<RulesCollection {...props} />);
@@ -197,10 +217,10 @@ describe('RulesCollection unit tests', () => {
               range: IEventValue<number | undefined>;
             } = {
               title: {
-                value: { value: 1, label: props.possibleChoices[1].ruleTitle },
+                value: { value: 0, label: props.possibleChoices[0].ruleTitle },
               },
               property: {
-                value: { value: props.possibleChoices[1].property, label: 'house' },
+                value: { value: props.possibleChoices[0].property, label: 'apartment' },
               },
               range: {
                 value: undefined,

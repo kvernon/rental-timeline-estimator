@@ -24,6 +24,5 @@ export function onChangeArray(
 
   newArray[oldIndex] = newArray[newIndex];
   newArray[newIndex] = temp;
-
   return newArray;
 }

@@ -2,15 +2,9 @@ import { IRuleStackEntity } from './IRuleStackEntity';
 import { IEventResult } from '../validators/IEventResult';
 import { ISelectOption } from '../core/ISelectOption';
 
-export function getRemainingValues(
-  choices: IRuleStackEntity[],
-  values: IEventResult<ISelectOption>[],
-): {
-  index: number;
-  entity: IRuleStackEntity;
-}[] {
+export function getRemainingValues(choices: IRuleStackEntity[], values: IEventResult<ISelectOption>[]): IRuleStackEntity[] {
   if (!choices || !choices.length) {
-    return choices.map((entity, index) => ({ index, entity }));
+    return choices;
   }
 
   const filteredValues: string[] = [];
@@ -22,10 +16,9 @@ export function getRemainingValues(
       }
     });
 
-  return choices
-    .map((entity, index) => ({
-      index,
-      entity,
-    }))
-    .filter((choice) => !filteredValues.includes(choice.entity.ruleTitle));
+  return choices.map((entity) => {
+    const e = { ...entity };
+    e.isDisabled = filteredValues.includes(entity.ruleTitle);
+    return e;
+  });
 }

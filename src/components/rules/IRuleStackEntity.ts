@@ -5,4 +5,5 @@ export interface IRuleStackEntity {
   max?: number;
   prefix?: string;
   suffix?: string;
+  isDisabled?: boolean;
 }
