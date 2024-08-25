@@ -7,6 +7,7 @@ import { getValidationResult } from '../components/rules/getValidationResult';
 import { generate } from './generate';
 import { getPurchaseRuleType } from './getPurchaseRuleType';
 import { getHoldRuleType } from './getHoldRuleType';
+import { LoanSettings } from '@cubedelement.com/realty-investor-timeline/dist/src/loans/loan-settings';
 
 jest.mock('@cubedelement.com/realty-investor-timeline');
 jest.mock('../components/rules/getValidationResult');
@@ -73,7 +74,19 @@ describe('generate unit tests', () => {
             propertyType: PropertyType.PassiveApartment,
           },
         ],
-        loanSettings: [],
+        loanSettings: [
+          {
+            value: 7,
+            propertyType: PropertyType.SingleFamily,
+            name: LoanSettings.LoanRatePercent,
+          },
+          { value: 30, propertyType: PropertyType.SingleFamily, name: LoanSettings.LoanTermInYears },
+          {
+            value: 25000,
+            propertyType: PropertyType.PassiveApartment,
+            name: LoanSettings.MinimumMonthlyReservesForRental,
+          },
+        ],
         amountInSavings: userInfo.amountInSavings.value as number,
         monthlyIncomeAmountGoal: userInfo.monthlyIncomeAmountGoal.value as number,
         monthlySavedAmount: userInfo.monthlySavedAmount.value as number,

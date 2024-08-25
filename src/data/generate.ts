@@ -6,6 +6,7 @@ import { ValidatorTypes } from '../components/validators/ValidatorTypes';
 import { PropertyType, simulate } from '@cubedelement.com/realty-investor-timeline';
 import { getPurchaseRuleType } from './getPurchaseRuleType';
 import { getHoldRuleType } from './getHoldRuleType';
+import { LoanSettings } from '@cubedelement.com/realty-investor-timeline/dist/src/loans/loan-settings';
 
 export function generate(userInfo: {
   purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
@@ -34,7 +35,19 @@ export function generate(userInfo: {
       type: getHoldRuleType(x.title.value.label),
       propertyType: x.property.value.value === 0 ? PropertyType.PassiveApartment : PropertyType.SingleFamily,
     })),
-    loanSettings: [],
+    loanSettings: [
+      {
+        value: 7,
+        propertyType: PropertyType.SingleFamily,
+        name: LoanSettings.LoanRatePercent,
+      },
+      { value: 30, propertyType: PropertyType.SingleFamily, name: LoanSettings.LoanTermInYears },
+      {
+        value: 25000,
+        propertyType: PropertyType.PassiveApartment,
+        name: LoanSettings.MinimumMonthlyReservesForRental,
+      },
+    ],
     amountInSavings: userInfo.amountInSavings.value as number,
     monthlyIncomeAmountGoal: userInfo.monthlyIncomeAmountGoal.value as number,
     monthlySavedAmount: userInfo.monthlySavedAmount.value as number,
