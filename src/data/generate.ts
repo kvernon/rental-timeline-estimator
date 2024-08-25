@@ -3,7 +3,7 @@ import { IEventResult } from '../components/validators/IEventResult';
 import { ISelectOption } from '../components/core/ISelectOption';
 import { getValidationResult } from '../components/rules/getValidationResult';
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
-import { HoldRuleTypes, PropertyType, PurchaseRuleTypes, simulate } from '@cubedelement.com/realty-investor-timeline';
+import { PropertyType, simulate } from '@cubedelement.com/realty-investor-timeline';
 import { getPurchaseRuleType } from './getPurchaseRuleType';
 import { getHoldRuleType } from './getHoldRuleType';
 
