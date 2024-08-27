@@ -11,6 +11,8 @@ import { ValidatorTypes } from './components/validators/ValidatorTypes';
 import { getRuleChoices } from './rules/getRuleChoices';
 import { holdConfig } from './rules/holdRuleConfig';
 import { purchaseConfig } from './rules/purchaseRuleConfig';
+import { RawResults } from './components/views/RawResults';
+import { AddListButton } from './components/core/AddListButton';
 
 export const App = function () {
   const [userInfo, setUserInfo] = React.useState<{
@@ -35,10 +37,28 @@ export const App = function () {
     purchaseRules: getRuleChoices(purchaseConfig.collection),
   });
 
+  const [run, setRun] = React.useState<boolean>(false);
+
   return (
     <ThemeProvider theme={options}>
       <Page />
-      <UserInformation values={userInfo} choices={choices} title="User Information" onChange={(e) => setUserInfo(e)} />
+      <UserInformation
+        values={userInfo}
+        choices={choices}
+        title="User Information"
+        onChange={(e) => {
+          setUserInfo(e);
+        }}
+      />
+      <AddListButton
+        role={'simulate'}
+        label="Run"
+        theme={options}
+        onClick={() => {
+          setRun(true);
+        }}
+      />
+      {run && <RawResults userInfo={userInfo} />}
     </ThemeProvider>
   );
 };
