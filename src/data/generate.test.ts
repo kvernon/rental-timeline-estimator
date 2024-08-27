@@ -28,9 +28,9 @@ describe('generate unit tests', () => {
       const userInfo: {
         purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
         holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
-        amountInSavings: IEventResult<number | undefined>;
-        monthlySavedAmount: IEventResult<number | undefined>;
-        monthlyIncomeAmountGoal: IEventResult<number | undefined>;
+        savedAtStart: IEventResult<number | undefined>;
+        moSavings: IEventResult<number | undefined>;
+        goal: IEventResult<number | undefined>;
       } = {
         purchaseRules: [
           {
@@ -52,9 +52,9 @@ describe('generate unit tests', () => {
             range: { value: 18, validationResult: ValidatorTypes.Valid },
           },
         ],
-        amountInSavings: { value: 1, validationResult: ValidatorTypes.Valid },
-        monthlySavedAmount: { value: 2, validationResult: ValidatorTypes.Valid },
-        monthlyIncomeAmountGoal: { value: 3, validationResult: ValidatorTypes.Valid },
+        savedAtStart: { value: 1, validationResult: ValidatorTypes.Valid },
+        moSavings: { value: 2, validationResult: ValidatorTypes.Valid },
+        goal: { value: 3, validationResult: ValidatorTypes.Valid },
       };
 
       generate(userInfo);
@@ -87,9 +87,35 @@ describe('generate unit tests', () => {
             name: LoanSettings.MinimumMonthlyReservesForRental,
           },
         ],
-        amountInSavings: userInfo.amountInSavings.value as number,
-        monthlyIncomeAmountGoal: userInfo.monthlyIncomeAmountGoal.value as number,
-        monthlySavedAmount: userInfo.monthlySavedAmount.value as number,
+        amountInSavings: userInfo.savedAtStart.value as number,
+        monthlyIncomeAmountGoal: userInfo.goal.value as number,
+        monthlySavedAmount: userInfo.moSavings.value as number,
+        generatorOptionsPassiveApartment: {
+          highestCashFlow: 500,
+          highestEquityCapturePercent: 15,
+          highestMinSellInYears: 1,
+          highestPurchasePrice: 200000,
+          highestSellAppreciationPercent: 7,
+          lowestCashFlow: 200,
+          lowestEquityCapturePercent: 7,
+          lowestMinSellInYears: 1,
+          lowestPurchasePrice: 150000,
+          lowestSellAppreciationPercent: 5,
+          maxRentalOpportunities: 6,
+        },
+        generatorOptionsSingleFamily: {
+          highestCashFlow: 550,
+          highestEquityCapturePercent: 15,
+          highestMinSellInYears: 1,
+          highestPurchasePrice: 250000,
+          highestSellAppreciationPercent: 7,
+          lowestCashFlow: 200,
+          lowestEquityCapturePercent: 7,
+          lowestMinSellInYears: 1,
+          lowestPurchasePrice: 150000,
+          lowestSellAppreciationPercent: 5,
+          maxRentalOpportunities: 4,
+        },
       };
 
       expect(simulate).toHaveBeenCalledWith(expected);
@@ -103,18 +129,18 @@ describe('generate unit tests', () => {
       const userInfo: {
         purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
         holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
-        amountInSavings: IEventResult<number | undefined>;
-        monthlySavedAmount: IEventResult<number | undefined>;
-        monthlyIncomeAmountGoal: IEventResult<number | undefined>;
+        savedAtStart: IEventResult<number | undefined>;
+        moSavings: IEventResult<number | undefined>;
+        goal: IEventResult<number | undefined>;
       } = {
         purchaseRules: [],
         holdRules: [],
-        amountInSavings: { value: 1, validationResult: ValidatorTypes.Invalid },
-        monthlySavedAmount: { value: 2, validationResult: ValidatorTypes.Invalid },
-        monthlyIncomeAmountGoal: { value: 3, validationResult: ValidatorTypes.Invalid },
+        savedAtStart: { value: 1, validationResult: ValidatorTypes.Invalid },
+        moSavings: { value: 2, validationResult: ValidatorTypes.Invalid },
+        goal: { value: 3, validationResult: ValidatorTypes.Invalid },
       };
 
-      expect(() => generate(userInfo)).toThrow(new Error('data is invalid'));
+      expect(generate(userInfo)).toEqual(null);
     });
   });
 });

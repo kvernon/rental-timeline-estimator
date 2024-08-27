@@ -201,8 +201,6 @@ describe('RulesCollection unit tests', () => {
               }),
             );
 
-            props.required = true;
-
             render(<RulesCollection {...props} />);
 
             const addButton = screen.getByLabelText<HTMLButtonElement>(`Add button for ${props.title}`);

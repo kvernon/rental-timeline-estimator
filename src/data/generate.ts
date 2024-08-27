@@ -3,25 +3,28 @@ import { IEventResult } from '../components/validators/IEventResult';
 import { ISelectOption } from '../components/core/ISelectOption';
 import { getValidationResult } from '../components/rules/getValidationResult';
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
-import { PropertyType, simulate } from '@cubedelement.com/realty-investor-timeline';
+import { ITimeline, PropertyType, simulate } from '@cubedelement.com/realty-investor-timeline';
 import { getPurchaseRuleType } from './getPurchaseRuleType';
 import { getHoldRuleType } from './getHoldRuleType';
 import { LoanSettings } from '@cubedelement.com/realty-investor-timeline/dist/src/loans/loan-settings';
 
+/**
+ *
+ * @param userInfo
+ * @throws Error
+ */
 export function generate(userInfo: {
   purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
   holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
-  amountInSavings: IEventResult<number | undefined>;
-  monthlySavedAmount: IEventResult<number | undefined>;
-  monthlyIncomeAmountGoal: IEventResult<number | undefined>;
-}) {
+  savedAtStart: IEventResult<number | undefined>;
+  moSavings: IEventResult<number | undefined>;
+  goal: IEventResult<number | undefined>;
+}): null | ITimeline {
   if (
-    getValidationResult(
-      [userInfo.monthlySavedAmount.validationResult, userInfo.monthlyIncomeAmountGoal.validationResult, userInfo.amountInSavings.validationResult],
-      true,
-    ) === ValidatorTypes.Invalid
+    getValidationResult([userInfo.moSavings.validationResult, userInfo.goal.validationResult, userInfo.savedAtStart.validationResult], true) ===
+    ValidatorTypes.Invalid
   ) {
-    throw new Error('data is invalid');
+    return null;
   }
 
   return simulate({
@@ -48,8 +51,34 @@ export function generate(userInfo: {
         name: LoanSettings.MinimumMonthlyReservesForRental,
       },
     ],
-    amountInSavings: userInfo.amountInSavings.value as number,
-    monthlyIncomeAmountGoal: userInfo.monthlyIncomeAmountGoal.value as number,
-    monthlySavedAmount: userInfo.monthlySavedAmount.value as number,
+    amountInSavings: userInfo.savedAtStart.value as number,
+    monthlyIncomeAmountGoal: userInfo.goal.value as number,
+    monthlySavedAmount: userInfo.moSavings.value as number,
+    generatorOptionsSingleFamily: {
+      lowestMinSellInYears: 1,
+      highestMinSellInYears: 1,
+      lowestPurchasePrice: 150000,
+      highestPurchasePrice: 250000,
+      lowestSellAppreciationPercent: 5,
+      highestSellAppreciationPercent: 7,
+      lowestCashFlow: 200,
+      highestCashFlow: 550,
+      lowestEquityCapturePercent: 7,
+      highestEquityCapturePercent: 15,
+      maxRentalOpportunities: 4,
+    },
+    generatorOptionsPassiveApartment: {
+      lowestMinSellInYears: 1,
+      highestMinSellInYears: 1,
+      lowestPurchasePrice: 150000,
+      highestPurchasePrice: 200000,
+      lowestSellAppreciationPercent: 5,
+      highestSellAppreciationPercent: 7,
+      lowestCashFlow: 200,
+      highestCashFlow: 500,
+      lowestEquityCapturePercent: 7,
+      highestEquityCapturePercent: 15,
+      maxRentalOpportunities: 6,
+    },
   });
 }

@@ -132,8 +132,6 @@ export function UserInformation(props: IUserInformationProps) {
               holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
             } = { ...value };
             n.purchaseRules = getRulesValuesToRulesValuesResults(false, e, props.choices.purchaseRules);
-            //console.log("RulesCollection.onChange:: value.purchaseRules\n", value.purchaseRules);
-            //console.log("RulesCollection.onChange:: n.purchaseRules\n", n.purchaseRules);
             if (JSON.stringify(value.purchaseRules) !== JSON.stringify(n.purchaseRules)) {
               setValue(n);
               setIsDataLoaded(true);
