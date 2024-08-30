@@ -8,9 +8,10 @@ import { generate } from './generate';
 import { getPurchaseRuleType } from './getPurchaseRuleType';
 import { getHoldRuleType } from './getHoldRuleType';
 import { LoanSettings } from '@cubedelement.com/realty-investor-timeline/dist/src/loans/loan-settings';
+import { validateUserInfo } from './validateUserInfo';
 
 jest.mock('@cubedelement.com/realty-investor-timeline');
-jest.mock('../components/rules/getValidationResult');
+jest.mock('../data/validateUserInfo');
 jest.mock('../data/getPurchaseRuleType');
 jest.mock('../data/getHoldRuleType');
 
@@ -21,7 +22,7 @@ describe('generate unit tests', () => {
 
   describe('and all data', () => {
     test('should call', () => {
-      jest.mocked(getValidationResult).mockReturnValue(ValidatorTypes.Valid);
+      jest.mocked(validateUserInfo).mockReturnValue(ValidatorTypes.Valid);
       jest.mocked(getPurchaseRuleType).mockReturnValue(PurchaseRuleTypes.MinAskingPrice);
       jest.mocked(getHoldRuleType).mockReturnValue(HoldRuleTypes.MinSellInYears);
 
@@ -124,7 +125,7 @@ describe('generate unit tests', () => {
 
   describe('and invalid data', () => {
     test('should call', () => {
-      jest.mocked(getValidationResult).mockReturnValue(ValidatorTypes.Invalid);
+      jest.mocked(validateUserInfo).mockReturnValue(ValidatorTypes.Invalid);
 
       const userInfo: {
         purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];

@@ -1,12 +1,12 @@
 import { IRuleValues } from '../components/rules/IRuleValues';
 import { IEventResult } from '../components/validators/IEventResult';
 import { ISelectOption } from '../components/core/ISelectOption';
-import { getValidationResult } from '../components/rules/getValidationResult';
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
 import { ITimeline, PropertyType, simulate } from '@cubedelement.com/realty-investor-timeline';
 import { getPurchaseRuleType } from './getPurchaseRuleType';
 import { getHoldRuleType } from './getHoldRuleType';
 import { LoanSettings } from '@cubedelement.com/realty-investor-timeline/dist/src/loans/loan-settings';
+import { validateUserInfo } from './validateUserInfo';
 
 /**
  *
@@ -20,10 +20,7 @@ export function generate(userInfo: {
   moSavings: IEventResult<number | undefined>;
   goal: IEventResult<number | undefined>;
 }): null | ITimeline {
-  if (
-    getValidationResult([userInfo.moSavings.validationResult, userInfo.goal.validationResult, userInfo.savedAtStart.validationResult], true) ===
-    ValidatorTypes.Invalid
-  ) {
+  if (validateUserInfo(true, userInfo) === ValidatorTypes.Invalid) {
     return null;
   }
 
