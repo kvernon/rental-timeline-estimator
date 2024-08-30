@@ -14,7 +14,7 @@ import { purchaseConfig } from './rules/purchaseRuleConfig';
 import { RawResults } from './components/views/RawResults';
 import { NavList } from './components/navigation/NavList';
 import { Stack } from './components/core/Stack';
-import { getValidationResult } from './components/rules/getValidationResult';
+import { validateUserInfo } from './data/validateUserInfo';
 
 export const App = function () {
   const [userInfo, setUserInfo] = React.useState<{
@@ -59,9 +59,7 @@ export const App = function () {
     const navListUpdated = [...navList];
     const i = navListUpdated.findIndex((n) => n.title === 'Results');
 
-    navListUpdated[i].isDisabled =
-      getValidationResult([userInfo.moSavings.validationResult, userInfo.goal.validationResult, userInfo.savedAtStart.validationResult], true) ===
-      ValidatorTypes.Invalid;
+    navListUpdated[i].isDisabled = validateUserInfo(true, userInfo) === ValidatorTypes.Invalid;
 
     if (navListUpdated[i].isDisabled !== navList[i].isDisabled) {
       setNavList(navListUpdated);
