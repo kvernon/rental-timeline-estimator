@@ -8,19 +8,28 @@ import { IThemeOptions } from './theming/IThemeOptions';
 
 jest.mock('./components/core/Page');
 jest.mock('./components/views/UserInformation');
+jest.mock('./components/navigation/NavList');
 
 describe('App unit tests', () => {
-  describe('and App', () => {
-    beforeEach(() => {
-      jest.mocked(useTheme).mockReturnValue(themeMock as jest.Mocked<IThemeOptions>);
+  beforeEach(() => {
+    jest.mocked(useTheme).mockReturnValue(themeMock as jest.Mocked<IThemeOptions>);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('and defaults', () => {
+    test('should contain User Information', () => {
+      render(<App />);
+
+      expect(screen.getByLabelText('User Information')).toBeInTheDocument();
     });
 
-    describe('and success', () => {
-      test('should create', () => {
-        render(<App />);
+    test('should contain Nav', () => {
+      render(<App />);
 
-        expect(screen.getByLabelText('User Information')).toBeInTheDocument();
-      });
+      expect(screen.getByLabelText('navigation')).toBeInTheDocument();
     });
   });
 });
