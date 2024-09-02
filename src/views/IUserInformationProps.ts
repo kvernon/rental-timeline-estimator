@@ -1,7 +1,7 @@
-import { IEventResult } from '../validators/IEventResult';
-import { IRuleValues } from '../rules/IRuleValues';
-import { ISelectOption } from '../core/ISelectOption';
-import { IRuleStackEntity } from '../rules/IRuleStackEntity';
+import { IEventResult } from '../components/validators/IEventResult';
+import { IRuleValues } from '../components/rules/IRuleValues';
+import { ISelectOption } from '../components/core/ISelectOption';
+import { IRuleStackEntity } from '../components/rules/IRuleStackEntity';
 
 export interface IUserInformationProps {
   values: {

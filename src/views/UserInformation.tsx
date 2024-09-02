@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { GoalPanel } from '../panels/GoalPanel';
-import { RangeValidationPanel } from '../panels/RangeValidationPanel';
-import { RulesCollection } from '../rules/RulesCollection';
-import { RangeFieldValidator } from '../validators/RangeFieldValidator';
-import { Stack } from '../core/Stack';
+import { GoalPanel } from '../components/panels/GoalPanel';
+import { RangeValidationPanel } from '../components/panels/RangeValidationPanel';
+import { RulesCollection } from '../components/rules/RulesCollection';
+import { RangeFieldValidator } from '../components/validators/RangeFieldValidator';
+import { Stack } from '../components/core/Stack';
 import styled from '@emotion/styled';
 import { IUserInformationProps } from './IUserInformationProps';
-import { IRuleValues } from '../rules/IRuleValues';
-import { IEventResult } from '../validators/IEventResult';
-import { ISelectOption } from '../core/ISelectOption';
-import { FontGroups } from '../../theming/fontGroups';
-import { evaluateValidation } from '../validators/evaluateValidation';
-import { isInRange } from '../validators/isInRange';
+import { IRuleValues } from '../components/rules/IRuleValues';
+import { IEventResult } from '../components/validators/IEventResult';
+import { ISelectOption } from '../components/core/ISelectOption';
+import { FontGroups } from '../theming/fontGroups';
+import { evaluateValidation } from '../components/validators/evaluateValidation';
+import { isInRange } from '../components/validators/isInRange';
 import { getRulesValuesToRulesValuesResults } from './getRulesValuesToRulesValuesResults';
 
 const RulesStack = styled(Stack)`

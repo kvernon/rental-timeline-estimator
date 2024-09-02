@@ -1,9 +1,9 @@
-import { Stack } from '../core/Stack';
+import { Stack } from '../components/core/Stack';
 import React from 'react';
-import { IRuleValues } from '../rules/IRuleValues';
-import { IEventResult } from '../validators/IEventResult';
-import { ISelectOption } from '../core/ISelectOption';
-import { generate } from '../../data/generate';
+import { IRuleValues } from '../components/rules/IRuleValues';
+import { IEventResult } from '../components/validators/IEventResult';
+import { ISelectOption } from '../components/core/ISelectOption';
+import { generate } from '../data/generate';
 import styled from '@emotion/styled';
 
 const Regular = styled(Stack)`

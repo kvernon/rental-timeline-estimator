@@ -1,10 +1,10 @@
-import { IRuleValues } from '../rules/IRuleValues';
-import { IEventResult, IEventValue } from '../validators/IEventResult';
-import { ISelectOption } from '../core/ISelectOption';
-import { IRuleStackEntity } from '../rules/IRuleStackEntity';
-import { ValidatorTypes } from '../validators/ValidatorTypes';
-import { evaluateValidation } from '../validators/evaluateValidation';
-import { isInRange } from '../validators/isInRange';
+import { IRuleValues } from '../components/rules/IRuleValues';
+import { IEventResult, IEventValue } from '../components/validators/IEventResult';
+import { ISelectOption } from '../components/core/ISelectOption';
+import { IRuleStackEntity } from '../components/rules/IRuleStackEntity';
+import { ValidatorTypes } from '../components/validators/ValidatorTypes';
+import { evaluateValidation } from '../components/validators/evaluateValidation';
+import { isInRange } from '../components/validators/isInRange';
 
 function formDefault(
   isRequired: boolean,

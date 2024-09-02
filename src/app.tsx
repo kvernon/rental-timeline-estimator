@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { options } from './theming/theme';
 import { Page } from './components/core/Page';
-import { UserInformation } from './components/views/UserInformation';
+import { UserInformation } from './views/UserInformation';
 import { IEventResult } from './components/validators/IEventResult';
 import { IRuleValues } from './components/rules/IRuleValues';
 import { ISelectOption } from './components/core/ISelectOption';
@@ -11,7 +11,7 @@ import { ValidatorTypes } from './components/validators/ValidatorTypes';
 import { getRuleChoices } from './rules/getRuleChoices';
 import { holdConfig } from './rules/holdRuleConfig';
 import { purchaseConfig } from './rules/purchaseRuleConfig';
-import { RawResults } from './components/views/RawResults';
+import { RawResults } from './views/RawResults';
 import { NavList } from './components/navigation/NavList';
 import { Stack } from './components/core/Stack';
 import { validateUserInfo } from './data/validateUserInfo';
@@ -49,6 +49,7 @@ export const App = function () {
     }[]
   >([
     { title: 'Basics', isSelected: true },
+    { title: 'Properties' },
     {
       title: 'Results',
       isDisabled: true,
@@ -88,6 +89,7 @@ export const App = function () {
           }}
         />
       )}
+      {location === 'Properties' && <Stack>Properties</Stack>}
 
       {location === 'Results' && <RawResults userInfo={userInfo} />}
     </ThemeProvider>

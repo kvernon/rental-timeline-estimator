@@ -2,14 +2,14 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import React from 'react';
 import { RawResults } from './RawResults';
-import { ValidatorTypes } from '../validators/ValidatorTypes';
-import { IRuleValues } from '../rules/IRuleValues';
-import { IEventResult } from '../validators/IEventResult';
-import { ISelectOption } from '../core/ISelectOption';
+import { ValidatorTypes } from '../components/validators/ValidatorTypes';
+import { IRuleValues } from '../components/rules/IRuleValues';
+import { IEventResult } from '../components/validators/IEventResult';
+import { ISelectOption } from '../components/core/ISelectOption';
 import { HoldRuleTypes, PurchaseRuleTypes } from '@cubedelement.com/realty-investor-timeline';
-import { generate } from '../../data/generate';
+import { generate } from '../data/generate';
 
-jest.mock('../../data/generate');
+jest.mock('../data/generate');
 
 describe('RawResults unit tests', () => {
   beforeEach(() => {

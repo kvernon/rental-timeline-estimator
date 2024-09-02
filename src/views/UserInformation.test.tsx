@@ -2,23 +2,23 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { UserInformation } from './UserInformation';
 import React from 'react';
 import '@testing-library/jest-dom';
-import { ValidatorTypes } from '../validators/ValidatorTypes';
+import { ValidatorTypes } from '../components/validators/ValidatorTypes';
 import { IUserInformationProps } from './IUserInformationProps';
-import { RangeFieldValidator } from '../validators/RangeFieldValidator';
-import { GoalPanel } from '../panels/GoalPanel';
-import { RulesCollection } from '../rules/RulesCollection';
-import { FontGroups } from '../../theming/fontGroups';
-import { evaluateValidation } from '../validators/evaluateValidation';
-import { isInRange } from '../validators/isInRange';
+import { RangeFieldValidator } from '../components/validators/RangeFieldValidator';
+import { GoalPanel } from '../components/panels/GoalPanel';
+import { RulesCollection } from '../components/rules/RulesCollection';
+import { FontGroups } from '../theming/fontGroups';
+import { evaluateValidation } from '../components/validators/evaluateValidation';
+import { isInRange } from '../components/validators/isInRange';
 import { getRulesValuesToRulesValuesResults } from './getRulesValuesToRulesValuesResults';
 import any = jasmine.any;
 
-jest.mock('../panels/GoalPanel');
-jest.mock('../panels/RangeValidationPanel');
-jest.mock('../rules/RulesCollection');
-jest.mock('../validators/RangeFieldValidator');
-jest.mock('../validators/evaluateValidation');
-jest.mock('../validators/isInRange');
+jest.mock('../components/panels/GoalPanel');
+jest.mock('../components/panels/RangeValidationPanel');
+jest.mock('../components/rules/RulesCollection');
+jest.mock('../components/validators/RangeFieldValidator');
+jest.mock('../components/validators/evaluateValidation');
+jest.mock('../components/validators/isInRange');
 jest.mock('./getRulesValuesToRulesValuesResults');
 
 describe('UserInformation unit tests', () => {

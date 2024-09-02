@@ -1,10 +1,10 @@
 import { getRulesValuesToRulesValuesResults } from './getRulesValuesToRulesValuesResults';
-import { ValidatorTypes } from '../validators/ValidatorTypes';
-import { evaluateValidation } from '../validators/evaluateValidation';
-import { isInRange } from '../validators/isInRange';
+import { ValidatorTypes } from '../components/validators/ValidatorTypes';
+import { evaluateValidation } from '../components/validators/evaluateValidation';
+import { isInRange } from '../components/validators/isInRange';
 
-jest.mock('../validators/evaluateValidation');
-jest.mock('../validators/isInRange');
+jest.mock('../components/validators/evaluateValidation');
+jest.mock('../components/validators/isInRange');
 
 describe('getRulesValuesToRulesValuesResults unit tests', () => {
   describe('and is not required', () => {
