@@ -15,6 +15,8 @@ import { RawResults } from './views/RawResults';
 import { NavList } from './components/navigation/NavList';
 import { Stack } from './components/core/Stack';
 import { validateUserInfo } from './data/validateUserInfo';
+import { PropertyType } from '@cubedelement.com/realty-investor-timeline';
+import { PropertiesInformation } from './views/PropertiesInformation';
 
 export const App = function () {
   const [userInfo, setUserInfo] = React.useState<{
@@ -72,6 +74,7 @@ export const App = function () {
       <Page />
       <Stack>
         <NavList
+          title="Navigation"
           navList={navList}
           onClick={(title, navList) => {
             setLocation(title);
@@ -89,8 +92,36 @@ export const App = function () {
           }}
         />
       )}
-      {location === 'Properties' && <Stack>Properties</Stack>}
-
+      {location === 'Properties' && (
+        <PropertiesInformation
+          {...{
+            house: {
+              title: 'Home',
+              propertyType: PropertyType.SingleFamily,
+              lowestPurchasePrice: { value: 150000, validationResult: ValidatorTypes.Valid },
+              highestPurchasePrice: { value: 200000, validationResult: ValidatorTypes.Valid },
+              lowestCashFlow: { value: 200, validationResult: ValidatorTypes.Valid },
+              highestCashFlow: { value: 500, validationResult: ValidatorTypes.Valid },
+              lowestEquityCapturePercent: { value: 5, validationResult: ValidatorTypes.Valid },
+              highestEquityCapturePercent: { value: 7, validationResult: ValidatorTypes.Valid },
+              lowestGenerationAmount: { value: 1, validationResult: ValidatorTypes.Valid },
+              highestGenerationAmount: { value: 6, validationResult: ValidatorTypes.Valid },
+            },
+            apartment: {
+              title: 'Apartment',
+              propertyType: PropertyType.PassiveApartment,
+              lowestPurchasePrice: { value: 150000, validationResult: ValidatorTypes.Valid },
+              highestPurchasePrice: { value: 200000, validationResult: ValidatorTypes.Valid },
+              lowestCashFlow: { value: 200, validationResult: ValidatorTypes.Valid },
+              highestCashFlow: { value: 500, validationResult: ValidatorTypes.Valid },
+              lowestEquityCapturePercent: { value: 5, validationResult: ValidatorTypes.Valid },
+              highestEquityCapturePercent: { value: 7, validationResult: ValidatorTypes.Valid },
+              lowestGenerationAmount: { value: 1, validationResult: ValidatorTypes.Valid },
+              highestGenerationAmount: { value: 6, validationResult: ValidatorTypes.Valid },
+            },
+          }}
+        ></PropertiesInformation>
+      )}
       {location === 'Results' && <RawResults userInfo={userInfo} />}
     </ThemeProvider>
   );

@@ -15,6 +15,7 @@ describe('NavList unit tests', () => {
 
   beforeEach(() => {
     props = {
+      title: 'Navigation',
       navList: [
         { title: 'one', isSelected: true, isDisabled: false },
         { title: 'two', isSelected: true, isDisabled: false },
@@ -26,7 +27,7 @@ describe('NavList unit tests', () => {
   });
 
   test('should render nav', () => {
-    const entity = screen.getByLabelText<HTMLUListElement>('navigation');
+    const entity = screen.getByLabelText<HTMLUListElement>('Navigation');
 
     const expectedStyle = `
         display: -webkit-flex;
@@ -57,7 +58,13 @@ describe('NavList unit tests', () => {
 
         fireEvent.click(entity);
 
-        expect(props.onClick).toHaveBeenCalledWith('one', [...props.navList]);
+        expect(props.onClick).toHaveBeenCalledWith(
+          'one',
+          [...props.navList].map((x, i) => {
+            x.isSelected = i === 0;
+            return x;
+          }),
+        );
       });
     });
 
@@ -67,7 +74,13 @@ describe('NavList unit tests', () => {
 
         fireEvent.click(entity);
 
-        expect(props.onClick).toHaveBeenCalledWith('two', [...props.navList]);
+        expect(props.onClick).toHaveBeenCalledWith(
+          'two',
+          [...props.navList].map((x, i) => {
+            x.isSelected = i === 1;
+            return x;
+          }),
+        );
       });
     });
   });

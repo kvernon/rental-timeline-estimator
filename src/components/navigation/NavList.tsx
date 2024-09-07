@@ -15,7 +15,7 @@ const NavListStyled = styled.menu`
 export const NavList = (props: INavListProps) => {
   const [navList, setNavList] = useState(props.navList);
   return (
-    <NavListStyled aria-label="navigation">
+    <NavListStyled aria-label={props.title}>
       {navList.map((entity) => {
         return (
           <NavButton
@@ -26,7 +26,9 @@ export const NavList = (props: INavListProps) => {
               const findIndex = navList.findIndex((x) => x.title === title);
 
               if (findIndex !== -1) {
-                const newVar = [...navList];
+                const newVar = [...navList].map((x) => {
+                  return { ...x, isSelected: false };
+                });
                 newVar[findIndex].isSelected = true;
                 setNavList(newVar);
                 props.onClick(title, newVar);

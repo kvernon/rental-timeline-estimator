@@ -29,7 +29,7 @@ describe('App unit tests', () => {
     test('should contain Nav', () => {
       render(<App />);
 
-      expect(screen.getByLabelText('navigation')).toBeInTheDocument();
+      expect(screen.getByLabelText('Navigation')).toBeInTheDocument();
     });
   });
 });

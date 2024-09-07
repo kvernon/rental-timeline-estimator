@@ -7,7 +7,6 @@ import { FontGroups } from '../../theming/fontGroups';
 export const InputLocal = styled(Input)<{
   themeOptions: IThemeOptions;
   validationType: ValidatorTypes;
-  id: string;
   fontGroup?: FontGroups;
   useTransparent: boolean;
 }>`

@@ -29,7 +29,7 @@ const Button = styled.button<{ disabled?: boolean; selected?: boolean }>`
   padding: 0;
   border: none;
 
-  &:hover:enabled && &:hover:not(active) {
+  &:hover:enabled {
     cursor: pointer;
     background-color: #007ae6;
   }
