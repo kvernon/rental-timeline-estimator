@@ -122,7 +122,6 @@ describe('RuleStack unit tests', () => {
           prefix: undefined,
           suffix: undefined,
           id: 'rule-range',
-          required: false,
           title: 'Rule Range',
           showTitle: false,
           useUnderlineOnly: false,
@@ -221,14 +220,13 @@ describe('RuleStack unit tests', () => {
       const entity = screen.getByLabelText<HTMLElement>(/Rule Range/);
 
       expect(entity).toBeInTheDocument();
-      expect(RangeFieldValidator).toHaveBeenCalledWith(
+      expect(RangeFieldValidator<false>).toHaveBeenCalledWith(
         {
           min: props.ruleStackValues[1].min,
           max: props.ruleStackValues[1].max,
           prefix: props.ruleStackValues[1].prefix,
           suffix: props.ruleStackValues[1].suffix,
           onChange: expect.any(Function),
-          required: false,
           id: 'rule-range',
           title: 'Rule Range',
           showTitle: false,
@@ -310,14 +308,13 @@ describe('RuleStack unit tests', () => {
           {},
         );
 
-        expect(RangeFieldValidator).toHaveBeenCalledWith(
+        expect(RangeFieldValidator<false>).toHaveBeenCalledWith(
           {
             min: props.ruleStackValues[1].min,
             max: props.ruleStackValues[1].max,
             prefix: props.ruleStackValues[1].prefix,
             suffix: props.ruleStackValues[1].suffix,
             onChange: expect.any(Function),
-            required: false,
             id: 'rule-range',
             title: 'Rule Range',
             showTitle: false,
@@ -385,7 +382,6 @@ describe('RuleStack unit tests', () => {
             prefix: props.ruleStackValues[1].prefix,
             suffix: props.ruleStackValues[1].suffix,
             onChange: expect.any(Function),
-            required: false,
             id: 'rule-range',
             title: 'Rule Range',
             showTitle: false,

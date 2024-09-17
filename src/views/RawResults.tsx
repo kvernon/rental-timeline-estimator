@@ -5,6 +5,7 @@ import { IEventResult } from '../components/validators/IEventResult';
 import { ISelectOption } from '../components/core/ISelectOption';
 import { generate } from '../data/generate';
 import styled from '@emotion/styled';
+import { IUserInfo } from '../data/IUserInfo';
 
 const Regular = styled(Stack)`
   color: white;
@@ -16,15 +17,7 @@ const Err = styled(Stack)`
   text-align: center;
 `;
 
-export const RawResults = (props: {
-  userInfo: {
-    purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
-    holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
-    savedAtStart: IEventResult<number | undefined>;
-    moSavings: IEventResult<number | undefined>;
-    goal: IEventResult<number | undefined>;
-  };
-}) => {
+export const RawResults = (props: { userInfo: IUserInfo }) => {
   try {
     return <Regular role="raw-results">{JSON.stringify(generate(props.userInfo), null, ' ')}</Regular>;
   } catch (e) {

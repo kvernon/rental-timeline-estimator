@@ -9,8 +9,10 @@ import { InputBox } from '../core/InputBox';
 import { InputLocal } from '../core/InputLocal';
 import { IRangeFieldValidatorProps } from './IRangeFieldValidatorProps';
 import { FontGroups } from '../../theming/fontGroups';
+import { evaluateValidation } from './evaluateValidation';
+import { isInRange } from './isInRange';
 
-export function RangeFieldValidator(props: IRangeFieldValidatorProps) {
+export function RangeFieldValidator<Required extends boolean = false>(props: IRangeFieldValidatorProps<Required>) {
   const coreTheme = useTheme() as IThemeOptions;
   const showTitle = props.showTitle ?? true;
   const validatorResult = props.value?.validationResult || (props.required ? ValidatorTypes.Invalid : ValidatorTypes.Optional);
@@ -47,14 +49,13 @@ export function RangeFieldValidator(props: IRangeFieldValidatorProps) {
               const value = parseInt(evt.target.value);
 
               if (value !== props.value?.value) {
-                const inputData = {
-                  ...props,
-                  value: {
-                    value,
-                  },
-                };
-                delete inputData.onChange;
-                props.onChange(inputData);
+                props.onChange(
+                  evaluateValidation<Required>(value, isInRange, {
+                    min: props.min,
+                    max: props.max,
+                    isRequired: props.required,
+                  }),
+                );
               }
             }
           }}

@@ -172,7 +172,7 @@ exports[`GoalPanel unit test should render 1`] = `
   font-size: child;
   color: child;
   background-color: transparent;
-  border-color: #FF0000;
+  border-color: #00FF00;
 }
 
 .emotion-6[type=number]::-webkit-inner-spin-button,
@@ -182,7 +182,7 @@ exports[`GoalPanel unit test should render 1`] = `
 }
 
 .emotion-6:hover {
-  border-color: #FF0000;
+  border-color: #00FF00;
 }
 
 <div
@@ -220,7 +220,7 @@ exports[`GoalPanel unit test should render 1`] = `
           id="goal"
           required=""
           type="number"
-          value=""
+          value="10"
         />
       </div>
     </div>

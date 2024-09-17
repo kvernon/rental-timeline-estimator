@@ -1,15 +1,19 @@
 import { PropertyType } from '@cubedelement.com/realty-investor-timeline';
-import { IEventResult } from './IEventResult';
+import { ConditionalNumber, ConditionEventResult } from './IRangeFieldValidatorEvent';
 
 export interface IPropertyInformationParams {
   title: string;
   propertyType: Omit<PropertyType, PropertyType.None>;
-  lowestPurchasePrice: IEventResult<number>;
-  highestPurchasePrice: IEventResult<number>;
-  lowestCashFlow: IEventResult<number>;
-  highestCashFlow: IEventResult<number>;
-  lowestEquityCapturePercent: IEventResult<number>;
-  highestEquityCapturePercent: IEventResult<number>;
-  lowestGenerationAmount: IEventResult<number>;
-  highestGenerationAmount: IEventResult<number>;
+  lowestPurchasePrice: ConditionEventResult<true, ConditionalNumber<true>>;
+  highestPurchasePrice: ConditionEventResult<true, ConditionalNumber<true>>;
+  lowestCashFlow: ConditionEventResult<true, ConditionalNumber<true>>;
+  highestCashFlow: ConditionEventResult<true, ConditionalNumber<true>>;
+  lowestEquityCapturePercent: ConditionEventResult<true, ConditionalNumber<true>>;
+  highestEquityCapturePercent: ConditionEventResult<true, ConditionalNumber<true>>;
+  lowestGenerationAmount: ConditionEventResult<true, ConditionalNumber<true>>;
+  highestGenerationAmount: ConditionEventResult<true, ConditionalNumber<true>>;
+}
+
+export interface IPropertyInformationOnChangeParams extends IPropertyInformationParams {
+  onChange: (result: IPropertyInformationParams) => void;
 }

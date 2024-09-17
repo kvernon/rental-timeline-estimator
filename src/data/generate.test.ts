@@ -3,12 +3,12 @@ import { IRuleValues } from '../components/rules/IRuleValues';
 import { IEventResult } from '../components/validators/IEventResult';
 import { ISelectOption } from '../components/core/ISelectOption';
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
-import { getValidationResult } from '../components/rules/getValidationResult';
 import { generate } from './generate';
 import { getPurchaseRuleType } from './getPurchaseRuleType';
 import { getHoldRuleType } from './getHoldRuleType';
 import { LoanSettings } from '@cubedelement.com/realty-investor-timeline/dist/src/loans/loan-settings';
 import { validateUserInfo } from './validateUserInfo';
+import { IUserInfo } from './IUserInfo';
 
 jest.mock('@cubedelement.com/realty-investor-timeline');
 jest.mock('../data/validateUserInfo');
@@ -26,13 +26,7 @@ describe('generate unit tests', () => {
       jest.mocked(getPurchaseRuleType).mockReturnValue(PurchaseRuleTypes.MinAskingPrice);
       jest.mocked(getHoldRuleType).mockReturnValue(HoldRuleTypes.MinSellInYears);
 
-      const userInfo: {
-        purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
-        holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
-        savedAtStart: IEventResult<number | undefined>;
-        moSavings: IEventResult<number | undefined>;
-        goal: IEventResult<number | undefined>;
-      } = {
+      const userInfo: IUserInfo = {
         purchaseRules: [
           {
             title: {
@@ -127,13 +121,7 @@ describe('generate unit tests', () => {
     test('should call', () => {
       jest.mocked(validateUserInfo).mockReturnValue(ValidatorTypes.Invalid);
 
-      const userInfo: {
-        purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
-        holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
-        savedAtStart: IEventResult<number | undefined>;
-        moSavings: IEventResult<number | undefined>;
-        goal: IEventResult<number | undefined>;
-      } = {
+      const userInfo: IUserInfo = {
         purchaseRules: [],
         holdRules: [],
         savedAtStart: { value: 1, validationResult: ValidatorTypes.Invalid },

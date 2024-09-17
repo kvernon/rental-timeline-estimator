@@ -4,13 +4,13 @@ import React from 'react';
 import { PropertyInformation } from './PropertyInformation';
 import { ValidatorTypes } from './ValidatorTypes';
 import { PropertyType } from '@cubedelement.com/realty-investor-timeline';
-import { IPropertyInformationParams } from './IPropertyInformationParams';
+import { IPropertyInformationOnChangeParams } from './IPropertyInformationParams';
 
 jest.mock('./RangeFieldValidator');
 jest.mock('../panels/RangeValidationPanel');
 
 describe('PropertyInformation unit tests', () => {
-  let props: IPropertyInformationParams;
+  let props: IPropertyInformationOnChangeParams;
 
   beforeEach(() => {
     props = {
@@ -24,6 +24,7 @@ describe('PropertyInformation unit tests', () => {
       lowestEquityCapturePercent: { value: 1, validationResult: ValidatorTypes.Valid },
       lowestPurchasePrice: { value: 1, validationResult: ValidatorTypes.Valid },
       title: 'title',
+      onChange: jest.fn(),
     };
 
     render(<PropertyInformation {...props} />);

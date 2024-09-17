@@ -12,7 +12,7 @@ import { IRuleStackEntity } from './IRuleStackEntity';
 import { getValidationResult } from './getValidationResult';
 import { ISelectOption } from '../core/ISelectOption';
 import { IEventResult, IEventValue } from '../validators/IEventResult';
-import { IRangeFieldValidatorEvent } from '../validators/IRangeFieldValidatorEvent';
+import { ConditionalNumber, ConditionEventResult } from '../validators/IRangeFieldValidatorEvent';
 import { IRuleValues } from './IRuleValues';
 
 const PropertyPicker = styled(PropertyDropDownValidator)`
@@ -35,7 +35,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
   }, [props]);
 
   useEffect(() => {
-    const newVar = props.ruleStackValues.length === 0 ? null : props.ruleStackValues[selectedRuleTitleIndex];
+    const newVar = props.ruleStackValues.length === 0 ? null : props.ruleStackValues[selectedRuleTitleIndex]; //?
     setSelectedValueOptions(newVar);
   }, [props.ruleStackValues, selectedRuleTitleIndex]);
 
@@ -87,12 +87,12 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
     />
   );
 
-  const rangeFieldValidatorOnChange = (evt: IRangeFieldValidatorEvent<IEventValue<number | undefined>>): void => {
-    if (evt.value && value.range?.value !== evt.value.value) {
+  const rangeFieldValidatorOnChange = (evt: ConditionEventResult<false, ConditionalNumber<false>>): void => {
+    if (evt?.value && value.range?.value !== evt?.value) {
       setValue({
         ...props.value,
         range: {
-          value: evt.value.value,
+          value: evt.value,
           validationResult: value.range.validationResult,
         },
       });
@@ -101,7 +101,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
   };
 
   const rangeFieldValidator = (
-    <RangeFieldValidator
+    <RangeFieldValidator<false>
       id={`rule-range`}
       title={'Rule Range'}
       showTitle={false}
@@ -111,7 +111,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
       suffix={selectedValueOptions?.suffix}
       useUnderlineOnly={false}
       onChange={(evt) => rangeFieldValidatorOnChange(evt)}
-      required={false}
+      value={undefined}
     />
   );
 

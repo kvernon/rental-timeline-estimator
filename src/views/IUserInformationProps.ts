@@ -1,26 +1,12 @@
-import { IEventResult } from '../components/validators/IEventResult';
-import { IRuleValues } from '../components/rules/IRuleValues';
-import { ISelectOption } from '../components/core/ISelectOption';
 import { IRuleStackEntity } from '../components/rules/IRuleStackEntity';
+import { IUserInfo } from '../data/IUserInfo';
 
 export interface IUserInformationProps {
-  values: {
-    goal: IEventResult<number | undefined>;
-    savedAtStart: IEventResult<number | undefined>;
-    moSavings: IEventResult<number | undefined>;
-    purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
-    holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
-  };
+  values: IUserInfo;
   choices: {
     purchaseRules: IRuleStackEntity[];
     holdRules: IRuleStackEntity[];
   };
   title: string;
-  onChange?: (updated: {
-    goal: IEventResult<number | undefined>;
-    savedAtStart: IEventResult<number | undefined>;
-    moSavings: IEventResult<number | undefined>;
-    purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
-    holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
-  }) => void;
+  onChange?: (updated: IUserInfo) => void;
 }

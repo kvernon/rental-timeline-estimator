@@ -1,6 +1,7 @@
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
 import { getValidationResult } from '../components/rules/getValidationResult';
 import { validateUserInfo } from './validateUserInfo';
+import { IUserInfo } from './IUserInfo';
 
 jest.mock('../components/rules/getValidationResult');
 
@@ -8,10 +9,10 @@ describe('validateUserInfo unit tests', () => {
   describe('and required', () => {
     describe('and all data invalid', () => {
       test('should be should be Invalid', () => {
-        const userInfo = {
-          goal: { validationResult: ValidatorTypes.Invalid, value: undefined },
-          moSavings: { validationResult: ValidatorTypes.Optional, value: undefined },
-          savedAtStart: { validationResult: ValidatorTypes.Valid, value: undefined },
+        const userInfo: IUserInfo = {
+          goal: { validationResult: ValidatorTypes.Invalid, value: -1 },
+          moSavings: { validationResult: ValidatorTypes.Optional, value: 1 },
+          savedAtStart: { validationResult: ValidatorTypes.Valid, value: 3 },
           holdRules: [
             {
               title: { value: { value: 0, label: '' }, validationResult: ValidatorTypes.Valid },
@@ -41,7 +42,7 @@ describe('validateUserInfo unit tests', () => {
             userInfo.moSavings.validationResult,
             userInfo.goal.validationResult,
             userInfo.savedAtStart.validationResult,
-          ],
+          ].sort(),
           false,
         );
       });

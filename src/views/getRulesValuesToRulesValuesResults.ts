@@ -66,9 +66,10 @@ export function getRulesValuesToRulesValuesResults(
     }
 
     result[x.index] = {
-      range: evaluateValidation(isRequired, isInRange, values[x.index].range.value, {
+      range: evaluateValidation(values[x.index].range.value, isInRange, {
         min: x.entity.min,
         max: x.entity.max,
+        isRequired: isRequired,
       }),
       property: { value: values[x.index].property.value, validationResult: ValidatorTypes.Valid },
       title: { value: values[x.index].title.value, validationResult: ValidatorTypes.Valid },

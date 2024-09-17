@@ -11,7 +11,6 @@ import { FontGroups } from '../theming/fontGroups';
 import { evaluateValidation } from '../components/validators/evaluateValidation';
 import { isInRange } from '../components/validators/isInRange';
 import { getRulesValuesToRulesValuesResults } from './getRulesValuesToRulesValuesResults';
-import any = jasmine.any;
 
 jest.mock('../components/panels/GoalPanel');
 jest.mock('../components/panels/RangeValidationPanel');
@@ -35,9 +34,9 @@ describe('UserInformation unit tests', () => {
           choices: { holdRules: [], purchaseRules: [] },
           title: 'UserInput Test',
           values: {
-            goal: { value: undefined, validationResult: ValidatorTypes.Valid },
-            savedAtStart: { value: undefined, validationResult: ValidatorTypes.Valid },
-            moSavings: { value: undefined, validationResult: ValidatorTypes.Valid },
+            goal: { value: 10, validationResult: ValidatorTypes.Valid },
+            savedAtStart: { value: 20, validationResult: ValidatorTypes.Valid },
+            moSavings: { value: 30, validationResult: ValidatorTypes.Valid },
             purchaseRules: [],
             holdRules: [],
           },
@@ -67,7 +66,7 @@ describe('UserInformation unit tests', () => {
             required: true,
             title: 'Your Monthly Goal',
             useUnderlineOnly: true,
-            value: { validationResult: ValidatorTypes.Valid },
+            value: { validationResult: ValidatorTypes.Valid, value: 10 },
             onChange: expect.any(Function),
           },
           {},
@@ -93,11 +92,11 @@ describe('UserInformation unit tests', () => {
             prefix: '$',
             id: 'amount-saved-at-start',
             hasSpinner: true,
-            required: false,
+            required: true,
             title: 'Amount Saved at Start',
             showTitle: true,
             useUnderlineOnly: false,
-            value: { validationResult: ValidatorTypes.Valid },
+            value: { validationResult: ValidatorTypes.Valid, value: 20 },
             onChange: expect.any(Function),
           },
           {},
@@ -119,11 +118,11 @@ describe('UserInformation unit tests', () => {
             prefix: '$',
             id: 'amount-saved-per-month',
             hasSpinner: true,
-            required: false,
+            required: true,
             title: 'Amount Saved Per Month',
             showTitle: true,
             useUnderlineOnly: false,
-            value: { validationResult: ValidatorTypes.Valid },
+            value: { validationResult: ValidatorTypes.Valid, value: 30 },
             onChange: expect.any(Function),
           },
           {},
@@ -169,7 +168,7 @@ describe('UserInformation unit tests', () => {
 
   describe('and interaction', () => {
     beforeEach(() => {
-      jest.mocked(evaluateValidation).mockImplementation((b, r, v) => ({
+      jest.mocked(evaluateValidation).mockImplementation((v) => ({
         validationResult: ValidatorTypes.Optional,
         value: v,
       }));
@@ -179,9 +178,9 @@ describe('UserInformation unit tests', () => {
         choices: { holdRules: [], purchaseRules: [] },
         title: 'UserInput Test',
         values: {
-          goal: { value: undefined, validationResult: ValidatorTypes.Valid },
-          savedAtStart: { value: undefined, validationResult: ValidatorTypes.Valid },
-          moSavings: { value: undefined, validationResult: ValidatorTypes.Valid },
+          goal: { value: 1, validationResult: ValidatorTypes.Valid },
+          savedAtStart: { value: 2, validationResult: ValidatorTypes.Valid },
+          moSavings: { value: 3, validationResult: ValidatorTypes.Valid },
           purchaseRules: [
             {
               title: { value: { value: 0, label: 'one' }, validationResult: ValidatorTypes.Valid },
@@ -208,7 +207,7 @@ describe('UserInformation unit tests', () => {
         fireEvent.change(entity, { target: { value: '40' } });
 
         expect(props.onChange).toHaveBeenCalledWith({
-          goal: { value: 40, validationResult: ValidatorTypes.Optional },
+          goal: { value: 40, validationResult: ValidatorTypes.Valid },
           holdRules: [
             {
               property: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
@@ -216,7 +215,7 @@ describe('UserInformation unit tests', () => {
               title: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
             },
           ],
-          moSavings: { validationResult: ValidatorTypes.Valid },
+          moSavings: { validationResult: ValidatorTypes.Valid, value: 3 },
           purchaseRules: [
             {
               property: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
@@ -224,11 +223,7 @@ describe('UserInformation unit tests', () => {
               title: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
             },
           ],
-          savedAtStart: { validationResult: ValidatorTypes.Valid },
-        });
-        expect(jest.mocked(evaluateValidation)).toHaveBeenCalledWith(true, isInRange, 40, {
-          max: 100000,
-          min: 1000,
+          savedAtStart: { validationResult: ValidatorTypes.Valid, value: 2 },
         });
       });
     });
@@ -240,7 +235,7 @@ describe('UserInformation unit tests', () => {
         fireEvent.change(entity, { target: { value: '40' } });
 
         expect(props.onChange).toHaveBeenCalledWith({
-          goal: { validationResult: ValidatorTypes.Valid },
+          goal: { validationResult: ValidatorTypes.Valid, value: 1 },
           holdRules: [
             {
               property: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
@@ -248,7 +243,7 @@ describe('UserInformation unit tests', () => {
               title: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
             },
           ],
-          moSavings: { validationResult: ValidatorTypes.Valid },
+          moSavings: { validationResult: ValidatorTypes.Valid, value: 3 },
           purchaseRules: [
             {
               property: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
@@ -256,11 +251,7 @@ describe('UserInformation unit tests', () => {
               title: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
             },
           ],
-          savedAtStart: { validationResult: 2, value: 40 },
-        });
-        expect(jest.mocked(evaluateValidation)).toHaveBeenCalledWith(true, isInRange, 40, {
-          max: 9999999,
-          min: 0,
+          savedAtStart: { validationResult: ValidatorTypes.Valid, value: 40 },
         });
       });
     });
@@ -272,7 +263,7 @@ describe('UserInformation unit tests', () => {
         fireEvent.change(entity, { target: { value: '40' } });
 
         expect(props.onChange).toHaveBeenCalledWith({
-          goal: { validationResult: ValidatorTypes.Valid },
+          goal: { validationResult: ValidatorTypes.Valid, value: 1 },
           holdRules: [
             {
               property: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
@@ -280,7 +271,7 @@ describe('UserInformation unit tests', () => {
               title: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
             },
           ],
-          moSavings: { validationResult: ValidatorTypes.Optional, value: 40 },
+          moSavings: { validationResult: ValidatorTypes.Valid, value: 40 },
           purchaseRules: [
             {
               property: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
@@ -288,12 +279,7 @@ describe('UserInformation unit tests', () => {
               title: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
             },
           ],
-          savedAtStart: { validationResult: ValidatorTypes.Valid },
-        });
-
-        expect(jest.mocked(evaluateValidation)).toHaveBeenCalledWith(true, isInRange, 40, {
-          max: 9999999,
-          min: 0,
+          savedAtStart: { validationResult: ValidatorTypes.Valid, value: 2 },
         });
       });
     });

@@ -25,8 +25,26 @@ export const PropertiesInformation = (props: IPropertiesInformationProps) => {
           setNav(navList);
         }}
       />
-      {location === propertyOptions[0] && <PropertyInformation {...props.apartment} />}
-      {location === propertyOptions[1] && <PropertyInformation {...props.house} />}
+      {location === propertyOptions[0] && (
+        <PropertyInformation
+          {...props.apartment}
+          onChange={(result) => {
+            if (JSON.stringify(result) !== JSON.stringify(props.apartment)) {
+              props.onChange({ apartment: result, house: props.house });
+            }
+          }}
+        />
+      )}
+      {location === propertyOptions[1] && (
+        <PropertyInformation
+          {...props.house}
+          onChange={(result) => {
+            if (JSON.stringify(result) !== JSON.stringify(props.house)) {
+              props.onChange({ apartment: { ...props.apartment }, house: result });
+            }
+          }}
+        />
+      )}
     </Stack>
   );
 };

@@ -16,9 +16,10 @@ export const NavList = (props: INavListProps) => {
   const [navList, setNavList] = useState(props.navList);
   return (
     <NavListStyled aria-label={props.title}>
-      {navList.map((entity) => {
+      {navList.map((entity, i) => {
         return (
           <NavButton
+            key={i}
             disabled={entity.isDisabled || false}
             selected={entity.isSelected || false}
             title={entity.title}

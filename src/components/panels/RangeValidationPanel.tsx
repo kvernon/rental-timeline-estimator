@@ -11,7 +11,7 @@ import { getValidationResult } from '../rules/getValidationResult';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
 import { IRangeValidationPanelProps } from './IRangeValidationPanelProps';
 
-export const RangeValidationPanel = function (props: IRangeValidationPanelProps) {
+export const RangeValidationPanel = function <Required extends boolean>(props: IRangeValidationPanelProps<Required>) {
   const coreTheme = useTheme() as IThemeOptions;
 
   return (
@@ -30,7 +30,7 @@ export const RangeValidationPanel = function (props: IRangeValidationPanelProps)
                 (Array.isArray(props.children) ? props.children : [props.children]).map(
                   (x) => x.props.value?.validationResult || ValidatorTypes.Optional,
                 ),
-                props.required || false,
+                props.required,
               )}
             />
           </Stack>

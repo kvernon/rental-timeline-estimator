@@ -3,11 +3,9 @@ import '@testing-library/jest-dom';
 import React from 'react';
 import { RawResults } from './RawResults';
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
-import { IRuleValues } from '../components/rules/IRuleValues';
-import { IEventResult } from '../components/validators/IEventResult';
-import { ISelectOption } from '../components/core/ISelectOption';
 import { HoldRuleTypes, PurchaseRuleTypes } from '@cubedelement.com/realty-investor-timeline';
 import { generate } from '../data/generate';
+import { IUserInfo } from '../data/IUserInfo';
 
 jest.mock('../data/generate');
 
@@ -15,13 +13,7 @@ describe('RawResults unit tests', () => {
   beforeEach(() => {
     jest.mocked(generate).mockReturnValue(null);
 
-    const userInfo: {
-      purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
-      holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
-      savedAtStart: IEventResult<number | undefined>;
-      moSavings: IEventResult<number | undefined>;
-      goal: IEventResult<number | undefined>;
-    } = {
+    const userInfo: IUserInfo = {
       purchaseRules: [
         {
           title: {

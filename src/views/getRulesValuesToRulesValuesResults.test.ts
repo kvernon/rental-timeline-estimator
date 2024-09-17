@@ -64,7 +64,7 @@ describe('getRulesValuesToRulesValuesResults unit tests', () => {
 
       describe('and rules match', () => {
         test('should return populated with evaluated values', () => {
-          jest.mocked(evaluateValidation).mockImplementation((b, r, v) => ({
+          jest.mocked(evaluateValidation).mockImplementation((v) => ({
             validationResult: ValidatorTypes.Invalid,
             value: v,
           }));
@@ -92,16 +92,17 @@ describe('getRulesValuesToRulesValuesResults unit tests', () => {
             },
           ]);
 
-          expect(jest.mocked(evaluateValidation)).toHaveBeenCalledWith(false, isInRange, 0, {
+          expect(jest.mocked(evaluateValidation)).toHaveBeenCalledWith(0, isInRange, {
             max: undefined,
             min: undefined,
+            isRequired: false,
           });
         });
       });
 
       describe('and mixed rules match', () => {
         test('should return populated with evaluated values', () => {
-          jest.mocked(evaluateValidation).mockImplementation((b, r, v) => ({
+          jest.mocked(evaluateValidation).mockImplementation((v) => ({
             validationResult: ValidatorTypes.Invalid,
             value: v,
           }));
@@ -133,13 +134,14 @@ describe('getRulesValuesToRulesValuesResults unit tests', () => {
             },
           ]);
 
-          expect(jest.mocked(evaluateValidation)).toHaveBeenCalledWith(false, isInRange, 0, {
+          expect(jest.mocked(evaluateValidation)).toHaveBeenCalledWith(0, isInRange, {
             max: undefined,
             min: undefined,
+            isRequired: false,
           });
         });
         test('should return populated with evaluated multiple values', () => {
-          jest.mocked(evaluateValidation).mockImplementation((b, r, v) => ({
+          jest.mocked(evaluateValidation).mockImplementation((v) => ({
             validationResult: ValidatorTypes.Invalid,
             value: v,
           }));
@@ -190,9 +192,10 @@ describe('getRulesValuesToRulesValuesResults unit tests', () => {
             },
           ]);
 
-          expect(jest.mocked(evaluateValidation)).toHaveBeenCalledWith(false, isInRange, 0, {
+          expect(jest.mocked(evaluateValidation)).toHaveBeenCalledWith(0, isInRange, {
             max: undefined,
             min: undefined,
+            isRequired: false,
           });
         });
       });

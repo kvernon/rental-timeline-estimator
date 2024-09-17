@@ -3,4 +3,5 @@ import { IPropertyInformationParams } from '../components/validators/IPropertyIn
 export interface IPropertiesInformationProps {
   apartment: IPropertyInformationParams;
   house: IPropertyInformationParams;
+  onChange: (result: { apartment: IPropertyInformationParams; house: IPropertyInformationParams }) => void;
 }

@@ -3,9 +3,6 @@ import { ThemeProvider } from '@emotion/react';
 import { options } from './theming/theme';
 import { Page } from './components/core/Page';
 import { UserInformation } from './views/UserInformation';
-import { IEventResult } from './components/validators/IEventResult';
-import { IRuleValues } from './components/rules/IRuleValues';
-import { ISelectOption } from './components/core/ISelectOption';
 import { IRuleStackEntity } from './components/rules/IRuleStackEntity';
 import { ValidatorTypes } from './components/validators/ValidatorTypes';
 import { getRuleChoices } from './rules/getRuleChoices';
@@ -17,18 +14,13 @@ import { Stack } from './components/core/Stack';
 import { validateUserInfo } from './data/validateUserInfo';
 import { PropertyType } from '@cubedelement.com/realty-investor-timeline';
 import { PropertiesInformation } from './views/PropertiesInformation';
+import { IUserInfo } from './data/IUserInfo';
 
 export const App = function () {
-  const [userInfo, setUserInfo] = React.useState<{
-    goal: IEventResult<number | undefined>;
-    savedAtStart: IEventResult<number | undefined>;
-    moSavings: IEventResult<number | undefined>;
-    purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
-    holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
-  }>({
+  const [userInfo, setUserInfo] = React.useState<IUserInfo>({
     goal: { value: 3000, validationResult: ValidatorTypes.Valid },
-    savedAtStart: { value: undefined, validationResult: ValidatorTypes.Optional },
-    moSavings: { value: undefined, validationResult: ValidatorTypes.Optional },
+    savedAtStart: { value: 1000, validationResult: ValidatorTypes.Valid },
+    moSavings: { value: 200, validationResult: ValidatorTypes.Valid },
     purchaseRules: [],
     holdRules: [],
   });
@@ -120,6 +112,7 @@ export const App = function () {
               highestGenerationAmount: { value: 6, validationResult: ValidatorTypes.Valid },
             },
           }}
+          onChange={() => {}}
         ></PropertiesInformation>
       )}
       {location === 'Results' && <RawResults userInfo={userInfo} />}

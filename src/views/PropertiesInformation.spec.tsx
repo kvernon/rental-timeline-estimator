@@ -15,6 +15,7 @@ describe('PropertiesInformation unit tests', () => {
 
   beforeEach(() => {
     props = {
+      onChange: jest.fn(),
       house: {
         propertyType: PropertyType.SingleFamily,
         highestGenerationAmount: { value: 1, validationResult: ValidatorTypes.Valid },

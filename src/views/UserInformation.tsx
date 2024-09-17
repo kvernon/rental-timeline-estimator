@@ -6,13 +6,9 @@ import { RangeFieldValidator } from '../components/validators/RangeFieldValidato
 import { Stack } from '../components/core/Stack';
 import styled from '@emotion/styled';
 import { IUserInformationProps } from './IUserInformationProps';
-import { IRuleValues } from '../components/rules/IRuleValues';
-import { IEventResult } from '../components/validators/IEventResult';
-import { ISelectOption } from '../components/core/ISelectOption';
 import { FontGroups } from '../theming/fontGroups';
-import { evaluateValidation } from '../components/validators/evaluateValidation';
-import { isInRange } from '../components/validators/isInRange';
 import { getRulesValuesToRulesValuesResults } from './getRulesValuesToRulesValuesResults';
+import { IUserInfo } from '../data/IUserInfo';
 
 const RulesStack = styled(Stack)`
   width: unset;
@@ -32,20 +28,13 @@ const RulesCollectionWidth = styled(RulesCollection)`
 
 export function UserInformation(props: IUserInformationProps) {
   const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
-  const [value, setValue] = useState<{
-    goal: IEventResult<number | undefined>;
-    savedAtStart: IEventResult<number | undefined>;
-    moSavings: IEventResult<number | undefined>;
-    purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
-    holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
-  }>(props.values);
+  const [value, setValue] = useState<IUserInfo>(props.values);
   useEffect(() => {
     setIsDataLoaded(false);
   }, [props]);
 
   useEffect(() => {
     if (isDataLoaded && props.onChange) {
-      //console.log('UserInformation::useEffect', value)
       props.onChange(value);
     }
   }, [value, isDataLoaded, props]);
@@ -67,20 +56,20 @@ export function UserInformation(props: IUserInformationProps) {
         id="goal-panel"
         onChange={(e) => {
           const n = { ...value };
-          if (n.goal.value !== e.value?.value) {
-            n.goal = evaluateValidation(true, isInRange, e.value?.value, { min: 1000, max: 100000 });
+          if (n.goal.value !== e.value) {
+            n.goal = e;
             setValue(n);
             setIsDataLoaded(true);
           }
         }}
       />
 
-      <RangeValidationPanel title="Savings">
-        <RangeFieldValidator
+      <RangeValidationPanel title="Savings" required={true}>
+        <RangeFieldValidator<true>
           min={0}
           max={9999999}
           prefix="$"
-          required={false}
+          required={true}
           title="Amount Saved at Start"
           hasSpinner={true}
           useUnderlineOnly={false}
@@ -89,18 +78,18 @@ export function UserInformation(props: IUserInformationProps) {
           id="amount-saved-at-start"
           onChange={(e) => {
             const n = { ...value };
-            if (n.savedAtStart.value !== e.value?.value) {
-              n.savedAtStart = evaluateValidation(true, isInRange, e.value?.value, { min: 0, max: 9999999 });
+            if (n.savedAtStart.value !== e.value) {
+              n.savedAtStart = e;
               setValue(n);
               setIsDataLoaded(true);
             }
           }}
         />
-        <RangeFieldValidator
+        <RangeFieldValidator<true>
           min={0}
           max={9999999}
           prefix="$"
-          required={false}
+          required={true}
           title="Amount Saved Per Month"
           hasSpinner={true}
           showTitle={true}
@@ -109,8 +98,8 @@ export function UserInformation(props: IUserInformationProps) {
           id="amount-saved-per-month"
           onChange={(e) => {
             const n = { ...value };
-            if (n.moSavings.value !== e.value?.value) {
-              n.moSavings = evaluateValidation(true, isInRange, e.value?.value, { min: 0, max: 9999999 });
+            if (n.moSavings.value !== e.value) {
+              n.moSavings = e;
               setValue(n);
               setIsDataLoaded(true);
             }
@@ -124,13 +113,7 @@ export function UserInformation(props: IUserInformationProps) {
           values={value.purchaseRules}
           possibleChoices={props.choices.purchaseRules}
           onChange={(e) => {
-            const n: {
-              goal: IEventResult<number | undefined>;
-              savedAtStart: IEventResult<number | undefined>;
-              moSavings: IEventResult<number | undefined>;
-              purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
-              holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
-            } = { ...value };
+            const n: IUserInfo = { ...value };
             n.purchaseRules = getRulesValuesToRulesValuesResults(false, e, props.choices.purchaseRules);
             if (JSON.stringify(value.purchaseRules) !== JSON.stringify(n.purchaseRules)) {
               setValue(n);
@@ -144,13 +127,7 @@ export function UserInformation(props: IUserInformationProps) {
           values={value.holdRules}
           possibleChoices={props.choices.holdRules}
           onChange={(e) => {
-            const n: {
-              goal: IEventResult<number | undefined>;
-              savedAtStart: IEventResult<number | undefined>;
-              moSavings: IEventResult<number | undefined>;
-              purchaseRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
-              holdRules: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
-            } = { ...value };
+            const n: IUserInfo = { ...value };
             n.holdRules = getRulesValuesToRulesValuesResults(false, e, props.choices.holdRules);
             if (JSON.stringify(value.holdRules) !== JSON.stringify(n.holdRules)) {
               setValue(n);
