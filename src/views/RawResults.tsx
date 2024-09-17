@@ -1,8 +1,5 @@
 import { Stack } from '../components/core/Stack';
 import React from 'react';
-import { IRuleValues } from '../components/rules/IRuleValues';
-import { IEventResult } from '../components/validators/IEventResult';
-import { ISelectOption } from '../components/core/ISelectOption';
 import { generate } from '../data/generate';
 import styled from '@emotion/styled';
 import { IUserInfo } from '../data/IUserInfo';
