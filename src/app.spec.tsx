@@ -7,7 +7,7 @@ import { themeMock } from '../__tests__/ThemeMock';
 import { IThemeOptions } from './theming/IThemeOptions';
 
 jest.mock('./components/core/Page');
-jest.mock('./components/views/UserInformation');
+jest.mock('./views/UserInformation');
 jest.mock('./components/navigation/NavList');
 
 describe('App unit tests', () => {
@@ -29,7 +29,7 @@ describe('App unit tests', () => {
     test('should contain Nav', () => {
       render(<App />);
 
-      expect(screen.getByLabelText('navigation')).toBeInTheDocument();
+      expect(screen.getByLabelText('Navigation')).toBeInTheDocument();
     });
   });
 });

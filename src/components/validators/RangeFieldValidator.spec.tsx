@@ -27,7 +27,7 @@ describe('input-range unit tests', () => {
 
   describe('and defaults', () => {
     test('should render', () => {
-      render(<RangeFieldValidator id={id} title={title} />);
+      render(<RangeFieldValidator id={id} title={title} value={undefined} />);
 
       const label = screen.queryByLabelText<HTMLLabelElement>('');
       const actual = screen.getByLabelText<HTMLInputElement>(title);
@@ -45,7 +45,7 @@ describe('input-range unit tests', () => {
 
   describe('and formatting', () => {
     test('and title with default of showTitle true', () => {
-      render(<RangeFieldValidator id={id} title={title} />);
+      render(<RangeFieldValidator id={id} title={title} value={undefined} />);
 
       const label = screen.queryByText<HTMLLabelElement>(title);
 
@@ -53,7 +53,7 @@ describe('input-range unit tests', () => {
     });
 
     test('and title with default of showTitle true', () => {
-      render(<RangeFieldValidator id={id} title={title} showTitle={true} />);
+      render(<RangeFieldValidator id={id} title={title} showTitle={true} value={undefined} />);
 
       const label = screen.queryByText<HTMLLabelElement>(title);
 
@@ -61,7 +61,7 @@ describe('input-range unit tests', () => {
     });
 
     test('and title with default of showTitle false', () => {
-      render(<RangeFieldValidator id={id} title={title} showTitle={false} />);
+      render(<RangeFieldValidator id={id} title={title} showTitle={false} value={undefined} />);
 
       const label = screen.queryByText<HTMLLabelElement>(title);
 
@@ -71,7 +71,7 @@ describe('input-range unit tests', () => {
     test('and prefix', () => {
       const text = 'text';
 
-      render(<RangeFieldValidator id={id} prefix={text} title={title} />);
+      render(<RangeFieldValidator id={id} prefix={text} title={title} value={undefined} />);
 
       const span = screen.queryByText<HTMLSpanElement>(text);
 
@@ -81,7 +81,7 @@ describe('input-range unit tests', () => {
     test('and suffix', () => {
       const text = 'text';
 
-      render(<RangeFieldValidator id={id} suffix={text} title={title} />);
+      render(<RangeFieldValidator id={id} suffix={text} title={title} value={undefined} />);
 
       const span = screen.queryByText<HTMLSpanElement>(text);
 
@@ -90,7 +90,7 @@ describe('input-range unit tests', () => {
   });
 
   test('should render required', () => {
-    render(<RangeFieldValidator id={id} required={true} title={title} />);
+    render(<RangeFieldValidator id={id} required={true} title={title} value={{ value: 2, validationResult: ValidatorTypes.Valid }} />);
 
     const actual = screen.getByLabelText<HTMLInputElement>(title);
 
@@ -100,7 +100,7 @@ describe('input-range unit tests', () => {
   test('should use min max', () => {
     const min = 10;
     const max = 20;
-    render(<RangeFieldValidator id={id} min={min} max={max} title={title} />);
+    render(<RangeFieldValidator id={id} min={min} max={max} title={title} value={undefined} />);
 
     const actual = screen.getByLabelText<HTMLInputElement>(title);
 
@@ -110,7 +110,7 @@ describe('input-range unit tests', () => {
 
   describe('and interaction', () => {
     test('should update value', () => {
-      render(<RangeFieldValidator id={id} title={title} />);
+      render(<RangeFieldValidator id={id} title={title} value={undefined} />);
       const actual = screen.getByLabelText<HTMLInputElement>(title);
 
       fireEvent.change(actual, { target: { value: '23' } });
@@ -135,12 +135,8 @@ describe('input-range unit tests', () => {
       fireEvent.change(actual, { target: { value: '23' } });
 
       expect(onChangeMock).toHaveBeenCalledWith({
-        id,
-        title,
-        max: 20,
-        min: 10,
-        required: true,
-        value: { value: 23 },
+        value: 23,
+        validationResult: ValidatorTypes.Invalid,
       });
     });
   });

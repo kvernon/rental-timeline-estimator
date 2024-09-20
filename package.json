@@ -23,8 +23,7 @@
     "webpack:prod": "webpack --mode=production",
     "prewebpack": "npm run clean",
     "webpack:serve:debug": "node --inspect ./node_modules/webpack/bin/webpack.js serve --mode=development",
-    "webpack:serve": "webpack serve --mode=development",
-    "webpack:serve2": "webpack-dev-server --mode=development"
+    "webpack:serve": "webpack serve --mode=development"
   },
   "keywords": [],
   "author": "Kelly Vernon",

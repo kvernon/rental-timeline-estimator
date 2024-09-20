@@ -1,4 +1,9 @@
-export interface IRangeFieldValidatorEvent<T> {
+import { IEventResult } from './IEventResult';
+
+export type ConditionalNumber<B extends boolean> = B extends true ? number : number | undefined;
+export type ConditionEventResult<B extends boolean, T> = B extends true ? IEventResult<T> : IEventResult<T> | undefined;
+
+export interface IRangeFieldValidatorEvent<Required extends boolean = false> {
   id: string;
 
   /**
@@ -10,7 +15,7 @@ export interface IRangeFieldValidatorEvent<T> {
    */
   min?: number;
 
-  required?: boolean;
+  required?: Required;
 
-  value?: T;
+  value: ConditionEventResult<Required, ConditionalNumber<Required>>;
 }

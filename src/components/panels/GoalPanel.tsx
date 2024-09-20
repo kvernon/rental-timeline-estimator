@@ -22,15 +22,15 @@ const StackPosition = styled(Stack)`
   z-index: 2;
 `;
 
-const ZRangeFieldValidator = styled(RangeFieldValidator)`
-  z-index: 4;
-`;
-
-export const GoalPanel = (props: IRangeFieldValidatorProps) => {
+export const GoalPanel = <Required extends boolean = false>(props: IRangeFieldValidatorProps<Required>) => {
   const [x, setX] = useState<number | undefined>();
   const [y, setY] = useState<number | undefined>();
   const [width, setWidth] = useState<number | undefined>();
   const [height, setHeight] = useState<number | undefined>();
+
+  const ZRangeFieldValidator = styled(RangeFieldValidator<Required>)`
+    z-index: 4;
+  `;
 
   useEffect(() => {
     const getPosition = () => {
@@ -61,7 +61,15 @@ export const GoalPanel = (props: IRangeFieldValidatorProps) => {
     <TopStack aria-label={'Goal Panel'}>
       <Spinner shape={{ x, width, y, height }} />
       <StackPosition spacing={2} paddingLeft={'20%'} paddingTop={'25px'} paddingBottom={'25px'} paddingRight={'20%'}>
-        <ZRangeFieldValidator {...props} id={props.id} direction={'row'} useUnderlineOnly hasSpinner={false} useTransparent={true} />
+        <ZRangeFieldValidator
+          {...props}
+          id={props.id}
+          direction={'row'}
+          useUnderlineOnly
+          hasSpinner={false}
+          useTransparent={true}
+          required={props.required}
+        />
       </StackPosition>
     </TopStack>
   );

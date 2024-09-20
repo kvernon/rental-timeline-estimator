@@ -5,6 +5,7 @@ import { IRangeFieldValidatorProps } from '../validators/IRangeFieldValidatorPro
 import { Theme, useTheme } from '@emotion/react';
 import { IThemeOptions } from '../../theming/IThemeOptions';
 import { ITypography } from '../../theming/ITypography';
+import { ValidatorTypes } from '../validators/ValidatorTypes';
 
 jest.mock('@emotion/react', () => {
   const requireActual = jest.requireActual('@emotion/react');
@@ -77,7 +78,9 @@ describe('GoalPanel unit test', () => {
   });
 
   test('should render', () => {
-    const p: IRangeFieldValidatorProps = {
+    const p: IRangeFieldValidatorProps<true> = {
+      onChange: jest.fn(),
+      value: { value: 10, validationResult: ValidatorTypes.Valid },
       title: 'Goal',
       id: 'goal',
       required: true,

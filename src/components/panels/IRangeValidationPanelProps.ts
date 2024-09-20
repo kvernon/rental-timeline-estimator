@@ -1,8 +1,8 @@
 import React from 'react';
 import { IRangeFieldValidatorProps } from '../validators/IRangeFieldValidatorProps';
 
-export interface IRangeValidationPanelProps {
-  required?: boolean;
-  children: React.ReactElement<IRangeFieldValidatorProps>[] | React.ReactElement<IRangeFieldValidatorProps>;
+export interface IRangeValidationPanelProps<Required extends boolean> {
+  required: Required;
+  children: React.ReactElement<IRangeFieldValidatorProps<Required>>[] | React.ReactElement<IRangeFieldValidatorProps<Required>>;
   title: string;
 }
