@@ -12,6 +12,10 @@ export interface IPropertyInformationParams {
   highestEquityCapturePercent: ConditionEventResult<true, ConditionalNumber<true>>;
   lowestGenerationAmount: ConditionEventResult<true, ConditionalNumber<true>>;
   highestGenerationAmount: ConditionEventResult<true, ConditionalNumber<true>>;
+  lowestMinSellInYears: ConditionEventResult<true, ConditionalNumber<true>>;
+  highestMinSellInYears: ConditionEventResult<true, ConditionalNumber<true>>;
+  lowestAppreciationValue: ConditionEventResult<true, ConditionalNumber<true>>;
+  highestAppreciationValue: ConditionEventResult<true, ConditionalNumber<true>>;
 }
 
 export interface IPropertyInformationOnChangeParams extends IPropertyInformationParams {

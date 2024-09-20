@@ -3,7 +3,7 @@ import '@testing-library/jest-dom';
 import React from 'react';
 import { RawResults } from './RawResults';
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
-import { HoldRuleTypes, PurchaseRuleTypes } from '@cubedelement.com/realty-investor-timeline';
+import { HoldRuleTypes, PropertyType, PurchaseRuleTypes } from '@cubedelement.com/realty-investor-timeline';
 import { generate } from '../data/generate';
 import { IUserInfo } from '../data/IUserInfo';
 
@@ -39,7 +39,45 @@ describe('RawResults unit tests', () => {
       goal: { value: 3, validationResult: ValidatorTypes.Valid },
     };
 
-    render(<RawResults userInfo={userInfo} />);
+    render(
+      <RawResults
+        userInfo={userInfo}
+        propertiesInfo={{
+          house: {
+            propertyType: PropertyType.SingleFamily,
+            highestGenerationAmount: { value: 1, validationResult: ValidatorTypes.Valid },
+            lowestGenerationAmount: { value: 1, validationResult: ValidatorTypes.Valid },
+            highestCashFlow: { value: 1, validationResult: ValidatorTypes.Valid },
+            highestEquityCapturePercent: { value: 1, validationResult: ValidatorTypes.Valid },
+            highestPurchasePrice: { value: 1, validationResult: ValidatorTypes.Valid },
+            lowestCashFlow: { value: 1, validationResult: ValidatorTypes.Valid },
+            lowestEquityCapturePercent: { value: 1, validationResult: ValidatorTypes.Valid },
+            lowestPurchasePrice: { value: 1, validationResult: ValidatorTypes.Valid },
+            lowestMinSellInYears: { value: 1, validationResult: ValidatorTypes.Valid },
+            highestMinSellInYears: { value: 1, validationResult: ValidatorTypes.Valid },
+            lowestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
+            highestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
+            title: 'title',
+          },
+          apartment: {
+            propertyType: PropertyType.SingleFamily,
+            highestGenerationAmount: { value: 1, validationResult: ValidatorTypes.Valid },
+            lowestGenerationAmount: { value: 1, validationResult: ValidatorTypes.Valid },
+            highestCashFlow: { value: 1, validationResult: ValidatorTypes.Valid },
+            highestEquityCapturePercent: { value: 1, validationResult: ValidatorTypes.Valid },
+            highestPurchasePrice: { value: 1, validationResult: ValidatorTypes.Valid },
+            lowestCashFlow: { value: 1, validationResult: ValidatorTypes.Valid },
+            lowestEquityCapturePercent: { value: 1, validationResult: ValidatorTypes.Valid },
+            lowestPurchasePrice: { value: 1, validationResult: ValidatorTypes.Valid },
+            lowestMinSellInYears: { value: 1, validationResult: ValidatorTypes.Valid },
+            highestMinSellInYears: { value: 1, validationResult: ValidatorTypes.Valid },
+            lowestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
+            highestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
+            title: 'title',
+          },
+        }}
+      />,
+    );
   });
 
   describe('RawResults unit tests', () => {

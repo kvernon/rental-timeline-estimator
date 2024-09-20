@@ -23,6 +23,10 @@ describe('PropertyInformation unit tests', () => {
       lowestCashFlow: { value: 1, validationResult: ValidatorTypes.Valid },
       lowestEquityCapturePercent: { value: 1, validationResult: ValidatorTypes.Valid },
       lowestPurchasePrice: { value: 1, validationResult: ValidatorTypes.Valid },
+      lowestMinSellInYears: { value: 1, validationResult: ValidatorTypes.Valid },
+      highestMinSellInYears: { value: 1, validationResult: ValidatorTypes.Valid },
+      lowestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
+      highestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
       title: 'title',
       onChange: jest.fn(),
     };
@@ -72,6 +76,38 @@ describe('PropertyInformation unit tests', () => {
 
       test('should render Highest Market Value', () => {
         const generatorAmount = screen.getByLabelText<HTMLInputElement>('Highest Market Value');
+
+        expect(generatorAmount).toBeInTheDocument();
+      });
+    });
+
+    describe('and Sell Price', () => {
+      test('should render Sell Price', () => {
+        const generatorAmount = screen.getByLabelText<HTMLDivElement>('Sell Price');
+
+        expect(generatorAmount).toBeInTheDocument();
+      });
+
+      test('should render Lowest Sell Time', () => {
+        const generatorAmount = screen.getByLabelText<HTMLInputElement>('Lowest Sell Time');
+
+        expect(generatorAmount).toBeInTheDocument();
+      });
+
+      test('should render Highest Sell Time', () => {
+        const generatorAmount = screen.getByLabelText<HTMLInputElement>('Highest Sell Time');
+
+        expect(generatorAmount).toBeInTheDocument();
+      });
+
+      test('should render Lowest Appreciation Percent', () => {
+        const generatorAmount = screen.getByLabelText<HTMLInputElement>('Lowest Appreciation Percent');
+
+        expect(generatorAmount).toBeInTheDocument();
+      });
+
+      test('should render Highest Appreciation Percent', () => {
+        const generatorAmount = screen.getByLabelText<HTMLInputElement>('Highest Appreciation Percent');
 
         expect(generatorAmount).toBeInTheDocument();
       });

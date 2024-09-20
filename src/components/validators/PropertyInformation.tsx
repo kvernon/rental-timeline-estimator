@@ -36,6 +36,7 @@ export const PropertyInformation = (props: IPropertyInformationOnChangeParams) =
               });
             }}
           />
+
           <RangeFieldValidator<true>
             min={props.lowestPurchasePrice.value + 1}
             max={10}
@@ -89,6 +90,83 @@ export const PropertyInformation = (props: IPropertyInformationOnChangeParams) =
               props.onChange({
                 ...props,
                 highestPurchasePrice: e,
+              });
+            }}
+          />
+        </RangeValidationPanel>
+
+        <RangeValidationPanel title="Sell Price" required={true}>
+          <RangeFieldValidator<true>
+            min={5}
+            max={20}
+            suffix="Years"
+            required={true}
+            title="Lowest Sell Time"
+            hasSpinner={true}
+            useUnderlineOnly={false}
+            showTitle={true}
+            value={props.lowestMinSellInYears}
+            id="lowest-minimum-sell-in-years"
+            onChange={(e) => {
+              props.onChange({
+                ...props,
+                lowestMinSellInYears: e,
+              });
+            }}
+          />
+
+          <RangeFieldValidator<true>
+            min={props.highestMinSellInYears.value + 1}
+            max={20}
+            suffix="Years"
+            required={true}
+            title="Highest Sell Time"
+            hasSpinner={true}
+            useUnderlineOnly={false}
+            showTitle={true}
+            value={props.highestMinSellInYears}
+            id="highest-minimum-sell-in-years"
+            onChange={(e) => {
+              props.onChange({
+                ...props,
+                highestMinSellInYears: e,
+              });
+            }}
+          />
+
+          <RangeFieldValidator<true>
+            min={1}
+            max={20}
+            suffix="%"
+            required={true}
+            title="Lowest Appreciation Percent"
+            hasSpinner={true}
+            useUnderlineOnly={false}
+            showTitle={true}
+            value={props.lowestAppreciationValue}
+            id="lowest-appreciation-value"
+            onChange={(e) => {
+              props.onChange({
+                ...props,
+                lowestAppreciationValue: e,
+              });
+            }}
+          />
+          <RangeFieldValidator<true>
+            min={props.lowestAppreciationValue.value + 1}
+            max={20}
+            suffix="%"
+            required={true}
+            title="Highest Appreciation Percent"
+            hasSpinner={true}
+            useUnderlineOnly={false}
+            showTitle={true}
+            value={props.highestAppreciationValue}
+            id="highest-appreciation-value"
+            onChange={(e) => {
+              props.onChange({
+                ...props,
+                highestAppreciationValue: e,
               });
             }}
           />

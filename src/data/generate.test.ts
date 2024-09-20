@@ -1,7 +1,4 @@
 import { HoldRuleTypes, ISimulateOptions, PropertyType, PurchaseRuleTypes, simulate } from '@cubedelement.com/realty-investor-timeline';
-import { IRuleValues } from '../components/rules/IRuleValues';
-import { IEventResult } from '../components/validators/IEventResult';
-import { ISelectOption } from '../components/core/ISelectOption';
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
 import { generate } from './generate';
 import { getPurchaseRuleType } from './getPurchaseRuleType';
@@ -52,7 +49,42 @@ describe('generate unit tests', () => {
         goal: { value: 3, validationResult: ValidatorTypes.Valid },
       };
 
-      generate(userInfo);
+      const propertiesInfo = {
+        apartment: {
+          title: '',
+          propertyType: PropertyType.PassiveApartment,
+          lowestPurchasePrice: { value: 1, validationResult: ValidatorTypes.Valid },
+          highestPurchasePrice: { value: 1, validationResult: ValidatorTypes.Valid },
+          lowestCashFlow: { value: 1, validationResult: ValidatorTypes.Valid },
+          highestCashFlow: { value: 1, validationResult: ValidatorTypes.Valid },
+          lowestEquityCapturePercent: { value: 1, validationResult: ValidatorTypes.Valid },
+          highestEquityCapturePercent: { value: 1, validationResult: ValidatorTypes.Valid },
+          lowestGenerationAmount: { value: 1, validationResult: ValidatorTypes.Valid },
+          highestGenerationAmount: { value: 1, validationResult: ValidatorTypes.Valid },
+          lowestMinSellInYears: { value: 1, validationResult: ValidatorTypes.Valid },
+          highestMinSellInYears: { value: 1, validationResult: ValidatorTypes.Valid },
+          lowestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
+          highestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
+        },
+        house: {
+          title: '',
+          propertyType: PropertyType.SingleFamily,
+          lowestPurchasePrice: { value: 1, validationResult: ValidatorTypes.Valid },
+          highestPurchasePrice: { value: 1, validationResult: ValidatorTypes.Valid },
+          lowestCashFlow: { value: 1, validationResult: ValidatorTypes.Valid },
+          highestCashFlow: { value: 1, validationResult: ValidatorTypes.Valid },
+          lowestEquityCapturePercent: { value: 1, validationResult: ValidatorTypes.Valid },
+          highestEquityCapturePercent: { value: 1, validationResult: ValidatorTypes.Valid },
+          lowestGenerationAmount: { value: 1, validationResult: ValidatorTypes.Valid },
+          highestGenerationAmount: { value: 1, validationResult: ValidatorTypes.Valid },
+          lowestMinSellInYears: { value: 1, validationResult: ValidatorTypes.Valid },
+          highestMinSellInYears: { value: 1, validationResult: ValidatorTypes.Valid },
+          lowestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
+          highestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
+        },
+      };
+
+      generate(userInfo, propertiesInfo);
 
       const expected: ISimulateOptions = {
         purchaseRules: [
@@ -86,30 +118,30 @@ describe('generate unit tests', () => {
         monthlyIncomeAmountGoal: userInfo.goal.value as number,
         monthlySavedAmount: userInfo.moSavings.value as number,
         generatorOptionsPassiveApartment: {
-          highestCashFlow: 500,
-          highestEquityCapturePercent: 15,
+          highestCashFlow: 1,
+          highestEquityCapturePercent: 1,
           highestMinSellInYears: 1,
-          highestPurchasePrice: 200000,
-          highestSellAppreciationPercent: 7,
-          lowestCashFlow: 200,
-          lowestEquityCapturePercent: 7,
+          highestPurchasePrice: 1,
+          highestSellAppreciationPercent: 1,
+          lowestCashFlow: 1,
+          lowestEquityCapturePercent: 1,
           lowestMinSellInYears: 1,
-          lowestPurchasePrice: 150000,
-          lowestSellAppreciationPercent: 5,
-          maxRentalOpportunities: 6,
+          lowestPurchasePrice: 1,
+          lowestSellAppreciationPercent: 1,
+          maxRentalOpportunities: 1,
         },
         generatorOptionsSingleFamily: {
-          highestCashFlow: 550,
-          highestEquityCapturePercent: 15,
+          highestCashFlow: 1,
+          highestEquityCapturePercent: 1,
           highestMinSellInYears: 1,
-          highestPurchasePrice: 250000,
-          highestSellAppreciationPercent: 7,
-          lowestCashFlow: 200,
-          lowestEquityCapturePercent: 7,
+          highestPurchasePrice: 1,
+          highestSellAppreciationPercent: 1,
+          lowestCashFlow: 1,
+          lowestEquityCapturePercent: 1,
           lowestMinSellInYears: 1,
-          lowestPurchasePrice: 150000,
-          lowestSellAppreciationPercent: 5,
-          maxRentalOpportunities: 4,
+          lowestPurchasePrice: 1,
+          lowestSellAppreciationPercent: 1,
+          maxRentalOpportunities: 1,
         },
       };
 
@@ -129,7 +161,42 @@ describe('generate unit tests', () => {
         goal: { value: 3, validationResult: ValidatorTypes.Invalid },
       };
 
-      expect(generate(userInfo)).toEqual(null);
+      expect(
+        generate(userInfo, {
+          apartment: {
+            title: '',
+            propertyType: PropertyType.PassiveApartment,
+            lowestPurchasePrice: { value: 1, validationResult: ValidatorTypes.Valid },
+            highestPurchasePrice: { value: 1, validationResult: ValidatorTypes.Valid },
+            lowestCashFlow: { value: 1, validationResult: ValidatorTypes.Valid },
+            highestCashFlow: { value: 1, validationResult: ValidatorTypes.Valid },
+            lowestEquityCapturePercent: { value: 1, validationResult: ValidatorTypes.Valid },
+            highestEquityCapturePercent: { value: 1, validationResult: ValidatorTypes.Valid },
+            lowestGenerationAmount: { value: 1, validationResult: ValidatorTypes.Valid },
+            highestGenerationAmount: { value: 1, validationResult: ValidatorTypes.Valid },
+            lowestMinSellInYears: { value: 1, validationResult: ValidatorTypes.Valid },
+            highestMinSellInYears: { value: 1, validationResult: ValidatorTypes.Valid },
+            lowestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
+            highestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
+          },
+          house: {
+            title: '',
+            propertyType: PropertyType.SingleFamily,
+            lowestPurchasePrice: { value: 1, validationResult: ValidatorTypes.Valid },
+            highestPurchasePrice: { value: 1, validationResult: ValidatorTypes.Valid },
+            lowestCashFlow: { value: 1, validationResult: ValidatorTypes.Valid },
+            highestCashFlow: { value: 1, validationResult: ValidatorTypes.Valid },
+            lowestEquityCapturePercent: { value: 1, validationResult: ValidatorTypes.Valid },
+            highestEquityCapturePercent: { value: 1, validationResult: ValidatorTypes.Valid },
+            lowestGenerationAmount: { value: 1, validationResult: ValidatorTypes.Valid },
+            highestGenerationAmount: { value: 1, validationResult: ValidatorTypes.Valid },
+            lowestMinSellInYears: { value: 1, validationResult: ValidatorTypes.Valid },
+            highestMinSellInYears: { value: 1, validationResult: ValidatorTypes.Valid },
+            lowestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
+            highestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
+          },
+        }),
+      ).toEqual(null);
     });
   });
 });

@@ -26,6 +26,10 @@ describe('PropertiesInformation unit tests', () => {
         lowestCashFlow: { value: 1, validationResult: ValidatorTypes.Valid },
         lowestEquityCapturePercent: { value: 1, validationResult: ValidatorTypes.Valid },
         lowestPurchasePrice: { value: 1, validationResult: ValidatorTypes.Valid },
+        lowestMinSellInYears: { value: 1, validationResult: ValidatorTypes.Valid },
+        highestMinSellInYears: { value: 1, validationResult: ValidatorTypes.Valid },
+        lowestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
+        highestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
         title: 'title',
       },
       apartment: {
@@ -38,6 +42,10 @@ describe('PropertiesInformation unit tests', () => {
         lowestCashFlow: { value: 1, validationResult: ValidatorTypes.Valid },
         lowestEquityCapturePercent: { value: 1, validationResult: ValidatorTypes.Valid },
         lowestPurchasePrice: { value: 1, validationResult: ValidatorTypes.Valid },
+        lowestMinSellInYears: { value: 1, validationResult: ValidatorTypes.Valid },
+        highestMinSellInYears: { value: 1, validationResult: ValidatorTypes.Valid },
+        lowestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
+        highestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
         title: 'title',
       },
     };
