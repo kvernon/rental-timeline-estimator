@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CardListLayout } from '../core/CardListLayout';
-import { List, arrayMove } from 'react-movable';
+import { arrayMove, List } from 'react-movable';
 import { onChangeArray } from './onChangeArray';
 import { AddListButton } from '../core/AddListButton';
 import { IThemeOptions } from '../../theming/IThemeOptions';
@@ -12,9 +12,17 @@ import { IRuleValues } from './IRuleValues';
 import { ISelectOption } from '../core/ISelectOption';
 import { IEventValue } from '../validators/IEventResult';
 import { propertyOptions } from '../validators/PropertyDropDownValidator';
+import { getValidationResult } from './getValidationResult';
+import { ValidatorTypes } from '../validators/ValidatorTypes';
+
+/*
+const shouldShow =
+  ;
+*/
 
 export function RulesCollection(componentProps: IRulesCollectionProps) {
   const [showButton, setShowButton] = useState(false);
+  const [enableButton, setEnableButton] = useState(false);
   const coreTheme = useTheme() as IThemeOptions;
 
   useEffect(() => {
@@ -24,6 +32,17 @@ export function RulesCollection(componentProps: IRulesCollectionProps) {
         componentProps.values.map((x) => x.title),
       ).filter((x) => !x.isDisabled).length > 0,
     );
+
+    if (componentProps.values.length === 0) {
+      setEnableButton(true);
+    } else {
+      setEnableButton(
+        componentProps.values.length === 0
+          ? true
+          : getValidationResult(componentProps.values.map((x) => Object.values(x).map((x) => x.validationResult)).flat(), true) !==
+              ValidatorTypes.Invalid,
+      );
+    }
   }, [componentProps]);
 
   return (
@@ -92,6 +111,7 @@ export function RulesCollection(componentProps: IRulesCollectionProps) {
           role={`Add button for ${componentProps.title}`}
           label="Add"
           theme={coreTheme}
+          isDisabled={!enableButton}
           onClick={function (): void {
             if (componentProps.onChange) {
               const remaining = getRemainingValues(

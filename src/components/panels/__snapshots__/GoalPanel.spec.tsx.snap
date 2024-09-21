@@ -215,10 +215,13 @@ exports[`GoalPanel unit test should render 1`] = `
         id="goal-box"
       >
         <input
+          alt="Range between 0 and 100"
+          aria-description="Range between 0 and 100"
           aria-label="Goal"
           class="emotion-6"
           id="goal"
           required=""
+          title="Range between 0 and 100"
           type="number"
           value="10"
         />

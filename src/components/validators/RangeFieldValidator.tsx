@@ -16,7 +16,7 @@ export function RangeFieldValidator<Required extends boolean = false>(props: IRa
   const coreTheme = useTheme() as IThemeOptions;
   const showTitle = props.showTitle ?? true;
   const validatorResult = props.value?.validationResult || (props.required ? ValidatorTypes.Invalid : ValidatorTypes.Optional);
-
+  const message = `Range between ${props.min || 0} and ${props.max || 100}`;
   return (
     <FormControl id={`${props.id}-form-control`} aria-controls={props.id} role={'input-control'}>
       {showTitle && (
@@ -59,6 +59,9 @@ export function RangeFieldValidator<Required extends boolean = false>(props: IRa
               }
             }
           }}
+          alt={message}
+          title={message}
+          aria-description={message}
           aria-label={props.title}
           validationType={validatorResult}
           required={props.required}

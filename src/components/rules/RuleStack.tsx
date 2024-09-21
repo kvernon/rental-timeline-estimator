@@ -142,7 +142,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
       <ValidationBar
         isValid={getValidationResult(
           Object.values(props.value).map((x) => x.validationResult),
-          props.required || false,
+          true,
         )}
       />
       <DeleteButton

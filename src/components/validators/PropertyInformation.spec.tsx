@@ -81,9 +81,9 @@ describe('PropertyInformation unit tests', () => {
       });
     });
 
-    describe('and Sell Price', () => {
-      test('should render Sell Price', () => {
-        const generatorAmount = screen.getByLabelText<HTMLDivElement>('Sell Price');
+    describe('and Sell Info', () => {
+      test('should render Sell Info', () => {
+        const generatorAmount = screen.getByLabelText<HTMLDivElement>('Sell Info');
 
         expect(generatorAmount).toBeInTheDocument();
       });
