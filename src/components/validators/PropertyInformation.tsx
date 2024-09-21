@@ -38,7 +38,7 @@ export const PropertyInformation = (props: IPropertyInformationOnChangeParams) =
           />
 
           <RangeFieldValidator<true>
-            min={props.lowestPurchasePrice.value + 1}
+            min={props.lowestGenerationAmount.value + 1}
             max={10}
             required={true}
             title="Maximum Generated Rental Opportunities"
@@ -59,7 +59,7 @@ export const PropertyInformation = (props: IPropertyInformationOnChangeParams) =
         <RangeValidationPanel title="Market Value" required={true}>
           <RangeFieldValidator<true>
             min={1}
-            max={5}
+            max={5000000}
             prefix="$"
             required={true}
             title="Lowest Market Value"
@@ -77,7 +77,7 @@ export const PropertyInformation = (props: IPropertyInformationOnChangeParams) =
           />
           <RangeFieldValidator<true>
             min={props.lowestPurchasePrice.value + 1}
-            max={10}
+            max={10000000}
             prefix="$"
             required={true}
             title="Highest Market Value"
@@ -95,7 +95,7 @@ export const PropertyInformation = (props: IPropertyInformationOnChangeParams) =
           />
         </RangeValidationPanel>
 
-        <RangeValidationPanel title="Sell Price" required={true}>
+        <RangeValidationPanel title="Sell Info" required={true}>
           <RangeFieldValidator<true>
             min={5}
             max={20}
@@ -116,7 +116,7 @@ export const PropertyInformation = (props: IPropertyInformationOnChangeParams) =
           />
 
           <RangeFieldValidator<true>
-            min={props.highestMinSellInYears.value + 1}
+            min={props.lowestMinSellInYears.value + 1}
             max={20}
             suffix="Years"
             required={true}
@@ -192,7 +192,7 @@ export const PropertyInformation = (props: IPropertyInformationOnChangeParams) =
             }}
           />
           <RangeFieldValidator<true>
-            min={props.highestCashFlow.value + 1}
+            min={props.lowestCashFlow.value + 1}
             max={10}
             prefix="$"
             required={true}

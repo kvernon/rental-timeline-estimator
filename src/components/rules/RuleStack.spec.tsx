@@ -81,7 +81,7 @@ describe('RuleStack unit tests', () => {
 
       expect(jest.mocked(getValidationResult)).toHaveBeenCalledWith(
         [ValidatorTypes.Optional, ValidatorTypes.Optional, ValidatorTypes.Optional],
-        false,
+        true,
       );
 
       expect(entity).toHaveTextContent(ValidatorTypes.Optional.toString());
@@ -144,7 +144,6 @@ describe('RuleStack unit tests', () => {
     beforeEach(() => {
       props = {
         index: 0,
-        required: true,
         ruleStackValues: [
           {
             min: 3,
@@ -175,10 +174,7 @@ describe('RuleStack unit tests', () => {
     test('should generate with ValidationBar', () => {
       const entity = screen.getByText<HTMLDivElement>(/ValidationBar/);
 
-      expect(jest.mocked(getValidationResult)).toHaveBeenCalledWith(
-        [ValidatorTypes.Valid, ValidatorTypes.Valid, ValidatorTypes.Invalid],
-        props.required,
-      );
+      expect(jest.mocked(getValidationResult)).toHaveBeenCalledWith([ValidatorTypes.Valid, ValidatorTypes.Valid, ValidatorTypes.Invalid], true);
 
       expect(entity).toHaveTextContent(ValidatorTypes.Optional.toString());
     });
@@ -267,7 +263,6 @@ describe('RuleStack unit tests', () => {
             suffix: 'suffix-two',
           },
         ],
-        required: true,
         removeClick: removeClickMock,
         onUpdate: jest.fn(),
       };

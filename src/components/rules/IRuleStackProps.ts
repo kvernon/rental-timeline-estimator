@@ -9,7 +9,6 @@ export interface IRuleStackProps {
   style?: React.CSSProperties;
   value: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>;
   ruleStackValues: IRuleStackEntity[];
-  required?: boolean;
   removeClick?: (evt: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   onUpdate?: (evt: IRuleValues<IEventValue<ISelectOption>, IEventValue<number | undefined>>) => void;
 }

@@ -140,6 +140,7 @@ describe('RulesCollection unit tests', () => {
             {
               role: `Add button for ${props.title}`,
               label: 'Add',
+              isDisabled: false,
               onClick: expect.any(Function),
               theme: themeMock,
             },
