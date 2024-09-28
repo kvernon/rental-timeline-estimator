@@ -5,6 +5,12 @@ export const purchaseConfig: IRuleConfig = {
   panelTitle: 'Purchase Rules',
   collection: [
     {
+      ruleType: PurchaseRuleTypes.MinEstimatedAnnualCashFlow,
+      min: 0,
+      max: 7200,
+      prefix: '$',
+    },
+    {
       ruleType: PurchaseRuleTypes.MinEstimatedCapitalGainsPercent,
       min: 0,
       max: 100,

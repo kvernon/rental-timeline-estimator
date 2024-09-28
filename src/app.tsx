@@ -17,14 +17,67 @@ import { PropertiesInformation } from './views/PropertiesInformation';
 import { IUserInfo } from './data/IUserInfo';
 import { IPropertiesInformationPropsEvent } from './views/IPropertiesInformationProps';
 import { validatePropertiesInfo } from './data/validatePropertiesInfo';
+import { propertyOptions } from './components/validators/PropertyDropDownValidator';
 
 export const App = function () {
+  const [choices] = React.useState<{
+    purchaseRules: IRuleStackEntity[];
+    holdRules: IRuleStackEntity[];
+  }>({
+    holdRules: getRuleChoices(holdConfig.collection),
+    purchaseRules: getRuleChoices(purchaseConfig.collection),
+  });
+
   const [userInfo, setUserInfo] = React.useState<IUserInfo>({
     goal: { value: 3000, validationResult: ValidatorTypes.Valid },
     savedAtStart: { value: 1000, validationResult: ValidatorTypes.Valid },
     moSavings: { value: 200, validationResult: ValidatorTypes.Valid },
-    purchaseRules: [],
-    holdRules: [],
+    purchaseRules: [
+      {
+        title: {
+          value: { value: 0, label: choices.purchaseRules[0].ruleTitle },
+          validationResult: ValidatorTypes.Valid,
+        },
+        property: {
+          value: { value: 1, label: propertyOptions[1] },
+          validationResult: ValidatorTypes.Valid,
+        },
+        range: {
+          value: 3600,
+          validationResult: ValidatorTypes.Valid,
+        },
+      },
+      {
+        title: {
+          value: { value: 3, label: choices.purchaseRules[3].ruleTitle },
+          validationResult: ValidatorTypes.Valid,
+        },
+        property: {
+          value: { value: 1, label: propertyOptions[1] },
+          validationResult: ValidatorTypes.Valid,
+        },
+        range: {
+          value: 60000,
+          validationResult: ValidatorTypes.Valid,
+        },
+      },
+    ],
+    holdRules: [
+      {
+        title: {
+          value: { value: 2, label: choices.holdRules[2].ruleTitle },
+          validationResult: ValidatorTypes.Valid,
+        },
+        property: {
+          value: { value: 1, label: propertyOptions[1] },
+          validationResult: ValidatorTypes.Valid,
+        },
+        range: {
+          value: 1,
+          validationResult: ValidatorTypes.Valid,
+        },
+      },
+    ],
   });
 
   const [propertiesInfo, setPropertiesInfo] = React.useState<IPropertiesInformationPropsEvent>({
@@ -62,14 +115,6 @@ export const App = function () {
     },
   });
 
-  const [choices] = React.useState<{
-    purchaseRules: IRuleStackEntity[];
-    holdRules: IRuleStackEntity[];
-  }>({
-    holdRules: getRuleChoices(holdConfig.collection),
-    purchaseRules: getRuleChoices(purchaseConfig.collection),
-  });
-
   const [location, setLocation] = React.useState<string>('Basics');
 
   const [navList, setNavList] = React.useState<
@@ -83,7 +128,8 @@ export const App = function () {
     { title: 'Properties' },
     {
       title: 'Results',
-      isDisabled: true,
+      isDisabled:
+        validateUserInfo(true, userInfo) === ValidatorTypes.Invalid && validatePropertiesInfo(true, propertiesInfo) === ValidatorTypes.Invalid,
     },
   ]);
 

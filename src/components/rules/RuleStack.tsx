@@ -111,7 +111,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
       suffix={selectedValueOptions?.suffix}
       useUnderlineOnly={false}
       onChange={(evt) => rangeFieldValidatorOnChange(evt)}
-      value={undefined}
+      value={props.value.range}
     />
   );
 
