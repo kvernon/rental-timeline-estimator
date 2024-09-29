@@ -1,3 +1,4 @@
 export function getDate(date: Date): string {
-  return date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+  const monthZeroBased = date.getMonth();
+  return date.getFullYear() + '-' + (monthZeroBased + 1) + '-' + date.getDate();
 }
