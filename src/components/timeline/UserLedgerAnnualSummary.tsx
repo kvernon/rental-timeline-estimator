@@ -2,7 +2,7 @@ import React from 'react';
 import { Stack } from '../core/Stack';
 import { ILedgerCollection } from '@cubedelement.com/realty-investor-timeline';
 import { MoneyCell, MoneyCellStyle } from './MoneyCell';
-import { DateCell, DateCellStyle } from './DateCell';
+import { DateCellStyle } from './DateCell';
 
 function LedgerHeader() {
   return (
@@ -25,7 +25,7 @@ export function UserLedgerAnnualSummary(props: { ledgerCollection: ILedgerCollec
     <>
       <LedgerHeader />
       <Stack direction={'row'}>
-        <DateCell date={currentYear.date} />
+        <DateCellStyle>&gt;&gt;</DateCellStyle>
         <MoneyCellStyle>{currentYear.equity}</MoneyCellStyle>
         <MoneyCellStyle>{currentYear.purchases}</MoneyCellStyle>
         <MoneyCell currency={currentYear.cashFlow} />

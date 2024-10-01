@@ -30,8 +30,8 @@ export const App = function () {
 
   const [userInfo, setUserInfo] = React.useState<IUserInfo>({
     goal: { value: 3000, validationResult: ValidatorTypes.Valid },
-    savedAtStart: { value: 1000, validationResult: ValidatorTypes.Valid },
-    moSavings: { value: 200, validationResult: ValidatorTypes.Valid },
+    savedAtStart: { value: 50000, validationResult: ValidatorTypes.Valid },
+    moSavings: { value: 1000, validationResult: ValidatorTypes.Valid },
     purchaseRules: [
       {
         title: {

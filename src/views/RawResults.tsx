@@ -59,7 +59,12 @@ export function RawResults(props: { userInfo: IUserInfo; propertiesInfo: IProper
 
         <Stack theme={coreTheme} direction="column">
           {location === 'Ledger' && results && (
-            <UserLedger ledgerCollection={results.user.ledgerCollection} startDate={results.startDate} endDate={results.endDate} />
+            <UserLedger
+              ledgerCollection={results.user.ledgerCollection}
+              startDate={results.startDate}
+              endDate={results.endDate}
+              monthlyIncomeAmountGoal={results.user.monthlyIncomeAmountGoal}
+            />
           )}
 
           {location === 'Properties' && results && <TimelineProperties rentals={results.rentals} />}
