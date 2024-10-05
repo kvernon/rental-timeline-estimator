@@ -1,26 +1,30 @@
-import { ITimeline } from '@cubedelement.com/realty-investor-timeline';
 import { Stack } from '../components/core/Stack';
 import { getDate } from '../data/getDate';
 import React from 'react';
 import { ValidationPanel } from '../components/panels/ValidationPanel';
+import { currencyFormatter } from '../data/data-number';
 
-export function UserSummary(props: { results: ITimeline }) {
+export function UserSummary(props: {
+  ownedProperties: number;
+  allOwnedProperties: number;
+  startDate: Date;
+  endDate: Date;
+  metMonthlyGoal: boolean;
+  balance: number;
+  equity: number;
+  estimatedCashFlow: number;
+}) {
   return (
-    <ValidationPanel
-      title={'Results'}
-      isValid={() =>
-        props.results.user.metMonthlyGoal(
-          props.results.endDate,
-          props.results.rentals.map((x) => x.property),
-        )
-      }
-    >
+    <ValidationPanel title={'Results'} isValid={() => props.metMonthlyGoal}>
       <Stack direction={'row'}>
         {' '}
-        date range: {getDate(props.results.startDate)} - {getDate(props.results.endDate)}
+        Date range: {getDate(props.startDate)} - {getDate(props.endDate)}
       </Stack>
-      <Stack direction={'row'}>end balance: {props.results.getBalance(props.results.endDate)}</Stack>
-      <Stack direction={'row'}>estimated Monthly cash flow: {props.results.getEstimatedMonthlyCashFlow()}</Stack>
+      <Stack direction={'row'}>End balance: {currencyFormatter(props.balance)}</Stack>
+      <Stack direction={'row'}>Estimated monthly cash flow: {currencyFormatter(props.estimatedCashFlow)}</Stack>
+      <Stack direction={'row'}>Every property owned: {props.allOwnedProperties}</Stack>
+      <Stack direction={'row'}>Properties owned: {props.ownedProperties}</Stack>
+      <Stack direction={'row'}>Properties equity: {currencyFormatter(props.equity)}</Stack>
     </ValidationPanel>
   );
 }

@@ -4,6 +4,6 @@ import { Span } from '../core/Span';
 export const AddressSpan = styled(Span)`
   white-space: nowrap;
   min-width: 169px;
-  width: auto;
-  border: black solid;
+  width: 100%;
+  border: none;
 `;

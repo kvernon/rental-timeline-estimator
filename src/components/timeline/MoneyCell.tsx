@@ -5,8 +5,9 @@ import { currencyFormatter } from '../../data/data-number';
 
 export const MoneyCellStyle = styled(Span)`
   white-space: nowrap;
-  border: black solid;
+  border: none;
   width: 96px;
+  min-width: 96px;
   text-align: right;
 `;
 

@@ -29,9 +29,9 @@ export const App = function () {
   });
 
   const [userInfo, setUserInfo] = React.useState<IUserInfo>({
-    goal: { value: 3000, validationResult: ValidatorTypes.Valid },
-    savedAtStart: { value: 50000, validationResult: ValidatorTypes.Valid },
-    moSavings: { value: 1000, validationResult: ValidatorTypes.Valid },
+    goal: { value: 5000, validationResult: ValidatorTypes.Valid },
+    savedAtStart: { value: 70000, validationResult: ValidatorTypes.Valid },
+    moSavings: { value: 3000, validationResult: ValidatorTypes.Valid },
     purchaseRules: [
       {
         title: {
@@ -74,6 +74,20 @@ export const App = function () {
         },
         range: {
           value: 1,
+          validationResult: ValidatorTypes.Valid,
+        },
+      },
+      {
+        title: {
+          value: { value: 3, label: choices.holdRules[3].ruleTitle },
+          validationResult: ValidatorTypes.Valid,
+        },
+        property: {
+          value: { value: 1, label: propertyOptions[1] },
+          validationResult: ValidatorTypes.Valid,
+        },
+        range: {
+          value: 25,
           validationResult: ValidatorTypes.Valid,
         },
       },
