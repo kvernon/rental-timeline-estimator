@@ -14,9 +14,9 @@ import { validatePropertiesInfo } from './validatePropertiesInfo';
  * @param propertiesInfo
  * @throws Error
  */
-export function generate(userInfo: IUserInfo, propertiesInfo: IPropertiesInformationPropsEvent): null | ITimeline {
+export function generate(userInfo: IUserInfo, propertiesInfo: IPropertiesInformationPropsEvent): ITimeline {
   if (validateUserInfo(true, userInfo) === ValidatorTypes.Invalid || validatePropertiesInfo(true, propertiesInfo) === ValidatorTypes.Invalid) {
-    return null;
+    throw new Error('Either UserInformation or PropertyInformation are invalid');
   }
 
   return simulate({

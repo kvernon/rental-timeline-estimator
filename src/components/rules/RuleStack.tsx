@@ -35,7 +35,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
   }, [props]);
 
   useEffect(() => {
-    const newVar = props.ruleStackValues.length === 0 ? null : props.ruleStackValues[selectedRuleTitleIndex]; //?
+    const newVar = props.ruleStackValues.length === 0 ? null : props.ruleStackValues[selectedRuleTitleIndex];
     setSelectedValueOptions(newVar);
   }, [props.ruleStackValues, selectedRuleTitleIndex]);
 
@@ -111,7 +111,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
       suffix={selectedValueOptions?.suffix}
       useUnderlineOnly={false}
       onChange={(evt) => rangeFieldValidatorOnChange(evt)}
-      value={undefined}
+      value={props.value.range}
     />
   );
 
