@@ -3,15 +3,28 @@ import '@testing-library/jest-dom';
 import React from 'react';
 import { RawResults } from './RawResults';
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
-import { HoldRuleTypes, PropertyType, PurchaseRuleTypes } from '@cubedelement.com/realty-investor-timeline';
+import { HoldRuleTypes, ITimeline, IUser, PropertyType, PurchaseRuleTypes } from '@cubedelement.com/realty-investor-timeline';
 import { generate } from '../data/generate';
 import { IUserInfo } from '../data/IUserInfo';
 
 jest.mock('../data/generate');
+jest.mock('./UserSummary');
 
 describe('RawResults unit tests', () => {
   beforeEach(() => {
-    jest.mocked(generate).mockReturnValue(null);
+    const userMock = {
+      metMonthlyGoal: jest.fn(),
+    } as unknown as jest.Mocked<IUser>;
+
+    jest.mocked(generate).mockReturnValue({
+      getEstimatedMonthlyCashFlow: jest.fn(),
+      endDate: new Date(),
+      startDate: new Date(),
+      rentals: [],
+      getBalance: jest.fn(),
+      clone: jest.fn(),
+      user: userMock,
+    } as jest.Mocked<ITimeline>);
 
     const userInfo: IUserInfo = {
       purchaseRules: [
@@ -78,6 +91,10 @@ describe('RawResults unit tests', () => {
         }}
       />,
     );
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   describe('RawResults unit tests', () => {
