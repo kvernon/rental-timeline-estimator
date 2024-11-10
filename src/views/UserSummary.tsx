@@ -2,10 +2,10 @@ import { Stack } from '../components/core/Stack';
 import { getDate } from '../data/getDate';
 import React from 'react';
 import { ValidationPanel } from '../components/panels/ValidationPanel';
-import { currencyFormatter } from '../data/data-number';
 import { GoalPanelDataSummary } from '../components/panels/GoalPanelDataSummary';
 import { PanelDataSummary } from '../components/panels/PanelDataSummary';
 import styled from '@emotion/styled';
+import { currencyFormatter } from '../data/currency-formatter';
 
 const StackContainer = styled(Stack)`
   align-items: stretch;

@@ -1,12 +1,12 @@
 import React, { ReactNode } from 'react';
 import { Stack } from '../core/Stack';
 import styled from '@emotion/styled';
-import { currencyFormatter } from '../../data/data-number';
 import { Header6 } from '../core/Header6';
 import { IThemeOptions } from '../../theming/IThemeOptions';
 import { useTheme } from '@emotion/react';
 import { FontGroups } from '../../theming/fontGroups';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
+import { currencyFormatter } from '../../data/currency-formatter';
 
 const BackGroundNode = styled(Stack)`
   padding-left: 0;

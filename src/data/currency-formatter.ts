@@ -1,11 +1,4 @@
-'use strict';
-
-export const fixedAndFloat = (value: number, precision?: number) => parseFloat(value.toFixed(precision || 2));
-
-export function randomNumberBetween(start: number, end: number) {
-  const diff = end - start;
-  return Math.floor(Math.random() * diff + start);
-}
+import { fixedAndFloat } from './fixed-and-float';
 
 export function currencyFormatter(value: number): string {
   const amount = fixedAndFloat(value);

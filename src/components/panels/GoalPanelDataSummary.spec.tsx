@@ -6,9 +6,10 @@ import { GoalPanelDataSummary } from './GoalPanelDataSummary';
 import { themeMock } from '../../../__tests__/ThemeMock';
 import { IThemeOptions } from '../../theming/IThemeOptions';
 import { useTheme } from '@emotion/react';
-import { currencyFormatter } from '../../data/data-number';
 
-jest.mock('../../data/data-number');
+import { currencyFormatter } from '../../data/currency-formatter';
+
+jest.mock('../../data/currency-formatter');
 
 describe('GoalPanelDataSummary unit tests', () => {
   const props: { data: number; isValid: () => boolean } = {
