@@ -161,7 +161,7 @@ describe('generate unit tests', () => {
         goal: { value: 3, validationResult: ValidatorTypes.Invalid },
       };
 
-      expect(
+      expect(() =>
         generate(userInfo, {
           apartment: {
             title: '',
@@ -196,7 +196,7 @@ describe('generate unit tests', () => {
             highestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
           },
         }),
-      ).toEqual(null);
+      ).toThrow(new Error('Either UserInformation or PropertyInformation are invalid'));
     });
   });
 });

@@ -34,14 +34,14 @@ export const themeMock = {
   typography: {
     parent: {
       allPopulated: jest.fn(),
-      font: 'p',
-      color: 'p',
-      size: 'p',
+      font: 'parent',
+      color: '#0000FF3F',
+      size: '20px',
     },
     get: jest.fn().mockReturnValue({
       font: 'font',
-      color: 'color',
-      size: 'size',
+      color: 'rgba(200, 0, 255, 0.247)',
+      size: '10px',
     }),
   },
 };

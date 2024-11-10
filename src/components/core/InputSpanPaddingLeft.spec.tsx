@@ -14,8 +14,8 @@ describe('InputSpanPaddingLeft unit tests', () => {
 
       const expectedStyle = `
       font-family: font;
-      font-size: size;
-      color: color;
+      font-size: 10px;
+      color: rgba(200, 0, 255, 0.247);
       margin: 0;
       padding: 7px;
       display: inline-flex;
@@ -32,8 +32,8 @@ describe('InputSpanPaddingLeft unit tests', () => {
 
         const expectedStyle = `
       font-family: font;
-      font-size: size;
-      color: color;
+      font-size: 10px;
+      color: rgba(200, 0, 255, 0.247);
       margin: 0;
       padding: 7px;
       display: inline-flex;
@@ -52,8 +52,8 @@ describe('InputSpanPaddingLeft unit tests', () => {
 
       const expectedStyle = `
       font-family: font;
-      font-size: size;
-      color: color;
+      font-size: 10px;
+      color: rgba(200, 0, 255, 0.247);
       margin: 0;
       padding: 5.5px 7px;
       display: inline-flex;

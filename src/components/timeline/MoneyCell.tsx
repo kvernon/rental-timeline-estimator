@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 import { Span } from '../core/Span';
 import React, { ReactNode } from 'react';
-import { currencyFormatter } from '../../data/data-number';
+
+import { currencyFormatter } from '../../data/currency-formatter';
 
 export const MoneyCellStyle = styled(Span)`
   white-space: nowrap;

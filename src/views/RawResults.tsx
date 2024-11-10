@@ -74,7 +74,7 @@ export function RawResults(props: { userInfo: IUserInfo; propertiesInfo: IProper
     const coreTheme = useTheme() as IThemeOptions;
 
     return (
-      <Stack direction={'column'}>
+      <Stack direction={'column'} role={'raw-results'}>
         <NavList
           title="Timeline Navigation"
           navList={nav}

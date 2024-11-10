@@ -126,6 +126,10 @@ describe('RuleStack unit tests', () => {
           showTitle: false,
           useUnderlineOnly: false,
           onChange: expect.any(Function),
+          value: {
+            validationResult: ValidatorTypes.Optional,
+            value: undefined,
+          },
         },
         {},
       );
@@ -227,6 +231,10 @@ describe('RuleStack unit tests', () => {
           title: 'Rule Range',
           showTitle: false,
           useUnderlineOnly: false,
+          value: {
+            validationResult: ValidatorTypes.Valid,
+            value: 1,
+          },
         },
         {},
       );
@@ -314,6 +322,10 @@ describe('RuleStack unit tests', () => {
             title: 'Rule Range',
             showTitle: false,
             useUnderlineOnly: false,
+            value: {
+              validationResult: ValidatorTypes.Valid,
+              value: 1,
+            },
           },
           {},
         );
@@ -381,6 +393,10 @@ describe('RuleStack unit tests', () => {
             title: 'Rule Range',
             showTitle: false,
             useUnderlineOnly: false,
+            value: {
+              validationResult: ValidatorTypes.Valid,
+              value: 1,
+            },
           },
           {},
         );
