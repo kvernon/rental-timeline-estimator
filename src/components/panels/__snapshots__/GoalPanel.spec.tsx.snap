@@ -191,6 +191,7 @@ exports[`GoalPanel unit test should render 1`] = `
 >
   <div
     class="emotion-1"
+    id="goal-spin"
     shape="[object Object]"
   />
   <div
