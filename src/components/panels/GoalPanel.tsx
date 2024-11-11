@@ -26,7 +26,6 @@ export const GoalPanel = <Required extends boolean = false>(props: IRangeFieldVa
   const [x, setX] = useState<number | undefined>();
   const [y, setY] = useState<number | undefined>();
   const [width, setWidth] = useState<number | undefined>();
-  const [height, setHeight] = useState<number | undefined>();
 
   const ZRangeFieldValidator = styled(RangeFieldValidator<Required>)`
     z-index: 4;
@@ -44,9 +43,6 @@ export const GoalPanel = <Required extends boolean = false>(props: IRangeFieldVa
 
       const width = ele?.getBoundingClientRect()?.width;
       setWidth(() => width);
-
-      const height = ele?.getBoundingClientRect()?.height;
-      setHeight(() => height);
     };
 
     getPosition();
@@ -59,7 +55,7 @@ export const GoalPanel = <Required extends boolean = false>(props: IRangeFieldVa
 
   return (
     <TopStack aria-label={'Goal Panel'}>
-      <Spinner shape={{ x, width, y, height }} />
+      <Spinner id="goal-spin" shape={{ x, width, y }} />
       <StackPosition spacing={2} paddingLeft={'20%'} paddingTop={'25px'} paddingBottom={'25px'} paddingRight={'20%'}>
         <ZRangeFieldValidator
           {...props}

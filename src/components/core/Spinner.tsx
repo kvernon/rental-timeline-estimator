@@ -21,12 +21,7 @@ export const Spinner = styled.div<{ shape: IShape }>`
     }
     return 240;
   }}px;
-  top: ${(props) => {
-    if (props.shape.y && props.shape.height) {
-      return props.shape.y - props.shape?.height - shapeSize / 2;
-    }
-    return -332;
-  }}px;
+  top: -332px;
   float: left;
   position: absolute;
   background-image: radial-gradient(rgba(199, 159, 0, 0.3) 0%, rgba(61, 61, 61, 0.01) 62%, transparent 67%);

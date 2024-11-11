@@ -7,14 +7,14 @@ describe('Spinner unit tests', () => {
     configure({ testIdAttribute: 'id' });
   });
   test('should render with shape', () => {
-    render(<Spinner role="spinner" shape={{ x: 1, height: 20, width: 30, y: 2 }} />);
+    render(<Spinner role="spinner" shape={{ x: 1, width: 30, y: 2 }} />);
 
     const entity = screen.getByRole<HTMLDivElement>('spinner');
 
     expect(entity).toMatchSnapshot();
   });
   test('should render without shape', () => {
-    render(<Spinner role="spinner" shape={{ x: undefined, height: undefined, width: undefined, y: undefined }} />);
+    render(<Spinner role="spinner" shape={{ x: undefined, width: undefined, y: undefined }} />);
 
     const entity = screen.getByRole<HTMLDivElement>('spinner');
 

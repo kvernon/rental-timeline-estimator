@@ -5,7 +5,7 @@ exports[`Spinner unit tests should render with shape 1`] = `
   width: 950px;
   height: 950px;
   left: -459px;
-  top: -493px;
+  top: -332px;
   float: left;
   position: absolute;
   background-image: radial-gradient(rgba(199, 159, 0, 0.3) 0%, rgba(61, 61, 61, 0.01) 62%, transparent 67%);
