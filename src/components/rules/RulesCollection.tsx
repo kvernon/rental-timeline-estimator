@@ -15,11 +15,6 @@ import { propertyOptions } from '../validators/PropertyDropDownValidator';
 import { getValidationResult } from './getValidationResult';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
 
-/*
-const shouldShow =
-  ;
-*/
-
 export function RulesCollection(componentProps: IRulesCollectionProps) {
   const [showButton, setShowButton] = useState(false);
   const [enableButton, setEnableButton] = useState(false);

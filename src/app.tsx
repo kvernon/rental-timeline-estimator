@@ -35,20 +35,6 @@ export const App = function () {
     purchaseRules: [
       {
         title: {
-          value: { value: 0, label: choices.purchaseRules[0].ruleTitle },
-          validationResult: ValidatorTypes.Valid,
-        },
-        property: {
-          value: { value: 1, label: propertyOptions[1] },
-          validationResult: ValidatorTypes.Valid,
-        },
-        range: {
-          value: 3600,
-          validationResult: ValidatorTypes.Valid,
-        },
-      },
-      {
-        title: {
           value: { value: 3, label: choices.purchaseRules[3].ruleTitle },
           validationResult: ValidatorTypes.Valid,
         },
@@ -62,36 +48,7 @@ export const App = function () {
         },
       },
     ],
-    holdRules: [
-      {
-        title: {
-          value: { value: 2, label: choices.holdRules[2].ruleTitle },
-          validationResult: ValidatorTypes.Valid,
-        },
-        property: {
-          value: { value: 1, label: propertyOptions[1] },
-          validationResult: ValidatorTypes.Valid,
-        },
-        range: {
-          value: 1,
-          validationResult: ValidatorTypes.Valid,
-        },
-      },
-      {
-        title: {
-          value: { value: 3, label: choices.holdRules[3].ruleTitle },
-          validationResult: ValidatorTypes.Valid,
-        },
-        property: {
-          value: { value: 1, label: propertyOptions[1] },
-          validationResult: ValidatorTypes.Valid,
-        },
-        range: {
-          value: 25,
-          validationResult: ValidatorTypes.Valid,
-        },
-      },
-    ],
+    holdRules: [],
   });
 
   const [propertiesInfo, setPropertiesInfo] = React.useState<IPropertiesInformationPropsEvent>({
@@ -178,6 +135,7 @@ export const App = function () {
           choices={choices}
           title="User Information"
           onChange={(e) => {
+            console.log('userInfoChange', e);
             setUserInfo(e);
           }}
         />

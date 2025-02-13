@@ -41,7 +41,13 @@ export function HistoricalProperty(props: { historicalProperty: IHistoricalPrope
         <DateCell date={props.historicalProperty.property.purchaseDate} />
         <DateCell date={props.historicalProperty.property.soldDate} />
         <MoneyCell currency={props.historicalProperty.property.rawEstimatedAnnualCashFlow} />
-        <MoneyCell currency={props.historicalProperty.property.estimatedReturnOnCapitalGain} />
+        <MoneyCell
+          currency={
+            props.historicalProperty.property.soldDate
+              ? props.historicalProperty.property.getEquityFromSell(props.historicalProperty.property.soldDate)
+              : 0
+          }
+        />
       </StackSpaceBetween>
       {props.historicalProperty.reasons.length > 0 && (
         <ul>
