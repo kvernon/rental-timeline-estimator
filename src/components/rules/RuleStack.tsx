@@ -25,7 +25,7 @@ const StackBase = styled(Stack)`
 `;
 
 export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref: React.Ref<HTMLDivElement>) {
-  const [selectedRuleTitleIndex] = useState<number>(props.value.title?.value?.value || 0);
+  const [selectedRuleTitleIndex, setSelectedRuleTitleIndex] = useState<number | null>(props.value.title?.value?.value || null);
   const [selectedValueOptions, setSelectedValueOptions] = useState<IRuleStackEntity | null>(null);
   const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
   const [value, setValue] = useState<IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>>(props.value);
@@ -35,7 +35,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
   }, [props]);
 
   useEffect(() => {
-    const newVar = props.ruleStackValues.length === 0 ? null : props.ruleStackValues[selectedRuleTitleIndex];
+    const newVar = props.ruleStackValues.length === 0 || !selectedRuleTitleIndex ? null : props.ruleStackValues[selectedRuleTitleIndex];
     setSelectedValueOptions(newVar);
   }, [props.ruleStackValues, selectedRuleTitleIndex]);
 
@@ -52,7 +52,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
   const injectProps = { ...props };
 
   const titleDropDownOnChange = (valueOption: IEventValue<ISelectOption>) => {
-    if (valueOption.value && value.title?.value !== valueOption.value) {
+    if (valueOption.value && value.title?.value.label !== valueOption.value.label) {
       const newVar = {
         ...props.value,
         title: {
@@ -60,6 +60,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
           validationResult: value.title.validationResult,
         },
       };
+      setSelectedRuleTitleIndex(valueOption.value?.value);
       setValue(newVar);
       setIsDataLoaded(true);
     }
@@ -78,15 +79,6 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
     }
   };
 
-  const titleDropDownValidator = (
-    <TitleDropDownValidator
-      onChange={(evt) => titleDropDownOnChange(evt)}
-      title={`Rule Title`}
-      value={props.value.title}
-      optionTitles={props.ruleStackValues.map((x) => ({ title: x.ruleTitle, isDisabled: x.isDisabled }))}
-    />
-  );
-
   const rangeFieldValidatorOnChange = (evt: ConditionEventResult<false, ConditionalNumber<false>>): void => {
     if (evt?.value && value.range?.value !== evt?.value) {
       setValue({
@@ -99,21 +91,6 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
       setIsDataLoaded(true);
     }
   };
-
-  const rangeFieldValidator = (
-    <RangeFieldValidator<false>
-      id={`rule-range`}
-      title={'Rule Range'}
-      showTitle={false}
-      min={selectedValueOptions?.min}
-      max={selectedValueOptions?.max}
-      prefix={selectedValueOptions?.prefix}
-      suffix={selectedValueOptions?.suffix}
-      useUnderlineOnly={false}
-      onChange={(evt) => rangeFieldValidatorOnChange(evt)}
-      value={props.value.range}
-    />
-  );
 
   delete injectProps.onUpdate;
 
@@ -133,10 +110,26 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
     >
       <DragPlaceholder role={'drag-handle'} data-movable-handle />
       <Stack direction="column" paddingTop={'10px'} paddingLeft={'17px'} paddingBottom={'20px'} paddingRight={'17px'}>
-        {titleDropDownValidator}
+        <TitleDropDownValidator
+          onChange={(evt) => titleDropDownOnChange(evt)}
+          title={`Rule Title`}
+          value={props.value.title}
+          optionTitles={props.ruleStackValues.map((x) => ({ title: x.ruleTitle, isDisabled: x.isDisabled }))}
+        />
         <Stack direction="row" spacing={2} paddingTop={'10px'}>
           <PropertyPicker title="Property Picker" value={props.value.property} onChange={(evt) => propertyDropDownOnChange(evt)} />
-          {rangeFieldValidator}
+          <RangeFieldValidator<false>
+            id={`rule-range`}
+            title={'Rule Range'}
+            showTitle={false}
+            min={selectedValueOptions?.min}
+            max={selectedValueOptions?.max}
+            prefix={selectedValueOptions?.prefix}
+            suffix={selectedValueOptions?.suffix}
+            useUnderlineOnly={false}
+            onChange={(evt) => rangeFieldValidatorOnChange(evt)}
+            value={props.value.range}
+          />
         </Stack>
       </Stack>
       <ValidationBar

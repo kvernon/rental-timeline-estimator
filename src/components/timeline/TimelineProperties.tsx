@@ -22,7 +22,7 @@ export function TimelineProperties(props: { rentals: IHistoricalProperty[] }) {
           <DateCellStyle>Purchase:</DateCellStyle>
           <DateCellStyle>Sold:</DateCellStyle>
           <MoneyCellStyle>Cash flow:</MoneyCellStyle>
-          <MoneyCellStyle>Cap Gains:</MoneyCellStyle>
+          <MoneyCellStyle>Equity:</MoneyCellStyle>
         </StackSpaceBetween>
         {props.rentals.map((x, i) => (
           <HistoricalProperty historicalProperty={x} key={`rental-${i}`} />
