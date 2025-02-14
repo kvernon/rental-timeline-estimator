@@ -8,7 +8,7 @@ import { ValidatorTypes } from './components/validators/ValidatorTypes';
 import { getRuleChoices } from './rules/getRuleChoices';
 import { holdConfig } from './rules/holdRuleConfig';
 import { purchaseConfig } from './rules/purchaseRuleConfig';
-import { RawResults } from './views/RawResults';
+import { Results } from './views/Results';
 import { NavList } from './components/navigation/NavList';
 import { Stack } from './components/core/Stack';
 import { validateUserInfo } from './data/validateUserInfo';
@@ -35,6 +35,20 @@ export const App = function () {
     purchaseRules: [
       {
         title: {
+          value: { value: 0, label: choices.purchaseRules[0].ruleTitle },
+          validationResult: ValidatorTypes.Valid,
+        },
+        property: {
+          value: { value: 1, label: propertyOptions[1] },
+          validationResult: ValidatorTypes.Valid,
+        },
+        range: {
+          value: 3600,
+          validationResult: ValidatorTypes.Valid,
+        },
+      },
+      {
+        title: {
           value: { value: 3, label: choices.purchaseRules[3].ruleTitle },
           validationResult: ValidatorTypes.Valid,
         },
@@ -48,7 +62,36 @@ export const App = function () {
         },
       },
     ],
-    holdRules: [],
+    holdRules: [
+      {
+        title: {
+          value: { value: 2, label: choices.holdRules[2].ruleTitle },
+          validationResult: ValidatorTypes.Valid,
+        },
+        property: {
+          value: { value: 1, label: propertyOptions[1] },
+          validationResult: ValidatorTypes.Valid,
+        },
+        range: {
+          value: 1,
+          validationResult: ValidatorTypes.Valid,
+        },
+      },
+      {
+        title: {
+          value: { value: 3, label: choices.holdRules[3].ruleTitle },
+          validationResult: ValidatorTypes.Valid,
+        },
+        property: {
+          value: { value: 1, label: propertyOptions[1] },
+          validationResult: ValidatorTypes.Valid,
+        },
+        range: {
+          value: 25,
+          validationResult: ValidatorTypes.Valid,
+        },
+      },
+    ],
   });
 
   const [propertiesInfo, setPropertiesInfo] = React.useState<IPropertiesInformationPropsEvent>({
@@ -59,8 +102,8 @@ export const App = function () {
       highestPurchasePrice: { value: 200000, validationResult: ValidatorTypes.Valid },
       lowestCashFlow: { value: 200, validationResult: ValidatorTypes.Valid },
       highestCashFlow: { value: 500, validationResult: ValidatorTypes.Valid },
-      lowestEquityCapturePercent: { value: 5, validationResult: ValidatorTypes.Valid },
-      highestEquityCapturePercent: { value: 7, validationResult: ValidatorTypes.Valid },
+      lowestEquityCapturePercent: { value: 40, validationResult: ValidatorTypes.Valid },
+      highestEquityCapturePercent: { value: 85, validationResult: ValidatorTypes.Valid },
       lowestGenerationAmount: { value: 1, validationResult: ValidatorTypes.Valid },
       highestGenerationAmount: { value: 6, validationResult: ValidatorTypes.Valid },
       lowestMinSellInYears: { value: 1, validationResult: ValidatorTypes.Valid },
@@ -135,7 +178,6 @@ export const App = function () {
           choices={choices}
           title="User Information"
           onChange={(e) => {
-            console.log('userInfoChange', e);
             setUserInfo(e);
           }}
         />
@@ -148,7 +190,7 @@ export const App = function () {
           }}
         ></PropertiesInformation>
       )}
-      {location === 'Results' && <RawResults userInfo={userInfo} propertiesInfo={propertiesInfo} />}
+      {location === 'Results' && <Results userInfo={userInfo} propertiesInfo={propertiesInfo} />}
     </ThemeProvider>
   );
 };

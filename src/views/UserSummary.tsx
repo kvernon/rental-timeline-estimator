@@ -33,20 +33,22 @@ export function UserSummary(props: {
 }) {
   const isValid = () => props.metMonthlyGoal;
   return (
-    <ValidationPanel title={`Results: ${getDate(props.startDate)} - ${getDate(props.endDate)}`} padRight={false} isValid={isValid}>
-      <StackContainer direction="row" paddingLeft="0" paddingRight="0" paddingBottom="0">
-        <Stack direction="row" paddingLeft="0" paddingRight="0" paddingBottom="0" marginBottom="0">
-          <StackContainColumn direction="column" paddingLeft="0" paddingBottom="0">
-            <PanelDataSummary title="Properties equity" data={currencyFormatter(props.equity)} />
-            <PanelDataSummary title="End balance" data={currencyFormatter(props.balance)} />
-          </StackContainColumn>
-          <StackContainColumn direction="column" paddingLeft="10px" paddingBottom="0">
-            <PanelDataSummary title="Property owned" data={props.allOwnedProperties.toString()} />
-            <PanelDataSummary title="Current properties" data={props.ownedProperties.toString()} />
-          </StackContainColumn>
-        </Stack>
-        <GoalPanelDataSummary data={props.estimatedCashFlow} isValid={isValid} />
-      </StackContainer>
-    </ValidationPanel>
+    <div>
+      <ValidationPanel title={`Results: ${getDate(props.startDate)} - ${getDate(props.endDate)}`} padRight={false} isValid={isValid}>
+        <StackContainer direction="row" paddingLeft="0" paddingRight="0" paddingBottom="0">
+          <Stack direction="row" paddingLeft="0" paddingRight="0" paddingBottom="0" marginBottom="0">
+            <StackContainColumn direction="column" paddingLeft="0" paddingBottom="0">
+              <PanelDataSummary title="Properties equity" data={currencyFormatter(props.equity)} />
+              <PanelDataSummary title="End balance" data={currencyFormatter(props.balance)} />
+            </StackContainColumn>
+            <StackContainColumn direction="column" paddingLeft="10px" paddingBottom="0">
+              <PanelDataSummary title="Property owned" data={props.allOwnedProperties.toString()} />
+              <PanelDataSummary title="Current properties" data={props.ownedProperties.toString()} />
+            </StackContainColumn>
+          </Stack>
+          <GoalPanelDataSummary data={props.estimatedCashFlow} isValid={isValid} />
+        </StackContainer>
+      </ValidationPanel>
+    </div>
   );
 }

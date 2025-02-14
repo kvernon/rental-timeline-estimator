@@ -7,7 +7,7 @@ import { ValidationPanel } from '../panels/ValidationPanel';
 
 export function UserLedger(props: { ledgerCollection: ILedgerCollection; startDate: Date; endDate: Date; monthlyIncomeAmountGoal: number }) {
   const years: number[] = [];
-  for (let i = props.startDate.getFullYear(); i < props.endDate.getFullYear(); i++) {
+  for (let i = props.startDate.getFullYear(); i < props.endDate.getFullYear() + 1; i++) {
     years.push(i);
   }
 
@@ -16,12 +16,13 @@ export function UserLedger(props: { ledgerCollection: ILedgerCollection; startDa
       {years.map((year) => {
         return (
           <ValidationPanel
+            key={`${year}`}
             title={year.toString()}
-            isValid={() => props.ledgerCollection.getCashFlowMonth(props.endDate) >= props.monthlyIncomeAmountGoal}
+            isValid={() => props.ledgerCollection.getCashFlowMonth(props.endDate) / 12 >= props.monthlyIncomeAmountGoal}
           >
             <Stack direction={'column'} key={`ledger-annual-${year}`}>
-              <UserLedgerAnnualSummary ledgerCollection={props.ledgerCollection} year={year} />
-              <UserLedgerAnnualSummaries ledgerCollection={props.ledgerCollection} year={year} />
+              <UserLedgerAnnualSummary key={`ledger-annual-summary-${year}`} ledgerCollection={props.ledgerCollection} year={year} />
+              <UserLedgerAnnualSummaries key={`ledger-annual-summaries-${year}`} ledgerCollection={props.ledgerCollection} year={year} />
             </Stack>
           </ValidationPanel>
         );

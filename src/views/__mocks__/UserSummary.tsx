@@ -1,4 +1,3 @@
-import { IUserInformationProps } from '../IUserInformationProps';
 import React from 'react';
 
 export const UserSummary = jest.fn(
@@ -9,6 +8,7 @@ export const UserSummary = jest.fn(
     endDate: Date;
     metMonthlyGoal: boolean;
     balance: number;
+    minSavings: number;
     equity: number;
     estimatedCashFlow: number;
   }) => {

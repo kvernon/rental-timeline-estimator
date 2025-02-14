@@ -87,6 +87,7 @@ describe('generate unit tests', () => {
       generate(userInfo, propertiesInfo);
 
       const expected: ISimulateOptions = {
+        maxYears: 20,
         purchaseRules: [
           {
             value: 8,

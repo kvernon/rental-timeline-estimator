@@ -20,6 +20,7 @@ export function generate(userInfo: IUserInfo, propertiesInfo: IPropertiesInforma
   }
 
   return simulate({
+    maxYears: 20,
     purchaseRules: userInfo.purchaseRules.map((x) => ({
       value: x.range.value as number,
       type: getPurchaseRuleType(x.title.value.label),
