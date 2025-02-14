@@ -41,7 +41,6 @@ const StackContainer = styled(Stack)`
 
 export function GoalPanelDataSummary(props: { data: number; isValid: () => boolean }): ReactNode {
   const coreTheme = useTheme() as IThemeOptions;
-
   return (
     <BackGroundNode theme={coreTheme} direction="column" paddingRight="0" paddingBottom="0">
       <StackContainer theme={coreTheme} direction="column">

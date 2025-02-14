@@ -12,20 +12,24 @@ import { UserLedger } from '../components/timeline/UserLedger';
 import { NavList } from '../components/navigation/NavList';
 import { UserSummary } from './UserSummary';
 
+const Regular = styled(Stack)`
+  color: white;
+`;
+
 const Err = styled(Stack)`
   padding-top: 30px;
   color: pink;
   text-align: center;
 `;
 
-export function RawResults(props: { userInfo: IUserInfo; propertiesInfo: IPropertiesInformationPropsEvent }) {
+export function Results(props: { userInfo: IUserInfo; propertiesInfo: IPropertiesInformationPropsEvent }) {
   const [nav, setNav] = useState<
     {
       title: string;
       isSelected?: boolean | undefined;
       isDisabled?: boolean | undefined;
     }[]
-  >([{ title: 'Ledger', isSelected: true }, { title: 'Properties' }]);
+  >([{ title: 'Ledger', isSelected: true }, { title: 'Properties' }, { title: 'Raw' }]);
   const [location, setLocation] = React.useState<string>('Ledger');
 
   const [results, setResults] = React.useState<ITimeline>();
@@ -42,23 +46,28 @@ export function RawResults(props: { userInfo: IUserInfo; propertiesInfo: IProper
   const [ledgerCollection, setLedgerCollection] = useState<ILedgerCollection | null>(null);
 
   useEffect(() => {
-    setEstimatedCashFlow(results?.getEstimatedMonthlyCashFlow() || 0);
-    setBalance(results?.getBalance(results.endDate) || 0);
-    setOwnedProperties(results?.rentals.filter((p) => p.property.isOwned).length || 0);
-    setAllOwnedProperties(results?.rentals.filter((p) => p.property.isOwned || !!p.property.soldDate).length || 0);
-    setEquity(
-      results?.rentals
-        .filter((p) => p.property.isOwned)
-        .reduce((previousValue, currentValue) => {
-          currentValue.property.soldDate = results.endDate;
-          return previousValue + currentValue.property.getEquityFromSell(results.endDate);
-        }, 0) || 0,
+    const ownedProperties = results?.rentals.filter((p) => p.property.isOwned && p.property.soldDate === undefined).map((x) => x.property) || [];
+    setEstimatedCashFlow(
+      !results ? 0 : ownedProperties.reduce((previousValue, currentValue) => previousValue + currentValue.getCashFlowByDate(results.endDate), 0),
     );
+    setBalance(results?.getBalance(results.endDate) || 0);
+    setOwnedProperties(ownedProperties?.length || 0);
+    setAllOwnedProperties(results?.rentals.filter((p) => p.property.purchaseDate).map((x) => x.property)?.length || 0);
+    setEquity(
+      results
+        ? ownedProperties.reduce((previousValue, currentValue) => {
+            const newCurrent = currentValue.clone();
+            newCurrent.soldDate = results?.endDate;
+            return previousValue + currentValue.getEquityFromSell(results.endDate);
+          }, 0)
+        : 0,
+    );
+
     setMetMonthlyGoal(
-      results?.user.metMonthlyGoal(
-        results.endDate,
-        results.rentals.map((x) => x.property),
-      ) || false,
+      !results
+        ? false
+        : ownedProperties.reduce((previousValue, currentValue) => previousValue + currentValue.getCashFlowByDate(results.endDate), 0) >=
+            results.user.monthlyIncomeAmountGoal,
     );
     setLedgerCollection(results?.user.ledgerCollection || null);
   }, [results]);
@@ -108,6 +117,7 @@ export function RawResults(props: { userInfo: IUserInfo; propertiesInfo: IProper
           )}
 
           {location === 'Properties' && results && <TimelineProperties rentals={results.rentals} />}
+          {location === 'Raw' && results && <Regular role="raw-results">{JSON.stringify(results, null, ' ')}</Regular>}
         </Stack>
       </Stack>
     );

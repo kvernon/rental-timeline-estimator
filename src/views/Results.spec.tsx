@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import React from 'react';
-import { RawResults } from './RawResults';
+import { Results } from './Results';
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
 import { HoldRuleTypes, ITimeline, IUser, PropertyType, PurchaseRuleTypes } from '@cubedelement.com/realty-investor-timeline';
 import { generate } from '../data/generate';
@@ -53,7 +53,7 @@ describe('RawResults unit tests', () => {
     };
 
     render(
-      <RawResults
+      <Results
         userInfo={userInfo}
         propertiesInfo={{
           house: {

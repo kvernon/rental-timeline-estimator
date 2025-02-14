@@ -51,6 +51,11 @@ export function UserLedgerAnnualSummaries(props: { ledgerCollection: ILedgerColl
   const summariesAnnual = props.ledgerCollection.getSummariesAnnual(props.year);
 
   return summariesAnnual.map((data, i) => (
-    <UserLedgerAnnualSummary ledgerCollection={props.ledgerCollection} ledgerSummary={data} year={i} key={`annualSummary-${i}}`} />
+    <UserLedgerAnnualSummary
+      ledgerCollection={props.ledgerCollection}
+      ledgerSummary={data}
+      year={i}
+      key={`ledger-annual-summaries-${props.year}-${i}`}
+    />
   ));
 }
