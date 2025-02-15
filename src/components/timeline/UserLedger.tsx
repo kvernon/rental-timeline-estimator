@@ -14,12 +14,11 @@ export function UserLedger(props: { ledgerCollection: ILedgerCollection; startDa
   return (
     <>
       {years.map((year) => {
+        const isValid = () => {
+          return props.ledgerCollection.getSummaryAnnual(year).cashFlow / 12 >= props.monthlyIncomeAmountGoal;
+        };
         return (
-          <ValidationPanel
-            key={`${year}`}
-            title={year.toString()}
-            isValid={() => props.ledgerCollection.getCashFlowMonth(props.endDate) / 12 >= props.monthlyIncomeAmountGoal}
-          >
+          <ValidationPanel key={`${year}`} title={year.toString()} isValid={isValid}>
             <Stack direction={'column'} key={`ledger-annual-${year}`}>
               <UserLedgerAnnualSummary key={`ledger-annual-summary-${year}`} ledgerCollection={props.ledgerCollection} year={year} />
               <UserLedgerAnnualSummaries key={`ledger-annual-summaries-${year}`} ledgerCollection={props.ledgerCollection} year={year} />

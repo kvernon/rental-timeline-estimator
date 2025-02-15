@@ -117,7 +117,11 @@ export function Results(props: { userInfo: IUserInfo; propertiesInfo: IPropertie
           )}
 
           {location === 'Properties' && results && <TimelineProperties rentals={results.rentals} />}
-          {location === 'Raw' && results && <Regular role="raw-results">{JSON.stringify(results, null, ' ')}</Regular>}
+          {location === 'Raw' && results && (
+            <Regular role="raw-results">
+              <pre>{JSON.stringify(results, null, ' ')}</pre>
+            </Regular>
+          )}
         </Stack>
       </Stack>
     );
