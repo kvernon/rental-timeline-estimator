@@ -14,9 +14,7 @@ const AdjustedButton = styled.button`
 `;
 
 export function UserLedgerAnnualSummary(props: { ledgerCollection: ILedgerCollection; ledgerSummary: ILedgerSummary; year: number }) {
-  //this is doing it for all, it should be individual
   const [isExpanded, setIsExpanded] = useState(false);
-
   const coreTheme = useTheme() as IThemeOptions;
 
   return (
