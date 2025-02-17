@@ -15,7 +15,7 @@ export function UserLedger(props: { ledgerCollection: ILedgerCollection; startDa
     <>
       {years.map((year) => {
         const isValid = () => {
-          return props.ledgerCollection.getSummaryAnnual(year).cashFlow / 12 >= props.monthlyIncomeAmountGoal;
+          return props.ledgerCollection.getMonthlyCashFlowByYear(year).some((cashFlow) => cashFlow >= props.monthlyIncomeAmountGoal);
         };
         return (
           <ValidationPanel key={`${year}`} title={year.toString()} isValid={isValid}>
