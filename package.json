@@ -33,7 +33,7 @@
     "npm": "~10"
   },
   "dependencies": {
-    "@cubedelement.com/realty-investor-timeline": "^4.6.0",
+    "@cubedelement.com/realty-investor-timeline": "^4.7.0",
     "@emotion-icons/fa-solid": "^3.14.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",

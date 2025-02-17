@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Stack } from '../core/Stack';
 import { ILedgerCollection, ILedgerSummary } from '@cubedelement.com/realty-investor-timeline';
-import { MoneyCell, MoneyCellStyle } from './MoneyCell';
+import { MoneyCell } from './MoneyCell';
 import { DateCell } from './DateCell';
 import { UserLedgerMonthly } from './UserLedgerMonthly';
 import { useTheme } from '@emotion/react';
@@ -32,8 +32,8 @@ export function UserLedgerAnnualSummary(props: { ledgerCollection: ILedgerCollec
         <Stack direction={'row'}>
           <AddressSpan />
           <DateCell date={props.ledgerSummary.date} />
-          <MoneyCellStyle>{props.ledgerSummary.equity}</MoneyCellStyle>
-          <MoneyCellStyle>{props.ledgerSummary.purchases}</MoneyCellStyle>
+          <MoneyCell currency={props.ledgerSummary.equity} />
+          <MoneyCell currency={props.ledgerSummary.purchases} />
           <MoneyCell currency={props.ledgerSummary.cashFlow} />
           <MoneyCell currency={props.ledgerSummary.averageCashFlow} />
           <MoneyCell currency={props.ledgerSummary.balance} />

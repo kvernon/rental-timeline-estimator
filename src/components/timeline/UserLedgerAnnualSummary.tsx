@@ -30,8 +30,8 @@ export function UserLedgerAnnualSummary(props: { ledgerCollection: ILedgerCollec
         <ButtonCell>&gt;&gt;</ButtonCell>
         <AddressSpan />
         <DateCellStyle />
-        <MoneyCellStyle>{currentYear.equity}</MoneyCellStyle>
-        <MoneyCellStyle>{currentYear.purchases}</MoneyCellStyle>
+        <MoneyCell currency={currentYear.equity} />
+        <MoneyCell currency={currentYear.purchases} />
         <MoneyCell currency={currentYear.cashFlow} />
         <MoneyCell currency={currentYear.averageCashFlow} />
         <MoneyCell currency={currentYear.balance} />
