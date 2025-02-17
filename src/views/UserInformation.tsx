@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { GoalPanel } from '../components/panels/GoalPanel';
 import { RangeValidationPanel } from '../components/panels/RangeValidationPanel';
 import { RulesCollection } from '../components/rules/RulesCollection';
 import { RangeFieldValidator } from '../components/validators/RangeFieldValidator';
@@ -9,6 +8,7 @@ import { IUserInformationProps } from './IUserInformationProps';
 import { FontGroups } from '../theming/fontGroups';
 import { getRulesValuesToRulesValuesResults } from './getRulesValuesToRulesValuesResults';
 import { IUserInfo } from '../data/IUserInfo';
+import { Spinner } from '../components/core/Spinner';
 
 const RulesStack = styled(Stack)`
   width: unset;
@@ -26,9 +26,52 @@ const RulesCollectionWidth = styled(RulesCollection)`
   width: 80%;
 `;
 
+const TopStack = styled.div`
+  height: 275px;
+  display: block;
+  width: 100%;
+  overflow: visible;
+  float: left;
+  position: relative;
+`;
+
+const StackPosition = styled(Stack)`
+  position: relative;
+  width: auto;
+  min-height: 0;
+  z-index: 2;
+`;
+
 export function UserInformation(props: IUserInformationProps) {
   const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
   const [value, setValue] = useState<IUserInfo>(props.values);
+
+  const [x, setX] = useState<number | undefined>();
+  const [y, setY] = useState<number | undefined>();
+  const [width, setWidth] = useState<number | undefined>();
+
+  useEffect(() => {
+    const getPosition = () => {
+      const ele = document.getElementById(`${'goal-panel'}-box`);
+
+      const x = ele?.getBoundingClientRect().x;
+      setX(() => x);
+
+      const y = ele?.getBoundingClientRect().y;
+      setY(() => y);
+
+      const width = ele?.getBoundingClientRect()?.width;
+      setWidth(() => width);
+    };
+
+    getPosition();
+    window.addEventListener('resize', getPosition);
+
+    return () => {
+      window.removeEventListener('resize', getPosition);
+    };
+  });
+
   useEffect(() => {
     setIsDataLoaded(false);
   }, [props]);
@@ -41,28 +84,34 @@ export function UserInformation(props: IUserInformationProps) {
 
   return (
     <form aria-label={props.title}>
-      <GoalPanel
-        inputFontGroup={FontGroups.inputGoal}
-        inputLabelFontGroup={FontGroups.inputGoalLabel}
-        min={1000}
-        max={100000}
-        prefix={'$'}
-        required={true}
-        title="Your Monthly Goal"
-        showTitle={true}
-        value={value.goal}
-        hasSpinner={false}
-        useUnderlineOnly={true}
-        id="goal-panel"
-        onChange={(e) => {
-          const n = { ...value };
-          if (n.goal.value !== e.value) {
-            n.goal = e;
-            setValue(n);
-            setIsDataLoaded(true);
-          }
-        }}
-      />
+      <TopStack aria-label={'Goal Panel'}>
+        <Spinner id="goal-spin" shape={{ x, width, y }} />
+        <StackPosition spacing={2} paddingLeft={'20%'} paddingTop={'25px'} paddingBottom={'25px'} paddingRight={'20%'}>
+          <RangeFieldValidator<true>
+            inputFontGroup={FontGroups.inputGoal}
+            inputLabelFontGroup={FontGroups.inputGoalLabel}
+            min={1000}
+            max={100000}
+            prefix={'$'}
+            required={true}
+            title="Your Monthly Goal"
+            showTitle={true}
+            value={value.goal}
+            useUnderlineOnly
+            hasSpinner={false}
+            useTransparent={true}
+            id="goal-panel"
+            onChange={(e) => {
+              const n = { ...value };
+              if (n.goal.value !== e.value) {
+                n.goal = e;
+                setValue(n);
+                setIsDataLoaded(true);
+              }
+            }}
+          />
+        </StackPosition>
+      </TopStack>
 
       <RangeValidationPanel title="Savings" required={true}>
         <RangeFieldValidator<true>
