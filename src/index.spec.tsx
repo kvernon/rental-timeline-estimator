@@ -37,8 +37,8 @@ describe('test ReactDOM.render', () => {
     }));
   });
 
-  it('should call ReactDOM.render', () => {
-    require('./index');
+  it('should call ReactDOM.render', async () => {
+    await import('./index');
     expect(mockedRoot.render).toHaveBeenCalledWith(
       <ThemeProvider theme={{}}>
         <App />
