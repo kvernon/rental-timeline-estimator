@@ -5,15 +5,13 @@ import '@testing-library/jest-dom';
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
 import { IUserInformationProps } from './IUserInformationProps';
 import { RangeFieldValidator } from '../components/validators/RangeFieldValidator';
-import { GoalPanel } from '../components/panels/GoalPanel';
 import { RulesCollection } from '../components/rules/RulesCollection';
 import { FontGroups } from '../theming/fontGroups';
 import { evaluateValidation } from '../components/validators/evaluateValidation';
-import { isInRange } from '../components/validators/isInRange';
 import { getRulesValuesToRulesValuesResults } from './getRulesValuesToRulesValuesResults';
 
-jest.mock('../components/panels/GoalPanel');
 jest.mock('../components/panels/RangeValidationPanel');
+jest.mock('../components/core/Spinner');
 jest.mock('../components/rules/RulesCollection');
 jest.mock('../components/validators/RangeFieldValidator');
 jest.mock('../components/validators/evaluateValidation');
@@ -50,10 +48,11 @@ describe('UserInformation unit tests', () => {
         expect(actual).toBeInTheDocument();
       });
 
-      test('should goal panel', () => {
+      test('should goal panel pieces', () => {
         const entity = screen.getByLabelText<HTMLInputElement>('Goal Panel');
 
-        expect(GoalPanel).toHaveBeenCalledWith(
+        expect(RangeFieldValidator).toHaveBeenNthCalledWith(
+          1,
           {
             inputFontGroup: FontGroups.inputGoal,
             inputLabelFontGroup: FontGroups.inputGoalLabel,
@@ -66,6 +65,7 @@ describe('UserInformation unit tests', () => {
             required: true,
             title: 'Your Monthly Goal',
             useUnderlineOnly: true,
+            useTransparent: true,
             value: { validationResult: ValidatorTypes.Valid, value: 10 },
             onChange: expect.any(Function),
           },
@@ -85,7 +85,7 @@ describe('UserInformation unit tests', () => {
         const entity = screen.getByLabelText<HTMLDivElement>('Amount Saved at Start');
 
         expect(RangeFieldValidator).toHaveBeenNthCalledWith(
-          1,
+          2,
           {
             min: 0,
             max: 9999999,
@@ -111,7 +111,7 @@ describe('UserInformation unit tests', () => {
         expect(entity).toBeInTheDocument();
 
         expect(RangeFieldValidator).toHaveBeenNthCalledWith(
-          2,
+          3,
           {
             min: 0,
             max: 9999999,
@@ -202,7 +202,7 @@ describe('UserInformation unit tests', () => {
 
     describe('and goal', () => {
       test('should fire update', () => {
-        const entity = screen.getByLabelText<HTMLInputElement>('Goal Panel');
+        const entity = screen.getByLabelText<HTMLInputElement>('Your Monthly Goal');
 
         fireEvent.change(entity, { target: { value: '40' } });
 
