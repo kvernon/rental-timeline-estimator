@@ -79,6 +79,7 @@ module.exports = [
     },
     rules: {
       '@typescript-eslint/no-var-requires': 'off',
+      '@typescript-eslint/no-unused-vars': 'warn',
       'testing-library/no-dom-import': 'off',
       'no-console': 'off',
       'react/no-children-prop': 'off',
