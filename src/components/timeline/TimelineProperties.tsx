@@ -1,10 +1,10 @@
 import { StackSpaceBetween } from './StackSpaceBetween';
-import { PropertyTypeSpan } from './PropertyTypeSpan';
-import { AddressSpan } from './AddressSpan';
-import { DateCellStyle } from './DateCell';
-import { OwnershipSpan } from './OwnershipSpan';
-import { MoneyCellStyle } from './MoneyCell';
-import { HistoricalProperty } from './HistoricalProperty';
+import { PropertyTypeSpan } from '../cells/PropertyTypeSpan';
+import { AddressSpan } from '../cells/AddressSpan';
+import { DateCellStyle } from '../cells/DateCell';
+import { OwnershipSpan } from '../cells/OwnershipSpan';
+import { MoneyCellStyle } from '../cells/MoneyCell';
+import { HistoricalPropertyData } from './HistoricalPropertyData';
 import React from 'react';
 import { IHistoricalProperty } from '@cubedelement.com/realty-investor-timeline/dist/src/time/i-historical-property';
 import { Panel } from '../panels/Panel';
@@ -25,7 +25,7 @@ export function TimelineProperties(props: { rentals: IHistoricalProperty[] }) {
           <MoneyCellStyle>Equity:</MoneyCellStyle>
         </StackSpaceBetween>
         {props.rentals.map((x, i) => (
-          <HistoricalProperty historicalProperty={x} key={`rental-${i}`} />
+          <HistoricalPropertyData historicalProperty={x} key={`rental-${i}`} />
         ))}
       </StackSpaceBetween>
     </Panel>

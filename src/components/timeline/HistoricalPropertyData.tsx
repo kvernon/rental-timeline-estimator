@@ -5,11 +5,11 @@ import { IRentalPropertyEntity } from '@cubedelement.com/realty-investor-timelin
 import { Stack } from '../core/Stack';
 import { getDate } from '../../data/getDate';
 import { StackSpaceBetween } from './StackSpaceBetween';
-import { PropertyTypeSpan } from './PropertyTypeSpan';
-import { AddressSpan } from './AddressSpan';
-import { OwnershipSpan } from './OwnershipSpan';
-import { MoneyCell } from './MoneyCell';
-import { DateCell } from './DateCell';
+import { PropertyTypeSpan } from '../cells/PropertyTypeSpan';
+import { AddressSpan } from '../cells/AddressSpan';
+import { OwnershipSpan } from '../cells/OwnershipSpan';
+import { MoneyCell } from '../cells/MoneyCell';
+import { DateCell } from '../cells/DateCell';
 
 enum OwnershipType {
   NeverOwned,
@@ -29,7 +29,7 @@ const getOwnership = (property: IRentalPropertyEntity): OwnershipType => {
   return OwnershipType.NeverOwned;
 };
 
-export function HistoricalProperty(props: { historicalProperty: IHistoricalProperty }): ReactNode {
+export function HistoricalPropertyData(props: { historicalProperty: IHistoricalProperty }): ReactNode {
   return (
     <Stack direction={'column'}>
       <StackSpaceBetween direction={'row'}>

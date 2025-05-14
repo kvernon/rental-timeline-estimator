@@ -1,12 +1,12 @@
 import React from 'react';
 import { Stack } from '../core/Stack';
 import { ILedgerCollection } from '@cubedelement.com/realty-investor-timeline';
-import { MoneyCell, MoneyCellStyle } from './MoneyCell';
-import { DateCell } from './DateCell';
-import { AddressSpan } from './AddressSpan';
+import { MoneyCell, MoneyCellStyle } from '../cells/MoneyCell';
+import { DateCell } from '../cells/DateCell';
+import { AddressSpan } from '../cells/AddressSpan';
 import { getDate } from '../../data/getDate';
-import { ButtonCell } from './ButtonCell';
-import { TypeSpan } from './TypeSpan';
+import { ButtonCell } from '../cells/ButtonCell';
+import { TypeSpan } from '../cells/TypeSpan';
 
 export function UserLedgerMonthly(props: { ledgerCollection: ILedgerCollection; date: Date }) {
   const ledgerItems = props.ledgerCollection.filter((l) => l.dateMatchesYearAndMonth(props.date));

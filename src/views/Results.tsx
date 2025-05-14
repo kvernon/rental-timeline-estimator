@@ -46,19 +46,17 @@ export function Results(props: { userInfo: IUserInfo; propertiesInfo: IPropertie
   const [ledgerCollection, setLedgerCollection] = useState<ILedgerCollection | null>(null);
 
   useEffect(() => {
-    const ownedProperties = results?.rentals.filter((p) => p.property.isOwned && p.property.soldDate === undefined).map((x) => x.property) || [];
+    const ownedProperties = results?.rentals.filter((p) => p.property.isOwned).map((x) => x.property) || [];
     setEstimatedCashFlow(
       !results ? 0 : ownedProperties.reduce((previousValue, currentValue) => previousValue + currentValue.getCashFlowByDate(results.endDate), 0),
     );
     setBalance(results?.getBalance(results.endDate) || 0);
     setOwnedProperties(ownedProperties?.length || 0);
-    setAllOwnedProperties(results?.rentals.filter((p) => p.property.purchaseDate).map((x) => x.property)?.length || 0);
+    setAllOwnedProperties(results?.rentals.filter((p) => p.property.isOwned).map((x) => x.property)?.length || 0);
     setEquity(
       results
         ? ownedProperties.reduce((previousValue, currentValue) => {
-            const newCurrent = currentValue.clone();
-            newCurrent.soldDate = results?.endDate;
-            return previousValue + currentValue.getEquityFromSell(results.endDate);
+            return previousValue + currentValue.getEstimatedEquityFromSell(results.endDate);
           }, 0)
         : 0,
     );

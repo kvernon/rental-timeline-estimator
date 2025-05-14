@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Stack } from '../core/Stack';
 import { ILedgerCollection, ILedgerSummary } from '@cubedelement.com/realty-investor-timeline';
-import { MoneyCell } from './MoneyCell';
-import { DateCell } from './DateCell';
+import { MoneyCell } from '../cells/MoneyCell';
+import { DateCell } from '../cells/DateCell';
 import { UserLedgerMonthly } from './UserLedgerMonthly';
 import { useTheme } from '@emotion/react';
 import { IThemeOptions } from '../../theming/IThemeOptions';
 import styled from '@emotion/styled';
-import { AddressSpan } from './AddressSpan';
+import { AddressSpan } from '../cells/AddressSpan';
 
 const AdjustedButton = styled.button`
   width: 50px;
