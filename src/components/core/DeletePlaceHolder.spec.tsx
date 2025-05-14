@@ -13,7 +13,7 @@ describe('DeletePlaceHolder unit tests', () => {
     const expectedStyle = `
       transition: background 0.4s ease-out;
       width: 45px;
-      background: rgb(126, 10, 10);
+      background: rgb(82, 6, 6);
       display: flex;
       flex-direction: row;
       align-items: center;

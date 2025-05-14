@@ -10,7 +10,7 @@ import { IPropertyDropDownParams } from './IPropertyDropDownParams';
 import styled from '@emotion/styled';
 
 const getDataValue = (title: string, value: number): IPropertyDropDownOption => {
-  return { value, label: title, image: `/images/${title}.jpg` };
+  return { value, label: title, image: `images/${title}.jpg` };
 };
 
 export const propertyOptions = ['apartment', 'house'];

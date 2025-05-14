@@ -118,7 +118,7 @@ describe('PropertyDropDownValidator unit test', () => {
 
       expect(params.onChange).toHaveBeenCalledWith({
         value: {
-          image: '/images/apartment.jpg',
+          image: 'images/apartment.jpg',
           label: 'apartment',
           value: 0,
         },
