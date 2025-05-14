@@ -1,10 +1,10 @@
 import React from 'react';
 import { Stack } from '../core/Stack';
 import { ILedgerCollection } from '@cubedelement.com/realty-investor-timeline';
-import { MoneyCell, MoneyCellStyle } from './MoneyCell';
-import { DateCellStyle } from './DateCell';
-import { AddressSpan } from './AddressSpan';
-import { ButtonCell } from './ButtonCell';
+import { MoneyCell, MoneyCellStyle } from '../cells/MoneyCell';
+import { DateCellStyle } from '../cells/DateCell';
+import { AddressSpan } from '../cells/AddressSpan';
+import { ButtonCell } from '../cells/ButtonCell';
 
 function LedgerHeader() {
   return (
