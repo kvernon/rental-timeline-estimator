@@ -47,12 +47,12 @@ export function Results(props: { userInfo: IUserInfo; propertiesInfo: IPropertie
 
   useEffect(() => {
     const ownedProperties = results?.rentals.filter((p) => p.property.isOwned).map((x) => x.property) || [];
-    setEstimatedCashFlow(
+    setEstimatedCashFlow(() =>
       !results ? 0 : ownedProperties.reduce((previousValue, currentValue) => previousValue + currentValue.getCashFlowByDate(results.endDate), 0),
     );
-    setBalance(results?.getBalance(results.endDate) || 0);
-    setOwnedProperties(ownedProperties?.length || 0);
-    setAllOwnedProperties(results?.rentals.filter((p) => p.property.isOwned).map((x) => x.property)?.length || 0);
+    setBalance(() => results?.getBalance(results.endDate) || 0);
+    setOwnedProperties(() => ownedProperties?.length || 0);
+    setAllOwnedProperties(() => results?.rentals.filter((p) => p.property.isOwned).map((x) => x.property)?.length || 0);
     setEquity(
       results
         ? ownedProperties.reduce((previousValue, currentValue) => {
@@ -61,19 +61,21 @@ export function Results(props: { userInfo: IUserInfo; propertiesInfo: IPropertie
         : 0,
     );
 
-    setMetMonthlyGoal(
-      !results
-        ? false
-        : ownedProperties.reduce((previousValue, currentValue) => previousValue + currentValue.getCashFlowByDate(results.endDate), 0) >=
-            results.user.monthlyIncomeAmountGoal,
-    );
-    setLedgerCollection(results?.user.ledgerCollection || null);
+    setMetMonthlyGoal(() => {
+      if (!results) {
+        return false;
+      }
+
+      const reduced = ownedProperties.reduce((previousValue, currentValue) => previousValue + currentValue.getCashFlowByDate(results.endDate), 0);
+      return reduced >= results.user.monthlyIncomeAmountGoal;
+    });
+    setLedgerCollection(() => results?.user.ledgerCollection || null);
   }, [results]);
 
   useEffect(() => {
     if (!isDataLoaded || JSON.stringify(props.userInfo) !== JSON.stringify(userInfo)) {
-      setIsDataLoaded(true);
-      setResults(generate(props.userInfo, props.propertiesInfo));
+      setIsDataLoaded(() => true);
+      setResults(() => generate(props.userInfo, props.propertiesInfo));
     }
   }, [props, isDataLoaded, userInfo, propertiesInfo]);
 
