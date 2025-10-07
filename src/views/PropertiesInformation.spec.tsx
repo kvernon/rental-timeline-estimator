@@ -84,7 +84,7 @@ describe('PropertiesInformation unit tests', () => {
             },
           ],
         },
-        {},
+        undefined,
       );
 
       expect(nav).toBeInTheDocument();

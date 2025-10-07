@@ -101,7 +101,7 @@ describe('RuleStack unit tests', () => {
             isDisabled: x.isDisabled,
           })),
         },
-        {},
+        undefined,
       );
     });
 
@@ -131,7 +131,7 @@ describe('RuleStack unit tests', () => {
             value: undefined,
           },
         },
-        {},
+        undefined,
       );
     });
 
@@ -197,7 +197,7 @@ describe('RuleStack unit tests', () => {
           })),
           onChange: expect.any(Function),
         },
-        {},
+        undefined,
       );
     });
 
@@ -212,7 +212,7 @@ describe('RuleStack unit tests', () => {
           value: props.value.property,
           onChange: expect.any(Function),
         },
-        {},
+        undefined,
       );
     });
 
@@ -236,7 +236,7 @@ describe('RuleStack unit tests', () => {
             value: 1,
           },
         },
-        {},
+        undefined,
       );
     });
   });
@@ -287,7 +287,7 @@ describe('RuleStack unit tests', () => {
           {
             onClick: expect.any(Function),
           },
-          {},
+          undefined,
         );
 
         fireEvent.click(deleteButton);
@@ -308,7 +308,7 @@ describe('RuleStack unit tests', () => {
             })),
             onChange: expect.any(Function),
           },
-          {},
+          undefined,
         );
 
         expect(RangeFieldValidator<false>).toHaveBeenCalledWith(
@@ -327,7 +327,7 @@ describe('RuleStack unit tests', () => {
               value: 1,
             },
           },
-          {},
+          undefined,
         );
 
         const entity = screen.getByLabelText<HTMLSelectElement>(`Rule Title`);
@@ -358,7 +358,7 @@ describe('RuleStack unit tests', () => {
             value: props.value.property,
             onChange: expect.any(Function),
           },
-          {},
+          undefined,
         );
 
         const entity = screen.getByLabelText<HTMLSelectElement>(`Property Picker`);
@@ -398,7 +398,7 @@ describe('RuleStack unit tests', () => {
               value: 1,
             },
           },
-          {},
+          undefined,
         );
 
         const entity = screen.getByLabelText<HTMLInputElement>(`Rule Range`);
