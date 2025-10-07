@@ -144,7 +144,7 @@ describe('RulesCollection unit tests', () => {
               onClick: expect.any(Function),
               theme: themeMock,
             },
-            {},
+            undefined,
           );
 
           expect(addButton).toBeInTheDocument();

@@ -69,7 +69,7 @@ describe('UserInformation unit tests', () => {
             value: { validationResult: ValidatorTypes.Valid, value: 10 },
             onChange: expect.any(Function),
           },
-          {},
+          undefined,
         );
 
         expect(entity).toBeInTheDocument();
@@ -99,7 +99,7 @@ describe('UserInformation unit tests', () => {
             value: { validationResult: ValidatorTypes.Valid, value: 20 },
             onChange: expect.any(Function),
           },
-          {},
+          undefined,
         );
 
         expect(entity).toBeInTheDocument();
@@ -125,7 +125,7 @@ describe('UserInformation unit tests', () => {
             value: { validationResult: ValidatorTypes.Valid, value: 30 },
             onChange: expect.any(Function),
           },
-          {},
+          undefined,
         );
       });
 
@@ -142,7 +142,7 @@ describe('UserInformation unit tests', () => {
             possibleChoices: [],
             onChange: expect.any(Function),
           },
-          {},
+          undefined,
         );
       });
 
@@ -160,7 +160,7 @@ describe('UserInformation unit tests', () => {
             possibleChoices: [],
             onChange: expect.any(Function),
           },
-          {},
+          undefined,
         );
       });
     });
