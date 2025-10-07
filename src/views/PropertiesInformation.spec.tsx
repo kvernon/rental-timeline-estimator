@@ -3,19 +3,21 @@ import '@testing-library/jest-dom';
 import React from 'react';
 import { PropertyType } from '@cubedelement.com/realty-investor-timeline';
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
-import { IPropertiesInformationProps } from './IPropertiesInformationProps';
 import { PropertiesInformation } from './PropertiesInformation';
 import { NavList } from '../components/navigation/NavList';
+import { useDispatch, useSelector } from 'react-redux';
 
 jest.mock('../components/validators/PropertyInformation');
 jest.mock('../components/navigation/NavList');
+jest.mock('react-redux');
 
 describe('PropertiesInformation unit tests', () => {
-  let props: IPropertiesInformationProps;
+  const mockDispatch = jest.fn();
 
   beforeEach(() => {
-    props = {
-      onChange: jest.fn(),
+    jest.mocked(useDispatch).mockReturnValue(mockDispatch);
+
+    const propertiesInfo = {
       house: {
         propertyType: PropertyType.SingleFamily,
         highestGenerationAmount: { value: 1, validationResult: ValidatorTypes.Valid },
@@ -50,7 +52,13 @@ describe('PropertiesInformation unit tests', () => {
       },
     };
 
-    render(<PropertiesInformation {...props} />);
+    jest.mocked(useSelector).mockImplementation((selector: (s: unknown) => unknown) => selector({ form: { propertiesInfo } } as unknown));
+
+    render(<PropertiesInformation />);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   describe('and with defaults', () => {

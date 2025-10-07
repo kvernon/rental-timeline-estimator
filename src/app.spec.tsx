@@ -1,14 +1,28 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+// Polyfill TextEncoder/TextDecoder for react-router in Jest/JSDOM
+import { TextEncoder, TextDecoder } from 'util';
+// @ts-ignore
+(global as any).TextEncoder = TextEncoder;
+// @ts-ignore
+(global as any).TextDecoder = TextDecoder;
 import { App } from './app';
 import { useTheme } from '@emotion/react';
 import { themeMock } from '../__tests__/ThemeMock';
 import { IThemeOptions } from './theming/IThemeOptions';
 
-jest.mock('./components/core/Page');
-jest.mock('./views/UserInformation');
-jest.mock('./components/navigation/NavList');
+jest.mock('./components/core/Page', () => ({
+  Page: () => <div />,
+}));
+
+jest.mock('./views/UserInformation', () => ({
+  UserInformation: () => <div aria-label="User Information" />,
+}));
+
+jest.mock('./components/navigation/NavList', () => ({
+  NavListGeneric: (props: { title: string }) => <nav aria-label={props.title} />,
+}));
 
 describe('App unit tests', () => {
   beforeEach(() => {

@@ -9,6 +9,7 @@ import { RulesCollection } from '../components/rules/RulesCollection';
 import { FontGroups } from '../theming/fontGroups';
 import { evaluateValidation } from '../components/validators/evaluateValidation';
 import { getRulesValuesToRulesValuesResults } from './getRulesValuesToRulesValuesResults';
+import { useDispatch, useSelector } from 'react-redux';
 
 jest.mock('../components/panels/RangeValidationPanel');
 jest.mock('../components/core/Spinner');
@@ -18,8 +19,15 @@ jest.mock('../components/validators/evaluateValidation');
 jest.mock('../components/validators/isInRange');
 jest.mock('./getRulesValuesToRulesValuesResults');
 
+jest.mock('react-redux');
+
 describe('UserInformation unit tests', () => {
   let props: IUserInformationProps;
+  const mockDispatch = jest.fn();
+
+  beforeEach(() => {
+    jest.mocked(useDispatch).mockReturnValue(mockDispatch);
+  });
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -31,14 +39,15 @@ describe('UserInformation unit tests', () => {
         props = {
           choices: { holdRules: [], purchaseRules: [] },
           title: 'UserInput Test',
-          values: {
-            goal: { value: 10, validationResult: ValidatorTypes.Valid },
-            savedAtStart: { value: 20, validationResult: ValidatorTypes.Valid },
-            moSavings: { value: 30, validationResult: ValidatorTypes.Valid },
-            purchaseRules: [],
-            holdRules: [],
-          },
         };
+        const userInfo = {
+          goal: { value: 10, validationResult: ValidatorTypes.Valid },
+          savedAtStart: { value: 20, validationResult: ValidatorTypes.Valid },
+          moSavings: { value: 30, validationResult: ValidatorTypes.Valid },
+          purchaseRules: [],
+          holdRules: [],
+        };
+        jest.mocked(useSelector).mockImplementation((selector: (s: unknown) => unknown) => selector({ form: { userInfo } } as unknown));
         render(<UserInformation {...props} />);
       });
 
@@ -174,29 +183,29 @@ describe('UserInformation unit tests', () => {
       }));
 
       props = {
-        onChange: jest.fn(),
         choices: { holdRules: [], purchaseRules: [] },
         title: 'UserInput Test',
-        values: {
-          goal: { value: 1, validationResult: ValidatorTypes.Valid },
-          savedAtStart: { value: 2, validationResult: ValidatorTypes.Valid },
-          moSavings: { value: 3, validationResult: ValidatorTypes.Valid },
-          purchaseRules: [
-            {
-              title: { value: { value: 0, label: 'one' }, validationResult: ValidatorTypes.Valid },
-              property: { value: { value: 0, label: 'one' }, validationResult: ValidatorTypes.Valid },
-              range: { value: 50, validationResult: ValidatorTypes.Valid },
-            },
-          ],
-          holdRules: [
-            {
-              title: { value: { value: 0, label: 'one' }, validationResult: ValidatorTypes.Valid },
-              property: { value: { value: 0, label: 'one' }, validationResult: ValidatorTypes.Valid },
-              range: { value: 50, validationResult: ValidatorTypes.Valid },
-            },
-          ],
-        },
       };
+      const userInfo = {
+        goal: { value: 1, validationResult: ValidatorTypes.Valid },
+        savedAtStart: { value: 2, validationResult: ValidatorTypes.Valid },
+        moSavings: { value: 3, validationResult: ValidatorTypes.Valid },
+        purchaseRules: [
+          {
+            title: { value: { value: 0, label: 'one' }, validationResult: ValidatorTypes.Valid },
+            property: { value: { value: 0, label: 'one' }, validationResult: ValidatorTypes.Valid },
+            range: { value: 50, validationResult: ValidatorTypes.Valid },
+          },
+        ],
+        holdRules: [
+          {
+            title: { value: { value: 0, label: 'one' }, validationResult: ValidatorTypes.Valid },
+            property: { value: { value: 0, label: 'one' }, validationResult: ValidatorTypes.Valid },
+            range: { value: 50, validationResult: ValidatorTypes.Valid },
+          },
+        ],
+      };
+      jest.mocked(useSelector).mockImplementation((selector: (s: unknown) => unknown) => selector({ form: { userInfo } } as unknown));
       render(<UserInformation {...props} />);
     });
 
@@ -206,25 +215,15 @@ describe('UserInformation unit tests', () => {
 
         fireEvent.change(entity, { target: { value: '40' } });
 
-        expect(props.onChange).toHaveBeenCalledWith({
-          goal: { value: 40, validationResult: ValidatorTypes.Valid },
-          holdRules: [
-            {
-              property: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
-              range: { validationResult: ValidatorTypes.Valid, value: 50 },
-              title: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
+        expect(mockDispatch).toHaveBeenCalledWith(
+          expect.objectContaining({
+            type: 'form/updateRangeUserInfo',
+            payload: {
+              key: 'goal',
+              value: { validationResult: ValidatorTypes.Valid, value: 40 },
             },
-          ],
-          moSavings: { validationResult: ValidatorTypes.Valid, value: 3 },
-          purchaseRules: [
-            {
-              property: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
-              range: { validationResult: ValidatorTypes.Valid, value: 50 },
-              title: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
-            },
-          ],
-          savedAtStart: { validationResult: ValidatorTypes.Valid, value: 2 },
-        });
+          }),
+        );
       });
     });
 
@@ -234,25 +233,15 @@ describe('UserInformation unit tests', () => {
 
         fireEvent.change(entity, { target: { value: '40' } });
 
-        expect(props.onChange).toHaveBeenCalledWith({
-          goal: { validationResult: ValidatorTypes.Valid, value: 1 },
-          holdRules: [
-            {
-              property: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
-              range: { validationResult: ValidatorTypes.Valid, value: 50 },
-              title: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
+        expect(mockDispatch).toHaveBeenCalledWith(
+          expect.objectContaining({
+            type: 'form/updateRangeUserInfo',
+            payload: {
+              key: 'savedAtStart',
+              value: { validationResult: ValidatorTypes.Valid, value: 40 },
             },
-          ],
-          moSavings: { validationResult: ValidatorTypes.Valid, value: 3 },
-          purchaseRules: [
-            {
-              property: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
-              range: { validationResult: ValidatorTypes.Valid, value: 50 },
-              title: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
-            },
-          ],
-          savedAtStart: { validationResult: ValidatorTypes.Valid, value: 40 },
-        });
+          }),
+        );
       });
     });
 
@@ -262,49 +251,55 @@ describe('UserInformation unit tests', () => {
 
         fireEvent.change(entity, { target: { value: '40' } });
 
-        expect(props.onChange).toHaveBeenCalledWith({
-          goal: { validationResult: ValidatorTypes.Valid, value: 1 },
-          holdRules: [
-            {
-              property: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
-              range: { validationResult: ValidatorTypes.Valid, value: 50 },
-              title: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
+        expect(mockDispatch).toHaveBeenCalledWith(
+          expect.objectContaining({
+            type: 'form/updateRangeUserInfo',
+            payload: {
+              key: 'moSavings',
+              value: { validationResult: ValidatorTypes.Valid, value: 40 },
             },
-          ],
-          moSavings: { validationResult: ValidatorTypes.Valid, value: 40 },
-          purchaseRules: [
-            {
-              property: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
-              range: { validationResult: ValidatorTypes.Valid, value: 50 },
-              title: { validationResult: ValidatorTypes.Valid, value: { label: 'one', value: 0 } },
-            },
-          ],
-          savedAtStart: { validationResult: ValidatorTypes.Valid, value: 2 },
-        });
+          }),
+        );
       });
     });
 
     describe('and purchase rules', () => {
       test('should fire update', () => {
         const entity = screen.getByLabelText<HTMLInputElement>('Purchase Rules');
+        const transformed: ReturnType<typeof getRulesValuesToRulesValuesResults> = [{ test: 'purchase' }] as unknown as ReturnType<
+          typeof getRulesValuesToRulesValuesResults
+        >;
+        jest.mocked(getRulesValuesToRulesValuesResults).mockReturnValueOnce(transformed);
 
         fireEvent.click(entity);
 
-        expect(props.onChange).toHaveBeenCalled();
-
         expect(jest.mocked(getRulesValuesToRulesValuesResults)).toHaveBeenCalledWith(false, expect.any(Object), props.choices.purchaseRules);
+        expect(mockDispatch).toHaveBeenCalledWith(
+          expect.objectContaining({
+            type: 'form/updateRuleUserInfo',
+            payload: { key: 'purchaseRules', value: transformed },
+          }),
+        );
       });
     });
 
     describe('and hold rules', () => {
       test('should fire update', () => {
         const entity = screen.getByLabelText<HTMLInputElement>('Hold Rules');
+        const transformed: ReturnType<typeof getRulesValuesToRulesValuesResults> = [{ test: 'hold' }] as unknown as ReturnType<
+          typeof getRulesValuesToRulesValuesResults
+        >;
+        jest.mocked(getRulesValuesToRulesValuesResults).mockReturnValueOnce(transformed);
 
         fireEvent.click(entity);
 
-        expect(props.onChange).toHaveBeenCalled();
-
         expect(jest.mocked(getRulesValuesToRulesValuesResults)).toHaveBeenCalledWith(false, expect.any(Object), props.choices.holdRules);
+        expect(mockDispatch).toHaveBeenCalledWith(
+          expect.objectContaining({
+            type: 'form/updateRuleUserInfo',
+            payload: { key: 'holdRules', value: transformed },
+          }),
+        );
       });
     });
   });
