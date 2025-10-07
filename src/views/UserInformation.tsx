@@ -6,9 +6,16 @@ import { Stack } from '../components/core/Stack';
 import styled from '@emotion/styled';
 import { IUserInformationProps } from './IUserInformationProps';
 import { FontGroups } from '../theming/fontGroups';
-import { getRulesValuesToRulesValuesResults } from './getRulesValuesToRulesValuesResults';
-import { IUserInfo } from '../data/IUserInfo';
 import { Spinner } from '../components/core/Spinner';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../store';
+import { updateRangeUserInfo, updateRuleUserInfo } from '../formSlice';
+import { ConditionalNumber, ConditionEventResult } from '../components/validators/IRangeFieldValidatorEvent';
+import { IRuleValues } from '../components/rules/IRuleValues';
+import { IEventResult } from '../components/validators/IEventResult';
+import { ISelectOption } from '../components/core/ISelectOption';
+import { IUserInfo } from '../data/IUserInfo';
+import { getRulesValuesToRulesValuesResults } from './getRulesValuesToRulesValuesResults';
 
 const RulesStack = styled(Stack)`
   width: unset;
@@ -43,8 +50,8 @@ const StackPosition = styled(Stack)`
 `;
 
 export function UserInformation(props: IUserInformationProps) {
-  const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
-  const [value, setValue] = useState<IUserInfo>(props.values);
+  const dispatch = useDispatch<AppDispatch>();
+  const value = useSelector((state: RootState) => state.form.userInfo);
 
   const [x, setX] = useState<number | undefined>();
   const [y, setY] = useState<number | undefined>();
@@ -52,7 +59,7 @@ export function UserInformation(props: IUserInformationProps) {
 
   useEffect(() => {
     const getPosition = () => {
-      const ele = document.getElementById(`${'goal-panel'}-box`);
+      const ele = document.getElementById(`goal-panel-box`);
 
       const x = ele?.getBoundingClientRect().x;
       setX(() => x);
@@ -72,15 +79,17 @@ export function UserInformation(props: IUserInformationProps) {
     };
   });
 
-  useEffect(() => {
-    setIsDataLoaded(false);
-  }, [props]);
+  const handleRangeChange =
+    (key: Exclude<keyof IUserInfo, 'purchaseRules' | 'holdRules'>) => (e: ConditionEventResult<true, ConditionalNumber<true>>) => {
+      dispatch(updateRangeUserInfo({ key, value: e }));
+    };
 
-  useEffect(() => {
-    if (isDataLoaded && props.onChange) {
-      props.onChange(value);
-    }
-  }, [value, isDataLoaded, props]);
+  const handleRuleChange = (
+    key: Exclude<keyof IUserInfo, 'goal' | 'savedAtStart' | 'moSavings'>,
+    e: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[],
+  ) => {
+    dispatch(updateRuleUserInfo({ key, value: e }));
+  };
 
   return (
     <form aria-label={props.title}>
@@ -101,14 +110,7 @@ export function UserInformation(props: IUserInformationProps) {
             hasSpinner={false}
             useTransparent={true}
             id="goal-panel"
-            onChange={(e) => {
-              const n = { ...value };
-              if (n.goal.value !== e.value) {
-                n.goal = e;
-                setValue(n);
-                setIsDataLoaded(true);
-              }
-            }}
+            onChange={handleRangeChange('goal')}
           />
         </StackPosition>
       </TopStack>
@@ -125,14 +127,7 @@ export function UserInformation(props: IUserInformationProps) {
           showTitle={true}
           value={value.savedAtStart}
           id="amount-saved-at-start"
-          onChange={(e) => {
-            const n = { ...value };
-            if (n.savedAtStart.value !== e.value) {
-              n.savedAtStart = e;
-              setValue(n);
-              setIsDataLoaded(true);
-            }
-          }}
+          onChange={handleRangeChange('savedAtStart')}
         />
         <RangeFieldValidator<true>
           min={0}
@@ -145,14 +140,7 @@ export function UserInformation(props: IUserInformationProps) {
           useUnderlineOnly={false}
           value={value.moSavings}
           id="amount-saved-per-month"
-          onChange={(e) => {
-            const n = { ...value };
-            if (n.moSavings.value !== e.value) {
-              n.moSavings = e;
-              setValue(n);
-              setIsDataLoaded(true);
-            }
-          }}
+          onChange={handleRangeChange('moSavings')}
         />
       </RangeValidationPanel>
 
@@ -162,12 +150,7 @@ export function UserInformation(props: IUserInformationProps) {
           values={value.purchaseRules}
           possibleChoices={props.choices.purchaseRules}
           onChange={(e) => {
-            const n: IUserInfo = { ...value };
-            n.purchaseRules = getRulesValuesToRulesValuesResults(false, e, props.choices.purchaseRules);
-            if (JSON.stringify(value.purchaseRules) !== JSON.stringify(n.purchaseRules)) {
-              setValue(n);
-              setIsDataLoaded(true);
-            }
+            handleRuleChange('purchaseRules', getRulesValuesToRulesValuesResults(false, e, props.choices.purchaseRules));
           }}
         />
 
@@ -176,12 +159,7 @@ export function UserInformation(props: IUserInformationProps) {
           values={value.holdRules}
           possibleChoices={props.choices.holdRules}
           onChange={(e) => {
-            const n: IUserInfo = { ...value };
-            n.holdRules = getRulesValuesToRulesValuesResults(false, e, props.choices.holdRules);
-            if (JSON.stringify(value.holdRules) !== JSON.stringify(n.holdRules)) {
-              setValue(n);
-              setIsDataLoaded(true);
-            }
+            handleRuleChange('holdRules', getRulesValuesToRulesValuesResults(false, e, props.choices.holdRules));
           }}
         />
       </RulesStack>

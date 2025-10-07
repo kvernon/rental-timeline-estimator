@@ -30,19 +30,22 @@
   "license": "ISC",
   "engineStrict": true,
   "engines": {
-    "npm": "~10"
+    "npm": ">=10"
   },
   "dependencies": {
     "@cubedelement.com/realty-investor-timeline": "^4.8.0",
     "@emotion-icons/fa-solid": "^3.14.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.14.1",
+    "@reduxjs/toolkit": "^2.9.0",
     "emotion-icons": "^3.27.0",
     "lodash.get": "^4.4.2",
     "lodash.isequal": "^4.5.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-movable": "^3.0.4",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.9.3",
     "react-select": "^5.10.2"
   },
   "devDependencies": {

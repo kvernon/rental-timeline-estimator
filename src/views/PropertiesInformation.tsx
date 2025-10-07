@@ -1,11 +1,14 @@
-import { IPropertiesInformationProps } from './IPropertiesInformationProps';
 import { Stack } from '../components/core/Stack';
 import { PropertyInformation } from '../components/validators/PropertyInformation';
 import React, { useState } from 'react';
 import { NavList } from '../components/navigation/NavList';
 import { propertyOptions } from '../components/validators/PropertyDropDownValidator';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../store';
+import { updatePropertiesInfo } from '../formSlice';
+import { IPropertyInformationParams } from '../components/validators/IPropertyInformationParams';
 
-export const PropertiesInformation = (props: IPropertiesInformationProps) => {
+export const PropertiesInformation = () => {
   const [nav, setNav] = useState<
     {
       title: string;
@@ -13,7 +16,14 @@ export const PropertiesInformation = (props: IPropertiesInformationProps) => {
       isDisabled?: boolean | undefined;
     }[]
   >(propertyOptions.map((x, i) => ({ title: x, isSelected: i === 0 })));
+
+  const dispatch = useDispatch<AppDispatch>();
+  const value = useSelector((state: RootState) => state.form.propertiesInfo);
   const [location, setLocation] = React.useState<string>(propertyOptions[0]);
+
+  const handlePropertyChange = (key: keyof typeof value) => (e: IPropertyInformationParams) => {
+    dispatch(updatePropertiesInfo({ key, value: e }));
+  };
 
   return (
     <Stack aria-label={'Properties Information'} direction="column">
@@ -25,26 +35,8 @@ export const PropertiesInformation = (props: IPropertiesInformationProps) => {
           setNav(navList);
         }}
       />
-      {location === propertyOptions[0] && (
-        <PropertyInformation
-          {...props.apartment}
-          onChange={(result) => {
-            if (JSON.stringify(result) !== JSON.stringify(props.apartment)) {
-              props.onChange({ apartment: result, house: props.house });
-            }
-          }}
-        />
-      )}
-      {location === propertyOptions[1] && (
-        <PropertyInformation
-          {...props.house}
-          onChange={(result) => {
-            if (JSON.stringify(result) !== JSON.stringify(props.house)) {
-              props.onChange({ apartment: { ...props.apartment }, house: result });
-            }
-          }}
-        />
-      )}
+      {location === propertyOptions[0] && <PropertyInformation {...value.apartment} onChange={handlePropertyChange('apartment')} />}
+      {location === propertyOptions[1] && <PropertyInformation {...value.house} onChange={handlePropertyChange('house')} />}
     </Stack>
   );
 };

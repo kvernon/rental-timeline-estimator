@@ -2,8 +2,6 @@ import { Stack } from '../components/core/Stack';
 import React, { useEffect, useState } from 'react';
 import { generate } from '../data/generate';
 import styled from '@emotion/styled';
-import { IUserInfo } from '../data/IUserInfo';
-import { IPropertiesInformationPropsEvent } from './IPropertiesInformationProps';
 import { ILedgerCollection, ITimeline } from '@cubedelement.com/realty-investor-timeline';
 import { useTheme } from '@emotion/react';
 import { IThemeOptions } from '../theming/IThemeOptions';
@@ -11,6 +9,8 @@ import { TimelineProperties } from '../components/timeline/TimelineProperties';
 import { UserLedger } from '../components/timeline/UserLedger';
 import { NavList } from '../components/navigation/NavList';
 import { UserSummary } from './UserSummary';
+import { RootState } from '../store';
+import { useSelector } from 'react-redux';
 
 const Regular = styled(Stack)`
   color: white;
@@ -22,7 +22,7 @@ const Err = styled(Stack)`
   text-align: center;
 `;
 
-export function Results(props: { userInfo: IUserInfo; propertiesInfo: IPropertiesInformationPropsEvent }) {
+export function Results() {
   const [nav, setNav] = useState<
     {
       title: string;
@@ -33,9 +33,8 @@ export function Results(props: { userInfo: IUserInfo; propertiesInfo: IPropertie
   const [location, setLocation] = React.useState<string>('Ledger');
 
   const [results, setResults] = React.useState<ITimeline>();
-  const [userInfo] = useState<IUserInfo>(props.userInfo);
-  const [propertiesInfo] = useState<IPropertiesInformationPropsEvent>(props.propertiesInfo);
-  const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
+
+  const formData = useSelector((state: RootState) => state.form);
 
   const [estimatedCashFlow, setEstimatedCashFlow] = useState<number>(0);
   const [balance, setBalance] = useState<number>(0);
@@ -73,11 +72,8 @@ export function Results(props: { userInfo: IUserInfo; propertiesInfo: IPropertie
   }, [results]);
 
   useEffect(() => {
-    if (!isDataLoaded || JSON.stringify(props.userInfo) !== JSON.stringify(userInfo)) {
-      setIsDataLoaded(() => true);
-      setResults(() => generate(props.userInfo, props.propertiesInfo));
-    }
-  }, [props, isDataLoaded, userInfo, propertiesInfo]);
+    setResults(() => generate(formData.userInfo, formData.propertiesInfo));
+  }, [formData]);
 
   try {
     const coreTheme = useTheme() as IThemeOptions;
