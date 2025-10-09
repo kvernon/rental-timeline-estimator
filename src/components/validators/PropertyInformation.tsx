@@ -16,7 +16,7 @@ export const PropertyInformation = (props: IPropertyInformationOnChangeParams) =
 
   return (
     <Stack aria-label={props.title} direction="row">
-      <Img width={`${498 / 2}px`} height={`${426 / 2}px`} title={propertyOption} alt={propertyOption} src={`/images/${propertyOption}-lg.jpg`} />
+      <Img width={`${498 / 2}px`} height={`${426 / 2}px`} title={propertyOption} alt={propertyOption} src={`./images/${propertyOption}-lg.jpg`} />
       <Stack direction="column" paddingLeft="15px">
         <RangeValidationPanel title="Life Span" required={true}>
           <RangeFieldValidator<true>

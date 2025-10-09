@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { NavButton } from './NavButton';
 import { INavListGenericProps, INavListProps } from './INavListProps';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router';
 
 export const NavListStyled = styled.menu`
   display: -webkit-flex;
