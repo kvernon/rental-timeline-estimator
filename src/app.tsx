@@ -24,9 +24,11 @@ export const App = function () {
     purchaseRules: getRuleChoices(purchaseConfig.collection),
   });
 
+  console.log('app process.env.BASE_PATH', process.env.BASE_PATH);
+
   return (
     <ThemeProvider theme={options}>
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.BASE_PATH ? `/${process.env.BASE_PATH}` : '/'}>
         <Provider store={store}>
           <Page />
           <Stack>
