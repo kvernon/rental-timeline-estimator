@@ -45,7 +45,7 @@
     "react-dom": "^19.2.0",
     "react-movable": "^3.0.4",
     "react-redux": "^9.2.0",
-    "react-router-dom": "^7.9.3",
+    "react-router": "^7.9.4",
     "react-select": "^5.10.2"
   },
   "devDependencies": {
@@ -71,6 +71,7 @@
     "@types/node": "^22.9.0",
     "@types/react": "^19.2.1",
     "@types/react-dom": "^19.2.0",
+    "@types/text-encoding": "^0.0.40",
     "@types/webpack": "^5.28.5",
     "@typescript-eslint/eslint-plugin": "^8.46.0",
     "@typescript-eslint/parser": "^8.46.0",

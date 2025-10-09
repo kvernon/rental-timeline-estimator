@@ -7,7 +7,7 @@ import { IRuleStackEntity } from './components/rules/IRuleStackEntity';
 import { getRuleChoices } from './rules/getRuleChoices';
 import { holdConfig } from './rules/holdRuleConfig';
 import { purchaseConfig } from './rules/purchaseRuleConfig';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router';
 import { Results } from './views/Results';
 import { PropertiesInformation } from './views/PropertiesInformation';
 import { Provider } from 'react-redux';

@@ -1,6 +1,9 @@
 import '@testing-library/jest-dom';
 import { matchers } from '@emotion/jest';
 import { Theme } from '@emotion/react';
+import { TextEncoder, TextDecoder } from 'text-encoding';
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
 
 expect.extend(matchers);
 
