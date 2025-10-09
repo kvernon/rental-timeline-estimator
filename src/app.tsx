@@ -33,8 +33,8 @@ export const App = function () {
             <NavListGeneric
               title={'Navigation'}
               navList={[
-                { title: 'User Information', path: '/' },
-                { title: 'Properties Information', path: '/properties' },
+                { title: 'Basics', path: '/' },
+                { title: 'Properties', path: '/properties' },
                 { title: 'Results', path: '/results' },
               ]}
             />
