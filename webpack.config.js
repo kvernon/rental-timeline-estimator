@@ -6,8 +6,13 @@ const webpack = require('webpack');
 const path = require('node:path');
 
 module.exports = (env, argv) => {
+  const isProduction = argv.mode === 'production';
+  const basePath = env.WEBPACK_SERVE ? '' : isProduction ? 'realty-v3' : '';
+
   console.log('env', env);
   console.log('argv', argv);
+  console.log(`basePath='${basePath}'`);
+
   return {
     entry: './src/index.tsx',
     module: {
@@ -32,6 +37,9 @@ module.exports = (env, argv) => {
     devtool: 'source-map',
     plugins: [
       new webpack.SourceMapDevToolPlugin({}),
+      new webpack.DefinePlugin({
+        process: { env: { BASE_PATH: JSON.stringify(basePath) } },
+      }),
       new HtmlWebpackPlugin({
         inject: false,
         title: 'Realty Investor Timeline',
