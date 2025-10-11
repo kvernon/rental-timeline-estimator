@@ -19,8 +19,7 @@ import styled from '@emotion/styled';
 export const TitleImage = styled.img`
   width: 593px;
   height: 160px;
-  margin-top: 25px;
-  margin-bottom: -25px;
+  margin: 25px 0 -25px;
 `;
 
 export const App = function () {
