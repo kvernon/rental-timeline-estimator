@@ -10,6 +10,9 @@ export const Page = () => {
       styles={css`
         body {
           background-color: ${coreTheme.palette.pageBackground};
+          background-image: url('./images/top-tile.gif');
+          background-position: top;
+          background-repeat: repeat-x;
         }
       `}
     />

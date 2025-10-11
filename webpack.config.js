@@ -59,7 +59,7 @@ module.exports = (env, argv) => {
           <noscript>
             <strong>We're sorry but ${htmlWebpackPlugin.options.title} doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
           </noscript>
-          <h1>${htmlWebpackPlugin.options.title}</h1>
+          <!-- ${htmlWebpackPlugin.options.title} -->
           <div id="root"></div>
         </body>
       </html>
