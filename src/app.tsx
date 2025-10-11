@@ -17,9 +17,9 @@ import { NavListGeneric } from './components/navigation/NavList';
 import styled from '@emotion/styled';
 
 export const TitleImage = styled.img`
-  width: 50%;
-  min-width: 300px;
-  height: auto;
+  width: 593px;
+  height: 160px;
+  margin-top: 25px;
   margin-bottom: -25px;
 `;
 
