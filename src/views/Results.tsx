@@ -7,7 +7,7 @@ import { useTheme } from '@emotion/react';
 import { IThemeOptions } from '../theming/IThemeOptions';
 import { TimelineProperties } from '../components/timeline/TimelineProperties';
 import { UserLedger } from '../components/timeline/UserLedger';
-import { NavList } from '../components/navigation/NavList';
+import { NavListSub } from '../components/navigation/NavListSub';
 import { UserSummary } from './UserSummary';
 import { RootState } from '../store';
 import { useSelector } from 'react-redux';
@@ -80,7 +80,7 @@ export function Results() {
 
     return (
       <Stack direction={'column'} role={'raw-results'}>
-        <NavList
+        <NavListSub
           title="Timeline Navigation"
           navList={nav}
           onClick={(title, navList) => {

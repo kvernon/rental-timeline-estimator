@@ -49,6 +49,10 @@ const StackPosition = styled(Stack)`
   z-index: 2;
 `;
 
+const FormStyled = styled.form`
+  margin-right: 0;
+`;
+
 export function UserInformation(props: IUserInformationProps) {
   const dispatch = useDispatch<AppDispatch>();
   const value = useSelector((state: RootState) => state.form.userInfo);
@@ -92,7 +96,7 @@ export function UserInformation(props: IUserInformationProps) {
   };
 
   return (
-    <form aria-label={props.title}>
+    <FormStyled aria-label={props.title}>
       <TopStack aria-label={'Goal Panel'}>
         <Spinner id="goal-spin" shape={{ x, width, y }} />
         <StackPosition spacing={2} paddingLeft={'20%'} paddingTop={'25px'} paddingBottom={'25px'} paddingRight={'20%'}>
@@ -163,6 +167,6 @@ export function UserInformation(props: IUserInformationProps) {
           }}
         />
       </RulesStack>
-    </form>
+    </FormStyled>
   );
 }

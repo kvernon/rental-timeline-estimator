@@ -1,7 +1,7 @@
 import { Stack } from '../components/core/Stack';
 import { PropertyInformation } from '../components/validators/PropertyInformation';
 import React, { useState } from 'react';
-import { NavList } from '../components/navigation/NavList';
+import { NavListSub } from '../components/navigation/NavListSub';
 import { propertyOptions } from '../components/validators/PropertyDropDownValidator';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store';
@@ -27,7 +27,7 @@ export const PropertiesInformation = () => {
 
   return (
     <Stack aria-label={'Properties Information'} direction="column">
-      <NavList
+      <NavListSub
         title="Properties Navigation"
         navList={nav}
         onClick={(title, navList) => {

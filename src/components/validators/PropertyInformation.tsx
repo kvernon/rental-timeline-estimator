@@ -11,14 +11,23 @@ const Img = styled.img`
   padding-top: 20px;
 `;
 
+const StackColumn = styled(Stack)`
+  padding-left: 15px;
+`;
+
+const PropertyRangeValidationPanel = styled(RangeValidationPanel)`
+  padding-left: 0;
+  width: unset;
+`;
+
 export const PropertyInformation = (props: IPropertyInformationOnChangeParams) => {
   const propertyOption = propertyOptions[props.propertyType === PropertyType.PassiveApartment ? 0 : 1];
 
   return (
     <Stack aria-label={props.title} direction="row">
       <Img width={`${498 / 2}px`} height={`${426 / 2}px`} title={propertyOption} alt={propertyOption} src={`./images/${propertyOption}-lg.jpg`} />
-      <Stack direction="column" paddingLeft="15px">
-        <RangeValidationPanel title="Life Span" required={true}>
+      <StackColumn direction="column">
+        <PropertyRangeValidationPanel title="Life Span" required={true}>
           <RangeFieldValidator<true>
             min={1}
             max={5}
@@ -54,9 +63,9 @@ export const PropertyInformation = (props: IPropertyInformationOnChangeParams) =
               });
             }}
           />
-        </RangeValidationPanel>
+        </PropertyRangeValidationPanel>
 
-        <RangeValidationPanel title="Market Value" required={true}>
+        <PropertyRangeValidationPanel title="Market Value" required={true}>
           <RangeFieldValidator<true>
             min={1}
             max={5000000}
@@ -93,9 +102,9 @@ export const PropertyInformation = (props: IPropertyInformationOnChangeParams) =
               });
             }}
           />
-        </RangeValidationPanel>
+        </PropertyRangeValidationPanel>
 
-        <RangeValidationPanel title="Sell Info" required={true}>
+        <PropertyRangeValidationPanel title="Sell Info" required={true}>
           <RangeFieldValidator<true>
             min={5}
             max={20}
@@ -170,9 +179,9 @@ export const PropertyInformation = (props: IPropertyInformationOnChangeParams) =
               });
             }}
           />
-        </RangeValidationPanel>
+        </PropertyRangeValidationPanel>
 
-        <RangeValidationPanel title="Cash Flow Range" required={true}>
+        <PropertyRangeValidationPanel title="Cash Flow Range" required={true}>
           <RangeFieldValidator<true>
             min={100}
             max={200}
@@ -209,9 +218,9 @@ export const PropertyInformation = (props: IPropertyInformationOnChangeParams) =
               });
             }}
           />
-        </RangeValidationPanel>
+        </PropertyRangeValidationPanel>
 
-        <RangeValidationPanel title="Equity Capture Range" required={true}>
+        <PropertyRangeValidationPanel title="Equity Capture Range" required={true}>
           <RangeFieldValidator<true>
             min={1}
             max={100}
@@ -248,8 +257,8 @@ export const PropertyInformation = (props: IPropertyInformationOnChangeParams) =
               });
             }}
           />
-        </RangeValidationPanel>
-      </Stack>
+        </PropertyRangeValidationPanel>
+      </StackColumn>
     </Stack>
   );
 };

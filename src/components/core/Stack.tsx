@@ -20,6 +20,11 @@ export const Stack = styled.div((props: IStackProps) => ({
   paddingBottom: props.paddingBottom ?? '0',
   marginBottom: props.marginBottom ?? '0',
   paddingTop: props.paddingTop ?? '0',
-  paddingLeft: props.paddingLeft ?? '2px',
+  paddingLeft: props.paddingLeft ?? '0',
   paddingRight: props.paddingRight ?? '0',
 }));
+
+export const StackMarginRight = styled(Stack)<IStackProps>`
+  margin-right: 10px;
+  width: unset;
+`;

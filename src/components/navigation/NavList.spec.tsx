@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import React from 'react';
-import { NavList } from './NavList';
+import { NavListSub } from './NavListSub';
 import { INavListProps } from './INavListProps';
 
 jest.mock('./NavButton');
@@ -23,7 +23,7 @@ describe('NavList unit tests', () => {
       onClick: jest.fn(),
     };
 
-    render(<NavList {...props} />);
+    render(<NavListSub {...props} />);
   });
 
   test('should render nav', () => {
