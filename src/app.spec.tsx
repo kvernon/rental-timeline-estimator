@@ -1,12 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-// Polyfill TextEncoder/TextDecoder for react-router in Jest/JSDOM
-import { TextEncoder, TextDecoder } from 'util';
-// @ts-ignore
-(global as any).TextEncoder = TextEncoder;
-// @ts-ignore
-(global as any).TextDecoder = TextDecoder;
+
 import { App } from './app';
 import { useTheme } from '@emotion/react';
 import { themeMock } from '../__tests__/ThemeMock';
