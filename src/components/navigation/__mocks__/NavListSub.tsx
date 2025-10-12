@@ -1,7 +1,7 @@
 import React from 'react';
 import { INavListProps } from '../INavListProps';
 
-export const NavList = jest.fn((props: INavListProps) => {
+export const NavListSub = jest.fn((props: INavListProps) => {
   return (
     <ul
       aria-label={props.title}
