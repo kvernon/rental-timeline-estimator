@@ -2,7 +2,7 @@ import { INavListGenericProps } from './INavListProps';
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { NavListStyled } from './NavListStyled';
-import { NavButton } from './NavButton';
+import { ListNavButton } from './NavButton';
 
 export const NavListMain = (props: INavListGenericProps) => {
   const [navList] = useState(props.navList);
@@ -13,7 +13,7 @@ export const NavListMain = (props: INavListGenericProps) => {
     <NavListStyled aria-label={props.title}>
       {navList.map((entity, i) => {
         return (
-          <NavButton
+          <ListNavButton
             key={i}
             selected={entity.path === location.pathname}
             title={entity.title}

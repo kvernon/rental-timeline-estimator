@@ -72,7 +72,7 @@ export function Results() {
   }, [results]);
 
   useEffect(() => {
-    setResults(() => generate(formData.userInfo, formData.propertiesInfo));
+    setResults(() => generate(formData.userInfo, formData.propertiesInfo, formData.settings));
   }, [formData]);
 
   try {

@@ -21,7 +21,7 @@ function LedgerHeader() {
   );
 }
 
-export function UserLedgerAnnualSummary(props: { ledgerCollection: ILedgerCollection; year: number }) {
+export function UserLedgerAnnualSummary(props: { ledgerCollection: ILedgerCollection; year: number; goal: number }) {
   const currentYear = props.ledgerCollection.getSummaryAnnual(props.year);
   return (
     <Stack direction={'column'}>

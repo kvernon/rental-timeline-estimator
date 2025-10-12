@@ -1,7 +1,7 @@
 import React from 'react';
 import { INavButtonProps } from '../INavButtonProps';
 
-export const NavButton = jest.fn((props: INavButtonProps) => {
+export const ListNavButton = jest.fn((props: INavButtonProps) => {
   return (
     <li
       onClick={() => {

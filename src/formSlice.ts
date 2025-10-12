@@ -13,6 +13,7 @@ import { IRuleValues } from './components/rules/IRuleValues';
 import { IEventResult } from './components/validators/IEventResult';
 import { ISelectOption } from './components/core/ISelectOption';
 import { IPropertyInformationParams } from './components/validators/IPropertyInformationParams';
+import { ISettings } from './data/ISettings';
 
 const choices: {
   purchaseRules: IRuleStackEntity[];
@@ -25,6 +26,7 @@ const choices: {
 interface IWizardFormData {
   userInfo: IUserInfo;
   propertiesInfo: IPropertiesInformationPropsEvent;
+  settings: ISettings;
 }
 
 const initialState: IWizardFormData = {
@@ -127,6 +129,12 @@ const initialState: IWizardFormData = {
       highestAppreciationValue: { value: 100, validationResult: ValidatorTypes.Valid },
     },
   },
+  settings: {
+    maxYears: { value: 20, validationResult: ValidatorTypes.Valid },
+    singleFamilyLoanRatePercent: { value: 7, validationResult: ValidatorTypes.Valid },
+    singleFamilyLoanTermInYears: { value: 30, validationResult: ValidatorTypes.Valid },
+    passiveApartmentsMinimumMonthlyReservesForRental: { value: 25000, validationResult: ValidatorTypes.Valid },
+  },
 };
 
 const formSlice = createSlice({
@@ -157,8 +165,12 @@ const formSlice = createSlice({
     updatePropertiesInfo(state, action: PayloadAction<{ key: keyof IPropertiesInformationPropsEvent; value: IPropertyInformationParams }>) {
       state.propertiesInfo[action.payload.key] = action.payload.value;
     },
+
+    updateSettings(state, action: PayloadAction<{ key: keyof ISettings; value: ConditionEventResult<true, ConditionalNumber<true>> }>) {
+      state.settings[action.payload.key] = action.payload.value;
+    },
   },
 });
 
-export const { updateRangeUserInfo, updatePropertiesInfo, updateRuleUserInfo } = formSlice.actions;
+export const { updateRangeUserInfo, updatePropertiesInfo, updateRuleUserInfo, updateSettings } = formSlice.actions;
 export default formSlice.reducer;

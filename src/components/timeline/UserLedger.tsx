@@ -20,8 +20,18 @@ export function UserLedger(props: { ledgerCollection: ILedgerCollection; startDa
         return (
           <ValidationPanel key={`${year}`} title={year.toString()} isValid={isValid}>
             <Stack direction={'column'} key={`ledger-annual-${year}`}>
-              <UserLedgerAnnualSummary key={`ledger-annual-summary-${year}`} ledgerCollection={props.ledgerCollection} year={year} />
-              <UserLedgerAnnualSummaries key={`ledger-annual-summaries-${year}`} ledgerCollection={props.ledgerCollection} year={year} />
+              <UserLedgerAnnualSummary
+                key={`ledger-annual-summary-${year}`}
+                ledgerCollection={props.ledgerCollection}
+                year={year}
+                goal={props.monthlyIncomeAmountGoal}
+              />
+              <UserLedgerAnnualSummaries
+                key={`ledger-annual-summaries-${year}`}
+                ledgerCollection={props.ledgerCollection}
+                year={year}
+                goal={props.monthlyIncomeAmountGoal}
+              />
             </Stack>
           </ValidationPanel>
         );

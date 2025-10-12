@@ -15,6 +15,7 @@ import { store } from './store';
 import { Stack } from './components/core/Stack';
 import { TitleImage } from './components/core/TitleImage';
 import { NavListMain } from './components/navigation/NavListMain';
+import { Settings } from './views/Settings';
 
 export const App = function () {
   const [choices] = React.useState<{
@@ -30,12 +31,15 @@ export const App = function () {
       <HashRouter basename={process.env.BASE_PATH ? `/${process.env.BASE_PATH}` : '/'}>
         <Provider store={store}>
           <Page />
-          <TitleImage />
+          <Stack direction={'row'}>
+            <TitleImage />
+          </Stack>
           <Stack>
             <NavListMain
               title={'Navigation'}
               navList={[
                 { title: 'Basics', path: '/' },
+                { title: 'System', path: '/system' },
                 { title: 'Properties', path: '/properties' },
                 { title: 'Results', path: '/results' },
               ]}
@@ -43,6 +47,7 @@ export const App = function () {
           </Stack>
           <Routes>
             <Route path="/" element={<UserInformation choices={choices} title="User Information" />} />
+            <Route path="/system" element={<Settings />} />
             <Route path="/properties" element={<PropertiesInformation />} />
             <Route path="/results" element={<Results />} />
           </Routes>

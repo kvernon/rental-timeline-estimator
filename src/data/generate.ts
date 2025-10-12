@@ -7,20 +7,22 @@ import { validateUserInfo } from './validateUserInfo';
 import { IUserInfo } from './IUserInfo';
 import { IPropertiesInformationPropsEvent } from '../views/IPropertiesInformationProps';
 import { validatePropertiesInfo } from './validatePropertiesInfo';
+import { ISettings } from './ISettings';
 
 /**
  *
  * @param userInfo
  * @param propertiesInfo
+ * @param settings
  * @throws Error
  */
-export function generate(userInfo: IUserInfo, propertiesInfo: IPropertiesInformationPropsEvent): ITimeline {
+export function generate(userInfo: IUserInfo, propertiesInfo: IPropertiesInformationPropsEvent, settings: ISettings): ITimeline {
   if (validateUserInfo(true, userInfo) === ValidatorTypes.Invalid || validatePropertiesInfo(true, propertiesInfo) === ValidatorTypes.Invalid) {
     throw new Error('Either UserInformation or PropertyInformation are invalid');
   }
 
   return simulate({
-    maxYears: 20,
+    maxYears: settings.maxYears.value,
     purchaseRules: userInfo.purchaseRules.map((x) => ({
       value: x.range.value as number,
       type: getPurchaseRuleType(x.title.value.label),
@@ -33,13 +35,17 @@ export function generate(userInfo: IUserInfo, propertiesInfo: IPropertiesInforma
     })),
     loanSettings: [
       {
-        value: 7,
+        value: settings.singleFamilyLoanRatePercent.value,
         propertyType: PropertyType.SingleFamily,
         name: LoanSettings.LoanRatePercent,
       },
-      { value: 30, propertyType: PropertyType.SingleFamily, name: LoanSettings.LoanTermInYears },
       {
-        value: 25000,
+        value: settings.singleFamilyLoanTermInYears.value,
+        propertyType: PropertyType.SingleFamily,
+        name: LoanSettings.LoanTermInYears,
+      },
+      {
+        value: settings.passiveApartmentsMinimumMonthlyReservesForRental.value,
         propertyType: PropertyType.PassiveApartment,
         name: LoanSettings.MinimumMonthlyReservesForRental,
       },

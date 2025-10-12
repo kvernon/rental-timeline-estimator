@@ -10,6 +10,7 @@ Will be based on version 1 (this will also replace it when published)
 
 1. ~~https://bitbucket.org/kellyvernon/realty-generator-core~~ https://github.com/kvernon/realty-investor-timeline (a private repo by me).
 2. version 1 live: http://cubedelement.com/realty/
+3. version 3 beta (this one) live: http://cubedelement.com/realty-v3/
 
 > Note: this version 1 above is buggy. I was racing to get the pieces together way back in the day.
 

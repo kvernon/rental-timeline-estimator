@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavButton } from './NavButton';
+import { ListNavButton } from './NavButton';
 import { INavListProps } from './INavListProps';
 import { NavListStyled } from './NavListStyled';
 
@@ -9,7 +9,7 @@ export const NavListSub = (props: INavListProps) => {
     <NavListStyled aria-label={props.title}>
       {navList.map((entity, i) => {
         return (
-          <NavButton
+          <ListNavButton
             key={i}
             disabled={entity.isDisabled || false}
             selected={entity.isSelected || false}

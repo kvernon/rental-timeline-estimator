@@ -10,7 +10,7 @@ const NavLi = styled.li`
   padding-right: 0.2em;
 `;
 
-const Button = styled.button<{ disabled?: boolean; selected?: boolean }>`
+const CoreNavButton = styled.button<{ disabled?: boolean; selected?: boolean }>`
   cursor: default;
   flex-grow: 1;
   background-color: ${(props) => {
@@ -46,20 +46,27 @@ const Span = styled.span`
   margin: 0;
 `;
 
-export const NavButton = (props: INavButtonProps) => {
+export function NavButton(props: INavButtonProps) {
+  return (
+    <CoreNavButton
+      type="button"
+      selected={props.selected}
+      disabled={props.disabled}
+      onClick={() => {
+        if (!props.selected) {
+          props.onClick(props.title);
+        }
+      }}
+    >
+      <Span>{props.title}</Span>
+    </CoreNavButton>
+  );
+}
+
+export const ListNavButton = (props: INavButtonProps) => {
   return (
     <NavLi>
-      <Button
-        selected={props.selected}
-        disabled={props.disabled}
-        onClick={() => {
-          if (!props.selected) {
-            props.onClick(props.title);
-          }
-        }}
-      >
-        <Span>{props.title}</Span>
-      </Button>
+      <NavButton {...props} />
     </NavLi>
   );
 };

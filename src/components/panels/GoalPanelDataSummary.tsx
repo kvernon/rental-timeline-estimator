@@ -32,7 +32,7 @@ const DataNode = styled(Stack)<{
 `;
 
 const StackContainer = styled(Stack)`
-  padding-top: 40px;
+  padding-top: 80px;
   padding-bottom: 0;
   padding-left: 0;
   margin: 0;

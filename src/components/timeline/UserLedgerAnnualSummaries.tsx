@@ -13,7 +13,38 @@ const AdjustedButton = styled.button`
   width: 50px;
 `;
 
-export function UserLedgerAnnualSummary(props: { ledgerCollection: ILedgerCollection; ledgerSummary: ILedgerSummary; year: number }) {
+const StackWin = styled(Stack)`
+  background-color: darkgreen;
+`;
+
+function RegularStack(props: { ledgerSummary: ILedgerSummary }) {
+  return (
+    <Stack direction={'row'}>
+      <AddressSpan />
+      <DateCell date={props.ledgerSummary.date} />
+      <MoneyCell currency={props.ledgerSummary.equity} />
+      <MoneyCell currency={props.ledgerSummary.purchases} />
+      <MoneyCell currency={props.ledgerSummary.cashFlow} />
+      <MoneyCell currency={props.ledgerSummary.averageCashFlow} />
+      <MoneyCell currency={props.ledgerSummary.balance} />
+    </Stack>
+  );
+}
+function WinningStack(props: { ledgerSummary: ILedgerSummary }) {
+  return (
+    <StackWin direction={'row'}>
+      <AddressSpan />
+      <DateCell date={props.ledgerSummary.date} />
+      <MoneyCell currency={props.ledgerSummary.equity} />
+      <MoneyCell currency={props.ledgerSummary.purchases} />
+      <MoneyCell currency={props.ledgerSummary.cashFlow} />
+      <MoneyCell currency={props.ledgerSummary.averageCashFlow} />
+      <MoneyCell currency={props.ledgerSummary.balance} />
+    </StackWin>
+  );
+}
+
+export function UserLedgerAnnualSummary(props: { ledgerCollection: ILedgerCollection; ledgerSummary: ILedgerSummary; year: number; goal: number }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const coreTheme = useTheme() as IThemeOptions;
 
@@ -29,15 +60,8 @@ export function UserLedgerAnnualSummary(props: { ledgerCollection: ILedgerCollec
         >
           {isExpanded ? '-' : '+'}
         </AdjustedButton>
-        <Stack direction={'row'}>
-          <AddressSpan />
-          <DateCell date={props.ledgerSummary.date} />
-          <MoneyCell currency={props.ledgerSummary.equity} />
-          <MoneyCell currency={props.ledgerSummary.purchases} />
-          <MoneyCell currency={props.ledgerSummary.cashFlow} />
-          <MoneyCell currency={props.ledgerSummary.averageCashFlow} />
-          <MoneyCell currency={props.ledgerSummary.balance} />
-        </Stack>
+        {props.ledgerSummary.cashFlow < props.goal && <RegularStack ledgerSummary={props.ledgerSummary} />}
+        {props.ledgerSummary.cashFlow >= props.goal && <WinningStack ledgerSummary={props.ledgerSummary} />}
       </Stack>
 
       {isExpanded && <UserLedgerMonthly ledgerCollection={props.ledgerCollection} date={props.ledgerSummary.date} />}
@@ -45,7 +69,7 @@ export function UserLedgerAnnualSummary(props: { ledgerCollection: ILedgerCollec
   );
 }
 
-export function UserLedgerAnnualSummaries(props: { ledgerCollection: ILedgerCollection; year: number }) {
+export function UserLedgerAnnualSummaries(props: { ledgerCollection: ILedgerCollection; year: number; goal: number }) {
   const summariesAnnual = props.ledgerCollection.getSummariesAnnual(props.year);
 
   return summariesAnnual.map((data, i) => (
@@ -53,6 +77,7 @@ export function UserLedgerAnnualSummaries(props: { ledgerCollection: ILedgerColl
       ledgerCollection={props.ledgerCollection}
       ledgerSummary={data}
       year={i}
+      goal={props.goal}
       key={`ledger-annual-summaries-${props.year}-${i}`}
     />
   ));

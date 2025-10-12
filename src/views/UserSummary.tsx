@@ -38,10 +38,12 @@ export function UserSummary(props: {
         <StackContainer direction="row" paddingLeft="0" paddingRight="0" paddingBottom="0">
           <Stack direction="row" paddingLeft="0" paddingRight="0" paddingBottom="0" marginBottom="0">
             <StackContainColumn direction="column" paddingLeft="0" paddingBottom="0">
+              <PanelDataSummary title="Years to goal" data={(props.endDate.getFullYear() - props.startDate.getFullYear()).toString()} />
               <PanelDataSummary title="Properties equity" data={currencyFormatter(props.equity)} />
               <PanelDataSummary title="End balance" data={currencyFormatter(props.balance)} />
             </StackContainColumn>
             <StackContainColumn direction="column" paddingLeft="10px" paddingBottom="0">
+              <PanelDataSummary title="Goal acheived" data={props.metMonthlyGoal ? 'Yes' : 'No'} />
               <PanelDataSummary title="Property owned" data={props.allOwnedProperties.toString()} />
               <PanelDataSummary title="Current properties" data={props.ownedProperties.toString()} />
             </StackContainColumn>
