@@ -14,6 +14,13 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import { Stack } from './components/core/Stack';
 import { NavListGeneric } from './components/navigation/NavList';
+import styled from '@emotion/styled';
+
+export const TitleImage = styled.img`
+  width: 593px;
+  height: 160px;
+  margin: 25px 0 -25px;
+`;
 
 export const App = function () {
   const [choices] = React.useState<{
@@ -31,6 +38,7 @@ export const App = function () {
       <BrowserRouter basename={process.env.BASE_PATH ? `/${process.env.BASE_PATH}` : '/'}>
         <Provider store={store}>
           <Page />
+          <TitleImage src="./images/rg3-title.png" alt="rental gen 3" />
           <Stack>
             <NavListGeneric
               title={'Navigation'}
