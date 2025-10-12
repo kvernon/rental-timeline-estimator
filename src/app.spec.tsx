@@ -20,7 +20,7 @@ jest.mock('./views/UserInformation', () => ({
   UserInformation: () => <div aria-label="User Information" />,
 }));
 
-jest.mock('./components/navigation/NavList', () => ({
+jest.mock('./components/navigation/NavListSub', () => ({
   NavListGeneric: (props: { title: string }) => <nav aria-label={props.title} />,
 }));
 

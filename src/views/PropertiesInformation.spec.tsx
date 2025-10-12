@@ -4,11 +4,11 @@ import React from 'react';
 import { PropertyType } from '@cubedelement.com/realty-investor-timeline';
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
 import { PropertiesInformation } from './PropertiesInformation';
-import { NavList } from '../components/navigation/NavList';
+import { NavListSub } from '../components/navigation/NavListSub';
 import { useDispatch, useSelector } from 'react-redux';
 
 jest.mock('../components/validators/PropertyInformation');
-jest.mock('../components/navigation/NavList');
+jest.mock('../components/navigation/NavListSub');
 jest.mock('react-redux');
 
 describe('PropertiesInformation unit tests', () => {
@@ -76,7 +76,7 @@ describe('PropertiesInformation unit tests', () => {
     test('should render NavBar', () => {
       const nav = screen.getByLabelText<HTMLUListElement>('Properties Navigation');
 
-      expect(NavList).toHaveBeenNthCalledWith(
+      expect(NavListSub).toHaveBeenNthCalledWith(
         1,
         {
           title: 'Properties Navigation',

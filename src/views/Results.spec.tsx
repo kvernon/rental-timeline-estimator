@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 
 jest.mock('../data/generate');
 jest.mock('./UserSummary');
-jest.mock('../components/navigation/NavList');
+jest.mock('../components/navigation/NavListSub');
 jest.mock('react-redux');
 
 describe('RawResults unit tests', () => {
