@@ -23,8 +23,3 @@ export const Stack = styled.div((props: IStackProps) => ({
   paddingLeft: props.paddingLeft ?? '0',
   paddingRight: props.paddingRight ?? '0',
 }));
-
-export const StackMarginRight = styled(Stack)<IStackProps>`
-  margin-right: 10px;
-  width: unset;
-`;
