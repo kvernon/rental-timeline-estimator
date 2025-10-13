@@ -6,12 +6,8 @@ const webpack = require('webpack');
 const path = require('node:path');
 
 module.exports = (env, argv) => {
-  const isProduction = argv.mode === 'production';
-  const basePath = env.WEBPACK_SERVE ? '' : isProduction ? 'realty-v3' : '';
-
   console.log('env', env);
   console.log('argv', argv);
-  console.log(`basePath='${basePath}'`);
 
   return {
     entry: './src/index.tsx',
@@ -31,15 +27,12 @@ module.exports = (env, argv) => {
       extensions: ['.tsx', '.ts', '.js'],
     },
     output: {
-      filename: 'bundle.js',
+      filename: './bundle.js',
       path: resolve(__dirname, 'dist'),
     },
     devtool: 'source-map',
     plugins: [
       new webpack.SourceMapDevToolPlugin({}),
-      new webpack.DefinePlugin({
-        process: { env: { BASE_PATH: JSON.stringify(basePath) } },
-      }),
       new HtmlWebpackPlugin({
         inject: false,
         title: 'Realty Investor Timeline',

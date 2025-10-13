@@ -28,7 +28,7 @@ export const App = function () {
 
   return (
     <ThemeProvider theme={options}>
-      <HashRouter basename={process.env.BASE_PATH ? `/${process.env.BASE_PATH}` : '/'}>
+      <HashRouter>
         <Provider store={store}>
           <Page />
           <Stack direction={'row'}>
