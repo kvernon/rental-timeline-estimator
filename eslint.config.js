@@ -1,59 +1,43 @@
-const globals = require('globals');
-const pluginJs = require('@eslint/js');
-const tsEslint = require('typescript-eslint');
-const pluginReact = require('eslint-plugin-react');
-const pluginReactHooks = require('eslint-plugin-react-hooks');
-const {fixupPluginRules } = require('@eslint/compat');
-const jest = require('eslint-plugin-jest');
-const jestDom = require('eslint-plugin-jest-dom');
-const testingLibrary = require('eslint-plugin-testing-library');
-const prettierConfig = require('eslint-config-prettier');
+import js from '@eslint/js';
+import globals from 'globals';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import tsEslint from 'typescript-eslint';
+import { defineConfig, globalIgnores } from 'eslint/config';
+import { fixupPluginRules } from '@eslint/compat';
+import jest from 'eslint-plugin-jest';
+import jestDom from 'eslint-plugin-jest-dom';
+import testingLibrary from 'eslint-plugin-testing-library';
+import prettierConfig from 'eslint-config-prettier';
 
-module.exports = [
-  pluginJs.configs.recommended,
-  ...tsEslint.configs.recommended,
+export default defineConfig([
+  globalIgnores([
+    'coverage/',
+    'babel.config.js',
+    'dist/',
+    'jest.config.ts',
+    'commitlint.config.js',
+    'lint-staged.config.js',
+    'eslint.config.js',
+    '.eslintignore',
+    '.prettierrc',
+    '.jestcache/',
+    '.husky',
+    '.gitignore',
+    'wallaby.js',
+  ]),
   {
-    ignores: [
-      'coverage/',
-      'babel.config.js',
-      'dist/',
-      'jest.config.ts',
-      'commitlint.config.js',
-      'webpack.config.js',
-      'webpack.*.config.js',
-      'lint-staged.config.js',
-      'eslint.config.js',
-      '.eslintignore',
-      '.prettierrc',
-      '.jestcache/',
-      '.husky',
-      '.gitignore',
-      'wallaby.js',
-    ],
-  },
-  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [js.configs.recommended, tsEslint.configs.recommended, reactHooks.configs.flat.recommended, reactRefresh.configs.vite],
     languageOptions: {
       parserOptions: {
-        project: './tsconfig-dev.json',
+        project: './tsconfig.json',
       },
-      globals: {
-        ...globals.jest,
-      },
+      ecmaVersion: 2020,
+      globals: globals.browser,
     },
   },
   {
-    files: ['**/*.tsx'],
-    plugins: {
-      react: pluginReact,
-      'react-hooks': fixupPluginRules(pluginReactHooks),
-    },
-    languageOptions: {
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
-      },
-    },
     rules: {
       'react/jsx-filename-extension': [
         'warn',
@@ -71,6 +55,16 @@ module.exports = [
     },
   },
   {
+    languageOptions: {
+      parserOptions: {
+        project: './tsconfig-dev.json',
+      },
+      globals: {
+        ecmaVersion: 2020,
+        ...globals.browser,
+        ...globals.jest,
+      },
+    },
     files: ['__tests__/**', '**/__mocks__/**', '**/**/*.spec.ts[x]'],
     plugins: {
       jest,
@@ -85,5 +79,5 @@ module.exports = [
       'react/no-children-prop': 'off',
     },
   },
-  prettierConfig
-];
+  prettierConfig,
+]);
