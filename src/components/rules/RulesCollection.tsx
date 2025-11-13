@@ -58,6 +58,7 @@ export function RulesCollection(componentProps: IRulesCollectionProps) {
               index={index ? componentProps.values.length - index : componentProps.values.length}
               value={value}
               {...props}
+              key={props.key}
               onUpdate={(evt) => {
                 if (index !== undefined && componentProps.onChange) {
                   const newed = [

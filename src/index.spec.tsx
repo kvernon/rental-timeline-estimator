@@ -15,7 +15,7 @@ jest.mock('./theming/theme', () => ({
 }));
 
 import { ThemeProvider } from '@emotion/react';
-import React from 'react';
+import React, { StrictMode } from 'react';
 import { App } from './app';
 
 describe('test ReactDOM.render', () => {
@@ -40,9 +40,11 @@ describe('test ReactDOM.render', () => {
   it('should call ReactDOM.render', async () => {
     await import('./index');
     expect(mockedRoot.render).toHaveBeenCalledWith(
-      <ThemeProvider theme={{}}>
-        <App />
-      </ThemeProvider>,
+      <StrictMode>
+        <ThemeProvider theme={{}}>
+          <App />
+        </ThemeProvider>
+      </StrictMode>,
     );
   });
 });
