@@ -11,7 +11,7 @@ import { HashRouter, Route, Routes } from 'react-router';
 import { Results } from './views/Results';
 import { PropertiesInformation } from './views/PropertiesInformation';
 import { Provider } from 'react-redux';
-import { store } from './store';
+import { store } from './redux/store';
 import { Stack } from './components/core/Stack';
 import { TitleImage } from './components/core/TitleImage';
 import { NavListMain } from './components/navigation/NavListMain';

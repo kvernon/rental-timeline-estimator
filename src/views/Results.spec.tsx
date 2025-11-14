@@ -21,12 +21,13 @@ describe('RawResults unit tests', () => {
 
     jest.mocked(generate).mockReturnValue({
       getEstimatedMonthlyCashFlow: jest.fn(),
-      endDate: new Date(),
       startDate: new Date(),
+      endDate: new Date(),
       rentals: [],
+      user: userMock,
+      getCashFlowMonthByEndDate: jest.fn(),
       getBalance: jest.fn(),
       clone: jest.fn(),
-      user: userMock,
     } as jest.Mocked<ITimeline>);
 
     const userInfo: IUserInfo = {

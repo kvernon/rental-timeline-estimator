@@ -2,9 +2,9 @@ import React from 'react';
 import { RangeValidationPanel } from '../components/panels/RangeValidationPanel';
 import { RangeFieldValidator } from '../components/validators/RangeFieldValidator';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../store';
+import { AppDispatch, RootState } from '../redux/store';
 import { ConditionalNumber, ConditionEventResult } from '../components/validators/IRangeFieldValidatorEvent';
-import { updateSettings } from '../formSlice';
+import { updateSettings } from '../redux/formSlice';
 import { ISettings } from '../data/ISettings';
 import { Stack } from '../components/core/Stack';
 

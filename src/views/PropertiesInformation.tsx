@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import { NavListSub } from '../components/navigation/NavListSub';
 import { propertyOptions } from '../components/validators/PropertyDropDownValidator';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../store';
-import { updatePropertiesInfo } from '../formSlice';
+import { AppDispatch, RootState } from '../redux/store';
+import { updatePropertiesInfo } from '../redux/formSlice';
 import { IPropertyInformationParams } from '../components/validators/IPropertyInformationParams';
 
 export const PropertiesInformation = () => {
