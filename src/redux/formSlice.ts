@@ -159,6 +159,7 @@ const formSlice = createSlice({
     ) {
       if (!action.payload.value) {
         const key = action.payload.key;
+        console.log('updateRuleUserInfo', key, action.payload.value);
         state.userInfo[key] = action.payload.value;
       }
     },
