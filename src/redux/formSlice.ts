@@ -1,19 +1,19 @@
-import { IUserInfo } from './data/IUserInfo';
-import { IPropertiesInformationPropsEvent } from './views/IPropertiesInformationProps';
-import { ValidatorTypes } from './components/validators/ValidatorTypes';
-import { propertyOptions } from './components/validators/PropertyDropDownValidator';
-import { IRuleStackEntity } from './components/rules/IRuleStackEntity';
-import { getRuleChoices } from './rules/getRuleChoices';
-import { holdConfig } from './rules/holdRuleConfig';
-import { purchaseConfig } from './rules/purchaseRuleConfig';
+import { IUserInfo } from '../data/IUserInfo';
+import { IPropertiesInformationPropsEvent } from '../views/IPropertiesInformationProps';
+import { ValidatorTypes } from '../components/validators/ValidatorTypes';
+import { propertyOptions } from '../components/validators/PropertyDropDownValidator';
+import { IRuleStackEntity } from '../components/rules/IRuleStackEntity';
+import { getRuleChoices } from '../rules/getRuleChoices';
+import { holdConfig } from '../rules/holdRuleConfig';
+import { purchaseConfig } from '../rules/purchaseRuleConfig';
 import { PropertyType } from '@cubedelement.com/realty-investor-timeline';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ConditionalNumber, ConditionEventResult } from './components/validators/IRangeFieldValidatorEvent';
-import { IRuleValues } from './components/rules/IRuleValues';
-import { IEventResult } from './components/validators/IEventResult';
-import { ISelectOption } from './components/core/ISelectOption';
-import { IPropertyInformationParams } from './components/validators/IPropertyInformationParams';
-import { ISettings } from './data/ISettings';
+import { ConditionalNumber, ConditionEventResult } from '../components/validators/IRangeFieldValidatorEvent';
+import { IRuleValues } from '../components/rules/IRuleValues';
+import { IEventResult } from '../components/validators/IEventResult';
+import { ISelectOption } from '../components/core/ISelectOption';
+import { IPropertyInformationParams } from '../components/validators/IPropertyInformationParams';
+import { ISettings } from '../data/ISettings';
 
 const choices: {
   purchaseRules: IRuleStackEntity[];
@@ -23,7 +23,7 @@ const choices: {
   purchaseRules: getRuleChoices(purchaseConfig.collection),
 };
 
-interface IWizardFormData {
+export interface IWizardFormData {
   userInfo: IUserInfo;
   propertiesInfo: IPropertiesInformationPropsEvent;
   settings: ISettings;
@@ -157,7 +157,7 @@ const formSlice = createSlice({
         value: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
       }>,
     ) {
-      if (!action.payload.value) {
+      if (!!action.payload.value) {
         const key = action.payload.key;
         state.userInfo[key] = action.payload.value;
       }

@@ -9,7 +9,7 @@ import { TimelineProperties } from '../components/timeline/TimelineProperties';
 import { UserLedger } from '../components/timeline/UserLedger';
 import { NavListSub } from '../components/navigation/NavListSub';
 import { UserSummary } from './UserSummary';
-import { RootState } from '../store';
+import { RootState } from '../redux/store';
 import { useSelector } from 'react-redux';
 
 const Regular = styled(Stack)`
@@ -43,6 +43,7 @@ export function Results() {
   const [ownedProperties, setOwnedProperties] = useState<number>(0);
   const [allOwnedProperties, setAllOwnedProperties] = useState<number>(0);
   const [ledgerCollection, setLedgerCollection] = useState<ILedgerCollection | null>(null);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     const ownedProperties = results?.rentals.filter((p) => p.property.isOwned).map((x) => x.property) || [];
@@ -72,56 +73,63 @@ export function Results() {
   }, [results]);
 
   useEffect(() => {
-    setResults(() => generate(formData.userInfo, formData.propertiesInfo, formData.settings));
+    try {
+      const generatedResult = generate(formData.userInfo, formData.propertiesInfo, formData.settings);
+      setResults(() => generatedResult);
+      setError(null);
+    } catch (e) {
+      setError(e as Error);
+    }
   }, [formData]);
 
-  try {
-    const coreTheme = useTheme() as IThemeOptions;
+  const coreTheme = useTheme() as IThemeOptions;
 
-    return (
-      <Stack direction={'column'} role={'raw-results'}>
-        <NavListSub
-          title="Timeline Navigation"
-          navList={nav}
-          onClick={(title, navList) => {
-            setLocation(title);
-            setNav(navList);
-          }}
-        />
-
-        {results && (
-          <UserSummary
-            endDate={results.endDate}
-            ownedProperties={ownedProperties}
-            allOwnedProperties={allOwnedProperties}
-            startDate={results.startDate}
-            metMonthlyGoal={metMonthlyGoal}
-            balance={balance}
-            equity={equity}
-            estimatedCashFlow={estimatedCashFlow}
+  return (
+    <>
+      {error && <Err role="raw-results-failed">{error.message}</Err>}
+      {!error && (
+        <Stack direction={'column'} role={'raw-results'}>
+          <NavListSub
+            title="Timeline Navigation"
+            navList={nav}
+            onClick={(title, navList) => {
+              setLocation(title);
+              setNav(navList);
+            }}
           />
-        )}
 
-        <Stack theme={coreTheme} direction="column">
-          {location === 'Ledger' && results && ledgerCollection && (
-            <UserLedger
-              ledgerCollection={ledgerCollection}
-              startDate={results.startDate}
+          {results && (
+            <UserSummary
               endDate={results.endDate}
-              monthlyIncomeAmountGoal={results.user.monthlyIncomeAmountGoal}
+              ownedProperties={ownedProperties}
+              allOwnedProperties={allOwnedProperties}
+              startDate={results.startDate}
+              metMonthlyGoal={metMonthlyGoal}
+              balance={balance}
+              equity={equity}
+              estimatedCashFlow={estimatedCashFlow}
             />
           )}
 
-          {location === 'Properties' && results && <TimelineProperties rentals={results.rentals} />}
-          {location === 'Raw' && results && (
-            <Regular role="raw-results">
-              <pre>{JSON.stringify(results, null, ' ')}</pre>
-            </Regular>
-          )}
+          <Stack theme={coreTheme} direction="column">
+            {location === 'Ledger' && results && ledgerCollection && (
+              <UserLedger
+                ledgerCollection={ledgerCollection}
+                startDate={results.startDate}
+                endDate={results.endDate}
+                monthlyIncomeAmountGoal={results.user.monthlyIncomeAmountGoal}
+              />
+            )}
+
+            {location === 'Properties' && results && <TimelineProperties rentals={results.rentals} />}
+            {location === 'Raw' && results && (
+              <Regular role="raw-results">
+                <pre>{JSON.stringify(results, null, ' ')}</pre>
+              </Regular>
+            )}
+          </Stack>
         </Stack>
-      </Stack>
-    );
-  } catch (e) {
-    return <Err role="raw-results-failed">{(e as Error).message}</Err>;
-  }
+      )}
+    </>
+  );
 }
