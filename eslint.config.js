@@ -4,11 +4,11 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import tsEslint from 'typescript-eslint';
 import { defineConfig, globalIgnores } from 'eslint/config';
-import { fixupPluginRules } from '@eslint/compat';
 import jest from 'eslint-plugin-jest';
 import jestDom from 'eslint-plugin-jest-dom';
 import testingLibrary from 'eslint-plugin-testing-library';
 import prettierConfig from 'eslint-config-prettier';
+import react from 'eslint-plugin-react';
 
 export default defineConfig([
   globalIgnores([
@@ -36,8 +36,9 @@ export default defineConfig([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
-  },
-  {
+    plugins: {
+      react,
+    },
     rules: {
       'react/jsx-filename-extension': [
         'warn',
