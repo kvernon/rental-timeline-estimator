@@ -22,6 +22,7 @@ const PropertyPicker = styled(PropertyDropDownValidator)`
 const StackBase = styled(Stack)`
   padding-left: 0;
   background-color: #4f41b9;
+  border-radius: 0.3rem;
 `;
 
 export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref: React.Ref<HTMLDivElement>) {
@@ -133,6 +134,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
         </Stack>
       </Stack>
       <ValidationBar
+        curveRight={false}
         isValid={getValidationResult(
           Object.values(props.value).map((x) => x.validationResult),
           true,

@@ -11,7 +11,8 @@ const DeleteButtonArea = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-
+  border-top-right-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
   :hover {
     background: rgb(126, 10, 10);
   }
