@@ -8,15 +8,15 @@ export const NavListStyled = styled.menu`
   padding: 0;
   justify-content: space-around;
 
-  & > li:first-child,
   & > li:first-child > button {
-    border-top-left-radius: 0.3rem;
-    border-bottom-left-radius: 0.3rem;
+    border-left: 0.5rem solid black;
+    border-top-left-radius: 0.7rem;
+    border-bottom-left-radius: 0.7rem;
   }
 
-  & > li:last-child,
   & > li:last-child > button {
-    border-top-right-radius: 0.3rem;
-    border-bottom-right-radius: 0.3rem;
+    border-right: 0.5rem solid black;
+    border-top-right-radius: 0.7rem;
+    border-bottom-right-radius: 0.7rem;
   }
 `;

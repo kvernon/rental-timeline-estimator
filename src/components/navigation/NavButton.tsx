@@ -28,6 +28,8 @@ const CoreNavButton = styled.button<{ disabled?: boolean; selected?: boolean }>`
   height: 58px;
   padding: 0;
   border: none;
+  border-top: 0.3rem solid black;
+  border-bottom: 0.3rem solid black;
 
   &:hover:enabled {
     cursor: pointer;

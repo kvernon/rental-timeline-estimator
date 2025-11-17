@@ -31,7 +31,9 @@ describe('AddListButton unit tests', () => {
       font-family: font;
       background-color: ButtonFace;
       border-radius: 0.3rem;
-      border-width: 0;
+      border-top: 0.3rem solid black;
+      border-left: 0.3rem solid black;
+      border-right: 0.3rem solid black;
       border-bottom: 5px solid #021c26;
       box-shadow: 0 10px 1px #05465e;
       margin: 0;
@@ -69,7 +71,9 @@ describe('AddListButton unit tests', () => {
       font-family: font;
       background-color: rgba(255, 0, 0, 0.506);
       border-radius: 0.3rem;
-      border-width: 0;
+      border-top: 0.3rem solid black;
+      border-left: 0.3rem solid black;
+      border-right: 0.3rem solid black;
       border-bottom: 5px solid #021c26;
       box-shadow: 0 10px 1px #05465e;
       margin: 0;

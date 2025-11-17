@@ -8,7 +8,7 @@ exports[`Spinner unit tests should render with shape 1`] = `
   top: -332px;
   float: left;
   position: absolute;
-  background-image: radial-gradient(rgba(199, 159, 0, 0.3) 0%, rgba(61, 61, 61, 0.01) 62%, transparent 67%);
+  background-image: radial-gradient(rgb(199 159 0 / 15%) 0%, rgb(61 61 61 / 0%) 62%, #00000000 67%);
   border-radius: 50%;
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
@@ -62,7 +62,7 @@ exports[`Spinner unit tests should render without shape 1`] = `
   top: -332px;
   float: left;
   position: absolute;
-  background-image: radial-gradient(rgba(199, 159, 0, 0.3) 0%, rgba(61, 61, 61, 0.01) 62%, transparent 67%);
+  background-image: radial-gradient(rgb(199 159 0 / 15%) 0%, rgb(61 61 61 / 0%) 62%, #00000000 67%);
   border-radius: 50%;
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;

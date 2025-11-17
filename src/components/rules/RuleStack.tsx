@@ -22,7 +22,8 @@ const PropertyPicker = styled(PropertyDropDownValidator)`
 const StackBase = styled(Stack)`
   padding-left: 0;
   background-color: #4f41b9;
-  border-radius: 0.3rem;
+  border: 0.3rem solid black;
+  border-radius: 0.5rem;
 `;
 
 export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref: React.Ref<HTMLDivElement>) {
