@@ -11,6 +11,12 @@ import { IRangeFieldValidatorProps } from './IRangeFieldValidatorProps';
 import { FontGroups } from '../../theming/fontGroups';
 import { evaluateValidation } from './evaluateValidation';
 import { isInRange } from './isInRange';
+import styled from '@emotion/styled';
+
+const FormControlFull = styled(FormControl)`
+  margin: 0 0 0 20px;
+  width: 100%;
+`;
 
 export function RangeFieldValidator<Required extends boolean = false>(props: IRangeFieldValidatorProps<Required>) {
   const coreTheme = useTheme() as IThemeOptions;
@@ -18,7 +24,7 @@ export function RangeFieldValidator<Required extends boolean = false>(props: IRa
   const validatorResult = props.value?.validationResult || (props.required ? ValidatorTypes.Invalid : ValidatorTypes.Optional);
   const message = `Range between ${props.min || 0} and ${props.max || 100}`;
   return (
-    <FormControl id={`${props.id}-form-control`} aria-controls={props.id} role={'input-control'}>
+    <FormControlFull id={`${props.id}-form-control`} aria-controls={props.id} role={'input-control'}>
       {showTitle && (
         <InputLabel
           themeOptions={coreTheme}
@@ -84,6 +90,6 @@ export function RangeFieldValidator<Required extends boolean = false>(props: IRa
           </InputSpanPaddingLeft>
         )}
       </InputBox>
-    </FormControl>
+    </FormControlFull>
   );
 }

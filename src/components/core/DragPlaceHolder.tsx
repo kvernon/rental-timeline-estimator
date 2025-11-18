@@ -8,7 +8,8 @@ export const DragPlaceholder = styled.div`
   background-image: radial-gradient(ellipse farthest-corner at 4px 4px, rgb(32, 32, 48), rgb(32, 32, 48) 50%, transparent 50%);
   background-size: 4px 4px;
   cursor: pointer;
-
+  border-top-left-radius: 0.3rem;
+  border-bottom-left-radius: 0.3rem;
   :hover {
     background-color: #6e6e6e;
     cursor: move;

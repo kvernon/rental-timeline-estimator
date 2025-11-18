@@ -1,7 +1,6 @@
 import { IUserInfo } from '../data/IUserInfo';
 import { IPropertiesInformationPropsEvent } from '../views/IPropertiesInformationProps';
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
-import { propertyOptions } from '../components/validators/PropertyDropDownValidator';
 import { IRuleStackEntity } from '../components/rules/IRuleStackEntity';
 import { getRuleChoices } from '../rules/getRuleChoices';
 import { holdConfig } from '../rules/holdRuleConfig';
@@ -14,6 +13,7 @@ import { IEventResult } from '../components/validators/IEventResult';
 import { ISelectOption } from '../components/core/ISelectOption';
 import { IPropertyInformationParams } from '../components/validators/IPropertyInformationParams';
 import { ISettings } from '../data/ISettings';
+import { propertyOptions } from '../components/validators/PropertyOptions';
 
 const choices: {
   purchaseRules: IRuleStackEntity[];

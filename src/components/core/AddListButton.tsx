@@ -17,7 +17,9 @@ const StyledButton = styled.button<{
   font-weight: ${(props) => props.theme.typography.get(FontGroups.input)?.weight};
   background-color: ${(props) => (props.disabled ? `${props.theme.palette.validation.Invalid.background}81` : props.theme.palette.inputBackground)};
   border-radius: 0.3rem;
-  border-width: 0;
+  border-top: 0.3rem solid black;
+  border-left: 0.3rem solid black;
+  border-right: 0.3rem solid black;
   border-bottom: 5px solid #021c26;
   box-shadow: 0 10px 1px #05465e;
   margin: 0;

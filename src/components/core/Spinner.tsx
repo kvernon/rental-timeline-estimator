@@ -24,7 +24,7 @@ export const Spinner = styled.div<{ shape: IShape }>`
   top: -332px;
   float: left;
   position: absolute;
-  background-image: radial-gradient(rgba(199, 159, 0, 0.3) 0%, rgba(61, 61, 61, 0.01) 62%, transparent 67%);
+  background-image: radial-gradient(rgb(199 159 0 / 15%) 0%, rgb(61 61 61 / 0%) 62%, #00000000 67%);
   border-radius: 50%;
   flex-grow: 1;
   z-index: -1;

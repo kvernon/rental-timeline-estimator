@@ -8,17 +8,19 @@ import { IThemeOptions } from '../../theming/IThemeOptions';
 import { FontGroups } from '../../theming/fontGroups';
 import { IPropertyDropDownParams } from './IPropertyDropDownParams';
 import styled from '@emotion/styled';
+import { propertyOptions } from './PropertyOptions';
+import { FormControl } from '../core/FormControl';
 
 const getDataValue = (title: string, value: number): IPropertyDropDownOption => {
-  return { value, label: title, image: `images/${title}.jpg` };
+  return { value, label: title, image: `images/${title}.gif` };
 };
-
-export const propertyOptions = ['apartment', 'house'];
 
 const Select = styled(ReactSelect<IPropertyDropDownOption, false, GroupBase<IPropertyDropDownOption>>)`
   width: 140px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  appearance: none;
+  white-space: pre-wrap;
+  padding-left: 4px;
+  overflow: visible;
 `;
 
 export function PropertyDropDownValidator(props: IPropertyDropDownParams) {
@@ -29,47 +31,49 @@ export function PropertyDropDownValidator(props: IPropertyDropDownParams) {
   const defaultValue = 1;
 
   return (
-    <Select
-      aria-label={props.title}
-      onChange={(a: SingleValue<IPropertyDropDownOption>) => {
-        if (a && props.onChange) {
-          if (a.value !== props.value.value.value) {
-            props.onChange({ value: a });
+    <FormControl>
+      <Select
+        aria-label={props.title}
+        onChange={(a: SingleValue<IPropertyDropDownOption>) => {
+          if (a && props.onChange) {
+            if (a.value !== props.value.value.value) {
+              props.onChange({ value: a });
+            }
           }
-        }
-      }}
-      value={getDataValue(props.value?.value?.label || propertyOptions[defaultValue], props.value.value.value || defaultValue)}
-      options={optionsMap}
-      formatOptionLabel={formatOptionLabel}
-      styles={{
-        control: (baseStyles) => {
-          return {
-            ...baseStyles,
-            backgroundColor: `${coreTheme.palette.validation[ValidatorTypes[ValidatorTypes.Valid]].background}41`,
-            marginLeft: '0',
-            padding: '0',
-            transition: 'background-color 0.4s ease-out',
-            height: '60px',
-            borderColor: `${coreTheme.palette.inputBackground}`,
-            border: `1px solid ${coreTheme.palette.panelBackground}`,
-            borderRadius: '0.3rem',
-            color: `${coreTheme.typography.get(FontGroups.input)?.color}`,
-            ':hover': {
-              backgroundColor: `${coreTheme.palette.validation[ValidatorTypes[ValidatorTypes.Valid]].background}81`,
-              borderColor: `${coreTheme.palette.inputBackgroundFocus}`,
-              color: `${coreTheme.palette.inputBackgroundFocus}`,
-            },
-          };
-        },
-        valueContainer: (baseStyles) => {
-          return {
-            ...baseStyles,
-            marginLeft: '0',
-            marginTop: '0',
-            padding: '0',
-          };
-        },
-      }}
-    />
+        }}
+        value={getDataValue(props.value?.value?.label || propertyOptions[defaultValue], props.value.value.value || defaultValue)}
+        options={optionsMap}
+        formatOptionLabel={formatOptionLabel}
+        styles={{
+          control: (baseStyles) => {
+            return {
+              ...baseStyles,
+              transition: ['border-color 0.4s ease-out', 'background-color 0.4s ease-out'],
+              backgroundColor: `${coreTheme.palette.validation[ValidatorTypes[ValidatorTypes.Valid]].background}41`,
+              marginLeft: '0',
+              padding: '0',
+              borderColor: `${coreTheme.palette.inputBackground}`,
+              border: `3px solid ${coreTheme.palette.validation[ValidatorTypes[ValidatorTypes.Valid]].background}41`,
+              borderRadius: '0.3rem',
+              color: `${coreTheme.typography.get(FontGroups.input)?.color}`,
+              ':hover': {
+                backgroundColor: `${coreTheme.palette.validation[ValidatorTypes[ValidatorTypes.Valid]].background}81`,
+                borderColor: `${coreTheme.palette.inputBackgroundFocus}`,
+                color: `${coreTheme.palette.inputBackgroundFocus}`,
+                transition: ['border-color 0.4s ease-out', 'background-color 0.4s ease-out'],
+              },
+            };
+          },
+          valueContainer: (baseStyles) => {
+            return {
+              ...baseStyles,
+              marginLeft: '0',
+              marginTop: '0',
+              padding: '0',
+            };
+          },
+        }}
+      />
+    </FormControl>
   );
 }

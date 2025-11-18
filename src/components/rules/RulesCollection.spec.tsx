@@ -13,7 +13,8 @@ import { IEventValue } from '../validators/IEventResult';
 import { ISelectOption } from '../core/ISelectOption';
 import { IRulesCollectionProps } from './IRulesCollectionProps';
 import { IRuleValues } from './IRuleValues';
-import { propertyOptions } from '../validators/PropertyDropDownValidator';
+
+import { propertyOptions } from '../validators/PropertyOptions';
 
 jest.mock('../core/CardListLayout');
 jest.mock('../core/AddListButton');

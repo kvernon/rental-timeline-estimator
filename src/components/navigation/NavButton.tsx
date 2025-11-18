@@ -6,8 +6,8 @@ const NavLi = styled.li`
   display: flex;
   flex-grow: 1;
   align-items: center;
-  padding-left: 0.2em;
-  padding-right: 0.2em;
+  padding-left: 0.05em;
+  padding-right: 0.05em;
 `;
 
 const CoreNavButton = styled.button<{ disabled?: boolean; selected?: boolean }>`
@@ -28,6 +28,8 @@ const CoreNavButton = styled.button<{ disabled?: boolean; selected?: boolean }>`
   height: 58px;
   padding: 0;
   border: none;
+  border-top: 0.3rem solid black;
+  border-bottom: 0.3rem solid black;
 
   &:hover:enabled {
     cursor: pointer;
@@ -36,11 +38,11 @@ const CoreNavButton = styled.button<{ disabled?: boolean; selected?: boolean }>`
 `;
 
 const Span = styled.span`
-  font-variant-caps: all-small-caps;
+  /* font-variant-caps: all-small-caps; */
   font-weight: 600;
-  font-size: xx-large;
+  font-size: large;
   position: relative;
-  bottom: -18px;
+  bottom: -6px;
   padding: 0;
   /* line-height: 58px; */
   margin: 0;

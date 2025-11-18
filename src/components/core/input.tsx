@@ -6,6 +6,7 @@ export interface IInputProps {
 }
 
 export const Input = styled.input<IInputProps>`
+  padding: 0;
   flex-grow: 1;
   text-align: right;
   width: 100%;
@@ -24,7 +25,7 @@ export const Input = styled.input<IInputProps>`
     props.useUnderlineOnly === false &&
     `
       transition: background-color 0.4s ease-out;
-      border-width: 1px;
+      border-width: 3px;
   `}
 
   ${(props) =>
