@@ -11,9 +11,9 @@ import { IRulesCollectionProps } from './IRulesCollectionProps';
 import { IRuleValues } from './IRuleValues';
 import { ISelectOption } from '../core/ISelectOption';
 import { IEventValue } from '../validators/IEventResult';
-import { propertyOptions } from '../validators/PropertyDropDownValidator';
 import { getValidationResult } from './getValidationResult';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
+import { propertyOptions } from '../validators/PropertyOptions';
 
 export function RulesCollection(componentProps: IRulesCollectionProps) {
   const [showButton, setShowButton] = useState(false);

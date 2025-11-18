@@ -2,11 +2,11 @@ import { Stack } from '../components/core/Stack';
 import { PropertyInformation } from '../components/validators/PropertyInformation';
 import React, { useState } from 'react';
 import { NavListSub } from '../components/navigation/NavListSub';
-import { propertyOptions } from '../components/validators/PropertyDropDownValidator';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../redux/store';
 import { updatePropertiesInfo } from '../redux/formSlice';
 import { IPropertyInformationParams } from '../components/validators/IPropertyInformationParams';
+import { propertyOptions } from '../components/validators/PropertyOptions';
 
 export const PropertiesInformation = () => {
   const [nav, setNav] = useState<

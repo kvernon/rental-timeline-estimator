@@ -2,12 +2,13 @@ import { IThemeOptions } from '../../theming/IThemeOptions';
 import { useTheme } from '@emotion/react';
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { PropertyDropDownValidator, propertyOptions } from './PropertyDropDownValidator';
+import { PropertyDropDownValidator } from './PropertyDropDownValidator';
 import '@testing-library/jest-dom';
 import selectEvent from 'react-select-event';
 import { ValidatorTypes } from './ValidatorTypes';
 import { themeMock } from '../../../__tests__/ThemeMock';
 import { IPropertyDropDownParams } from './IPropertyDropDownParams';
+import { propertyOptions } from './PropertyOptions';
 
 describe('PropertyDropDownValidator unit test', () => {
   let params: IPropertyDropDownParams;
@@ -52,7 +53,7 @@ describe('PropertyDropDownValidator unit test', () => {
         })),
       ).toEqual(
         ['house', 'apartment', 'house'].map((exp) => ({
-          src: `http://localhost/images/${exp}.jpg`,
+          src: `http://localhost/images/${exp}.gif`,
           title: exp,
           alt: exp,
         })),
@@ -87,7 +88,7 @@ describe('PropertyDropDownValidator unit test', () => {
         })),
       ).toEqual(
         ['apartment', 'apartment', 'house'].map((exp) => ({
-          src: `http://localhost/images/${exp}.jpg`,
+          src: `http://localhost/images/${exp}.gif`,
           title: exp,
           alt: exp,
         })),
@@ -118,7 +119,7 @@ describe('PropertyDropDownValidator unit test', () => {
 
       expect(params.onChange).toHaveBeenCalledWith({
         value: {
-          image: 'images/apartment.jpg',
+          image: 'images/apartment.gif',
           label: 'apartment',
           value: 0,
         },

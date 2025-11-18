@@ -4,8 +4,8 @@ import { RangeFieldValidator } from './RangeFieldValidator';
 import { Stack } from '../core/Stack';
 import { PropertyType } from '@cubedelement.com/realty-investor-timeline';
 import styled from '@emotion/styled';
-import { propertyOptions } from './PropertyDropDownValidator';
 import { IPropertyInformationOnChangeParams, IPropertyInformationParams } from './IPropertyInformationParams';
+import { propertyOptions } from './PropertyOptions';
 
 const Img = styled.img`
   padding-top: 20px;

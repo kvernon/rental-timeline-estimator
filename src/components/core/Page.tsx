@@ -13,6 +13,7 @@ export const Page = () => {
           background-image: url('./images/top-tile.gif');
           background-position: top;
           background-repeat: repeat-x;
+          font-family: 'Arial', sans-serif;
         }
       `}
     />

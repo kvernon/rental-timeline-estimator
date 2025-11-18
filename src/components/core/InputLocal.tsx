@@ -20,11 +20,17 @@ export const InputLocal = styled(Input)<{
     `
      background-color: ${coreTheme.themeOptions.palette.validation[ValidatorTypes[coreTheme.validationType]].background}41;
 
+     border: 3px solid ${coreTheme.themeOptions.palette.validation[ValidatorTypes[coreTheme.validationType]].background}41;
+     transition: border-color 0.4s ease-out, background-color 0.4s ease-out;
+
      &:hover {
+        border: 3px solid ${coreTheme.themeOptions.palette.validation[ValidatorTypes[coreTheme.validationType]].backgroundFocus};
+        transition: border-color 0.4s ease-out, background-color 0.4s ease-out;
         background-color: ${coreTheme.themeOptions.palette.validation[ValidatorTypes[coreTheme.validationType]].backgroundFocus}81;
      }
 
      &:focus {
+        border: 3px solid ${coreTheme.themeOptions.palette.validation[ValidatorTypes[coreTheme.validationType]].backgroundFocus};
         background-color: ${coreTheme.themeOptions.palette.validation[ValidatorTypes[coreTheme.validationType]].backgroundFocus}81;
      }
   `}
@@ -33,7 +39,9 @@ export const InputLocal = styled(Input)<{
     coreTheme.useTransparent &&
     `
      background-color: transparent;
+
      border-color: ${coreTheme.themeOptions.palette.validation[ValidatorTypes[coreTheme.validationType]].background};
+     transition: border-color 0.4s ease-out;
 
      &:hover {
         border-color: ${coreTheme.themeOptions.palette.validation[ValidatorTypes[coreTheme.validationType]].backgroundFocus};

@@ -6,12 +6,11 @@ export const FormControl = styled.div`
   flex-direction: ${(props: { direction?: 'row' | 'column' }) => {
     return props.direction ?? 'row';
   }};
-  margin: 5px 5px 24px 5px;
   justify-content: flex-start;
+  padding-bottom: 10px;
   align-items: center;
-  width: 100%;
 
   &:last-child {
-    margin: 5px;
+    /*  margin: 5px;*/
   }
 `;

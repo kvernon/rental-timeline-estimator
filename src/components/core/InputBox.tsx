@@ -7,5 +7,4 @@ export const InputBox = styled.div`
   align-items: center;
   width: 100%;
   flex-grow: 1;
-  height: 43px;
 `;

@@ -2,6 +2,7 @@
 
 exports[`input unit tests and defaults should contain styles 1`] = `
 .emotion-0 {
+  padding: 0;
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
@@ -20,6 +21,7 @@ exports[`input unit tests and defaults should contain styles 1`] = `
 
 exports[`input unit tests and no spinner should contain styles and spinner removal 1`] = `
 .emotion-0 {
+  padding: 0;
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
@@ -38,6 +40,7 @@ exports[`input unit tests and no spinner should contain styles and spinner remov
 
 exports[`input unit tests and useUnderlineOnly should contain styles with no border and underline 1`] = `
 .emotion-0 {
+  padding: 0;
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
