@@ -34,7 +34,9 @@ export default defineConfig([
         project: './tsconfig.json',
       },
       ecmaVersion: 2020,
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+      },
     },
     plugins: {
       react,
@@ -60,8 +62,8 @@ export default defineConfig([
       parserOptions: {
         project: './tsconfig-dev.json',
       },
+      ecmaVersion: 2020,
       globals: {
-        ecmaVersion: 2020,
         ...globals.browser,
         ...globals.jest,
       },
