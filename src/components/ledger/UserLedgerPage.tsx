@@ -1,11 +1,11 @@
 import React from 'react';
 import { ILedgerCollection } from '@cubedelement.com/realty-investor-timeline';
-import { UserLedgerAnnualSummary } from './UserLedgerAnnualSummary';
+import { UserLedgerSummaryForYear } from './UserLedgerSummaryForYear';
 import { Stack } from '../core/Stack';
-import { UserLedgerAnnualSummaries } from './UserLedgerAnnualSummaries';
+import { UserLedgerSummariesForYearByMonth } from './UserLedgerSummariesForYearByMonth';
 import { ValidationPanel } from '../panels/ValidationPanel';
 
-export function UserLedger(props: { ledgerCollection: ILedgerCollection; startDate: Date; endDate: Date; monthlyIncomeAmountGoal: number }) {
+export function UserLedgerPage(props: { ledgerCollection: ILedgerCollection; startDate: Date; endDate: Date; monthlyIncomeAmountGoal: number }) {
   const years: number[] = [];
   for (let i = props.startDate.getFullYear(); i < props.endDate.getFullYear() + 1; i++) {
     years.push(i);
@@ -20,13 +20,13 @@ export function UserLedger(props: { ledgerCollection: ILedgerCollection; startDa
         return (
           <ValidationPanel key={`${year}`} title={year.toString()} isValid={isValid}>
             <Stack direction={'column'} key={`ledger-annual-${year}`}>
-              <UserLedgerAnnualSummary
+              <UserLedgerSummaryForYear
                 key={`ledger-annual-summary-${year}`}
                 ledgerCollection={props.ledgerCollection}
                 year={year}
                 goal={props.monthlyIncomeAmountGoal}
               />
-              <UserLedgerAnnualSummaries
+              <UserLedgerSummariesForYearByMonth
                 key={`ledger-annual-summaries-${year}`}
                 ledgerCollection={props.ledgerCollection}
                 year={year}

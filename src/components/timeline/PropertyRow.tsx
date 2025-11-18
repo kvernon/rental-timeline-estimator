@@ -1,13 +1,12 @@
 import { IHistoricalProperty } from '@cubedelement.com/realty-investor-timeline/dist/src/time/i-historical-property';
-import { PropertyType } from '@cubedelement.com/realty-investor-timeline';
+import { IRentalPropertyEntity, PropertyType } from '@cubedelement.com/realty-investor-timeline';
 import { AddressSpan } from '../cells/AddressSpan';
 import { DateCell } from '../cells/DateCell';
 import { OwnershipSpan } from '../cells/OwnershipSpan';
 import { MoneyCell } from '../cells/MoneyCell';
 import React from 'react';
 import styled from '@emotion/styled';
-import { Stack } from '../core/Stack';
-import { IRentalPropertyEntity } from '@cubedelement.com/realty-investor-timeline';
+import { StackRowPill } from '../core/StackRowPill';
 
 enum OwnershipType {
   NeverOwned,
@@ -29,16 +28,6 @@ const getOwnership = (property: IRentalPropertyEntity): OwnershipType => {
 
 const Img = styled.img`
   padding-top: 0;
-`;
-
-const StackRowPill = styled(Stack)`
-  margin-top: 10px;
-  margin-bottom: 10px;
-  background-color: #4f41b9;
-  border-radius: 0.5rem;
-  border: 0.1rem solid black;
-  padding: 10px;
-  align-items: center;
 `;
 
 export function PropertyRow(props: { historicalProperty: IHistoricalProperty }) {
