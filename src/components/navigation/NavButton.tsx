@@ -34,6 +34,7 @@ const CoreNavButton = styled.button<{ disabled?: boolean; selected?: boolean }>`
   &:hover:enabled {
     cursor: pointer;
     background-color: #007ae6;
+    transition: background-color 0.3s ease-out;
   }
 `;
 

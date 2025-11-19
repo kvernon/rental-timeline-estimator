@@ -9,12 +9,12 @@ describe('MoneyCell unit tests', () => {
       render(<MoneyCell />);
     });
     test('should render', () => {
-      const entity = screen.getByText<HTMLSpanElement>('$0.00');
+      const entity = screen.getByText<HTMLSpanElement>('-');
 
       const expectedStyle = `
         white-space: nowrap;
         border: none;
-        width: 96px;
+        width: 100%;
         min-width: 96px;
         text-align: right;
       `;
@@ -29,12 +29,12 @@ describe('MoneyCell unit tests', () => {
     });
 
     test('should render', () => {
-      const entity = screen.getByText<HTMLSpanElement>('$99.90');
+      const entity = screen.getByText<HTMLSpanElement>('99.90');
 
       const expectedStyle = `
         white-space: nowrap;
         border: none;
-        width: 96px;
+        width: 100%;
         min-width: 96px;
         text-align: right;
       `;
@@ -57,7 +57,7 @@ describe('MoneyCellStyle unit tests', () => {
       const expectedStyle = `
         white-space: nowrap;
         border: none;
-        width: 96px;
+        width: 100%;
         min-width: 96px;
         text-align: right;
       `;

@@ -6,7 +6,7 @@ import { ILedgerCollection, ITimeline } from '@cubedelement.com/realty-investor-
 import { useTheme } from '@emotion/react';
 import { IThemeOptions } from '../theming/IThemeOptions';
 import { TimelineProperties } from '../components/timeline/TimelineProperties';
-import { UserLedger } from '../components/timeline/UserLedger';
+import { UserLedgerPage } from '../components/ledger/UserLedgerPage';
 import { NavListSub } from '../components/navigation/NavListSub';
 import { UserSummary } from './UserSummary';
 import { RootState } from '../redux/store';
@@ -113,7 +113,7 @@ export function Results() {
 
           <Stack theme={coreTheme} direction="column">
             {location === 'Ledger' && results && ledgerCollection && (
-              <UserLedger
+              <UserLedgerPage
                 ledgerCollection={ledgerCollection}
                 startDate={results.startDate}
                 endDate={results.endDate}

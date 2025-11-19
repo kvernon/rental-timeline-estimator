@@ -9,6 +9,7 @@ export interface IStackProps {
   direction?: 'column' | 'row';
   spacing?: number;
   flexGrow?: number;
+  onClick?: () => void;
 }
 
 export const Stack = styled.div((props: IStackProps) => ({
