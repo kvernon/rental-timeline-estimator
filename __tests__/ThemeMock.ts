@@ -17,16 +17,19 @@ export const themeMock = {
       Invalid: {
         validationColor: validationColorInvalidLeft,
         background: validationColorInvalidLeft,
+        goalBackground: validationColorInvalidLeft,
         backgroundFocus: validationColorInvalidLeft,
       },
       Valid: {
         validationColor: validationColorValidMiddle,
         background: validationColorValidMiddle,
+        goalBackground: validationColorValidMiddle,
         backgroundFocus: validationColorValidMiddle,
       },
       Optional: {
         validationColor: validationColorOptionalRight,
         background: validationColorOptionalRight,
+        goalBackground: validationColorOptionalRight,
         backgroundFocus: validationColorOptionalRight,
       },
     },

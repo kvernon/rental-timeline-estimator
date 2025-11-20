@@ -6,15 +6,16 @@ import { themeMock } from '../../../__tests__/ThemeMock';
 import { IThemeOptions } from '../../theming/IThemeOptions';
 import { useTheme } from '@emotion/react';
 import { ValidationPanel } from './ValidationPanel';
+import { ValidatorTypes } from '../validators/ValidatorTypes';
 
 describe('ValidationPanel unit tests', () => {
   const props: {
     title: string;
-    isValid: () => boolean;
+    validationType: ValidatorTypes;
     padRight?: boolean;
   } = {
     title: 'hello',
-    isValid: () => true,
+    validationType: ValidatorTypes.Valid,
     padRight: true,
   };
 

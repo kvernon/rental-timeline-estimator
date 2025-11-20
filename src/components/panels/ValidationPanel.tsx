@@ -12,14 +12,21 @@ import { ValidatorTypes } from '../validators/ValidatorTypes';
 export function ValidationPanel(props: {
   children: React.ReactElement[] | React.ReactElement;
   title: string;
-  isValid: () => boolean;
+  validationType: ValidatorTypes;
   padRight?: boolean;
+  forceIsValid?: boolean;
 }) {
   const coreTheme = useTheme() as IThemeOptions;
 
   const padding = props.padRight === undefined || props.padRight;
   const mainRightPadding = padding ? '4px' : '0';
   const containerRightPadding = padding ? '25px' : '0';
+
+  let isValidForced = true;
+
+  if (Object.hasOwn(props, 'forceIsValid') && props.forceIsValid !== undefined) {
+    isValidForced = props.forceIsValid;
+  }
 
   return (
     <Stack direction={'column'} paddingTop={'15px'} paddingBottom={'15px'} paddingRight={mainRightPadding} aria-label={props.title}>
@@ -32,7 +39,15 @@ export function ValidationPanel(props: {
             <Stack spacing={2} flexGrow={1} paddingLeft="25px" paddingTop="25px" paddingBottom="25px" paddingRight={containerRightPadding}>
               {props.children}
             </Stack>
-            <ValidationBar isValid={props.isValid() ? ValidatorTypes.Valid : ValidatorTypes.Invalid} />
+            <ValidationBar
+              isValid={
+                !isValidForced
+                  ? props.validationType
+                  : props.validationType === ValidatorTypes.Valid || props.validationType === ValidatorTypes.Optional
+                    ? ValidatorTypes.Valid
+                    : ValidatorTypes.Invalid
+              }
+            />
           </Stack>
         </CardContent>
       </Card>

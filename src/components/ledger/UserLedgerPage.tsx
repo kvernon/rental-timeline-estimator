@@ -4,6 +4,7 @@ import { UserLedgerSummaryForYear } from './UserLedgerSummaryForYear';
 import { Stack } from '../core/Stack';
 import { UserLedgerSummariesForYearByMonth } from './UserLedgerSummariesForYearByMonth';
 import { ValidationPanel } from '../panels/ValidationPanel';
+import { ValidatorTypes } from '../validators/ValidatorTypes';
 
 export function UserLedgerPage(props: { ledgerCollection: ILedgerCollection; startDate: Date; endDate: Date; monthlyIncomeAmountGoal: number }) {
   const years: number[] = [];
@@ -15,10 +16,11 @@ export function UserLedgerPage(props: { ledgerCollection: ILedgerCollection; sta
     <>
       {years.map((year) => {
         const isValid = () => {
-          return props.ledgerCollection.getMonthlyCashFlowByYear(year).some((cashFlow) => cashFlow >= props.monthlyIncomeAmountGoal);
+          const b = props.ledgerCollection.getMonthlyCashFlowByYear(year).some((cashFlow) => cashFlow >= props.monthlyIncomeAmountGoal);
+          return b ? ValidatorTypes.Valid : ValidatorTypes.Invalid;
         };
         return (
-          <ValidationPanel key={`${year}`} title={year.toString()} isValid={isValid}>
+          <ValidationPanel key={`${year}`} title={year.toString()} validationType={isValid()}>
             <Stack direction={'column'} key={`ledger-annual-${year}`}>
               <UserLedgerSummaryForYear
                 key={`ledger-annual-summary-${year}`}

@@ -6,6 +6,7 @@ import { GoalPanelDataSummary } from '../components/panels/GoalPanelDataSummary'
 import { PanelDataSummary } from '../components/panels/PanelDataSummary';
 import styled from '@emotion/styled';
 import { currencyFormatter } from '../data/currency-formatter';
+import { ValidatorTypes } from '../components/validators/ValidatorTypes';
 
 const StackContainer = styled(Stack)`
   align-items: stretch;
@@ -31,10 +32,10 @@ export function UserSummary(props: {
   equity: number;
   estimatedCashFlow: number;
 }) {
-  const isValid = () => props.metMonthlyGoal;
+  const isValid = props.metMonthlyGoal ? ValidatorTypes.Valid : ValidatorTypes.Invalid;
   return (
     <div>
-      <ValidationPanel title={`Results: ${getDate(props.startDate)} - ${getDate(props.endDate)}`} padRight={false} isValid={isValid}>
+      <ValidationPanel title={`Results: ${getDate(props.startDate)} - ${getDate(props.endDate)}`} padRight={false} validationType={isValid}>
         <StackContainer direction="row" paddingLeft="0" paddingRight="0" paddingBottom="0">
           <Stack direction="row" paddingLeft="0" paddingRight="0" paddingBottom="0" marginBottom="0">
             <StackContainColumn direction="column" paddingLeft="0" paddingBottom="0">
@@ -48,7 +49,8 @@ export function UserSummary(props: {
               <PanelDataSummary title="Current properties" data={props.ownedProperties.toString()} />
             </StackContainColumn>
           </Stack>
-          <GoalPanelDataSummary data={props.estimatedCashFlow} isValid={isValid} />
+          {/** TODO: link the validation type updated from here to this ValidationPanel */}
+          <GoalPanelDataSummary data={props.estimatedCashFlow} validationType={isValid} />
         </StackContainer>
       </ValidationPanel>
     </div>
