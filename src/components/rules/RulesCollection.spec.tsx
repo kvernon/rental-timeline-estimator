@@ -104,7 +104,7 @@ describe('RulesCollection unit tests', () => {
         possibleChoices: [
           {
             ruleTitle: 'one',
-            suffix: 'suf',
+            suffix: 'com',
             prefix: 'pre',
             max: 20,
             min: 10,
@@ -112,7 +112,7 @@ describe('RulesCollection unit tests', () => {
           },
           {
             ruleTitle: 'two',
-            suffix: 'suff',
+            suffix: 'edu',
             prefix: 'pree',
             max: 40,
             min: 20,

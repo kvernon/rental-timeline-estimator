@@ -7,9 +7,13 @@
     "noImplicitAny": false,
     "strictNullChecks": false
   },
+  "include": [
+    "src",
+    "__tests__",
+    "__mocks__"
+  ],
   "exclude": [
     "node_modules",
-    "dist",
-    "./jest.config.ts"
+    "dist"
   ]
 }

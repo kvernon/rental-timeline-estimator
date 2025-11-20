@@ -10,7 +10,7 @@ import testingLibrary from 'eslint-plugin-testing-library';
 import prettierConfig from 'eslint-config-prettier';
 import react from 'eslint-plugin-react';
 
-export default defineConfig([
+export default defineConfig(
   globalIgnores([
     'coverage/',
     'babel.config.js',
@@ -31,7 +31,7 @@ export default defineConfig([
     extends: [js.configs.recommended, tsEslint.configs.recommended, reactHooks.configs.flat.recommended, reactRefresh.configs.vite],
     languageOptions: {
       parserOptions: {
-        project: './tsconfig.json',
+        project: './tsconfig-dev.json',
       },
       ecmaVersion: 2020,
       globals: {
@@ -59,9 +59,6 @@ export default defineConfig([
   },
   {
     languageOptions: {
-      parserOptions: {
-        project: './tsconfig-dev.json',
-      },
       ecmaVersion: 2020,
       globals: {
         ...globals.browser,
@@ -83,4 +80,4 @@ export default defineConfig([
     },
   },
   prettierConfig,
-]);
+);

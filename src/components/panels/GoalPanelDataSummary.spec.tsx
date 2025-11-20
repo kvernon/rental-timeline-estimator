@@ -2,19 +2,22 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import React from 'react';
 
-import { GoalPanelDataSummary } from './GoalPanelDataSummary';
 import { themeMock } from '../../../__tests__/ThemeMock';
 import { IThemeOptions } from '../../theming/IThemeOptions';
 import { useTheme } from '@emotion/react';
 
-import { currencyFormatter } from '../../data/currency-formatter';
+import { GoalPanelDataSummary } from './GoalPanelDataSummary';
 
+import { currencyFormatter } from '../../data/currency-formatter';
+import { ValidatorTypes } from '../validators/ValidatorTypes';
+jest.mock('react-confetti');
+jest.mock('@number-flow/react');
 jest.mock('../../data/currency-formatter');
 
 describe('GoalPanelDataSummary unit tests', () => {
-  const props: { data: number; isValid: () => boolean } = {
+  const props: { data: number; validationType: ValidatorTypes } = {
     data: 1,
-    isValid: jest.fn().mockReturnValue(true),
+    validationType: ValidatorTypes.Valid,
   };
 
   beforeEach(() => {
