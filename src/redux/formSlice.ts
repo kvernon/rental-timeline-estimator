@@ -29,6 +29,11 @@ export interface IWizardFormData {
   settings: ISettings;
 }
 
+export interface IRulesConfig {
+  purchaseRules: IRuleStackEntity[];
+  holdRules: IRuleStackEntity[];
+}
+
 const initialState: IWizardFormData = {
   userInfo: {
     goal: { value: 5000, validationResult: ValidatorTypes.Valid },
@@ -148,6 +153,7 @@ const formSlice = createSlice({
         value: ConditionEventResult<true, ConditionalNumber<true>>;
       }>,
     ) {
+      //console.log('updateRangeUserInfo: ', action.payload);
       state.userInfo[action.payload.key] = action.payload.value;
     },
     updateRuleUserInfo(
@@ -157,7 +163,7 @@ const formSlice = createSlice({
         value: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
       }>,
     ) {
-      if (!!action.payload.value) {
+      if (action.payload.value) {
         const key = action.payload.key;
         state.userInfo[key] = action.payload.value;
       }

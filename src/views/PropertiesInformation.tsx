@@ -2,11 +2,10 @@ import { Stack } from '../components/core/Stack';
 import { PropertyInformation } from '../components/validators/PropertyInformation';
 import React, { useState } from 'react';
 import { NavListSub } from '../components/navigation/NavListSub';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../redux/store';
 import { updatePropertiesInfo } from '../redux/formSlice';
 import { IPropertyInformationParams } from '../components/validators/IPropertyInformationParams';
 import { propertyOptions } from '../components/validators/PropertyOptions';
+import { useFormDispatch, useFormSelector } from '../redux/hooks';
 
 export const PropertiesInformation = () => {
   const [nav, setNav] = useState<
@@ -17,8 +16,8 @@ export const PropertiesInformation = () => {
     }[]
   >(propertyOptions.map((x, i) => ({ title: x, isSelected: i === 0 })));
 
-  const dispatch = useDispatch<AppDispatch>();
-  const value = useSelector((state: RootState) => state.form.propertiesInfo);
+  const dispatch = useFormDispatch();
+  const value = useFormSelector((state) => state.form.propertiesInfo);
   const [location, setLocation] = React.useState<string>(propertyOptions[0]);
 
   const handlePropertyChange = (key: keyof typeof value) => (e: IPropertyInformationParams) => {

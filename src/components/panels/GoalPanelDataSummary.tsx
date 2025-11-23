@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { Stack } from '../core/Stack';
 import styled from '@emotion/styled';
 import { Header6 } from '../core/Header6';
@@ -9,6 +9,9 @@ import { ValidatorTypes } from '../validators/ValidatorTypes';
 import NumberFlow from '@number-flow/react';
 import { useWindowSize } from 'react-use';
 import Confetti from 'react-confetti';
+import { useFormDispatch, useFormSelector } from '../../redux/hooks';
+import { setAnimationCompleted } from '../../redux/timelineSlice';
+import { getEstimatedCashFlow, getGoalMetForUser } from '../../redux/timeilneSelectors';
 
 const BackGroundNode = styled(Stack)<{
   themeOptions: IThemeOptions;
@@ -47,12 +50,20 @@ const StackContainer = styled(Stack)`
   align-items: stretch;
 `;
 
-export function GoalPanelDataSummary(props: { data: number; validationType: ValidatorTypes }): ReactNode {
+export function GoalPanelDataSummary(): ReactNode {
   const coreTheme = useTheme() as IThemeOptions;
   const { width, height } = useWindowSize();
   const [showConfetti, setShowConfetti] = useState(false);
   const [validationType, setValidationType] = useState<ValidatorTypes>(ValidatorTypes.Optional);
-  const validatedType: ValidatorTypes = props.validationType;
+
+  const dispatch = useFormDispatch();
+  const estimatedCashFlow = useFormSelector(getEstimatedCashFlow);
+  const [animatedCashFlow, setAnimatedCashFlow] = useState(0);
+  const metGoal = useFormSelector(getGoalMetForUser);
+
+  useEffect(() => {
+    setAnimatedCashFlow(estimatedCashFlow);
+  }, [estimatedCashFlow]);
 
   return (
     <BackGroundNode
@@ -63,26 +74,44 @@ export function GoalPanelDataSummary(props: { data: number; validationType: Vali
       themeOptions={coreTheme}
       validatorType={ValidatorTypes[validationType]}
     >
-      <Confetti width={width} height={height} run={showConfetti} recycle={false} numberOfPieces={350} />
+      <Confetti
+        width={width}
+        height={height}
+        run={showConfetti}
+        recycle={false}
+        numberOfPieces={350}
+        tweenDuration={10000}
+        onConfettiComplete={() => {
+          console.log('Confetti finished');
+          setShowConfetti(false);
+        }}
+      />
       <StackContainer theme={coreTheme} direction="column">
         <TitleNode theme={coreTheme}>Estimated monthly cash flow</TitleNode>
         <DataNode themeOptions={coreTheme} validatorType={ValidatorTypes[validationType]}>
           <NumberFlow
-            value={props.data}
+            value={animatedCashFlow}
             transformTiming={{ duration: 750, easing: 'ease-in-out' }}
             format={{
               currency: 'USD',
               style: 'currency',
               signDisplay: 'auto',
               minimumFractionDigits: 0,
-              minimumIntegerDigits: props.data.toString().length,
+              minimumIntegerDigits: estimatedCashFlow.toString().length,
               unitDisplay: 'long',
             }}
+            onAnimationsStart={() => {
+              console.log('GoalPanelDataSummary: onAnimationsStart');
+            }}
+            onLoadedData={() => {
+              console.log('GoalPanelDataSummary: onLoadedData');
+            }}
             onAnimationsFinish={() => {
-              setValidationType(validatedType);
-              if (validatedType === ValidatorTypes.Valid) {
-                setShowConfetti(true);
-              }
+              console.log('GoalPanelDataSummary: onAnimationsFinish', metGoal, estimatedCashFlow, validationType);
+              const valid = metGoal ? ValidatorTypes.Valid : ValidatorTypes.Invalid;
+              setValidationType(valid);
+              setShowConfetti(valid === ValidatorTypes.Valid);
+              dispatch(setAnimationCompleted(true));
             }}
           />
         </DataNode>

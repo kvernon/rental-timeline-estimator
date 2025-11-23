@@ -6,10 +6,13 @@ import { OwnershipSpan } from '../cells/OwnershipSpan';
 import { MoneyCellStyle } from '../cells/MoneyCell';
 import { HistoricalPropertyData } from './HistoricalPropertyData';
 import React from 'react';
-import { IHistoricalProperty } from '@cubedelement.com/realty-investor-timeline/dist/src/time/i-historical-property';
 import { Panel } from '../panels/Panel';
+import { useFormSelector } from '../../redux/hooks';
+import { getRentals } from '../../redux/timeilneSelectors';
 
-export function TimelineProperties(props: { rentals: IHistoricalProperty[] }) {
+export function TimelineProperties() {
+  const rentals = useFormSelector(getRentals);
+
   return (
     <Panel title={'Historical Properties'}>
       <StackSpaceBetween spacing={0}>
@@ -24,7 +27,7 @@ export function TimelineProperties(props: { rentals: IHistoricalProperty[] }) {
           <MoneyCellStyle>Cash flow:</MoneyCellStyle>
           <MoneyCellStyle>Equity:</MoneyCellStyle>
         </StackSpaceBetween>
-        {props.rentals.map((x, i) => (
+        {rentals.map((x, i) => (
           <HistoricalPropertyData historicalProperty={x} key={`rental-${i}`} />
         ))}
       </StackSpaceBetween>
