@@ -30,7 +30,6 @@ export function Results() {
   const coreTheme = useTheme() as IThemeOptions;
 
   const formData = useFormSelector((state) => {
-    //console.log('useFormSelector: ', state);
     return state.form;
   });
   const { errorMessage } = useTimeline(formData);

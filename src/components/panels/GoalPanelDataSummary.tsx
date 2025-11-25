@@ -82,7 +82,6 @@ export function GoalPanelDataSummary(): ReactNode {
         numberOfPieces={350}
         tweenDuration={10000}
         onConfettiComplete={() => {
-          console.log('Confetti finished');
           setShowConfetti(false);
         }}
       />
@@ -100,14 +99,7 @@ export function GoalPanelDataSummary(): ReactNode {
               minimumIntegerDigits: estimatedCashFlow.toString().length,
               unitDisplay: 'long',
             }}
-            onAnimationsStart={() => {
-              console.log('GoalPanelDataSummary: onAnimationsStart');
-            }}
-            onLoadedData={() => {
-              console.log('GoalPanelDataSummary: onLoadedData');
-            }}
             onAnimationsFinish={() => {
-              console.log('GoalPanelDataSummary: onAnimationsFinish', metGoal, estimatedCashFlow, validationType);
               const valid = metGoal ? ValidatorTypes.Valid : ValidatorTypes.Invalid;
               setValidationType(valid);
               setShowConfetti(valid === ValidatorTypes.Valid);
