@@ -79,8 +79,33 @@ export function GoalPanelDataSummary(): ReactNode {
         height={height}
         run={showConfetti}
         recycle={false}
-        numberOfPieces={350}
-        tweenDuration={10000}
+        numberOfPieces={150}
+        tweenDuration={300}
+        friction={1}
+        confettiSource={{
+          x: 0, // left edge
+          y: height - height / 3, // near bottom
+          w: 100,
+          h: height / 3,
+        }}
+        onConfettiComplete={() => {
+          setShowConfetti(false);
+        }}
+      />
+      <Confetti
+        width={width}
+        height={height}
+        run={showConfetti}
+        recycle={false}
+        numberOfPieces={150}
+        tweenDuration={300}
+        friction={1}
+        confettiSource={{
+          x: width - 100, // right edge
+          y: height - height / 3, // near bottom
+          w: 100,
+          h: height / 3,
+        }}
         onConfettiComplete={() => {
           setShowConfetti(false);
         }}
