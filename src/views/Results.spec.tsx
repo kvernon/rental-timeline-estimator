@@ -7,14 +7,20 @@ import { HoldRuleTypes, ITimeline, IUser, PropertyType, PurchaseRuleTypes } from
 import { generate } from '../data/generate';
 import { IUserInfo } from '../data/IUserInfo';
 import { useSelector } from 'react-redux';
+import { useTimeline } from './useTimeline';
+import { useFormSelector } from '../redux/hooks';
 
 jest.mock('../data/generate');
 jest.mock('./UserSummary');
+jest.mock('../components/ledger/UserLedgerPage');
 jest.mock('../components/navigation/NavListSub');
+jest.mock('../components/timeline/TimelineProperties');
 jest.mock('react-redux');
+jest.mock('./useTimeline');
 
 describe('RawResults unit tests', () => {
   beforeEach(() => {
+    jest.mocked(useTimeline).mockReturnValue({ timeline: {} } as unknown as ReturnType<typeof useTimeline>);
     const userMock = {
       metMonthlyGoal: jest.fn(),
     } as unknown as jest.Mocked<IUser>;
@@ -91,6 +97,7 @@ describe('RawResults unit tests', () => {
       },
     };
 
+    jest.mocked(useFormSelector).mockImplementation(() => {});
     jest.mocked(useSelector).mockImplementation((selector: (s: unknown) => unknown) => selector({ form: { userInfo, propertiesInfo } } as unknown));
 
     render(<Results />);

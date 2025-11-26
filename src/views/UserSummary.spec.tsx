@@ -3,10 +3,25 @@ import '@testing-library/jest-dom';
 import React from 'react';
 import { UserSummary } from './UserSummary';
 import { getDate } from '../data/getDate';
+import { useFormDispatch, useFormSelector } from '../redux/hooks';
+import { TypedUseSelectorHook } from 'react-redux';
+import { RootState } from '../redux/store';
+import { ValidatorTypes } from '../components/validators/ValidatorTypes';
+import { when } from 'jest-when';
+import {
+  getActivelyOwnedPropertiesCount,
+  getCompletedValidation,
+  getEndDateBalanceForUser,
+  getEquity,
+  getGoalMetForUser,
+  getOwnedOrSoldPropertiesCount,
+  getStartAndEndDate,
+} from '../redux/timeilneSelectors';
 
 jest.mock('../components/panels/ValidationPanel');
 jest.mock('../components/panels/PanelDataSummary');
 jest.mock('../components/panels/GoalPanelDataSummary');
+jest.mock('react-redux');
 
 describe('UserSummary unit tests', () => {
   const props: {
@@ -29,8 +44,23 @@ describe('UserSummary unit tests', () => {
     metMonthlyGoal: false,
   };
 
+  let useFormSelectorMock: jest.MockWithArgs<TypedUseSelectorHook<RootState>> & TypedUseSelectorHook<RootState> & {};
+
   beforeEach(() => {
-    render(<UserSummary {...props} />);
+    jest.mocked(useFormDispatch).mockImplementation().mockReturnValue(jest.fn());
+    useFormSelectorMock = jest.mocked(useFormSelector).mockImplementation(() => {});
+    when(useFormSelectorMock).calledWith(getGoalMetForUser).mockReturnValue(true);
+    when(useFormSelectorMock).calledWith(getStartAndEndDate).mockReturnValue([new Date(), new Date()]);
+    when(useFormSelectorMock).calledWith(getEquity).mockReturnValue(1);
+    when(useFormSelectorMock).calledWith(getOwnedOrSoldPropertiesCount).mockReturnValue(2);
+    when(useFormSelectorMock).calledWith(getActivelyOwnedPropertiesCount).mockReturnValue(2);
+    when(useFormSelectorMock).calledWith(getEndDateBalanceForUser).mockReturnValue(4);
+    when(useFormSelectorMock).calledWith(getCompletedValidation).mockReturnValue(ValidatorTypes.Valid);
+    render(<UserSummary />);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   describe('and with defaults', () => {
@@ -54,7 +84,7 @@ describe('UserSummary unit tests', () => {
     });
 
     test('should render Property owned', () => {
-      const panelDataSummary = screen.getByLabelText<HTMLDivElement>('Property owned');
+      const panelDataSummary = screen.getByLabelText<HTMLDivElement>('Properties owned');
 
       expect(panelDataSummary).toBeInTheDocument();
     });

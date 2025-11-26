@@ -12,6 +12,7 @@ export interface IPalette {
     [key: string]: {
       validationColor: string;
       background: string;
+      goalBackground: string;
       backgroundFocus: string;
     };
   };

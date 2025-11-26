@@ -1,16 +1,15 @@
 import React from 'react';
 import { RangeValidationPanel } from '../components/panels/RangeValidationPanel';
 import { RangeFieldValidator } from '../components/validators/RangeFieldValidator';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../redux/store';
 import { ConditionalNumber, ConditionEventResult } from '../components/validators/IRangeFieldValidatorEvent';
 import { updateSettings } from '../redux/formSlice';
 import { ISettings } from '../data/ISettings';
 import { Stack } from '../components/core/Stack';
+import { useFormDispatch, useFormSelector } from '../redux/hooks';
 
 export function Settings() {
-  const dispatch = useDispatch<AppDispatch>();
-  const value = useSelector((state: RootState) => state.form.settings);
+  const dispatch = useFormDispatch();
+  const value = useFormSelector((state) => state.form.settings);
 
   const handleRangeChange = (key: keyof ISettings) => (e: ConditionEventResult<true, ConditionalNumber<true>>) => {
     dispatch(updateSettings({ key, value: e }));

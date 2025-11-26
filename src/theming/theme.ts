@@ -16,16 +16,19 @@ export const options: IThemeOptions = {
       Invalid: {
         validationColor: '#ff0000',
         background: '#ff3c3c',
+        goalBackground: '#320000',
         backgroundFocus: '#ff6464',
       },
       Valid: {
         validationColor: '#00ff00',
         background: '#6ad8fd',
+        goalBackground: '#003200FF',
         backgroundFocus: '#9EE5FF',
       },
       Optional: {
         validationColor: '#858585',
         background: '#6ad8fd',
+        goalBackground: '#101B1E7C',
         backgroundFocus: '#9EE5FF',
       },
     },

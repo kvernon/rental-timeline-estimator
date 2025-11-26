@@ -1,20 +1,15 @@
 import { Stack } from '../components/core/Stack';
-import React, { useEffect, useState } from 'react';
-import { generate } from '../data/generate';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { ILedgerCollection, ITimeline } from '@cubedelement.com/realty-investor-timeline';
 import { useTheme } from '@emotion/react';
 import { IThemeOptions } from '../theming/IThemeOptions';
 import { TimelineProperties } from '../components/timeline/TimelineProperties';
 import { UserLedgerPage } from '../components/ledger/UserLedgerPage';
 import { NavListSub } from '../components/navigation/NavListSub';
 import { UserSummary } from './UserSummary';
-import { RootState } from '../redux/store';
-import { useSelector } from 'react-redux';
-
-const Regular = styled(Stack)`
-  color: white;
-`;
+import { Raw } from './Raw';
+import { useTimeline } from './useTimeline';
+import { useFormSelector } from '../redux/hooks';
 
 const Err = styled(Stack)`
   padding-top: 30px;
@@ -32,62 +27,17 @@ export function Results() {
   >([{ title: 'Ledger', isSelected: true }, { title: 'Properties' }, { title: 'Raw' }]);
   const [location, setLocation] = React.useState<string>('Ledger');
 
-  const [results, setResults] = React.useState<ITimeline>();
-
-  const formData = useSelector((state: RootState) => state.form);
-
-  const [estimatedCashFlow, setEstimatedCashFlow] = useState<number>(0);
-  const [balance, setBalance] = useState<number>(0);
-  const [metMonthlyGoal, setMetMonthlyGoal] = useState<boolean>(false);
-  const [equity, setEquity] = useState<number>(0);
-  const [ownedProperties, setOwnedProperties] = useState<number>(0);
-  const [allOwnedProperties, setAllOwnedProperties] = useState<number>(0);
-  const [ledgerCollection, setLedgerCollection] = useState<ILedgerCollection | null>(null);
-  const [error, setError] = useState<Error | null>(null);
-
-  useEffect(() => {
-    const ownedProperties = results?.rentals.filter((p) => p.property.isOwned).map((x) => x.property) || [];
-    setEstimatedCashFlow(() =>
-      !results ? 0 : ownedProperties.reduce((previousValue, currentValue) => previousValue + currentValue.getCashFlowByDate(results.endDate), 0),
-    );
-    setBalance(() => results?.getBalance(results.endDate) || 0);
-    setOwnedProperties(() => ownedProperties?.length || 0);
-    setAllOwnedProperties(() => results?.rentals.filter((p) => p.property.isOwned).map((x) => x.property)?.length || 0);
-    setEquity(
-      results
-        ? ownedProperties.reduce((previousValue, currentValue) => {
-            return previousValue + currentValue.getEstimatedEquityFromSell(results.endDate);
-          }, 0)
-        : 0,
-    );
-
-    setMetMonthlyGoal(() => {
-      if (!results) {
-        return false;
-      }
-
-      const reduced = ownedProperties.reduce((previousValue, currentValue) => previousValue + currentValue.getCashFlowByDate(results.endDate), 0);
-      return reduced >= results.user.monthlyIncomeAmountGoal;
-    });
-    setLedgerCollection(() => results?.user.ledgerCollection || null);
-  }, [results]);
-
-  useEffect(() => {
-    try {
-      const generatedResult = generate(formData.userInfo, formData.propertiesInfo, formData.settings);
-      setResults(() => generatedResult);
-      setError(null);
-    } catch (e) {
-      setError(e as Error);
-    }
-  }, [formData]);
-
   const coreTheme = useTheme() as IThemeOptions;
+
+  const formData = useFormSelector((state) => {
+    return state.form;
+  });
+  const { errorMessage } = useTimeline(formData);
 
   return (
     <>
-      {error && <Err role="raw-results-failed">{error.message}</Err>}
-      {!error && (
+      {errorMessage && <Err role="raw-results-failed">{errorMessage}</Err>}
+      {!errorMessage && (
         <Stack direction={'column'} role={'raw-results'}>
           <NavListSub
             title="Timeline Navigation"
@@ -98,35 +48,12 @@ export function Results() {
             }}
           />
 
-          {results && (
-            <UserSummary
-              endDate={results.endDate}
-              ownedProperties={ownedProperties}
-              allOwnedProperties={allOwnedProperties}
-              startDate={results.startDate}
-              metMonthlyGoal={metMonthlyGoal}
-              balance={balance}
-              equity={equity}
-              estimatedCashFlow={estimatedCashFlow}
-            />
-          )}
+          <UserSummary />
 
           <Stack theme={coreTheme} direction="column">
-            {location === 'Ledger' && results && ledgerCollection && (
-              <UserLedgerPage
-                ledgerCollection={ledgerCollection}
-                startDate={results.startDate}
-                endDate={results.endDate}
-                monthlyIncomeAmountGoal={results.user.monthlyIncomeAmountGoal}
-              />
-            )}
-
-            {location === 'Properties' && results && <TimelineProperties rentals={results.rentals} />}
-            {location === 'Raw' && results && (
-              <Regular role="raw-results">
-                <pre>{JSON.stringify(results, null, ' ')}</pre>
-              </Regular>
-            )}
+            {location === 'Ledger' && <UserLedgerPage />}
+            {location === 'Properties' && <TimelineProperties />}
+            {location === 'Raw' && <Raw />}
           </Stack>
         </Stack>
       )}

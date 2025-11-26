@@ -76,7 +76,7 @@ const jestConfig: JestConfigWithTsJest = {
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   // moduleNameMapper: {
-  //   '@emotion/react': '<rootDir>/__mocks__/@emotion/react.ts'
+  //   '@number-flow/react': '<rootDir>/__mocks__/@number-flow/react.ts'
   // },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
