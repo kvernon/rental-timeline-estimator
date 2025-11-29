@@ -9,6 +9,8 @@ import React from 'react';
 import { Panel } from '../panels/Panel';
 import { useFormSelector } from '../../redux/hooks';
 import { getRentals } from '../../redux/timeilneSelectors';
+import { DEFAULT_START_DELAY } from '../IAnimatedProps';
+import { AnimatedWrapFormItem } from '../AnimatedWrapFormItem';
 
 export function TimelineProperties() {
   const rentals = useFormSelector(getRentals);
@@ -28,7 +30,9 @@ export function TimelineProperties() {
           <MoneyCellStyle>Equity:</MoneyCellStyle>
         </StackSpaceBetween>
         {rentals.map((x, i) => (
-          <HistoricalPropertyData historicalProperty={x} key={`rental-${i}`} />
+          <AnimatedWrapFormItem delay={DEFAULT_START_DELAY * i}>
+            <HistoricalPropertyData historicalProperty={x} key={`rental-${i}`} />
+          </AnimatedWrapFormItem>
         ))}
       </StackSpaceBetween>
     </Panel>

@@ -1,6 +1,6 @@
 {
   "name": "realty-investor-estimator",
-  "version": "0.66.0",
+  "version": "0.67.0",
   "description": "",
   "main": "./dist/src/index.js",
   "types": "./dist/src/index.d.ts",
@@ -41,6 +41,7 @@
     "emotion-icons": "^3.27.0",
     "lodash.get": "^4.4.2",
     "lodash.isequal": "^4.5.0",
+    "motion": "^12.23.24",
     "react": "^19.2.0",
     "react-confetti": "^6.4.0",
     "react-dom": "^19.2.0",

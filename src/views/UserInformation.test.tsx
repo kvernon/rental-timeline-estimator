@@ -4,7 +4,7 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
 import { IUserInformationProps } from './IUserInformationProps';
-import { RangeFieldValidator } from '../components/validators/RangeFieldValidator';
+import { AnimatedRangeFieldValidator } from '../components/validators/AnimatedRangeFieldValidator';
 import { RulesCollection } from '../components/rules/RulesCollection';
 import { FontGroups } from '../theming/fontGroups';
 import { evaluateValidation } from '../components/validators/evaluateValidation';
@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 jest.mock('../components/panels/RangeValidationPanel');
 jest.mock('../components/core/Spinner');
 jest.mock('../components/rules/RulesCollection');
-jest.mock('../components/validators/RangeFieldValidator');
+jest.mock('../components/validators/AnimatedRangeFieldValidator');
 jest.mock('../components/validators/evaluateValidation');
 jest.mock('../components/validators/isInRange');
 jest.mock('./getRulesValuesToRulesValuesResults');
@@ -60,7 +60,7 @@ describe('UserInformation unit tests', () => {
       test('should goal panel pieces', () => {
         const entity = screen.getByLabelText<HTMLInputElement>('Goal Panel');
 
-        expect(RangeFieldValidator).toHaveBeenNthCalledWith(
+        expect(AnimatedRangeFieldValidator).toHaveBeenNthCalledWith(
           1,
           {
             inputFontGroup: FontGroups.inputGoal,
@@ -93,9 +93,10 @@ describe('UserInformation unit tests', () => {
       test('should validation panel for savings at start', () => {
         const entity = screen.getByLabelText<HTMLDivElement>('Amount Saved at Start');
 
-        expect(RangeFieldValidator).toHaveBeenNthCalledWith(
+        expect(AnimatedRangeFieldValidator).toHaveBeenNthCalledWith(
           2,
           {
+            delay: 0.3,
             min: 0,
             max: 9999999,
             prefix: '$',
@@ -119,9 +120,10 @@ describe('UserInformation unit tests', () => {
 
         expect(entity).toBeInTheDocument();
 
-        expect(RangeFieldValidator).toHaveBeenNthCalledWith(
+        expect(AnimatedRangeFieldValidator).toHaveBeenNthCalledWith(
           3,
           {
+            delay: 0.5,
             min: 0,
             max: 9999999,
             prefix: '$',

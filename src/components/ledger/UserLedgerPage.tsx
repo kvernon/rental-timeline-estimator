@@ -6,6 +6,8 @@ import { ValidationPanel } from '../panels/ValidationPanel';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
 import { useFormSelector } from '../../redux/hooks';
 import { getStartAndEndDate, getUser } from '../../redux/timeilneSelectors';
+import { AnimatedWrapPanel } from '../AnimatedWrapPanel';
+import { DEFAULT_START_DELAY } from '../IAnimatedProps';
 
 export function UserLedgerPage() {
   const [startDate, endDate] = useFormSelector(getStartAndEndDate);
@@ -27,28 +29,30 @@ export function UserLedgerPage() {
 
   return (
     <>
-      {years.map((year) => {
+      {years.map((year, i) => {
         const isValid = () => {
           const b = user.ledgerCollection.getMonthlyCashFlowByYear(year).some((cashFlow) => cashFlow >= user.monthlyIncomeAmountGoal);
           return b ? ValidatorTypes.Valid : ValidatorTypes.Invalid;
         };
         return (
-          <ValidationPanel key={`${year}`} title={year.toString()} validationType={isValid()}>
-            <Stack direction={'column'} key={`ledger-annual-${year}`}>
-              <UserLedgerSummaryForYear
-                key={`ledger-annual-summary-${year}`}
-                ledgerCollection={user.ledgerCollection}
-                year={year}
-                goal={user.monthlyIncomeAmountGoal}
-              />
-              <UserLedgerSummariesForYearByMonth
-                key={`ledger-annual-summaries-${year}`}
-                ledgerCollection={user.ledgerCollection}
-                year={year}
-                goal={user.monthlyIncomeAmountGoal}
-              />
-            </Stack>
-          </ValidationPanel>
+          <AnimatedWrapPanel delay={i + DEFAULT_START_DELAY}>
+            <ValidationPanel key={`${year}`} title={year.toString()} validationType={isValid()}>
+              <Stack direction={'column'} key={`ledger-annual-${year}`}>
+                <UserLedgerSummaryForYear
+                  key={`ledger-annual-summary-${year}`}
+                  ledgerCollection={user.ledgerCollection}
+                  year={year}
+                  goal={user.monthlyIncomeAmountGoal}
+                />
+                <UserLedgerSummariesForYearByMonth
+                  key={`ledger-annual-summaries-${year}`}
+                  ledgerCollection={user.ledgerCollection}
+                  year={year}
+                  goal={user.monthlyIncomeAmountGoal}
+                />
+              </Stack>
+            </ValidationPanel>
+          </AnimatedWrapPanel>
         );
       })}
     </>

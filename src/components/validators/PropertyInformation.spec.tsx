@@ -6,7 +6,7 @@ import { ValidatorTypes } from './ValidatorTypes';
 import { PropertyType } from '@cubedelement.com/realty-investor-timeline';
 import { IPropertyInformationOnChangeParams } from './IPropertyInformationParams';
 
-jest.mock('./RangeFieldValidator');
+jest.mock('./AnimatedRangeFieldValidator');
 jest.mock('../panels/RangeValidationPanel');
 
 describe('PropertyInformation unit tests', () => {

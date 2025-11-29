@@ -18,6 +18,8 @@ import {
   getStartAndEndDate,
 } from '../redux/timeilneSelectors';
 import { setAnimationCompleted } from '../redux/timelineSlice';
+import { DEFAULT_START_DELAY } from '../components/IAnimatedProps';
+import { AnimatedWrapFormItem } from '../components/AnimatedWrapFormItem';
 
 const StackContainer = styled(Stack)`
   align-items: stretch;
@@ -45,12 +47,11 @@ export function UserSummary() {
   const dispatch = useFormDispatch();
 
   useEffect(() => {
-    console.log('UserSummary useEffect isValid:', ValidatorTypes[isValid]);
     if (isValid !== ValidatorTypes.Optional) {
       setValidationType(isValid);
       dispatch(setAnimationCompleted(false));
     }
-  }, [isValid]);
+  }, [dispatch, isValid]);
 
   if (!startDate || !endDate) {
     return null;
@@ -67,17 +68,28 @@ export function UserSummary() {
         <StackContainer direction="row" paddingLeft="0" paddingRight="0" paddingBottom="0">
           <Stack direction="row" paddingLeft="0" paddingRight="0" paddingBottom="0" marginBottom="0">
             <StackContainColumn direction="column" paddingLeft="0" paddingBottom="0">
-              <PanelDataSummary title="Years to goal" data={(endDate.getFullYear() - startDate.getFullYear()).toString()} />
-              <PanelDataSummary title="Properties equity" data={`$${currencyFormatter(equity)}`} />
-              <PanelDataSummary title="End balance" data={`$${currencyFormatter(balance)}`} />
+              <AnimatedWrapFormItem>
+                <PanelDataSummary title="Years to goal" data={(endDate.getFullYear() - startDate.getFullYear()).toString()} />
+              </AnimatedWrapFormItem>
+              <AnimatedWrapFormItem>
+                <PanelDataSummary title="Properties equity" data={`$${currencyFormatter(equity)}`} />
+              </AnimatedWrapFormItem>
+              <AnimatedWrapFormItem>
+                <PanelDataSummary title="End balance" data={`$${currencyFormatter(balance)}`} />
+              </AnimatedWrapFormItem>
             </StackContainColumn>
             <StackContainColumn direction="column" paddingLeft="10px" paddingBottom="0">
-              <PanelDataSummary title="Goal acheived" data={metMonthlyGoal ? 'Yes' : 'No'} />
-              <PanelDataSummary title="Properties owned" data={allOwnedProperties.toString()} />
-              <PanelDataSummary title="Current properties" data={ownedProperties.toString()} />
+              <AnimatedWrapFormItem delay={DEFAULT_START_DELAY}>
+                <PanelDataSummary title="Goal acheived" data={metMonthlyGoal ? 'Yes' : 'No'} />
+              </AnimatedWrapFormItem>
+              <AnimatedWrapFormItem delay={DEFAULT_START_DELAY}>
+                <PanelDataSummary title="Properties owned" data={allOwnedProperties.toString()} />
+              </AnimatedWrapFormItem>
+              <AnimatedWrapFormItem delay={DEFAULT_START_DELAY}>
+                <PanelDataSummary title="Current properties" data={ownedProperties.toString()} />
+              </AnimatedWrapFormItem>
             </StackContainColumn>
           </Stack>
-          {/** TODO: link the validation type updated from here to this ValidationPanel */}
           <GoalPanelDataSummary />
         </StackContainer>
       </ValidationPanel>

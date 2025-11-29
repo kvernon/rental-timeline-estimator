@@ -1,11 +1,13 @@
 import React from 'react';
 import { RangeValidationPanel } from '../components/panels/RangeValidationPanel';
-import { RangeFieldValidator } from '../components/validators/RangeFieldValidator';
+import { AnimatedRangeFieldValidator } from '../components/validators/AnimatedRangeFieldValidator';
 import { ConditionalNumber, ConditionEventResult } from '../components/validators/IRangeFieldValidatorEvent';
 import { updateSettings } from '../redux/formSlice';
 import { ISettings } from '../data/ISettings';
 import { Stack } from '../components/core/Stack';
 import { useFormDispatch, useFormSelector } from '../redux/hooks';
+import { AnimatedWrapPanel } from '../components/AnimatedWrapPanel';
+import { DEFAULT_START_DELAY } from '../components/IAnimatedProps';
 
 export function Settings() {
   const dispatch = useFormDispatch();
@@ -17,63 +19,73 @@ export function Settings() {
 
   return (
     <Stack aria-label={'Money'} direction="column">
-      <RangeValidationPanel title="Time" required={true}>
-        <RangeFieldValidator<true>
-          min={1}
-          max={20}
-          required={true}
-          title="Maximum Amount of Years"
-          hasSpinner={true}
-          useUnderlineOnly={false}
-          showTitle={true}
-          value={value.maxYears}
-          id="max-years-of-life"
-          onChange={handleRangeChange('maxYears')}
-        />
-      </RangeValidationPanel>
-      <RangeValidationPanel title="Single Family Loans" required={true}>
-        <RangeFieldValidator<true>
-          min={0}
-          max={20}
-          required={true}
-          title="Loan Interest Rate"
-          hasSpinner={true}
-          useUnderlineOnly={false}
-          showTitle={true}
-          suffix={'%'}
-          value={value.singleFamilyLoanRatePercent}
-          id="sf-mort-interest-rate"
-          onChange={handleRangeChange('singleFamilyLoanRatePercent')}
-        />
-        <RangeFieldValidator<true>
-          min={15}
-          max={30}
-          required={true}
-          title="Loan Mortgage Term"
-          suffix={'Years'}
-          hasSpinner={true}
-          useUnderlineOnly={false}
-          showTitle={true}
-          value={value.singleFamilyLoanTermInYears}
-          id="sf-mort-term-years"
-          onChange={handleRangeChange('singleFamilyLoanRatePercent')}
-        />
-      </RangeValidationPanel>
-      <RangeValidationPanel title="Passive Apartments" required={true}>
-        <RangeFieldValidator<true>
-          min={25000}
-          max={100000}
-          required={true}
-          title="Multi Family Minimum Monthly Reserves"
-          prefix={'$'}
-          hasSpinner={true}
-          useUnderlineOnly={false}
-          showTitle={true}
-          value={value.passiveApartmentsMinimumMonthlyReservesForRental}
-          id="mf-monthly-reserves"
-          onChange={handleRangeChange('passiveApartmentsMinimumMonthlyReservesForRental')}
-        />
-      </RangeValidationPanel>
+      <AnimatedWrapPanel>
+        <RangeValidationPanel title="Time" required={true}>
+          <AnimatedRangeFieldValidator<true>
+            delay={DEFAULT_START_DELAY * 2}
+            min={1}
+            max={20}
+            required={true}
+            title="Maximum Amount of Years"
+            hasSpinner={true}
+            useUnderlineOnly={false}
+            showTitle={true}
+            value={value.maxYears}
+            id="max-years-of-life"
+            onChange={handleRangeChange('maxYears')}
+          />
+        </RangeValidationPanel>
+      </AnimatedWrapPanel>
+      <AnimatedWrapPanel delay={DEFAULT_START_DELAY}>
+        <RangeValidationPanel title="Single Family Loans" required={true}>
+          <AnimatedRangeFieldValidator<true>
+            delay={DEFAULT_START_DELAY * 3}
+            min={0}
+            max={20}
+            required={true}
+            title="Loan Interest Rate"
+            hasSpinner={true}
+            useUnderlineOnly={false}
+            showTitle={true}
+            suffix={'%'}
+            value={value.singleFamilyLoanRatePercent}
+            id="sf-mort-interest-rate"
+            onChange={handleRangeChange('singleFamilyLoanRatePercent')}
+          />
+          <AnimatedRangeFieldValidator<true>
+            delay={DEFAULT_START_DELAY * 4}
+            min={15}
+            max={30}
+            required={true}
+            title="Loan Mortgage Term"
+            suffix={'Years'}
+            hasSpinner={true}
+            useUnderlineOnly={false}
+            showTitle={true}
+            value={value.singleFamilyLoanTermInYears}
+            id="sf-mort-term-years"
+            onChange={handleRangeChange('singleFamilyLoanRatePercent')}
+          />
+        </RangeValidationPanel>
+      </AnimatedWrapPanel>
+      <AnimatedWrapPanel delay={DEFAULT_START_DELAY * 2}>
+        <RangeValidationPanel title="Passive Apartments" required={true}>
+          <AnimatedRangeFieldValidator<true>
+            delay={DEFAULT_START_DELAY * 4}
+            min={25000}
+            max={100000}
+            required={true}
+            title="Multi Family Minimum Monthly Reserves"
+            prefix={'$'}
+            hasSpinner={true}
+            useUnderlineOnly={false}
+            showTitle={true}
+            value={value.passiveApartmentsMinimumMonthlyReservesForRental}
+            id="mf-monthly-reserves"
+            onChange={handleRangeChange('passiveApartmentsMinimumMonthlyReservesForRental')}
+          />
+        </RangeValidationPanel>
+      </AnimatedWrapPanel>
     </Stack>
   );
 }

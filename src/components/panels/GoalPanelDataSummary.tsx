@@ -12,6 +12,7 @@ import Confetti from 'react-confetti';
 import { useFormDispatch, useFormSelector } from '../../redux/hooks';
 import { setAnimationCompleted } from '../../redux/timelineSlice';
 import { getEstimatedCashFlow, getGoalMetForUser } from '../../redux/timeilneSelectors';
+import { DEFAULT_START_DELAY } from '../IAnimatedProps';
 
 const BackGroundNode = styled(Stack)<{
   themeOptions: IThemeOptions;
@@ -62,7 +63,11 @@ export function GoalPanelDataSummary(): ReactNode {
   const metGoal = useFormSelector(getGoalMetForUser);
 
   useEffect(() => {
-    setAnimatedCashFlow(estimatedCashFlow);
+    const timer = setTimeout(() => {
+      setAnimatedCashFlow(estimatedCashFlow);
+    }, DEFAULT_START_DELAY * 61);
+
+    return () => clearTimeout(timer);
   }, [estimatedCashFlow]);
 
   return (
@@ -115,7 +120,7 @@ export function GoalPanelDataSummary(): ReactNode {
         <DataNode themeOptions={coreTheme} validatorType={ValidatorTypes[validationType]}>
           <NumberFlow
             value={animatedCashFlow}
-            transformTiming={{ duration: 750, easing: 'ease-in-out' }}
+            transformTiming={{ duration: 850, easing: 'ease-in-out' }}
             format={{
               currency: 'USD',
               style: 'currency',
