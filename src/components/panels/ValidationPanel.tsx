@@ -15,7 +15,7 @@ export function ValidationPanel(props: {
   validationType: ValidatorTypes;
   padRight?: boolean;
   forceIsValid?: boolean;
-}) {
+}): React.ReactElement {
   const coreTheme = useTheme() as IThemeOptions;
 
   const padding = props.padRight === undefined || props.padRight;

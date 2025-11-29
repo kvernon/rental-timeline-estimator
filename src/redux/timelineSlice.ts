@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ITimeline } from '@cubedelement.com/realty-investor-timeline';
-import { useState } from 'react';
 
 export type NullableTimeline = ITimeline | null;
 
@@ -22,16 +21,13 @@ const timelineSlice = createSlice({
       state.errorMessage = null;
     },
     setTimelineError(state, action: PayloadAction<string>) {
-      //console.log('setTimelineError: ', action.payload);
       state.timeline = null;
       state.errorMessage = action.payload;
     },
     setAnimationCompleted: (state, action: PayloadAction<boolean>) => {
-      console.log('setAnimationCompleted: ', action.payload);
       state.animationCompleted = action.payload;
     },
     resetResult: () => {
-      console.log('resetResult:');
       return result;
     },
   },

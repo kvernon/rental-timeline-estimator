@@ -11,7 +11,7 @@ import { getValidationResult } from '../rules/getValidationResult';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
 import { IRangeValidationPanelProps } from './IRangeValidationPanelProps';
 
-export const RangeValidationPanel = function <Required extends boolean>(props: IRangeValidationPanelProps<Required>) {
+export const RangeValidationPanel = function <Required extends boolean>(props: IRangeValidationPanelProps<Required>): React.ReactElement {
   const coreTheme = useTheme() as IThemeOptions;
 
   return (
