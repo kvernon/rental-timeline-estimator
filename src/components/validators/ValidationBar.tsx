@@ -16,12 +16,13 @@ export interface IValidationBarProps {
 
 const Box = styled.div<{ validationColor: string; curveRight?: boolean }>`
   display: flex;
-  transition: background-color 0.4s ease-out;
   flex-direction: column;
   width: 10px;
-  background: ${(props) => `linear-gradient(${props.validationColor}, ${props.validationColor + 33})`};
+  background-color: ${(props) => props.validationColor};
+  mask-image: linear-gradient(to bottom, black, rgba(0, 0, 0, 0.2));
   border-top-right-radius: ${(props) => (props.curveRight ? '0.3rem' : '0')};
   border-bottom-right-radius: ${(props) => (props.curveRight ? '0.3rem' : '0')};
+  transition: background-color 0.4s ease-out;
 `;
 
 export const ValidationBar = function (props: IValidationBarProps) {

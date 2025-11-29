@@ -30,7 +30,7 @@ describe('ValidationBar unit tests', () => {
       render(<ValidationBar isValid={expectedValidatorType} />);
 
       const byTitle = screen.getByTitle('Invalid');
-      expect(byTitle).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(byTitle).toHaveStyle('background-color: rgba(255, 0, 0)');
     });
   });
 });

@@ -46,7 +46,7 @@ describe('GoalPanelDataSummary unit tests', () => {
       expect(panelDataSummary).toBeInTheDocument();
     });
 
-    test.only('should render data', () => {
+    test('should render data', () => {
       jest.useFakeTimers();
       jest.spyOn(global, 'setTimeout');
 
