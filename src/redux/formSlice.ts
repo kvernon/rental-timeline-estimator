@@ -27,6 +27,7 @@ export interface IWizardFormData {
   userInfo: IUserInfo;
   propertiesInfo: IPropertiesInformationPropsEvent;
   settings: ISettings;
+  rulesConfig: IRulesConfig;
 }
 
 export interface IRulesConfig {
@@ -46,7 +47,7 @@ const initialState: IWizardFormData = {
           validationResult: ValidatorTypes.Valid,
         },
         property: {
-          value: { value: 1, label: propertyOptions[1] },
+          value: { value: PropertyType.SingleFamily, label: propertyOptions[1] },
           validationResult: ValidatorTypes.Valid,
         },
         range: {
@@ -60,7 +61,7 @@ const initialState: IWizardFormData = {
           validationResult: ValidatorTypes.Valid,
         },
         property: {
-          value: { value: 1, label: propertyOptions[1] },
+          value: { value: PropertyType.SingleFamily, label: propertyOptions[1] },
           validationResult: ValidatorTypes.Valid,
         },
         range: {
@@ -76,7 +77,7 @@ const initialState: IWizardFormData = {
           validationResult: ValidatorTypes.Valid,
         },
         property: {
-          value: { value: 1, label: propertyOptions[1] },
+          value: { value: PropertyType.SingleFamily, label: propertyOptions[1] },
           validationResult: ValidatorTypes.Valid,
         },
         range: {
@@ -90,7 +91,7 @@ const initialState: IWizardFormData = {
           validationResult: ValidatorTypes.Valid,
         },
         property: {
-          value: { value: 1, label: propertyOptions[1] },
+          value: { value: PropertyType.SingleFamily, label: propertyOptions[1] },
           validationResult: ValidatorTypes.Valid,
         },
         range: {
@@ -140,6 +141,7 @@ const initialState: IWizardFormData = {
     singleFamilyLoanTermInYears: { value: 30, validationResult: ValidatorTypes.Valid },
     passiveApartmentsMinimumMonthlyReservesForRental: { value: 25000, validationResult: ValidatorTypes.Valid },
   },
+  rulesConfig: choices,
 };
 
 const formSlice = createSlice({
@@ -153,7 +155,6 @@ const formSlice = createSlice({
         value: ConditionEventResult<true, ConditionalNumber<true>>;
       }>,
     ) {
-      //console.log('updateRangeUserInfo: ', action.payload);
       state.userInfo[action.payload.key] = action.payload.value;
     },
     updateRuleUserInfo(

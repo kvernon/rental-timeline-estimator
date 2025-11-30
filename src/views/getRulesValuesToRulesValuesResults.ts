@@ -5,24 +5,7 @@ import { IRuleStackEntity } from '../components/rules/IRuleStackEntity';
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
 import { evaluateValidation } from '../components/validators/evaluateValidation';
 import { isInRange } from '../components/validators/isInRange';
-
-function formDefault(
-  isRequired: boolean,
-  values: IRuleValues<IEventValue<ISelectOption>, IEventValue<number | undefined>>[],
-): IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[] {
-  const validationResultDefault = isRequired ? ValidatorTypes.Invalid : ValidatorTypes.Optional;
-  return values.map((x: IRuleValues<IEventValue<ISelectOption>, IEventValue<number | undefined>>) => {
-    const y: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>> = {
-      range: {
-        value: x.range.value,
-        validationResult: validationResultDefault,
-      },
-      property: { value: x.property.value, validationResult: ValidatorTypes.Valid },
-      title: { value: x.title.value, validationResult: ValidatorTypes.Valid },
-    };
-    return y;
-  });
-}
+import { formDefault } from './formDefault';
 
 export function getRulesValuesToRulesValuesResults(
   isRequired: boolean,
@@ -33,48 +16,43 @@ export function getRulesValuesToRulesValuesResults(
     return formDefault(isRequired, values);
   }
 
-  const map = new Map<string, { index: number; entity: IRuleStackEntity }>();
-  rules.forEach((x) => {
-    map.set(x.ruleTitle, { index: -1, entity: x });
+  const rulesMap = new Map<string, IRuleStackEntity>();
+  rules.forEach((rule) => {
+    const key = `${rule.ruleTitle}-${rule.property}`;
+    rulesMap.set(key, rule);
   });
 
-  values.map((x, i) => {
-    const rule = map.get(x.title.value.label);
-
-    if (rule && rule?.entity) {
-      map.set(x.title.value.label, { index: i, entity: rule.entity });
-    }
+  const valueCounts = new Map<string, number>();
+  values.forEach((value) => {
+    const key = `${value.title.value.label}-${value.property.value.value}`;
+    valueCounts.set(key, (valueCounts.get(key) || 0) + 1);
   });
 
+  const result: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[] = [];
   let hasMatches = false;
 
-  for (const mapElement of map.values()) {
-    if (mapElement.index > -1) {
+  values.forEach((value) => {
+    const key = `${value.title.value.label}-${value.property.value.value}`;
+    const rule = rulesMap.get(key);
+    const isDuplicate = (valueCounts.get(key) || 0) > 1;
+
+    if (rule) {
       hasMatches = true;
-      break;
+      result.push({
+        range: evaluateValidation(value.range.value, isInRange, {
+          min: rule.min,
+          max: rule.max,
+          isRequired,
+        }),
+        property: { value: value.property.value, validationResult: isDuplicate ? ValidatorTypes.Invalid : ValidatorTypes.Valid },
+        title: { value: value.title.value, validationResult: isDuplicate ? ValidatorTypes.Invalid : ValidatorTypes.Valid },
+      });
     }
-  }
+  });
 
   if (!hasMatches) {
     return formDefault(isRequired, values);
   }
 
-  const result: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[] = [];
-  for (const x of map.values()) {
-    if (x.index === -1) {
-      continue;
-    }
-
-    result[x.index] = {
-      range: evaluateValidation(values[x.index].range.value, isInRange, {
-        min: x.entity.min,
-        max: x.entity.max,
-        isRequired: isRequired,
-      }),
-      property: { value: values[x.index].property.value, validationResult: ValidatorTypes.Valid },
-      title: { value: values[x.index].title.value, validationResult: ValidatorTypes.Valid },
-    };
-  }
-
-  return result.filter((x) => !!x);
+  return result;
 }

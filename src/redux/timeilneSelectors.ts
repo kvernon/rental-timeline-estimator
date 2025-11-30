@@ -5,6 +5,7 @@ import { ValidatorTypes } from '../components/validators/ValidatorTypes';
 export const getTimeline = (state: RootState) => {
   return state.result.timeline;
 };
+
 export const getErrorMessage = (state: RootState) => state.result.errorMessage;
 
 export const getRentals = createSelector([getTimeline], (timeline) => {

@@ -1,5 +1,5 @@
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
-import { getValidationResult } from '../components/rules/getValidationResult';
+import { getValidationResult } from '../components/rules/hooks/getValidationResult';
 import { IPropertiesInformationPropsEvent } from '../views/IPropertiesInformationProps';
 import { IPropertyInformationParams } from '../components/validators/IPropertyInformationParams';
 

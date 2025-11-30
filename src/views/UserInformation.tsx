@@ -6,8 +6,8 @@ import styled from '@emotion/styled';
 import { IUserInformationProps } from './IUserInformationProps';
 import { FontGroups } from '../theming/fontGroups';
 import { Spinner } from '../components/core/Spinner';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../redux/store';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../redux/store';
 import { updateRangeUserInfo, updateRuleUserInfo } from '../redux/formSlice';
 import { ConditionalNumber, ConditionEventResult } from '../components/validators/IRangeFieldValidatorEvent';
 import { IRuleValues } from '../components/rules/IRuleValues';
@@ -17,6 +17,8 @@ import { IUserInfo } from '../data/IUserInfo';
 import { getRulesValuesToRulesValuesResults } from './getRulesValuesToRulesValuesResults';
 import { AnimatedWrapPanel } from '../components/AnimatedWrapPanel';
 import { AnimatedRangeFieldValidator } from '../components/validators/AnimatedRangeFieldValidator';
+import { useFormSelector } from '../redux/hooks';
+import { getFormData } from '../redux/formSelector';
 
 const RulesStack = styled(Stack)`
   width: unset;
@@ -56,7 +58,7 @@ const FormStyled = styled.form`
 
 export function UserInformation(props: IUserInformationProps) {
   const dispatch = useDispatch<AppDispatch>();
-  const value = useSelector((state: RootState) => state.form.userInfo);
+  const value = useFormSelector(getFormData);
 
   const [x, setX] = useState<number | undefined>();
   const [y, setY] = useState<number | undefined>();
@@ -110,7 +112,7 @@ export function UserInformation(props: IUserInformationProps) {
             required={true}
             title="Your Monthly Goal"
             showTitle={true}
-            value={value.goal}
+            value={value.userInfo.goal}
             useUnderlineOnly
             hasSpinner={false}
             useTransparent={true}
@@ -132,7 +134,7 @@ export function UserInformation(props: IUserInformationProps) {
             hasSpinner={true}
             useUnderlineOnly={false}
             showTitle={true}
-            value={value.savedAtStart}
+            value={value.userInfo.savedAtStart}
             id="amount-saved-at-start"
             onChange={handleRangeChange('savedAtStart')}
           />
@@ -147,7 +149,7 @@ export function UserInformation(props: IUserInformationProps) {
             hasSpinner={true}
             showTitle={true}
             useUnderlineOnly={false}
-            value={value.moSavings}
+            value={value.userInfo.moSavings}
             id="amount-saved-per-month"
             onChange={handleRangeChange('moSavings')}
           />
@@ -158,20 +160,20 @@ export function UserInformation(props: IUserInformationProps) {
         <AnimatedWrapPanel delay={0.5}>
           <RulesCollection
             title="Purchase Rules"
-            values={value.purchaseRules}
-            possibleChoices={props.choices.purchaseRules}
+            values={value.userInfo.purchaseRules}
+            possibleChoices={value.rulesConfig.purchaseRules}
             onChange={(e) => {
-              handleRuleChange('purchaseRules', getRulesValuesToRulesValuesResults(false, e, props.choices.purchaseRules));
+              handleRuleChange('purchaseRules', getRulesValuesToRulesValuesResults(false, e, value.rulesConfig.purchaseRules));
             }}
           />
         </AnimatedWrapPanel>
         <AnimatedWrapPanel delay={1}>
           <RulesCollectionWidth
             title="Hold Rules"
-            values={value.holdRules}
-            possibleChoices={props.choices.holdRules}
+            values={value.userInfo.holdRules}
+            possibleChoices={value.rulesConfig.holdRules}
             onChange={(e) => {
-              handleRuleChange('holdRules', getRulesValuesToRulesValuesResults(false, e, props.choices.holdRules));
+              handleRuleChange('holdRules', getRulesValuesToRulesValuesResults(false, e, value.rulesConfig.holdRules));
             }}
           />
         </AnimatedWrapPanel>

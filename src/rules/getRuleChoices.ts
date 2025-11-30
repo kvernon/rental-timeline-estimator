@@ -1,13 +1,14 @@
 import { IRuleStackEntity } from '../components/rules/IRuleStackEntity';
-import { IRuleConfigEntity } from './IRuleConfigEntity';
+import { IRuleConfigWithPropertyType } from './IRuleConfigEntity';
 import { getPrettyName } from './getPrettyName';
 
-export const getRuleChoices = (choices: IRuleConfigEntity[]): IRuleStackEntity[] =>
-  choices.map((c) => ({
+export const getRuleChoices = (choices: IRuleConfigWithPropertyType[]): IRuleStackEntity[] => {
+  return choices.map((c) => ({
     ruleTitle: getPrettyName(c.ruleType, 'percent'),
-    property: 0,
+    property: c.propertyType,
     max: c.max,
     suffix: c.suffix,
     min: c.min,
     prefix: c.prefix,
   }));
+};

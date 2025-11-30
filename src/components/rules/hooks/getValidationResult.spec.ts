@@ -1,5 +1,5 @@
 import { getValidationResult } from './getValidationResult';
-import { ValidatorTypes } from '../validators/ValidatorTypes';
+import { ValidatorTypes } from '../../validators/ValidatorTypes';
 
 describe('getValidationResult unit tests', () => {
   describe('and empty data', () => {

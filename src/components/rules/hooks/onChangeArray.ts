@@ -1,6 +1,6 @@
-import { IRuleValues } from './IRuleValues';
-import { ISelectOption } from '../core/ISelectOption';
-import { IEventResult } from '../validators/IEventResult';
+import { IRuleValues } from '../IRuleValues';
+import { ISelectOption } from '../../core/ISelectOption';
+import { IEventResult } from '../../validators/IEventResult';
 
 export function onChangeArray(
   values: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[],

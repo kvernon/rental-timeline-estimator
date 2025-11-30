@@ -70,7 +70,7 @@ export function TitleDropDownValidator(props: ITitleDropDownParams) {
             color: `${coreTheme.typography.get(FontGroups.input)?.color}`,
           }),
           control: (baseStyles) => {
-            const validatorTypeName = ValidatorTypes[ValidatorTypes.Valid];
+            const validatorTypeName = ValidatorTypes[props.value.validationResult];
             return {
               ...baseStyles,
               transition: ['border-color 0.4s ease-out', 'background-color 0.4s ease-out'],
@@ -82,7 +82,7 @@ export function TitleDropDownValidator(props: ITitleDropDownParams) {
               color: `${coreTheme.typography.get(FontGroups.input)?.color}`,
               ':hover': {
                 backgroundColor: `${coreTheme.palette.validation[validatorTypeName].background}81`,
-                borderColor: `${coreTheme.palette.inputBackgroundFocus}`,
+                border: `3px solid ${coreTheme.palette.validation[validatorTypeName].backgroundFocus}`,
                 transition: ['border-color 0.4s ease-out', 'background-color 0.4s ease-out'],
                 color: `${coreTheme.palette.inputBackgroundFocus}`,
               },

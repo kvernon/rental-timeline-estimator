@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Stack } from '../core/Stack';
-import React, { useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 import { ValidationBar } from '../validators/ValidationBar';
 import { TitleDropDownValidator } from '../validators/TitleDropDownValidator';
 import { PropertyDropDownValidator } from '../validators/PropertyDropDownValidator';
@@ -8,12 +8,11 @@ import { RangeFieldValidator } from '../validators/RangeFieldValidator';
 import { DeleteButton } from '../core/DeleteButton';
 import { IRuleStackProps } from './IRuleStackProps';
 import { DragPlaceholder } from '../core/DragPlaceHolder';
-import { IRuleStackEntity } from './IRuleStackEntity';
-import { getValidationResult } from './getValidationResult';
+import { getValidationResult } from './hooks/getValidationResult';
 import { ISelectOption } from '../core/ISelectOption';
-import { IEventResult, IEventValue } from '../validators/IEventResult';
+import { IEventValue } from '../validators/IEventResult';
 import { ConditionalNumber, ConditionEventResult } from '../validators/IRangeFieldValidatorEvent';
-import { IRuleValues } from './IRuleValues';
+import { getTitleChoicesFormatted } from './hooks/getTitleChoicesFormatted';
 
 const PropertyPicker = styled(PropertyDropDownValidator)`
   width: 147px;
@@ -27,70 +26,51 @@ const StackBase = styled(Stack)`
 `;
 
 export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref: React.Ref<HTMLDivElement>) {
-  const [selectedRuleTitleIndex, setSelectedRuleTitleIndex] = useState<number | null>(props.value.title?.value?.value || null);
-  const [selectedValueOptions, setSelectedValueOptions] = useState<IRuleStackEntity | null>(null);
-  const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
-  const [value, setValue] = useState<IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>>(props.value);
+  const selectedRuleTitleIndex = props.value.title?.value?.value ?? null;
 
-  useEffect(() => {
-    setIsDataLoaded(false);
-  }, [props]);
-
-  useEffect(() => {
-    const newVar = props.ruleStackValues.length === 0 || !selectedRuleTitleIndex ? null : props.ruleStackValues[selectedRuleTitleIndex];
-    setSelectedValueOptions(newVar);
+  const selectedValueOptions = useMemo(() => {
+    return props.ruleStackValues.length === 0 || selectedRuleTitleIndex === null ? null : props.ruleStackValues[selectedRuleTitleIndex];
   }, [props.ruleStackValues, selectedRuleTitleIndex]);
 
-  useEffect(() => {
-    if (isDataLoaded && props.onUpdate) {
-      props.onUpdate({
-        range: { value: value.range.value },
-        property: { value: value.property.value },
-        title: { value: value.title.value },
-      });
-    }
-  }, [value, isDataLoaded, props]);
+  const formattedTitles = useMemo(() => {
+    return getTitleChoicesFormatted(props.ruleStackValues, props.value.property.value.value);
+  }, [props.ruleStackValues, props.value.property.value.value]);
 
   const injectProps = { ...props };
 
   const titleDropDownOnChange = (valueOption: IEventValue<ISelectOption>) => {
-    if (valueOption.value && value.title?.value.label !== valueOption.value.label) {
-      const newVar = {
-        ...props.value,
-        title: {
-          value: { value: valueOption.value?.value, label: valueOption.value?.label },
-          validationResult: value.title.validationResult,
-        },
-      };
-      setSelectedRuleTitleIndex(valueOption.value?.value);
-      setValue(newVar);
-      setIsDataLoaded(true);
+    if (valueOption.value && props.value.title?.value.label !== valueOption.value.label) {
+      if (props.onUpdate) {
+        props.onUpdate({
+          range: { value: props.value.range.value },
+          property: { value: props.value.property.value },
+          title: { value: { value: valueOption.value.value, label: valueOption.value.label } },
+        });
+      }
     }
   };
 
   const propertyDropDownOnChange = (valueOption: IEventValue<ISelectOption>) => {
-    if (valueOption.value && value.property?.value !== valueOption.value) {
-      setValue({
-        ...props.value,
-        property: {
-          value: { value: valueOption.value.value, label: valueOption.value.label },
-          validationResult: value.property.validationResult,
-        },
-      });
-      setIsDataLoaded(true);
+    if (valueOption.value && props.value.property?.value !== valueOption.value) {
+      if (props.onUpdate) {
+        props.onUpdate({
+          range: { value: props.value.range.value },
+          property: { value: { value: valueOption.value.value, label: valueOption.value.label } },
+          title: { value: props.value.title.value },
+        });
+      }
     }
   };
 
   const rangeFieldValidatorOnChange = (evt: ConditionEventResult<false, ConditionalNumber<false>>): void => {
-    if (evt?.value && value.range?.value !== evt?.value) {
-      setValue({
-        ...props.value,
-        range: {
-          value: evt.value,
-          validationResult: value.range.validationResult,
-        },
-      });
-      setIsDataLoaded(true);
+    if (evt?.value && props.value.range?.value !== evt?.value) {
+      if (props.onUpdate) {
+        props.onUpdate({
+          range: { value: evt.value },
+          property: { value: props.value.property.value },
+          title: { value: props.value.title.value },
+        });
+      }
     }
   };
 
@@ -111,18 +91,18 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
       aria-label={`Rule Number ${props.index}`}
     >
       <DragPlaceholder role={'drag-handle'} data-movable-handle />
-      <Stack direction="column" paddingTop={'10px'} paddingLeft={'17px'} paddingBottom={'20px'} paddingRight={'17px'}>
+      <Stack direction="column" paddingTop="10px" paddingLeft="17px" paddingBottom="20px" paddingRight="17px">
         <TitleDropDownValidator
           onChange={(evt) => titleDropDownOnChange(evt)}
-          title={`Rule Title`}
+          title="Rule Title"
           value={props.value.title}
-          optionTitles={props.ruleStackValues.map((x) => ({ title: x.ruleTitle, isDisabled: x.isDisabled }))}
+          optionTitles={formattedTitles}
         />
-        <Stack direction="row" spacing={2} paddingTop={'10px'}>
+        <Stack direction="row" spacing={2} paddingTop="10px">
           <PropertyPicker title="Property Picker" value={props.value.property} onChange={(evt) => propertyDropDownOnChange(evt)} />
           <RangeFieldValidator<false>
-            id={`rule-range`}
-            title={'Rule Range'}
+            id="rule-range"
+            title="Rule Range"
             showTitle={false}
             min={selectedValueOptions?.min}
             max={selectedValueOptions?.max}

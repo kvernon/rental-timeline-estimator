@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { UserInformation } from './UserInformation';
 import React from 'react';
 import '@testing-library/jest-dom';
@@ -9,7 +9,11 @@ import { RulesCollection } from '../components/rules/RulesCollection';
 import { FontGroups } from '../theming/fontGroups';
 import { evaluateValidation } from '../components/validators/evaluateValidation';
 import { getRulesValuesToRulesValuesResults } from './getRulesValuesToRulesValuesResults';
-import { useDispatch, useSelector } from 'react-redux';
+import { TypedUseSelectorHook, useDispatch } from 'react-redux';
+import { getFormData } from '../redux/formSelector';
+import { RootState } from '../redux/store';
+import { useFormSelector } from '../redux/hooks';
+import { when } from 'jest-when';
 
 jest.mock('../components/panels/RangeValidationPanel');
 jest.mock('../components/core/Spinner');
@@ -18,27 +22,37 @@ jest.mock('../components/validators/AnimatedRangeFieldValidator');
 jest.mock('../components/validators/evaluateValidation');
 jest.mock('../components/validators/isInRange');
 jest.mock('./getRulesValuesToRulesValuesResults');
-
+jest.mock('../redux/hooks');
+jest.mock('../redux/store');
+jest.mock('../redux/formSelector');
 jest.mock('react-redux');
 
 describe('UserInformation unit tests', () => {
   let props: IUserInformationProps;
   const mockDispatch = jest.fn();
+  let useFormSelectorMock: jest.MockWithArgs<TypedUseSelectorHook<RootState>> & TypedUseSelectorHook<RootState> & {};
 
   beforeEach(() => {
+    jest.useFakeTimers();
+
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+
     jest.mocked(useDispatch).mockReturnValue(mockDispatch);
+    useFormSelectorMock = jest.mocked(useFormSelector).mockImplementation(() => {});
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    jest.useRealTimers();
+    jest.restoreAllMocks();
   });
 
   describe('and defaults', () => {
     describe('and success', () => {
       beforeEach(() => {
         props = {
-          choices: { holdRules: [], purchaseRules: [] },
-          title: 'UserInput Test',
+          title: 'UserInput defaults Test',
         };
         const userInfo = {
           goal: { value: 10, validationResult: ValidatorTypes.Valid },
@@ -47,7 +61,10 @@ describe('UserInformation unit tests', () => {
           purchaseRules: [],
           holdRules: [],
         };
-        jest.mocked(useSelector).mockImplementation((selector: (s: unknown) => unknown) => selector({ form: { userInfo } } as unknown));
+
+        when(useFormSelectorMock)
+          .calledWith(getFormData)
+          .mockReturnValue({ userInfo, rulesConfig: { purchaseRules: [], holdRules: [] } });
         render(<UserInformation {...props} />);
       });
 
@@ -185,9 +202,9 @@ describe('UserInformation unit tests', () => {
       }));
 
       props = {
-        choices: { holdRules: [], purchaseRules: [] },
-        title: 'UserInput Test',
+        title: 'UserInput interaction Test',
       };
+
       const userInfo = {
         goal: { value: 1, validationResult: ValidatorTypes.Valid },
         savedAtStart: { value: 2, validationResult: ValidatorTypes.Valid },
@@ -207,7 +224,10 @@ describe('UserInformation unit tests', () => {
           },
         ],
       };
-      jest.mocked(useSelector).mockImplementation((selector: (s: unknown) => unknown) => selector({ form: { userInfo } } as unknown));
+
+      when(useFormSelectorMock)
+        .calledWith(getFormData)
+        .mockReturnValue({ userInfo, rulesConfig: { purchaseRules: [], holdRules: [] } });
       render(<UserInformation {...props} />);
     });
 
@@ -275,7 +295,7 @@ describe('UserInformation unit tests', () => {
 
         fireEvent.click(entity);
 
-        expect(jest.mocked(getRulesValuesToRulesValuesResults)).toHaveBeenCalledWith(false, expect.any(Object), props.choices.purchaseRules);
+        expect(jest.mocked(getRulesValuesToRulesValuesResults)).toHaveBeenCalledWith(false, expect.any(Array), expect.any(Array));
         expect(mockDispatch).toHaveBeenCalledWith(
           expect.objectContaining({
             type: 'form/updateRuleUserInfo',
@@ -295,7 +315,7 @@ describe('UserInformation unit tests', () => {
 
         fireEvent.click(entity);
 
-        expect(jest.mocked(getRulesValuesToRulesValuesResults)).toHaveBeenCalledWith(false, expect.any(Object), props.choices.holdRules);
+        expect(jest.mocked(getRulesValuesToRulesValuesResults)).toHaveBeenCalledWith(false, expect.any(Array), expect.any(Array));
         expect(mockDispatch).toHaveBeenCalledWith(
           expect.objectContaining({
             type: 'form/updateRuleUserInfo',

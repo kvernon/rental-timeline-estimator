@@ -1,8 +1,8 @@
 import { onChangeArray } from './onChangeArray';
-import { ValidatorTypes } from '../validators/ValidatorTypes';
-import { IRuleValues } from './IRuleValues';
-import { ISelectOption } from '../core/ISelectOption';
-import { IEventResult } from '../validators/IEventResult';
+import { ValidatorTypes } from '../../validators/ValidatorTypes';
+import { IRuleValues } from '../IRuleValues';
+import { ISelectOption } from '../../core/ISelectOption';
+import { IEventResult } from '../../validators/IEventResult';
 
 describe('onChangeArray unit tests', () => {
   describe('and empty array', () => {

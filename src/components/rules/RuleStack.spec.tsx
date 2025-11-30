@@ -11,9 +11,9 @@ import { IRuleStackProps } from './IRuleStackProps';
 import { RangeFieldValidator } from '../validators/RangeFieldValidator';
 import { PropertyDropDownValidator } from '../validators/PropertyDropDownValidator';
 import { DeleteButton } from '../core/DeleteButton';
-import { getValidationResult } from './getValidationResult';
+import { getValidationResult } from './hooks/getValidationResult';
 
-jest.mock('../rules/getValidationResult');
+jest.mock('./hooks/getValidationResult');
 jest.mock('../validators/TitleDropDownValidator');
 jest.mock('../validators/RangeFieldValidator');
 jest.mock('../validators/PropertyDropDownValidator');
@@ -96,10 +96,13 @@ describe('RuleStack unit tests', () => {
           title: 'Rule Title',
           value: props.value.title,
           onChange: expect.any(Function),
-          optionTitles: props.ruleStackValues.map((x) => ({
-            title: x.ruleTitle,
-            isDisabled: x.isDisabled,
-          })),
+          optionTitles: props.ruleStackValues
+            .filter((x) => x.property === 0)
+            .map((x) => ({
+              title: x.ruleTitle,
+              property: x.property,
+              isDisabled: x.isDisabled,
+            })),
         },
         undefined,
       );
@@ -191,10 +194,12 @@ describe('RuleStack unit tests', () => {
         {
           title: 'Rule Title',
           value: props.value.title,
-          optionTitles: props.ruleStackValues.map((x) => ({
-            title: x.ruleTitle,
-            isDisabled: x.isDisabled,
-          })),
+          optionTitles: props.ruleStackValues
+            .filter((x) => x.property === 0)
+            .map((x) => ({
+              title: x.ruleTitle,
+              isDisabled: x.isDisabled,
+            })),
           onChange: expect.any(Function),
         },
         undefined,
@@ -258,7 +263,7 @@ describe('RuleStack unit tests', () => {
             min: 3,
             prefix: 'prefix-one',
             ruleTitle: 'rule-title-one',
-            property: 1,
+            property: 0,
             max: 7,
             suffix: 'suffix-one',
           },
@@ -302,10 +307,13 @@ describe('RuleStack unit tests', () => {
           {
             title: 'Rule Title',
             value: props.value.title,
-            optionTitles: props.ruleStackValues.map((x) => ({
-              title: x.ruleTitle,
-              isDisabled: x.isDisabled,
-            })),
+            optionTitles: props.ruleStackValues
+              .filter((x) => x.property === 0)
+              .map((x) => ({
+                title: x.ruleTitle,
+                property: x.property,
+                isDisabled: x.isDisabled,
+              })),
             onChange: expect.any(Function),
           },
           undefined,

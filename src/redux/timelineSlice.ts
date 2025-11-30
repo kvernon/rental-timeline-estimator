@@ -16,7 +16,6 @@ const timelineSlice = createSlice({
   initialState: result,
   reducers: {
     setTimeline: (state, action: PayloadAction<NullableTimeline>) => {
-      //console.log('setTimeline: ', action.payload);
       state.timeline = action.payload;
       state.errorMessage = null;
     },
