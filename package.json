@@ -37,7 +37,7 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.14.1",
     "@number-flow/react": "^0.5.10",
-    "@reduxjs/toolkit": "^2.9.0",
+    "@reduxjs/toolkit": "^2.11.0",
     "emotion-icons": "^3.27.0",
     "lodash.get": "^4.4.2",
     "lodash.isequal": "^4.5.0",
