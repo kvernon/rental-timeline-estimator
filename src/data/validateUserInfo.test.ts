@@ -1,9 +1,9 @@
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
-import { getValidationResult } from '../components/rules/getValidationResult';
+import { getValidationResult } from '../components/rules/hooks/getValidationResult';
 import { validateUserInfo } from './validateUserInfo';
 import { IUserInfo } from './IUserInfo';
 
-jest.mock('../components/rules/getValidationResult');
+jest.mock('../components/rules/hooks/getValidationResult');
 
 describe('validateUserInfo unit tests', () => {
   describe('and required', () => {

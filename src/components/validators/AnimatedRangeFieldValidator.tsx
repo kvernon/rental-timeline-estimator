@@ -30,7 +30,7 @@ export function AnimatedRangeFieldValidator<Required extends boolean = false>(pr
   const coreTheme = useTheme() as IThemeOptions;
   const showTitle = props.showTitle ?? true;
   const validatorResult = props.value?.validationResult || (props.required ? ValidatorTypes.Invalid : ValidatorTypes.Optional);
-  const message = `Range between ${props.min || 0} and ${props.max || 100}`;
+  const message = `The${showTitle ? ` ${props.title}` : ''} range is between ${props.min || 0} and ${props.max || 100}`;
   const [startDelayWithWait] = useState(props.delay === undefined ? 0 : props.delay + DEFAULT_START_DELAY);
 
   return (

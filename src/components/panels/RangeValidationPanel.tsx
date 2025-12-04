@@ -7,7 +7,7 @@ import { Card } from '../core/Card';
 import { CardContent } from '../core/CardContent';
 import { Stack } from '../core/Stack';
 import { ValidationBar } from '../validators/ValidationBar';
-import { getValidationResult } from '../rules/getValidationResult';
+import { getValidationResult } from '../rules/hooks/getValidationResult';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
 import { IRangeValidationPanelProps } from './IRangeValidationPanelProps';
 

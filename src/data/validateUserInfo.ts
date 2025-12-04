@@ -2,7 +2,7 @@ import { IRuleValues } from '../components/rules/IRuleValues';
 import { IEventResult } from '../components/validators/IEventResult';
 import { ISelectOption } from '../components/core/ISelectOption';
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
-import { getValidationResult } from '../components/rules/getValidationResult';
+import { getValidationResult } from '../components/rules/hooks/getValidationResult';
 import { IUserInfo } from './IUserInfo';
 
 export function validateUserInfo(required: boolean, userInfo: IUserInfo): ValidatorTypes {

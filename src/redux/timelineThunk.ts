@@ -7,7 +7,6 @@ export const generateTimelineThunk =
   (formData: IWizardFormData): TimelineThunk =>
   (dispatch) => {
     try {
-      //console.log('generateTimelineThunk', formData);
       const timeline = generate(formData.userInfo, formData.propertiesInfo, formData.settings); // sync call
       dispatch(setTimeline(timeline));
     } catch (err) {

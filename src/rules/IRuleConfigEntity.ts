@@ -5,3 +5,7 @@ export interface IRuleConfigEntity {
   suffix?: string;
   prefix?: string;
 }
+
+export interface IRuleConfigWithPropertyType extends IRuleConfigEntity {
+  propertyType: number;
+}

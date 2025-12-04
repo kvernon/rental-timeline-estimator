@@ -23,6 +23,11 @@ const Select = styled(ReactSelect<IPropertyDropDownOption, false, GroupBase<IPro
   overflow: visible;
 `;
 
+/**
+ * I think I want (TODO) to make this highlight when there is a duplicate property for a rule
+ * @param props
+ * @constructor
+ */
 export function PropertyDropDownValidator(props: IPropertyDropDownParams) {
   const optionsMap = propertyOptions.map(getDataValue) as IPropertyDropDownOption[];
 
@@ -33,6 +38,7 @@ export function PropertyDropDownValidator(props: IPropertyDropDownParams) {
   return (
     <FormControl>
       <Select
+        isDisabled={props.isDisabled || false}
         aria-label={props.title}
         onChange={(a: SingleValue<IPropertyDropDownOption>) => {
           if (a && props.onChange) {
@@ -49,16 +55,17 @@ export function PropertyDropDownValidator(props: IPropertyDropDownParams) {
             return {
               ...baseStyles,
               transition: ['border-color 0.4s ease-out', 'background-color 0.4s ease-out'],
-              backgroundColor: `${coreTheme.palette.validation[ValidatorTypes[ValidatorTypes.Valid]].background}41`,
+              backgroundColor: `${coreTheme.palette.validation[ValidatorTypes[props.value.validationResult]].background}41`,
               marginLeft: '0',
               padding: '0',
               borderColor: `${coreTheme.palette.inputBackground}`,
-              border: `3px solid ${coreTheme.palette.validation[ValidatorTypes[ValidatorTypes.Valid]].background}41`,
+              border: `3px solid ${coreTheme.palette.validation[ValidatorTypes[props.value.validationResult]].background}41`,
               borderRadius: '0.3rem',
               color: `${coreTheme.typography.get(FontGroups.input)?.color}`,
               ':hover': {
-                backgroundColor: `${coreTheme.palette.validation[ValidatorTypes[ValidatorTypes.Valid]].background}81`,
+                backgroundColor: `${coreTheme.palette.validation[ValidatorTypes[props.value.validationResult]].background}81`,
                 borderColor: `${coreTheme.palette.inputBackgroundFocus}`,
+                border: `3px solid ${coreTheme.palette.validation[ValidatorTypes[props.value.validationResult]].backgroundFocus}`,
                 color: `${coreTheme.palette.inputBackgroundFocus}`,
                 transition: ['border-color 0.4s ease-out', 'background-color 0.4s ease-out'],
               },

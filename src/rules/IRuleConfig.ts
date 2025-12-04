@@ -1,6 +1,6 @@
-import { IRuleConfigEntity } from './IRuleConfigEntity';
+import { IRuleConfigWithPropertyType } from './IRuleConfigEntity';
 
 export interface IRuleConfig {
   panelTitle: string;
-  collection: IRuleConfigEntity[];
+  collection: IRuleConfigWithPropertyType[];
 }

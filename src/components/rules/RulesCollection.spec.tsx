@@ -7,7 +7,7 @@ import { themeMock } from '../../../__tests__/ThemeMock';
 import { IThemeOptions } from '../../theming/IThemeOptions';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
 import { AddListButton } from '../core/AddListButton';
-import { getRemainingValues } from './getRemainingValues';
+import { getRemainingValues } from './hooks/getRemainingValues';
 import userEvent from '@testing-library/user-event';
 import { IEventValue } from '../validators/IEventResult';
 import { ISelectOption } from '../core/ISelectOption';
@@ -18,7 +18,7 @@ import { propertyOptions } from '../validators/PropertyOptions';
 
 jest.mock('../core/CardListLayout');
 jest.mock('../core/AddListButton');
-jest.mock('./getRemainingValues');
+jest.mock('./hooks/getRemainingValues');
 jest.mock('./RuleStack');
 
 describe('RulesCollection unit tests', () => {
@@ -109,6 +109,14 @@ describe('RulesCollection unit tests', () => {
             max: 20,
             min: 10,
             property: 0,
+          },
+          {
+            ruleTitle: 'one',
+            suffix: 'com',
+            prefix: 'pre',
+            max: 20,
+            min: 10,
+            property: 1,
           },
           {
             ruleTitle: 'two',

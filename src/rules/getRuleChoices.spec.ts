@@ -17,9 +17,22 @@ describe('getRuleChoices unit tests', () => {
       // @ts-ignore
       getPrettyName.mockReturnValueOnce(expectedLabelPurchase);
 
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      getPrettyName.mockReturnValueOnce(expectedLabelPurchase);
+
       expect(
         getRuleChoices([
           {
+            propertyType: 0,
+            min: 0,
+            max: 1,
+            prefix: 'prefix',
+            ruleType: 'Foo',
+            suffix: 'suffix',
+          },
+          {
+            propertyType: 1,
             min: 0,
             max: 1,
             prefix: 'prefix',
@@ -33,6 +46,14 @@ describe('getRuleChoices unit tests', () => {
           max: 1,
           prefix: 'prefix',
           property: 0,
+          ruleTitle: 'Big Thing Purchase',
+          suffix: 'suffix',
+        },
+        {
+          min: 0,
+          max: 1,
+          prefix: 'prefix',
+          property: 1,
           ruleTitle: 'Big Thing Purchase',
           suffix: 'suffix',
         },

@@ -1,6 +1,6 @@
 export interface IRuleStackEntity {
   ruleTitle: string;
-  property: 0 | 1;
+  property: number;
   min?: number;
   max?: number;
   prefix?: string;
