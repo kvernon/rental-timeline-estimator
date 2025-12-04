@@ -1,6 +1,6 @@
 {
   "name": "realty-investor-estimator",
-  "version": "0.68.0",
+  "version": "0.69.0",
   "description": "",
   "main": "./dist/src/index.js",
   "types": "./dist/src/index.d.ts",
