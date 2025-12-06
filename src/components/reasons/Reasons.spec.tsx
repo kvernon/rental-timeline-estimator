@@ -2,6 +2,8 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Reasons } from './Reasons';
+import { IHistoricalProperty } from '@cubedelement.com/realty-investor-timeline/dist/src/time/i-historical-property';
+import { IRentalPropertyEntity } from '@cubedelement.com/realty-investor-timeline';
 
 // Mock child components to make assertions easier and avoid tight coupling
 jest.mock('./ReasonUserHasNoMoneyToInvest', () => ({
@@ -19,11 +21,10 @@ jest.mock('../cells/DateCell', () => ({
 }));
 
 describe('Reasons', () => {
-  const baseHistorical = (reasons: { date: Date; reason: string }[]) =>
-    ({
-      property: { address: '123 Main' },
-      reasons,
-    }) as any;
+  const baseHistorical = (reasons: { date: Date; reason: string }[]): IHistoricalProperty => ({
+    property: { address: '123 Main' } as IRentalPropertyEntity,
+    reasons,
+  });
 
   test('returns null when no reasons', () => {
     const { container } = render(<Reasons historicalProperty={baseHistorical([])} />);
