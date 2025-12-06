@@ -2,8 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Reasons } from './Reasons';
-import { IHistoricalProperty } from '@cubedelement.com/realty-investor-timeline/dist/src/time/i-historical-property';
-import { IRentalPropertyEntity } from '@cubedelement.com/realty-investor-timeline';
+import { IRentalPropertyEntity, IHistoricalProperty } from '@cubedelement.com/realty-investor-timeline';
 
 // Mock child components to make assertions easier and avoid tight coupling
 jest.mock('./ReasonUserHasNoMoneyToInvest', () => ({
