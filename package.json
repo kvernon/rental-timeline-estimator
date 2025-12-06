@@ -22,7 +22,7 @@
     "prepare": "husky install",
     "prettier": "prettier --write",
     "preview": "vite preview",
-    "test:related": "jest --findRelatedTests"
+    "test:related": "jest --changedSince origin/main"
   },
   "keywords": [],
   "author": "Kelly Vernon",
