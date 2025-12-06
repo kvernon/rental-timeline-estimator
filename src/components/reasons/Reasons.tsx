@@ -12,14 +12,14 @@ export function Reasons(props: { historicalProperty: IHistoricalProperty }) {
   return (
     <ul>
       {props.historicalProperty.reasons.map((x) => {
-        const userHaNoMoneyToInvest = <ReasonUserHasNoMoneyToInvest reason={x.reason} />;
-        const ruleCashFlowFalse = <ReasonDoesNotMeetUserRuleAnnualCashFlow reason={x.reason} />;
+        const isNoMoney = x.reason.startsWith('UserHasNoMoneyToInvest');
+        const isRuleCash = x.reason.startsWith('DoesNotMeetUserRuleAnnualCashFlow');
         return (
-          <li key={`reason-${props.historicalProperty.property.address}`}>
+          <li key={`reason-${props.historicalProperty.property.address}-${x.date.toISOString()}-${x.reason}`}>
             <DateCell date={x.date} />
-            {userHaNoMoneyToInvest}
-            {ruleCashFlowFalse}
-            {!userHaNoMoneyToInvest && !ruleCashFlowFalse && x.reason}
+            {isNoMoney && <ReasonUserHasNoMoneyToInvest reason={x.reason} />}
+            {isRuleCash && <ReasonDoesNotMeetUserRuleAnnualCashFlow reason={x.reason} />}
+            {!isNoMoney && !isRuleCash && x.reason}
           </li>
         );
       })}
