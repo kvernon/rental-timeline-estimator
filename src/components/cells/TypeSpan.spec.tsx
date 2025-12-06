@@ -11,7 +11,7 @@ describe('TypeSpan styling', () => {
 
     const expectedStyle = `
       white-space: nowrap;
-      width: 95px;
+      min-width: 95px;
       border: none;
     `;
 

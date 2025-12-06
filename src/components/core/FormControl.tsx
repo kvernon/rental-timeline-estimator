@@ -9,8 +9,4 @@ export const FormControl = styled.div`
   justify-content: flex-start;
   padding-bottom: 10px;
   align-items: center;
-
-  &:last-child {
-    /*  margin: 5px;*/
-  }
 `;
