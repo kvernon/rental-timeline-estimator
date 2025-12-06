@@ -10,6 +10,7 @@ import { UserSummary } from './UserSummary';
 import { Raw } from './Raw';
 import { useTimeline } from './useTimeline';
 import { useFormSelector } from '../redux/hooks';
+import { Timeline } from './Timeline';
 
 const Err = styled(Stack)`
   padding-top: 30px;
@@ -24,8 +25,8 @@ export function Results() {
       isSelected?: boolean | undefined;
       isDisabled?: boolean | undefined;
     }[]
-  >([{ title: 'Ledger', isSelected: true }, { title: 'Properties' }, { title: 'Raw' }]);
-  const [location, setLocation] = React.useState<string>('Ledger');
+  >([{ title: 'Timeline', isSelected: true }, { title: 'Ledger', isSelected: false }, { title: 'Properties' }, { title: 'Raw' }]);
+  const [location, setLocation] = React.useState<string>('Timeline');
 
   const coreTheme = useTheme() as IThemeOptions;
 
@@ -51,6 +52,7 @@ export function Results() {
           <UserSummary />
 
           <Stack theme={coreTheme} direction="column">
+            {location === 'Timeline' && <Timeline />}
             {location === 'Ledger' && <UserLedgerPage />}
             {location === 'Properties' && <TimelineProperties />}
             {location === 'Raw' && <Raw />}
