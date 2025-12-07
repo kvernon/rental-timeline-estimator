@@ -1,11 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormDispatch, useFormSelector } from './hooks';
 
-jest.mock('react-redux', () => ({
-  __esModule: true,
-  useDispatch: jest.fn(),
-  useSelector: jest.fn(),
-}));
+jest.mock('react-redux');
 
 describe('redux hooks', () => {
   beforeEach(() => {
