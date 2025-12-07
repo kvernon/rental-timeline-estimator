@@ -59,7 +59,7 @@ describe('UserLedgerSummaryForMonth', () => {
     expect(screen.queryAllByText('RegularStack')).toEqual([]);
   });
 
-  it.only('toggles details on click', () => {
+  it('toggles details on click', () => {
     render(<UserLedgerSummaryForMonth ledgerCollection={mockLedgerCollection} ledgerSummary={mockLedgerSummary} year={2023} goal={2000} />);
 
     const stack = screen.getByText('RegularStack');
