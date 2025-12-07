@@ -16,7 +16,7 @@ import {
   getGoalMetForUser,
   getOwnedOrSoldPropertiesCount,
   getStartAndEndDate,
-} from '../redux/timeilneSelectors';
+} from '../redux/timelineSelectors';
 import { setAnimationCompleted } from '../redux/timelineSlice';
 import { DEFAULT_START_DELAY } from '../components/IAnimatedProps';
 import { AnimatedWrapFormItem } from '../components/AnimatedWrapFormItem';

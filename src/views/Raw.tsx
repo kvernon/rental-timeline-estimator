@@ -1,7 +1,7 @@
 import { Stack } from '../components/core/Stack';
 import styled from '@emotion/styled';
 import { useFormSelector } from '../redux/hooks';
-import { getTimeline } from '../redux/timeilneSelectors';
+import { getTimeline } from '../redux/timelineSelectors';
 import { AnimatedWrapFormItem } from '../components/AnimatedWrapFormItem';
 
 const Regular = styled(Stack)`

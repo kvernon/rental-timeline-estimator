@@ -11,7 +11,7 @@ expect.extend(matchers);
 describe('InputLabel style checks', () => {
   test('applies theme-driven typography and default layout styles', () => {
     render(
-      <InputLabel themeOptions={themeMock as any} role="input-label">
+      <InputLabel themeOptions={themeMock} role="input-label">
         Label
       </InputLabel>,
     );
@@ -37,7 +37,7 @@ describe('InputLabel style checks', () => {
 
   test('align-self switches to flex-start when direction is column', () => {
     render(
-      <InputLabel themeOptions={themeMock as any} direction="column" role="input-label-col">
+      <InputLabel themeOptions={themeMock} direction="column" role="input-label-col">
         Label
       </InputLabel>,
     );
@@ -47,7 +47,7 @@ describe('InputLabel style checks', () => {
 
   test('white-space is nowrap when fontGroup is inputLabel', () => {
     render(
-      <InputLabel themeOptions={themeMock as any} fontGroup={FontGroups.inputLabel} role="input-label-nowrap">
+      <InputLabel themeOptions={themeMock} fontGroup={FontGroups.inputLabel} role="input-label-nowrap">
         Label
       </InputLabel>,
     );

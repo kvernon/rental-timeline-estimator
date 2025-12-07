@@ -11,7 +11,7 @@ import { useWindowSize } from 'react-use';
 import Confetti from 'react-confetti';
 import { useFormDispatch, useFormSelector } from '../../redux/hooks';
 import { setAnimationCompleted } from '../../redux/timelineSlice';
-import { getEstimatedCashFlow, getGoalMetForUser } from '../../redux/timeilneSelectors';
+import { getEstimatedCashFlow, getGoalMetForUser } from '../../redux/timelineSelectors';
 import { DEFAULT_START_DELAY } from '../IAnimatedProps';
 
 const BackGroundNode = styled(Stack)<{

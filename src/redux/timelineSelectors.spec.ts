@@ -19,10 +19,10 @@ import {
   getLedgerCollection,
   getAnimationCompleted,
   getCompletedValidation,
-} from './timeilneSelectors';
+} from './timelineSelectors';
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
 
-describe('timeilneSelectors', () => {
+describe('timelineSelectors', () => {
   const end = new Date('2024-01-31T00:00:00.000Z');
   const start = new Date('2023-01-01T00:00:00.000Z');
 

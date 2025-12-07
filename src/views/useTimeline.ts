@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useFormSelector, useFormDispatch } from '../redux/hooks';
-import { getErrorMessage, getTimeline } from '../redux/timeilneSelectors';
+import { getErrorMessage, getTimeline } from '../redux/timelineSelectors';
 import { generateTimelineThunk } from '../redux/timelineThunk';
 import { IWizardFormData } from '../redux/formSlice';
 

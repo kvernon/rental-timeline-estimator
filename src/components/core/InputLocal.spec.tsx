@@ -10,7 +10,7 @@ expect.extend(matchers);
 
 describe('InputLocal style checks', () => {
   test('applies typography styles from theme', () => {
-    render(<InputLocal role="input-local" themeOptions={themeMock as any} validationType={ValidatorTypes.Valid} useTransparent={false} />);
+    render(<InputLocal role="input-local" themeOptions={themeMock} validationType={ValidatorTypes.Valid} useTransparent={false} />);
     const el = screen.getByRole('input-local');
     expect(el).toHaveStyleRule('font-family', 'font');
     expect(el).toHaveStyleRule('font-size', '10px');
@@ -18,7 +18,7 @@ describe('InputLocal style checks', () => {
   });
 
   test('non-transparent mode uses validation background and border colors including hover/focus', () => {
-    render(<InputLocal role="input-local-nt" themeOptions={themeMock as any} validationType={ValidatorTypes.Valid} useTransparent={false} />);
+    render(<InputLocal role="input-local-nt" themeOptions={themeMock} validationType={ValidatorTypes.Valid} useTransparent={false} />);
     const el = screen.getByRole('input-local-nt');
     // default
     expect(el).toHaveStyleRule('background-color', `${validationColorValidMiddle}41`);
@@ -34,7 +34,7 @@ describe('InputLocal style checks', () => {
   });
 
   test('transparent mode uses transparent background and only border-color change on hover', () => {
-    render(<InputLocal role="input-local-t" themeOptions={themeMock as any} validationType={ValidatorTypes.Invalid} useTransparent={true} />);
+    render(<InputLocal role="input-local-t" themeOptions={themeMock} validationType={ValidatorTypes.Invalid} useTransparent={true} />);
     const el = screen.getByRole('input-local-t');
 
     expect(el).toHaveStyleRule('background-color', 'transparent');

@@ -5,7 +5,7 @@ import { UserLedgerSummariesForYearByMonth } from './UserLedgerSummariesForYearB
 import { ValidationPanel } from '../panels/ValidationPanel';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
 import { useFormSelector } from '../../redux/hooks';
-import { getStartAndEndDate, getUser } from '../../redux/timeilneSelectors';
+import { getStartAndEndDate, getUser } from '../../redux/timelineSelectors';
 import { AnimatedWrapPanel } from '../AnimatedWrapPanel';
 import { DEFAULT_START_DELAY } from '../IAnimatedProps';
 

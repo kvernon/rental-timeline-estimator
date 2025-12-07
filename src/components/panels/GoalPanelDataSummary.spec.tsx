@@ -10,7 +10,7 @@ import { useFormDispatch, useFormSelector } from '../../redux/hooks';
 import { when } from 'jest-when';
 import { TypedUseSelectorHook } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { getEstimatedCashFlow, getGoalMetForUser } from '../../redux/timeilneSelectors';
+import { getEstimatedCashFlow, getGoalMetForUser } from '../../redux/timelineSelectors';
 import { DEFAULT_START_DELAY } from '../IAnimatedProps';
 
 jest.mock('react-confetti');

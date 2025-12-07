@@ -16,7 +16,7 @@ import {
   getGoalMetForUser,
   getOwnedOrSoldPropertiesCount,
   getStartAndEndDate,
-} from '../redux/timeilneSelectors';
+} from '../redux/timelineSelectors';
 
 jest.mock('../components/panels/ValidationPanel');
 jest.mock('../components/panels/PanelDataSummary');

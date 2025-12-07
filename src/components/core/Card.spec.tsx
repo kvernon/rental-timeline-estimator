@@ -9,7 +9,7 @@ expect.extend(matchers);
 
 describe('Card style checks', () => {
   test('applies gradient background, color, border and shadow', () => {
-    render(<Card theme={themeMock as any} aria-label="card" />);
+    render(<Card theme={themeMock} aria-label="card" />);
     const card = screen.getByLabelText('card');
 
     expect(card).toHaveStyleRule('background', 'linear-gradient(#7950C5, panelBackground 3px)');
