@@ -6,7 +6,7 @@ export const CardContent = styled.div`
 
   display: block;
 
-  &:last-child {
+  > :last-child {
     padding-bottom: 0;
   }
 `;

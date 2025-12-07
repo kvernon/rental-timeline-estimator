@@ -5,7 +5,7 @@ import { UserLedgerSummariesForYearByMonth } from './UserLedgerSummariesForYearB
 import { ValidationPanel } from '../panels/ValidationPanel';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
 import { useFormSelector } from '../../redux/hooks';
-import { getStartAndEndDate, getUser } from '../../redux/timeilneSelectors';
+import { getStartAndEndDate, getUser } from '../../redux/timelineSelectors';
 import { AnimatedWrapPanel } from '../AnimatedWrapPanel';
 import { DEFAULT_START_DELAY } from '../IAnimatedProps';
 
@@ -35,8 +35,8 @@ export function UserLedgerPage() {
           return b ? ValidatorTypes.Valid : ValidatorTypes.Invalid;
         };
         return (
-          <AnimatedWrapPanel delay={i + DEFAULT_START_DELAY}>
-            <ValidationPanel key={`${year}`} title={year.toString()} validationType={isValid()}>
+          <AnimatedWrapPanel delay={i + DEFAULT_START_DELAY} key={`anim-${year}`}>
+            <ValidationPanel key={`va-${year}`} title={year.toString()} validationType={isValid()}>
               <Stack direction={'column'} key={`ledger-annual-${year}`}>
                 <UserLedgerSummaryForYear
                   key={`ledger-annual-summary-${year}`}

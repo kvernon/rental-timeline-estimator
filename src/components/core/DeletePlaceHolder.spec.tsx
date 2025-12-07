@@ -24,7 +24,7 @@ describe('DeletePlaceHolder unit tests', () => {
   });
 
   test('should generate with TrashColored', () => {
-    const entity = screen.getByRole<HTMLElement>('trash-can-icon', { hidden: true });
+    const entity = screen.getByTestId('trash-can-icon');
 
     const expectedStyle = `
       color: rgb(255, 0, 0);

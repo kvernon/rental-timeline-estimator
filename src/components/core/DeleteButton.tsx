@@ -37,7 +37,7 @@ export const DeleteButton = (props: IDeleteProps) => {
         if (props.onClick) props.onClick(e);
       }}
     >
-      <TrashColored role={'trash-can-icon'} />
+      <TrashColored role={'img'} data-testid={'trash-can-icon'} />
     </DeleteButtonArea>
   );
 };

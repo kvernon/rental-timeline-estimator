@@ -8,7 +8,7 @@ import { HistoricalPropertyData } from './HistoricalPropertyData';
 import React from 'react';
 import { Panel } from '../panels/Panel';
 import { useFormSelector } from '../../redux/hooks';
-import { getRentals } from '../../redux/timeilneSelectors';
+import { getRentals } from '../../redux/timelineSelectors';
 import { DEFAULT_START_DELAY } from '../IAnimatedProps';
 import { AnimatedWrapFormItem } from '../AnimatedWrapFormItem';
 

@@ -15,7 +15,7 @@ export function UserLedgerItems(props: { ledgerCollection: ILedgerCollection; da
 
   return ledgerItems.map((data, i) => {
     return (
-      <AnimatedWrapFormItem delay={DEFAULT_START_DELAY * i}>
+      <AnimatedWrapFormItem delay={DEFAULT_START_DELAY * i} key={`anim-ledgerItem-${getDate(data.created as Date)}-${i}`}>
         <UserLedgerItem data={data} date={props.date} goalMet={props.goalMet} key={`ledgerItem-${getDate(data.created as Date)}-${i}`} />
       </AnimatedWrapFormItem>
     );
