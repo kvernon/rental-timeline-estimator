@@ -5,6 +5,7 @@ import { themeMock } from '../../../__tests__/ThemeMock';
 import { IThemeOptions } from '../../theming/IThemeOptions';
 import { useTheme } from '@emotion/react';
 import { GoalPanelDataSummary } from './GoalPanelDataSummary';
+import { currencyFormatter } from '../../data/currency-formatter';
 import { useFormDispatch, useFormSelector } from '../../redux/hooks';
 import { when } from 'jest-when';
 import { TypedUseSelectorHook } from 'react-redux';
@@ -30,10 +31,7 @@ jest.mock('@number-flow/react', () => ({
   )),
 }));
 
-jest.mock('../../data/currency-formatter', () => ({
-  currencyFormatter: jest.fn(),
-}));
-
+jest.mock('../../data/currency-formatter');
 jest.mock('react-redux');
 
 jest.mock('../../redux/timelineSlice', () => ({
@@ -58,6 +56,7 @@ describe('GoalPanelDataSummary unit tests', () => {
     when(useFormSelectorMock).calledWith(getGoalMetForUser).mockReturnValue(true);
 
     jest.mocked(useTheme).mockReturnValue(themeMock as jest.Mocked<IThemeOptions>);
+    jest.mocked(currencyFormatter).mockReturnValue((10).toString());
     jest.clearAllMocks();
   });
 
