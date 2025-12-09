@@ -4,4 +4,5 @@ export enum FontGroups {
   input = 'input',
   inputGoalLabel = 'inputGoalLabel',
   inputGoal = 'inputGoal',
+  street = 'propertyStreet',
 }

@@ -1,8 +1,10 @@
+import { IThemeOptions } from '../src/theming/IThemeOptions';
+
 export const validationColorOptionalRight = '#0000FF';
 export const validationColorValidMiddle = '#00FF00';
 export const validationColorInvalidLeft = '#FF0000';
 
-export const themeMock = {
+const themeMock: IThemeOptions = {
   palette: {
     pageBackground: 'pageBackground',
     panelBackground: 'panelBackground',
@@ -12,6 +14,9 @@ export const themeMock = {
     inputBackgroundBad: 'inputBackgroundBad',
     inputBackground: 'inputBackground',
     inputBackgroundFocus: 'inputBackgroundFocus',
+    streetBackground: 'green',
+    streetBorder: '0.3rem solid white',
+    streetBorderRadius: '0.3rem',
 
     validation: {
       Invalid: {
@@ -40,11 +45,19 @@ export const themeMock = {
       font: 'parent',
       color: '#0000FF3F',
       size: '20px',
+      weight: 'bold',
+      lineHeight: '1.4375em',
+      letterSpacing: '0.00938em',
     },
     get: jest.fn().mockReturnValue({
       font: 'font',
       color: 'rgba(200, 0, 255, 0.247)',
       size: '10px',
+      lineHeight: '1.4375em',
+      weight: 'normal',
+      letterSpacing: '0.00938em',
     }),
   },
 };
+
+export { themeMock };

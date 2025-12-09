@@ -32,6 +32,9 @@ export const options: IThemeOptions = {
         backgroundFocus: '#9EE5FF',
       },
     },
+    streetBackground: 'linear-gradient(to bottom, black, #17400b 15%, #1a6c45 89%, black 97%)',
+    streetBorder: '0.15rem  solid #bfbfbf',
+    streetBorderRadius: '0.2rem',
   },
   typography: new Typography()
     .set(
@@ -85,6 +88,16 @@ export const options: IThemeOptions = {
         weight: 'bold',
         lineHeight: '1.4375em',
         letterSpacing: '0.00938em',
+      }),
+    )
+    .set(
+      FontGroups.street,
+      new FontInformation({
+        color: '#bfbfbf',
+        size: '12pt',
+        weight: 'normal',
+        lineHeight: '1.95em',
+        letterSpacing: '0.01em',
       }),
     ),
 };
