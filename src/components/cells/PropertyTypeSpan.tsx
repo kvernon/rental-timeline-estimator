@@ -3,6 +3,6 @@ import { Span } from '../core/Span';
 
 export const PropertyTypeSpan = styled(Span)`
   white-space: nowrap;
-  width: 125px;
+  width: unset;
   border: none;
 `;

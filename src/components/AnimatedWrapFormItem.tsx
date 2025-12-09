@@ -22,7 +22,7 @@ export function AnimatedWrapFormItem({ children, delay }: IAnimatedProps) {
       }}
       style={{ transformOrigin: 'top left' }}
     >
-      <Stack>{children}</Stack>
+      {children}
     </MotionStack>
   );
 }

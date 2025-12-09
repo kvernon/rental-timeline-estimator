@@ -16,4 +16,8 @@ export interface IPalette {
       backgroundFocus: string;
     };
   };
+
+  streetBackground: string;
+  streetBorder: string;
+  streetBorderRadius: string;
 }

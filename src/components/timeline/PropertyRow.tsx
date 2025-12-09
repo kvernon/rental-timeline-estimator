@@ -7,6 +7,7 @@ import { MoneyCell } from '../cells/MoneyCell';
 import React from 'react';
 import styled from '@emotion/styled';
 import { StackRowPill } from '../core/StackRowPill';
+import { Street } from './Street';
 
 enum OwnershipType {
   NeverOwned,
@@ -40,7 +41,9 @@ export function PropertyRow(props: { historicalProperty: IHistoricalProperty }) 
         alt={props.historicalProperty.property.address}
         src={`./images/${propertyOption === PropertyType.SingleFamily ? 'house' : 'apartment'}.gif`}
       />
-      <AddressSpan>{props.historicalProperty.property.address}</AddressSpan>
+      <AddressSpan>
+        <Street address={props.historicalProperty.property.address} />
+      </AddressSpan>
       <DateCell date={props.historicalProperty.property.availableStartDate} />
       <DateCell date={props.historicalProperty.property.availableEndDate} />
       <OwnershipSpan>{OwnershipType[getOwnership(props.historicalProperty.property)]}</OwnershipSpan>

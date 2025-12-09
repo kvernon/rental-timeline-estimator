@@ -19,7 +19,7 @@ export function TimelineProperties() {
     <Panel title={'Historical Properties'}>
       <StackSpaceBetween spacing={0}>
         <StackSpaceBetween direction={'row'} paddingLeft={'4px'}>
-          <PropertyTypeSpan>Property:</PropertyTypeSpan>
+          <PropertyTypeSpan style={{ minWidth: '95px' }}>Property:</PropertyTypeSpan>
           <AddressSpan>Address:</AddressSpan>
           <DateCellStyle>Start:</DateCellStyle>
           <DateCellStyle>End:</DateCellStyle>

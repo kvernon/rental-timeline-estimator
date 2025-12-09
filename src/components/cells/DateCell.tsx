@@ -6,8 +6,8 @@ import React, { ReactNode } from 'react';
 export const DateCellStyle = styled(Span)`
   white-space: nowrap;
   border: none;
-  width: 95px;
-  min-width: 95px;
+  width: 100px;
+  min-width: 100px;
 `;
 
 export const DateCell = (props: { date?: Date }): ReactNode => {
