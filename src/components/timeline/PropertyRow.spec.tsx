@@ -2,6 +2,9 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { PropertyRow } from './PropertyRow';
+import { useTheme } from '@emotion/react';
+import { themeMock } from '../../../__tests__/ThemeMock';
+import { IThemeOptions } from '../../theming/IThemeOptions';
 import { PropertyType } from '@cubedelement.com/realty-investor-timeline';
 import { IHistoricalProperty } from '@cubedelement.com/realty-investor-timeline/dist/src/time/i-historical-property';
 
@@ -45,6 +48,7 @@ describe('PropertyRow', () => {
   };
 
   beforeEach(() => {
+    jest.mocked(useTheme).mockReturnValue(themeMock as jest.Mocked<IThemeOptions>);
     jest.clearAllMocks();
   });
 
