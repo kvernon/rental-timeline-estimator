@@ -3,8 +3,8 @@ import styled from '@emotion/styled';
 import { Card } from './Card';
 import { useTheme } from '@emotion/react';
 import { IThemeOptions } from '../../theming/IThemeOptions';
-import { TypographyDiv } from './TypographyDiv';
-import { Header5 } from './Header5';
+import { TypographyDiv } from './text/TypographyDiv';
+import { Header5 } from './text/Header5';
 /*import { RangeFieldValidator } from '../validators/RangeFieldValidator';
 import { IPropertyInformationParams } from '../validators/IPropertyInformationParams';
 import { RangeValidationPanel } from '../panels/RangeValidationPanel';*/

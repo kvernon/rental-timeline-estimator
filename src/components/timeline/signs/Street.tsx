@@ -1,10 +1,10 @@
 import React from 'react';
 
 import styled from '@emotion/styled';
-import { Stack } from '../core/Stack';
-import { IThemeOptions } from '../../theming/IThemeOptions';
+import { Stack } from '../../core/Stack';
+import { IThemeOptions } from '../../../theming/IThemeOptions';
 import { useTheme } from '@emotion/react';
-import { FontGroups } from '../../theming/fontGroups';
+import { FontGroups } from '../../../theming/fontGroups';
 
 const StreetSign = styled(Stack)<{
   themeOptions: IThemeOptions;

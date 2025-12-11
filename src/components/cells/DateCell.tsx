@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Span } from '../core/Span';
+import { Span } from '../core/text/Span';
 import { getDate } from '../../data/getDate';
 import React, { ReactNode } from 'react';
 

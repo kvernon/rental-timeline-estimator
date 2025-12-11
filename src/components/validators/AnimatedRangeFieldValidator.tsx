@@ -13,7 +13,7 @@ import { evaluateValidation } from './evaluateValidation';
 import { isInRange } from './isInRange';
 import styled from '@emotion/styled';
 import { DEFAULT_START_DELAY } from '../IAnimatedProps';
-import { MotionStack } from '../MotionStack';
+import { MotionStackNoWidth } from '../MotionStack';
 
 const FormControlFull = styled(FormControl)`
   margin: 0 0 0 20px;
@@ -34,7 +34,7 @@ export function AnimatedRangeFieldValidator<Required extends boolean = false>(pr
   const [startDelayWithWait] = useState(props.delay === undefined ? 0 : props.delay + DEFAULT_START_DELAY);
 
   return (
-    <MotionStack
+    <MotionStackNoWidth
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{
@@ -111,6 +111,6 @@ export function AnimatedRangeFieldValidator<Required extends boolean = false>(pr
           )}
         </InputBox>
       </FormControlFull>
-    </MotionStack>
+    </MotionStackNoWidth>
   );
 }

@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 
 const SpanRule = styled.span`
   padding-left: 5px;
+  width: unset;
 `;
 
 export function ReasonDoesNotMeetUserRuleAnnualCashFlow(props: { reason: string }) {
@@ -17,7 +18,7 @@ export function ReasonDoesNotMeetUserRuleAnnualCashFlow(props: { reason: string 
 
   return (
     <>
-      <span>Does Not Meet User Rule Annual Cash Flow</span>
+      <span>Does Not Meet Annual Cash Flow</span>
       <SpanRule>Rule: {currencyFormatter(rule)}</SpanRule>
       <SpanRule>Property: {currencyFormatter(propertyCashFlow)}</SpanRule>
     </>

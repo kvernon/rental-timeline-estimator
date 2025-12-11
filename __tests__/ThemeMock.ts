@@ -17,6 +17,12 @@ const themeMock: IThemeOptions = {
     streetBackground: 'green',
     streetBorder: '0.3rem solid white',
     streetBorderRadius: '0.3rem',
+    propertyStatusOwnedBackground: 'green',
+    propertyStatusSoldBackground: 'red',
+    propertyStatusBorder: '0.15rem solid purple',
+    propertyStatusRadius: '0.2rem',
+    propertyStatusForSaleBackground: 'lavender',
+    propertyStatusForSaleBorder: '0.15rem solid gold',
 
     validation: {
       Invalid: {

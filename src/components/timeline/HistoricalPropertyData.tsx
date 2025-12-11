@@ -7,7 +7,7 @@ import { PropertyRow } from './PropertyRow';
 
 export function HistoricalPropertyData(props: { historicalProperty: IHistoricalProperty }): ReactNode {
   return (
-    <Stack direction={'column'}>
+    <Stack>
       <PropertyRow historicalProperty={props.historicalProperty} key={`property-${props.historicalProperty.property.address}`} />
       <Reasons historicalProperty={props.historicalProperty} />
     </Stack>

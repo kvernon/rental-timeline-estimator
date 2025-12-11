@@ -35,13 +35,74 @@ export const options: IThemeOptions = {
     streetBackground: 'linear-gradient(to bottom, black, #17400b 15%, #1a6c45 89%, black 97%)',
     streetBorder: '0.15rem  solid #bfbfbf',
     streetBorderRadius: '0.2rem',
+    propertyStatusOwnedBackground: '#33701e',
+    propertyStatusSoldBackground: '#ca1616',
+    propertyStatusBorder: '0.15rem  solid #bfbfbf',
+    propertyStatusRadius: '0.2rem',
+    propertyStatusForSaleBackground: '#dcdcdc',
+    propertyStatusForSaleBorder: '0.15rem  solid #ca1616',
   },
   typography: new Typography()
+    .set(
+      FontGroups.h3,
+      new FontInformation({
+        font: 'Arial, Helvetica, sans-serif',
+        size: '30pt',
+        color: '#ffffff',
+        weight: 'bold',
+        lineHeight: '1.4375em',
+        letterSpacing: '1em',
+      }),
+    )
+    .set(
+      FontGroups.h4,
+      new FontInformation({
+        font: 'Arial, Helvetica, sans-serif',
+        size: '26pt',
+        color: '#ffffff',
+        weight: 'bold',
+        lineHeight: '1.4375em',
+        letterSpacing: '1em',
+      }),
+    )
+    .set(
+      FontGroups.h5,
+      new FontInformation({
+        font: 'Arial, Helvetica, sans-serif',
+        size: '24pt',
+        color: '#ffffff',
+        weight: 'bold',
+        lineHeight: '1.4375em',
+        letterSpacing: '1em',
+      }),
+    )
+    .set(
+      FontGroups.h6,
+      new FontInformation({
+        font: 'Arial, Helvetica, sans-serif',
+        size: '22pt',
+        color: '#ffffff',
+        weight: 'bold',
+        lineHeight: '1.4375em',
+        letterSpacing: '1em',
+      }),
+    )
     .set(
       FontGroups.panelTitle,
       new FontInformation({
         font: 'Arial, Helvetica, sans-serif',
-        size: '14pt',
+        size: '30pt',
+        color: '#ffffff',
+        weight: 'bold',
+        lineHeight: '1.4375em',
+        letterSpacing: '1em',
+      }),
+    )
+    .set(
+      FontGroups.panelTitle,
+      new FontInformation({
+        font: 'Arial, Helvetica, sans-serif',
+        size: '30pt',
         color: '#ffffff',
         weight: 'bold',
         lineHeight: '1.4375em',
@@ -94,6 +155,26 @@ export const options: IThemeOptions = {
       FontGroups.street,
       new FontInformation({
         color: '#bfbfbf',
+        size: '12pt',
+        weight: 'normal',
+        lineHeight: '1.95em',
+        letterSpacing: '0.01em',
+      }),
+    )
+    .set(
+      FontGroups.propertySign,
+      new FontInformation({
+        color: '#bfbfbf',
+        size: '12pt',
+        weight: 'normal',
+        lineHeight: '1.95em',
+        letterSpacing: '0.01em',
+      }),
+    )
+    .set(
+      FontGroups.propertySignForSale,
+      new FontInformation({
+        color: '#ca1616',
         size: '12pt',
         weight: 'normal',
         lineHeight: '1.95em',

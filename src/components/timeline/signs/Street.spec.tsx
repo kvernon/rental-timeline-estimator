@@ -2,8 +2,8 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Street } from './Street';
 import { useTheme } from '@emotion/react';
-import { themeMock } from '../../../__tests__/ThemeMock';
-import { IThemeOptions } from '../../theming/IThemeOptions';
+import { themeMock } from '../../../../__tests__/ThemeMock';
+import { IThemeOptions } from '../../../theming/IThemeOptions';
 
 describe('Street', () => {
   let addy: string;

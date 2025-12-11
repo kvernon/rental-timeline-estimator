@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Span } from '../core/Span';
+import { Span } from '../core/text/Span';
 import { PropertyType } from '@cubedelement.com/realty-investor-timeline';
 import React, { useEffect, useState } from 'react';
 import { TypeSpan } from './TypeSpan';

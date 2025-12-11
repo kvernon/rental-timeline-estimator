@@ -2,27 +2,44 @@ import { IHistoricalProperty } from '@cubedelement.com/realty-investor-timeline/
 import React from 'react';
 import { ReasonUserHasNoMoneyToInvest } from './ReasonUserHasNoMoneyToInvest';
 import { ReasonDoesNotMeetUserRuleAnnualCashFlow } from './ReasonDoesNotMeetUserRuleAnnualCashFlow';
-import { DateCell } from '../cells/DateCell';
+import styled from '@emotion/styled';
+import { getDate } from '../../data/getDate';
+
+const ListStyle = styled.ul`
+  padding-left: 1rem;
+  font-size: 10pt;
+  min-height: 50px;
+`;
+
+const ListItemStyle = styled.li`
+  padding-left: 0;
+`;
+
+const NoWidthDateCell = styled.span`
+  width: unset;
+  min-width: unset;
+  padding-right: 0.5rem;
+`;
 
 export function Reasons(props: { historicalProperty: IHistoricalProperty }) {
   if (props.historicalProperty.reasons.length === 0) {
-    return null;
+    return <ListStyle></ListStyle>;
   }
 
   return (
-    <ul>
+    <ListStyle>
       {props.historicalProperty.reasons.map((x) => {
         const isNoMoney = x.reason.startsWith('UserHasNoMoneyToInvest');
         const isRuleCash = x.reason.startsWith('DoesNotMeetUserRuleAnnualCashFlow');
         return (
-          <li key={`reason-${props.historicalProperty.property.address}-${x.date.toISOString()}-${x.reason}`}>
-            <DateCell date={x.date} />
+          <ListItemStyle key={`reason-${props.historicalProperty.property.address}-${x.date.toISOString()}-${x.reason}`}>
+            <NoWidthDateCell>{getDate(x.date)}</NoWidthDateCell>
             {isNoMoney && <ReasonUserHasNoMoneyToInvest reason={x.reason} />}
             {isRuleCash && <ReasonDoesNotMeetUserRuleAnnualCashFlow reason={x.reason} />}
             {!isNoMoney && !isRuleCash && x.reason}
-          </li>
+          </ListItemStyle>
         );
       })}
-    </ul>
+    </ListStyle>
   );
 }
