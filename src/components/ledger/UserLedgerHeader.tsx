@@ -29,8 +29,7 @@ export function UserLedgerHeader() {
         <AddressFormatted note={'Note:'} />
         <MoneyCellStyle>Equity:</MoneyCellStyle>
         <MoneyCellStyle>Purchases:</MoneyCellStyle>
-        <MoneyCellStyle>Cash flow:</MoneyCellStyle>
-        <MoneyCellStyle>Avg cash flow:</MoneyCellStyle>
+        <MoneyCellStyle>Cash Flow:</MoneyCellStyle>
       </Stack>
       <LastHeader>Balance:</LastHeader>
     </StackHeader>

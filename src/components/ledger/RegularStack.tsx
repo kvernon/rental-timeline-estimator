@@ -24,7 +24,6 @@ export function RegularStack(props: { ledgerSummary: ILedgerSummary; onClick: ()
         <MoneyCell currency={props.ledgerSummary.equity} />
         <MoneyCell currency={props.ledgerSummary.purchases} />
         <MoneyCell currency={props.ledgerSummary.cashFlow} />
-        <MoneyCell currency={props.ledgerSummary.averageCashFlow} />
       </Stack>
       <MoneyCell currency={props.ledgerSummary.balance} />
     </RegStackHand>
