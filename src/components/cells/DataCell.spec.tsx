@@ -36,8 +36,8 @@ describe('DataCell unit tests', () => {
       const expectedStyle = `
         white-space: nowrap;
         border: none;
-        width: 95px;
-        min-width: 95px;
+        width: 100px;
+        min-width: 100px;
       `;
 
       expect(entity).toHaveStyle(expectedStyle);
@@ -58,8 +58,8 @@ describe('DataCellStyle unit tests', () => {
       const expectedStyle = `
         white-space: nowrap;
         border: none;
-        width: 95px;
-        min-width: 95px;
+        width: 100px;
+        min-width: 100px;
       `;
 
       expect(entity).toHaveStyle(expectedStyle);

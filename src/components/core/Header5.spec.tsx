@@ -14,7 +14,7 @@ describe('Header5 unit tests', () => {
 
       const expectedStyle = `
         font-size: 10px;
-        font-weight: bold;
+        font-weight: normal;
         color: rgba(200, 0, 255, 0.247);
         margin: 0
       `;

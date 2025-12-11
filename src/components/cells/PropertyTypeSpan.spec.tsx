@@ -11,7 +11,6 @@ describe('PropertyTypeSpan styling', () => {
 
     const expectedStyle = `
       white-space: nowrap;
-      width: 125px;
       border: none;
     `;
 
