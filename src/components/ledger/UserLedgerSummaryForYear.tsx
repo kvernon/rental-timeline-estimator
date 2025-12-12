@@ -34,7 +34,6 @@ export function UserLedgerSummaryForYear(props: { ledgerCollection: ILedgerColle
           <MoneyCell currency={currentYear.equity} />
           <MoneyCell currency={currentYear.purchases} />
           <MoneyCell currency={currentYear.cashFlow} />
-          <MoneyCell currency={currentYear.averageCashFlow} />
         </Stack>
         <LastMoneyCell currency={currentYear.balance} />
       </StackYearHeader>

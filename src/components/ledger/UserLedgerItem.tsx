@@ -28,7 +28,6 @@ export function UserLedgerItem(props: { data: LedgerItem; date: Date; goalMet: b
         <Stack direction="row" spacing={0}>
           <MoneyCellStyle />
           <MoneyCellStyle />
-          <MoneyCellStyle />
         </Stack>
         <MoneyCell currency={props.data.amount} />
       </StackWinWidthUnset>
@@ -41,7 +40,6 @@ export function UserLedgerItem(props: { data: LedgerItem; date: Date; goalMet: b
       <LedgerType>{props.data.type}</LedgerType>
       <AddressFormatted note={props.data.note} />
       <Stack direction="row" spacing={1}>
-        <MoneyCellStyle />
         <MoneyCellStyle />
         <MoneyCellStyle />
       </Stack>
