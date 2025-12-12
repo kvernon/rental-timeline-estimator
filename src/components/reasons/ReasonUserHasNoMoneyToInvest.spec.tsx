@@ -11,7 +11,7 @@ describe('ReasonUserHasNoMoneyToInvest', () => {
 
   test('renders label and formatted balance when reason matches', () => {
     render(<ReasonUserHasNoMoneyToInvest reason="UserHasNoMoneyToInvest:12345" />);
-    expect(screen.getByText('User Has No Money To Invest')).toBeInTheDocument();
+    expect(screen.getByText('No Money To Invest')).toBeInTheDocument();
     // currencyFormatter will add locale formatting (commas); look for Balance prefix and number substring
     expect(screen.getByText(/Balance:/)).toHaveTextContent(/12,345|12345/);
   });

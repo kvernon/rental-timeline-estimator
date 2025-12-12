@@ -11,7 +11,7 @@ describe('ReasonDoesNotMeetUserRuleAnnualCashFlow', () => {
 
   test('renders label and formatted balance when reason matches', () => {
     render(<ReasonDoesNotMeetUserRuleAnnualCashFlow reason="DoesNotMeetUserRuleAnnualCashFlow rule: 3600 property: 3156" />);
-    expect(screen.getByText('Does Not Meet User Rule Annual Cash Flow')).toBeInTheDocument();
+    expect(screen.getByText('Does Not Meet Annual Cash Flow')).toBeInTheDocument();
     expect(screen.getByText(/Rule:/)).toHaveTextContent(/3,600.00/);
     expect(screen.getByText(/Property:/)).toHaveTextContent(/3,156/);
   });

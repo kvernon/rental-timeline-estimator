@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import React from 'react';
-import { themeMock } from '../../../__tests__/ThemeMock';
-import { Header5 } from './Header5';
+import { themeMock } from '../../../../__tests__/ThemeMock';
+import { Header3 } from './Header3';
 
-describe('Header5 unit tests', () => {
+describe('Header3 unit tests', () => {
   describe('and with defaults', () => {
     beforeEach(() => {
-      render(<Header5 theme={themeMock}>bacon</Header5>);
+      render(<Header3 theme={themeMock}>bacon</Header3>);
     });
     test('should render', () => {
       const entity = screen.getByText<HTMLHeadingElement>('bacon');

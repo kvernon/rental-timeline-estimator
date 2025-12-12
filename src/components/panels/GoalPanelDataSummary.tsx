@@ -1,7 +1,7 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { Stack } from '../core/Stack';
 import styled from '@emotion/styled';
-import { Header6 } from '../core/Header6';
+import { Header6 } from '../core/text/Header6';
 import { IThemeOptions } from '../../theming/IThemeOptions';
 import { useTheme } from '@emotion/react';
 import { FontGroups } from '../../theming/fontGroups';

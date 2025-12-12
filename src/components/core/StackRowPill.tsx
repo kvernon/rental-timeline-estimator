@@ -9,10 +9,7 @@ export const StackRowPill = styled(Stack)`
   border: 0.1rem solid #2e266a;
   padding-bottom: 4px;
   padding-right: 10px;
-  align-items: center;
-
-  > :first-child {
-    padding-top: 4px;
-    margin-top: 6px;
-  }
+  align-items: flex-start;
+  width: 525px;
+  box-shadow: 0 10px 15px rgba(16, 27, 30, 0.4);
 `;

@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import React from 'react';
-import { themeMock } from '../../../__tests__/ThemeMock';
+import { themeMock } from '../../../../__tests__/ThemeMock';
 import { Header6 } from './Header6';
 
 describe('Header6 unit tests', () => {

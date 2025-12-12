@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTheme } from '@emotion/react';
 import { IThemeOptions } from '../../theming/IThemeOptions';
-import { Header5 } from '../core/Header5';
-import { TypographyDiv } from '../core/TypographyDiv';
+import { Header5 } from '../core/text/Header5';
+import { TypographyDiv } from '../core/text/TypographyDiv';
 import { Card } from '../core/Card';
 import { CardContent } from '../core/CardContent';
 import { Stack } from '../core/Stack';

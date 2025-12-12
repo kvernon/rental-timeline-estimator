@@ -1,11 +1,12 @@
 import React from 'react';
 import { useTheme } from '@emotion/react';
 import { IThemeOptions } from '../../theming/IThemeOptions';
-import { Header5 } from '../core/Header5';
-import { TypographyDiv } from '../core/TypographyDiv';
+import { TypographyDiv } from '../core/text/TypographyDiv';
 import { Card } from '../core/Card';
 import { CardContent } from '../core/CardContent';
 import { Stack } from '../core/Stack';
+import { Header3 } from '../core/text/Header3';
+import { FontGroups } from '../../theming/fontGroups';
 
 export function Panel(props: { children: React.ReactElement[] | React.ReactElement; title: string }) {
   const coreTheme = useTheme() as IThemeOptions;
@@ -13,7 +14,9 @@ export function Panel(props: { children: React.ReactElement[] | React.ReactEleme
   return (
     <Stack direction={'column'} paddingTop={'15px'} paddingBottom={'15px'} aria-label={props.title}>
       <TypographyDiv>
-        <Header5 theme={coreTheme}>{props.title}</Header5>
+        <Header3 theme={coreTheme} fontGroup={FontGroups.panelTitle}>
+          {props.title}
+        </Header3>
       </TypographyDiv>
       <Card theme={coreTheme}>
         <CardContent>

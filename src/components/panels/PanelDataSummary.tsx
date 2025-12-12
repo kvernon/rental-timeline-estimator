@@ -3,8 +3,7 @@ import { Stack } from '../core/Stack';
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
 import { IThemeOptions } from '../../theming/IThemeOptions';
-import { Header6 } from '../core/Header6';
-import { Header5 } from '../core/Header5';
+import { Header6 } from '../core/text/Header6';
 
 const TitleNode = styled(Header6)`
   text-align: right;
@@ -12,7 +11,7 @@ const TitleNode = styled(Header6)`
   padding-right: 20px;
 `;
 
-const DataNode = styled(Header5)`
+const DataNode = styled(Header6)`
   text-align: right;
   margin: 2px;
   padding-right: 20px;

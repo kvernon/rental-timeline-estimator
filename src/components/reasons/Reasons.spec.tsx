@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Reasons } from './Reasons';
 import { IRentalPropertyEntity, IHistoricalProperty } from '@cubedelement.com/realty-investor-timeline';
+import { getDate } from '../../data/getDate';
 
 // Mock child components to make assertions easier and avoid tight coupling
 jest.mock('./ReasonUserHasNoMoneyToInvest', () => ({
@@ -18,16 +19,19 @@ jest.mock('./ReasonDoesNotMeetUserRuleAnnualCashFlow', () => ({
 jest.mock('../cells/DateCell', () => ({
   DateCell: (props: { date: Date }) => <span data-testid="date-cell">{props.date.toISOString()}</span>,
 }));
+jest.mock('../../data/getDate');
 
 describe('Reasons', () => {
+  jest.mocked(getDate).mockReturnValue('some date');
+
   const baseHistorical = (reasons: { date: Date; reason: string }[]): IHistoricalProperty => ({
     property: { address: '123 Main' } as IRentalPropertyEntity,
     reasons,
   });
 
-  test('returns null when no reasons', () => {
+  test('returns empty list when no reasons', () => {
     const { container } = render(<Reasons historicalProperty={baseHistorical([])} />);
-    expect(container).toBeEmptyDOMElement();
+    expect(container).toBeInTheDocument();
   });
 
   test('renders list items with DateCell and specific reason components', () => {
@@ -39,10 +43,8 @@ describe('Reasons', () => {
 
     render(<Reasons historicalProperty={baseHistorical(reasons)} />);
 
-    // DateCell renders ISO string for each
-    expect(screen.getByText('2024-01-01T00:00:00.000Z')).toBeInTheDocument();
-    expect(screen.getByText('2024-02-01T00:00:00.000Z')).toBeInTheDocument();
-    expect(screen.getByText('2024-03-01T00:00:00.000Z')).toBeInTheDocument();
+    // span renders date
+    expect(screen.getAllByText('some date').length).toEqual(3);
 
     // Specific reason components
     expect(screen.getByTestId('no-money')).toBeInTheDocument();

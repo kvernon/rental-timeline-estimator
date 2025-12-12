@@ -20,4 +20,10 @@ export interface IPalette {
   streetBackground: string;
   streetBorder: string;
   streetBorderRadius: string;
+  propertyStatusOwnedBackground: string;
+  propertyStatusSoldBackground: string;
+  propertyStatusForSaleBackground: string;
+  propertyStatusBorder: string;
+  propertyStatusForSaleBorder: string;
+  propertyStatusRadius: string;
 }
