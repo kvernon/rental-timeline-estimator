@@ -10,19 +10,22 @@ export interface IPropertyCashHeaderProps {
   value: number;
   title: string;
   fontGroup?: FontGroups;
+  tighten?: boolean;
 }
 
-export function PropertyCash({ value, title, fontGroup }: IPropertyCashHeaderProps) {
+export function PropertyCash({ value, title, fontGroup, tighten }: IPropertyCashHeaderProps) {
   const coreTheme = useTheme() as IThemeOptions;
 
   const valueString = value === 0 ? '0' : currencyFormatter(value);
-
+  const adjustMinor = tighten ? '0.8em' : '0.9em';
+  const adjustMarginTop = tighten ? '0px' : '5px';
+  const adjustMarginBottom = tighten ? '0px' : '13px';
   return (
-    <Stack marginBottom={'13px'} marginTop={'5px'} style={{ textAlign: 'right' }}>
+    <Stack marginBottom={adjustMarginBottom} marginTop={adjustMarginTop} style={{ textAlign: 'right' }}>
       <Header theme={coreTheme} fontGroup={fontGroup}>
         ${valueString}
       </Header>
-      <Stack style={{ textAlign: 'right', fontSize: '10pt', lineHeight: '0.9em' }}>{title}</Stack>
+      <Stack style={{ textAlign: 'right', fontSize: '10pt', lineHeight: adjustMinor }}>{title}</Stack>
     </Stack>
   );
 }

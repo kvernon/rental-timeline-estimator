@@ -15,15 +15,11 @@ export const SignStyle = styled(Stack)<{
   border: ${(props) => props.themeOptions.palette.propertyStatusForSaleBorder};
   border-radius: ${(props) => props.themeOptions.palette.propertyStatusRadius};
   color: ${(props) => props.themeOptions.typography.get(FontGroups.propertySignForSale)?.color};
-  rotate: -10deg;
   white-space: nowrap;
   min-width: auto;
   padding-left: 5px;
   padding-right: 5px;
   margin-top: 0;
-  position: relative;
-  top: 125px;
-  left: 125px;
 `;
 
 export function ForSaleSign() {
