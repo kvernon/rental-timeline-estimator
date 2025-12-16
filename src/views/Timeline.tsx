@@ -1,11 +1,16 @@
 import { useFormSelector } from '../redux/hooks';
 import { getTimeline } from '../redux/timelineSelectors';
-import { IRentalPropertyEntity, LedgerItem, LedgerItemType } from '@cubedelement.com/realty-investor-timeline';
+import { LedgerItem, LedgerItemType } from '@cubedelement.com/realty-investor-timeline';
 import { getDate } from '../data/getDate';
 import React, { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { currencyFormatter } from '../data/currency-formatter';
-import { propertyOptions, propertyOptionsMap } from '../components/validators/PropertyOptions';
+import { IHistoricalProperty } from '@cubedelement.com/realty-investor-timeline/dist/src/time/i-historical-property';
+import { Stack } from '../components/core/Stack';
+import { Header5 } from '../components/core/text/Header5';
+import { useTheme } from '@emotion/react';
+import { IThemeOptions } from '../theming/IThemeOptions';
+import { PropertyTimeline } from '../components/timeline/PropertyTimeline';
 
 function useActiveMonth(year: number, month: number, setActiveMonth: React.Dispatch<React.SetStateAction<{ year: number; month: number } | null>>) {
   const ref = useRef<HTMLElement | null>(null);
@@ -31,45 +36,34 @@ function useActiveMonth(year: number, month: number, setActiveMonth: React.Dispa
   return ref;
 }
 
-const ItemOnOff = styled.div<{ visible: boolean }>`
+const ItemOnOff = styled(Stack)<{ visible: boolean }>`
+  width: unset;
   color: ${({ visible }) => `#332211${visible ? '' : '11'}`};
   transition: all 0.6s ease;
-  width: unset;
   display: ${({ visible }) => (visible ? 'block' : 'none')};
 `;
 
 function LedgerItemDisplay({ item, isActive }: { item: LedgerItem; isActive: boolean }) {
   const isAdd = item.type !== LedgerItemType.Purchase;
   const positiveOrNegative = isAdd ? '+' : '-';
+  const coreTheme = useTheme() as IThemeOptions;
 
   return (
     <ItemOnOff visible={isActive}>
-      {positiveOrNegative} {getDate(item.created!)} ${currencyFormatter(item.amount)}
+      <Header5 theme={coreTheme}>
+        {positiveOrNegative} {} ${currencyFormatter(item.amount)}
+      </Header5>
     </ItemOnOff>
   );
 }
 
 function LedgerGroup({ items }: { items: { ledger: LedgerItem; isActive: boolean }[] }) {
   return (
-    <div>
+    <Stack>
       {items.map((item, i) => (
         <LedgerItemDisplay key={`${getDate(item.ledger.created!)} ${i}`} item={item.ledger} isActive={item.isActive} />
       ))}
-    </div>
-  );
-}
-
-function PropertyCard({ property, status }: { property: IRentalPropertyEntity; status: string }) {
-  const propertyType = propertyOptionsMap.find((x) => x.propertyType === property.propertyType);
-
-  return (
-    <div style={{ border: '1px solid #ccc', padding: '8px', float: 'left' }}>
-      <div>{property.address}</div>
-      <div>
-        <img src={`./images/${propertyType?.label}.gif`} alt={propertyType?.label} />
-      </div>
-      <div>{status}</div>
-    </div>
+    </Stack>
   );
 }
 
@@ -86,7 +80,7 @@ function MonthSection({
   year,
   month,
   setActiveMonth,
-  minHeight = 200,
+  minHeight = 900,
 }: {
   year: number;
   month: number;
@@ -107,14 +101,20 @@ function MonthSection({
 const DataLayer = styled.div`
   /* No longer fixed, flows inside the wrapper */
   padding: 12px;
-  width: 45%;
+  width: 15%;
   margin-left: 50px;
   display: inline-block;
   vertical-align: top;
+  border: 1px solid #eee;
 `;
 
 const DataLayerProperty = styled(DataLayer)`
   margin-left: 5%; /* Spacing between columns */
+  width: 70%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: flex-start;
 `;
 
 const FixedWrapper = styled.div`
@@ -123,11 +123,13 @@ const FixedWrapper = styled.div`
   left: 0;
   right: 0;
   z-index: 50;
-  border-bottom: 1px solid #eee;
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   align-items: flex-start;
   pointer-events: none;
+  border: 1px solid #ff3c3c;
+  justify-content: left;
 `;
 
 export function Timeline() {
@@ -167,7 +169,7 @@ export function Timeline() {
 
   // Compute active month’s data
   let ledgerItems: { ledger: LedgerItem; isActive: boolean }[] = [];
-  let properties: { property: IRentalPropertyEntity; status: string; isActive: boolean }[] = [];
+  let properties: { property: IHistoricalProperty; status: string; isActive: boolean }[] = [];
   if (activeMonth) {
     const currentDate = new Date(Date.UTC(activeMonth.year, activeMonth.month, 1));
 
@@ -192,11 +194,11 @@ export function Timeline() {
         if (r.property.soldDate && currentDate >= r.property.soldDate) status = 'SOLD';
         const start = new Date(r.property.availableStartDate);
         const end = new Date(r.property.availableEndDate);
-        return { property: r.property, status, isActive: currentDate >= start && currentDate <= end };
+        return { property: r, status, isActive: currentDate >= start && currentDate <= end };
       })
       .filter((r) => {
-        const start = new Date(r.property.availableStartDate);
-        const end = new Date(r.property.availableEndDate);
+        const start = new Date(r.property.property.availableStartDate);
+        const end = new Date(r.property.property.availableEndDate);
 
         return start <= endLate && end >= startEarly;
       });
@@ -208,7 +210,7 @@ export function Timeline() {
       {years.map((year) => {
         const data = timeline.user.ledgerCollection.getSummariesAnnual(year);
         return data.map((ledgeSummary, index) => {
-          const dynamicHeight = wrapperHeight > 0 ? wrapperHeight + 80 : 200;
+          const dynamicHeight = wrapperHeight > 0 ? wrapperHeight + 80 : 500;
 
           return (
             <MonthSection
@@ -233,10 +235,9 @@ export function Timeline() {
               <LedgerGroup items={ledgerItems} />
             </DataLayer>
             <DataLayerProperty>
-              {properties.length === 0 && <div>No properties available for this month</div>}
               {properties.map((p, i) => (
-                <ItemOnOff key={i} visible={p.isActive}>
-                  <PropertyCard property={p.property} status={p.status} />
+                <ItemOnOff key={i} visible={p.isActive} style={{ width: '400px', height: '100px', paddingRight: '10px' }}>
+                  <PropertyTimeline historicalProperty={p.property} useSmall={true} />
                 </ItemOnOff>
               ))}
             </DataLayerProperty>
