@@ -14,7 +14,7 @@ export function PropertyTimeline(props: { historicalProperty: IHistoricalPropert
   const marketTitle = costDownValue > 0 ? `Market ($${costDownAmount} Down Payment)` : 'Market';
   return (
     <StackRowPill direction="row">
-      <Stack direction="column">
+      <Stack direction="column" style={{ width: 'unset' }}>
         <PropertyIcon
           useSmall={props.useSmall}
           address={props.historicalProperty.property.address}
