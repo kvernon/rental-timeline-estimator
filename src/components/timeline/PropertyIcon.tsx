@@ -22,11 +22,28 @@ export function PropertyIcon(prop: IPropertyIconParams) {
 
   const Sign = prop.status === OwnershipType.IsOwned ? OwnedSign : prop.status === OwnershipType.WasOwned ? SoldSign : ForSaleSign;
 
+  const SignLarge = 'translate(95px, 95px) rotate(-10deg)';
+  const SignSmall = 'translate(15px, 15px) rotate(-10deg)';
+
   const imgSrc = `./images/${prop.propertyType === PropertyType.SingleFamily ? 'house' : 'apartment'}${prop.useSmall ? '' : '-lg'}.gif`;
   return (
     <Stack>
       <Street address={prop.address} />
-      <Stack style={{ rotate: '-10deg', position: 'relative', top: '45px', left: '25px' }}>
+      <Stack
+        marginLeft={'0'}
+        marginTop={'0'}
+        marginBottom={'0'}
+        paddingLeft={'0'}
+        paddingRight={'0'}
+        paddingTop={'0'}
+        paddingBottom={'0'}
+        style={{
+          height: '0',
+          overflow: 'visible',
+          position: 'relative',
+          transform: `${prop.useSmall ? SignSmall : SignLarge}`,
+        }}
+      >
         <Sign />
       </Stack>
       <Image width={imgWidth} height={imgHeight} src={imgSrc} alt={prop.address} title={prop.address} />

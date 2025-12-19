@@ -11,6 +11,7 @@ import { Header5 } from '../components/core/text/Header5';
 import { useTheme } from '@emotion/react';
 import { IThemeOptions } from '../theming/IThemeOptions';
 import { PropertyTimeline } from '../components/timeline/PropertyTimeline';
+import { AnimatePresence, motion } from 'motion/react';
 
 function useActiveMonth(year: number, month: number, setActiveMonth: React.Dispatch<React.SetStateAction<{ year: number; month: number } | null>>) {
   const ref = useRef<HTMLElement | null>(null);
@@ -61,7 +62,9 @@ function LedgerGroup({ items }: { items: { ledger: LedgerItem; isActive: boolean
   return (
     <Stack>
       {items.map((item, i) => (
-        <LedgerItemDisplay key={`${getDate(item.ledger.created!)} ${i}`} item={item.ledger} isActive={item.isActive} />
+        <AnimatePresence mode="wait" initial={false} key={`${getDate(item.ledger.created!)}-${i}`}>
+          <LedgerItemDisplay key={`${getDate(item.ledger.created!)} ${i}`} item={item.ledger} isActive={item.isActive} />
+        </AnimatePresence>
       ))}
     </Stack>
   );
@@ -80,7 +83,7 @@ function MonthSection({
   year,
   month,
   setActiveMonth,
-  minHeight = 900,
+  minHeight = 1000,
 }: {
   year: number;
   month: number;
@@ -135,30 +138,6 @@ const FixedWrapper = styled.div`
 export function Timeline() {
   const timeline = useFormSelector(getTimeline);
   const [activeMonth, setActiveMonth] = useState<{ year: number; month: number } | null>(null);
-  const [wrapperHeight, setWrapperHeight] = useState(0);
-
-  // Use a callback ref to attach the ResizeObserver immediately when the node enters the DOM
-  // Note: For production-grade cleanup, storing observer in a useRef and disconnecting in this callback when node is null is better.
-  // Implementing strictly safe version below:
-
-  const observerRef = useRef<ResizeObserver | null>(null);
-  const measuredRef = React.useCallback((node: HTMLDivElement | null) => {
-    if (observerRef.current) {
-      observerRef.current.disconnect();
-      observerRef.current = null;
-    }
-
-    if (node !== null) {
-      const observer = new ResizeObserver((entries) => {
-        for (const entry of entries) {
-          const height = entry.borderBoxSize?.[0]?.blockSize ?? entry.contentRect.height;
-          setWrapperHeight(height);
-        }
-      });
-      observer.observe(node);
-      observerRef.current = observer;
-    }
-  }, []);
 
   if (!timeline) return null;
 
@@ -200,7 +179,7 @@ export function Timeline() {
         const start = new Date(r.property.property.availableStartDate);
         const end = new Date(r.property.property.availableEndDate);
 
-        return start <= endLate && end >= startEarly;
+        return (start <= endLate && end >= startEarly) || r.status === 'OWNED';
       });
   }
 
@@ -210,7 +189,7 @@ export function Timeline() {
       {years.map((year) => {
         const data = timeline.user.ledgerCollection.getSummariesAnnual(year);
         return data.map((ledgeSummary, index) => {
-          const dynamicHeight = wrapperHeight > 0 ? wrapperHeight + 80 : 500;
+          const dynamicHeight = properties.length > 0 || ledgerItems.length > 0 ? 1000 : 200;
 
           return (
             <MonthSection
@@ -230,13 +209,13 @@ export function Timeline() {
       {/* Container for fixed overlay */}
       <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', pointerEvents: 'none', zIndex: 50 }}>
         {activeMonth && (
-          <FixedWrapper ref={measuredRef} style={{ pointerEvents: 'auto' }}>
+          <FixedWrapper style={{ pointerEvents: 'auto' }}>
             <DataLayer>
               <LedgerGroup items={ledgerItems} />
             </DataLayer>
             <DataLayerProperty>
               {properties.map((p, i) => (
-                <ItemOnOff key={i} visible={p.isActive} style={{ width: '400px', height: '100px', paddingRight: '10px' }}>
+                <ItemOnOff key={i} visible={p.isActive} style={{ width: '325px', height: '140px', paddingRight: '10px' }}>
                   <PropertyTimeline historicalProperty={p.property} useSmall={true} />
                 </ItemOnOff>
               ))}
