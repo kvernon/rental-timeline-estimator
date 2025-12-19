@@ -24,7 +24,16 @@ jest.mock('../../data/getDate');
 describe('Reasons', () => {
   jest.mocked(getDate).mockReturnValue('some date');
 
-  const baseHistorical = (reasons: { date: Date; reason: string }[]): IHistoricalProperty => ({
+  const baseHistorical = (
+    reasons: {
+      date: Date;
+      reason: string;
+      additionalInfo: {
+        name: string;
+        value: number;
+      }[];
+    }[],
+  ): IHistoricalProperty => ({
     property: { address: '123 Main' } as IRentalPropertyEntity,
     reasons,
   });
@@ -36,9 +45,9 @@ describe('Reasons', () => {
 
   test('renders list items with DateCell and specific reason components', () => {
     const reasons = [
-      { date: new Date('2024-01-01T00:00:00.000Z'), reason: 'UserHasNoMoneyToInvest:1000' },
-      { date: new Date('2024-02-01T00:00:00.000Z'), reason: 'DoesNotMeetUserRuleAnnualCashFlow:0' },
-      { date: new Date('2024-03-01T00:00:00.000Z'), reason: 'SomeOtherReason' },
+      { date: new Date('2024-01-01T00:00:00.000Z'), reason: 'UserHasNoMoneyToInvest:1000', additionalInfo: [] },
+      { date: new Date('2024-02-01T00:00:00.000Z'), reason: 'DoesNotMeetUserRuleAnnualCashFlow:0', additionalInfo: [] },
+      { date: new Date('2024-03-01T00:00:00.000Z'), reason: 'SomeOtherReason', additionalInfo: [] },
     ];
 
     render(<Reasons historicalProperty={baseHistorical(reasons)} />);
