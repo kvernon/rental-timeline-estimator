@@ -27,6 +27,7 @@ describe('PropertyInformation unit tests', () => {
       highestMinSellInYears: { value: 1, validationResult: ValidatorTypes.Valid },
       lowestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
       highestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
+      maxMonthsToCache: { value: 1, validationResult: ValidatorTypes.Valid },
       title: 'title',
       onChange: jest.fn(),
     };
@@ -56,6 +57,12 @@ describe('PropertyInformation unit tests', () => {
 
       test('should render Maximum Generated Rental Opportunities', () => {
         const generatorAmount = screen.getByLabelText<HTMLInputElement>('Maximum Generated Rental Opportunities');
+
+        expect(generatorAmount).toBeInTheDocument();
+      });
+
+      test('should render Maximum Time Listed', () => {
+        const generatorAmount = screen.getByLabelText<HTMLInputElement>('Maximum Time Listed');
 
         expect(generatorAmount).toBeInTheDocument();
       });

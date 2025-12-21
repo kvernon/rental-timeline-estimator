@@ -2,6 +2,7 @@ import { validatePropertyInfo, validatePropertiesInfo } from './validateProperti
 import { ValidatorTypes } from '../components/validators/ValidatorTypes';
 import type { IPropertyInformationParams } from '../components/validators/IPropertyInformationParams';
 import type { IPropertiesInformationPropsEvent } from '../views/IPropertiesInformationProps';
+import { PropertyType } from '@cubedelement.com/realty-investor-timeline';
 
 jest.mock('../components/rules/hooks/getValidationResult', () => ({
   getValidationResult: jest.fn((values: number[], required: boolean) => {
@@ -11,7 +12,7 @@ jest.mock('../components/rules/hooks/getValidationResult', () => ({
 
 const makePropInfo = (overrides?: Partial<IPropertyInformationParams>): IPropertyInformationParams => ({
   title: 'X',
-  propertyType: 1 as any,
+  propertyType: PropertyType.SingleFamily,
   lowestPurchasePrice: { value: 1, validationResult: ValidatorTypes.Valid },
   highestPurchasePrice: { value: 2, validationResult: ValidatorTypes.Valid },
   lowestCashFlow: { value: 3, validationResult: ValidatorTypes.Valid },
@@ -24,6 +25,7 @@ const makePropInfo = (overrides?: Partial<IPropertyInformationParams>): IPropert
   highestMinSellInYears: { value: 2, validationResult: ValidatorTypes.Valid },
   lowestAppreciationValue: { value: 10, validationResult: ValidatorTypes.Valid },
   highestAppreciationValue: { value: 20, validationResult: ValidatorTypes.Valid },
+  maxMonthsToCache: { value: 30, validationResult: ValidatorTypes.Valid },
   ...overrides,
 });
 

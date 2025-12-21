@@ -7,7 +7,6 @@ import { IPropertyInformationOnChangeParams, IPropertyInformationParams } from '
 import { propertyOptions } from './PropertyOptions';
 import { AnimatedWrapPanel } from '../AnimatedWrapPanel';
 import { AnimatedRangeFieldValidator } from './AnimatedRangeFieldValidator';
-import { AnimatedWrapFormItem } from '../AnimatedWrapFormItem';
 import { motion } from 'motion/react';
 import { DEFAULT_DURATION, DEFAULT_START_DELAY } from '../IAnimatedProps';
 
@@ -76,6 +75,25 @@ export const PropertyInformation = (props: IPropertyInformationOnChangeParams) =
                 props.onChange({
                   ...props,
                   highestGenerationAmount: e,
+                });
+              }}
+            />
+
+            <AnimatedRangeFieldValidator<true>
+              delay={DEFAULT_START_DELAY * 4}
+              min={1}
+              max={6}
+              required={true}
+              title="Maximum Time Listed"
+              hasSpinner={true}
+              useUnderlineOnly={false}
+              showTitle={true}
+              value={props.maxMonthsToCache}
+              id="highest-cache-amount"
+              onChange={(e) => {
+                props.onChange({
+                  ...props,
+                  maxMonthsToCache: e,
                 });
               }}
             />

@@ -17,14 +17,14 @@ import { setAnimationCompleted } from '../../redux/timelineSlice';
 // Mocks
 jest.mock('react-confetti', () => ({
   __esModule: true,
-  default: jest.fn((props: any) => (
+  default: jest.fn((props: { run: boolean; onConfettiComplete: () => void }) => (
     <div data-testid="confetti" data-run={props.run} onClick={() => props.onConfettiComplete && props.onConfettiComplete()} />
   )),
 }));
 
 jest.mock('@number-flow/react', () => ({
   __esModule: true,
-  default: jest.fn((props: any) => (
+  default: jest.fn((props: { value: number; onAnimationsFinish?: () => void }) => (
     <div data-testid="number-flow" onClick={() => props.onAnimationsFinish && props.onAnimationsFinish()}>
       {props.value}
     </div>

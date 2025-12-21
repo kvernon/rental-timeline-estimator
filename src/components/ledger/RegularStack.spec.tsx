@@ -2,18 +2,22 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { RegularStack } from './RegularStack';
+import { ILedgerSummary } from '@cubedelement.com/realty-investor-timeline';
 
 // Mock the RegStack styled component to avoid needing theme providers for this unit test
 jest.mock('./RegStack', () => ({
-  RegStack: (props: any) => <div data-testid="reg-stack" {...props} />,
+  RegStack: (props: { ledgerSummary: ILedgerSummary; onClick: () => void }) => <div data-testid="reg-stack" {...props} />,
 }));
 
 describe('RegularStack', () => {
   const mockOnClick = jest.fn();
-  const mockLedgerSummary: any = {
-    amount: 1000,
-    // Add other properties if strictly required by the component logic,
-    // but for a visual stack usually the amount/height matters.
+  const mockLedgerSummary: ILedgerSummary = {
+    date: new Date(),
+    balance: 0,
+    cashFlow: 0,
+    averageCashFlow: 0,
+    purchases: 0,
+    equity: 0,
   };
 
   it('renders correctly and handles click', () => {

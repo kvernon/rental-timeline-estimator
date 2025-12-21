@@ -65,6 +65,7 @@ export function generate(userInfo: IUserInfo, propertiesInfo: IPropertiesInforma
       lowestEquityCapturePercent: propertiesInfo.house.lowestEquityCapturePercent.value,
       highestEquityCapturePercent: propertiesInfo.house.highestEquityCapturePercent.value,
       maxRentalOpportunities: propertiesInfo.house.highestGenerationAmount.value,
+      maxMonthsToCache: propertiesInfo.house.maxMonthsToCache.value,
     },
     generatorOptionsPassiveApartment: {
       lowestMinSellInYears: propertiesInfo.apartment.lowestMinSellInYears.value,
@@ -78,6 +79,7 @@ export function generate(userInfo: IUserInfo, propertiesInfo: IPropertiesInforma
       lowestEquityCapturePercent: propertiesInfo.apartment.lowestEquityCapturePercent.value,
       highestEquityCapturePercent: propertiesInfo.apartment.highestEquityCapturePercent.value,
       maxRentalOpportunities: propertiesInfo.apartment.highestGenerationAmount.value,
+      maxMonthsToCache: propertiesInfo.apartment.maxMonthsToCache.value,
     },
   });
 }

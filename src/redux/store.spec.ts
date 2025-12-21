@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import formReducer from './formSlice';
-import resultReducer, { resetResult, setTimeline } from './timelineSlice';
+import resultReducer, { NullableTimeline, resetResult, setTimeline } from './timelineSlice';
+import { ITimeline, IUser } from '@cubedelement.com/realty-investor-timeline';
 
 // Mock router subscription to avoid side effects when importing store.ts
 jest.mock('../router/router', () => ({
@@ -19,7 +20,14 @@ describe('store configuration', () => {
     expect(initial.result.timeline).toBeNull();
 
     // dispatch setTimeline
-    const t = { id: 'x' } as any;
+    const t: jest.Mocked<NullableTimeline> = {
+      user: {} as unknown as jest.Mocked<IUser>,
+      rentals: [],
+      clone: jest.fn(),
+      endDate: new Date(),
+      startDate: new Date(),
+      getCashFlowMonthByEndDate: jest.fn(),
+    } as unknown as jest.Mocked<ITimeline>;
     store.dispatch(setTimeline(t));
     expect(store.getState().result.timeline).toBe(t);
 

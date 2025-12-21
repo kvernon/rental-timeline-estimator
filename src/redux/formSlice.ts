@@ -117,9 +117,10 @@ const initialState: IWizardFormData = {
       highestMinSellInYears: { value: 5, validationResult: ValidatorTypes.Valid },
       lowestAppreciationValue: { value: 10, validationResult: ValidatorTypes.Valid },
       highestAppreciationValue: { value: 30, validationResult: ValidatorTypes.Valid },
+      maxMonthsToCache: { value: 2, validationResult: ValidatorTypes.Valid },
     },
     apartment: {
-      title: 'Apartment',
+      title: 'Passive Apartment',
       propertyType: PropertyType.PassiveApartment,
       lowestPurchasePrice: { value: 25000, validationResult: ValidatorTypes.Valid },
       highestPurchasePrice: { value: 500000, validationResult: ValidatorTypes.Valid },
@@ -133,6 +134,7 @@ const initialState: IWizardFormData = {
       highestMinSellInYears: { value: 8, validationResult: ValidatorTypes.Valid },
       lowestAppreciationValue: { value: 50, validationResult: ValidatorTypes.Valid },
       highestAppreciationValue: { value: 100, validationResult: ValidatorTypes.Valid },
+      maxMonthsToCache: { value: 2, validationResult: ValidatorTypes.Valid },
     },
   },
   settings: {
