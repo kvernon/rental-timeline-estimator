@@ -65,6 +65,7 @@ describe('generate unit tests', () => {
           highestMinSellInYears: { value: 1, validationResult: ValidatorTypes.Valid },
           lowestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
           highestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
+          maxMonthsToCache: { value: 1, validationResult: ValidatorTypes.Valid },
         },
         house: {
           title: '',
@@ -81,6 +82,7 @@ describe('generate unit tests', () => {
           highestMinSellInYears: { value: 1, validationResult: ValidatorTypes.Valid },
           lowestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
           highestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
+          maxMonthsToCache: { value: 1, validationResult: ValidatorTypes.Valid },
         },
       };
 
@@ -137,6 +139,7 @@ describe('generate unit tests', () => {
           lowestPurchasePrice: 1,
           lowestSellAppreciationPercent: 1,
           maxRentalOpportunities: 1,
+          maxMonthsToCache: 1,
         },
         generatorOptionsSingleFamily: {
           highestCashFlow: 1,
@@ -150,6 +153,7 @@ describe('generate unit tests', () => {
           lowestPurchasePrice: 1,
           lowestSellAppreciationPercent: 1,
           maxRentalOpportunities: 1,
+          maxMonthsToCache: 1,
         },
       };
 
@@ -188,6 +192,7 @@ describe('generate unit tests', () => {
               highestMinSellInYears: { value: 1, validationResult: ValidatorTypes.Valid },
               lowestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
               highestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
+              maxMonthsToCache: { value: 1, validationResult: ValidatorTypes.Valid },
             },
             house: {
               title: '',
@@ -204,6 +209,7 @@ describe('generate unit tests', () => {
               highestMinSellInYears: { value: 1, validationResult: ValidatorTypes.Valid },
               lowestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
               highestAppreciationValue: { value: 1, validationResult: ValidatorTypes.Valid },
+              maxMonthsToCache: { value: 1, validationResult: ValidatorTypes.Valid },
             },
           },
           {

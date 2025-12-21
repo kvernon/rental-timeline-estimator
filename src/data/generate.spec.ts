@@ -3,6 +3,8 @@ import { ValidatorTypes } from '../components/validators/ValidatorTypes';
 import type { IUserInfo } from './IUserInfo';
 import type { IPropertiesInformationPropsEvent } from '../views/IPropertiesInformationProps';
 import type { ISettings } from './ISettings';
+import { ISimulateOptions } from '@cubedelement.com/realty-investor-timeline/dist/src/time/simulate';
+import { PropertyType } from '@cubedelement.com/realty-investor-timeline';
 
 jest.mock('./validateUserInfo', () => ({
   validateUserInfo: jest.fn(() => ValidatorTypes.Valid),
@@ -15,7 +17,7 @@ jest.mock('./validatePropertiesInfo', () => ({
 jest.mock('@cubedelement.com/realty-investor-timeline', () => ({
   __esModule: true,
   PropertyType: { PassiveApartment: 0, SingleFamily: 1 },
-  simulate: jest.fn((args: any) => ({ id: 'timeline', args })),
+  simulate: jest.fn((args: ISimulateOptions) => ({ id: 'timeline', args })),
 }));
 
 describe('generate', () => {
@@ -37,12 +39,12 @@ describe('generate', () => {
         range: { value: 3, validationResult: ValidatorTypes.Valid },
       },
     ],
-  } as any;
+  };
 
   const propertiesInfo: IPropertiesInformationPropsEvent = {
     house: {
       title: 'Home',
-      propertyType: 1 as any,
+      propertyType: PropertyType.SingleFamily,
       lowestPurchasePrice: { value: 100000, validationResult: ValidatorTypes.Valid },
       highestPurchasePrice: { value: 200000, validationResult: ValidatorTypes.Valid },
       lowestCashFlow: { value: 200, validationResult: ValidatorTypes.Valid },
@@ -55,10 +57,11 @@ describe('generate', () => {
       highestMinSellInYears: { value: 5, validationResult: ValidatorTypes.Valid },
       lowestAppreciationValue: { value: 5, validationResult: ValidatorTypes.Valid },
       highestAppreciationValue: { value: 10, validationResult: ValidatorTypes.Valid },
+      maxMonthsToCache: { value: 20, validationResult: ValidatorTypes.Valid },
     },
     apartment: {
       title: 'Apartment',
-      propertyType: 0 as any,
+      propertyType: PropertyType.PassiveApartment,
       lowestPurchasePrice: { value: 25000, validationResult: ValidatorTypes.Valid },
       highestPurchasePrice: { value: 500000, validationResult: ValidatorTypes.Valid },
       lowestCashFlow: { value: 100, validationResult: ValidatorTypes.Valid },
@@ -71,8 +74,9 @@ describe('generate', () => {
       highestMinSellInYears: { value: 8, validationResult: ValidatorTypes.Valid },
       lowestAppreciationValue: { value: 12, validationResult: ValidatorTypes.Valid },
       highestAppreciationValue: { value: 25, validationResult: ValidatorTypes.Valid },
+      maxMonthsToCache: { value: 30, validationResult: ValidatorTypes.Valid },
     },
-  } as any;
+  };
 
   const settings: ISettings = {
     maxYears: { value: 20, validationResult: ValidatorTypes.Valid },
@@ -82,7 +86,9 @@ describe('generate', () => {
   };
 
   test('throws when validations are invalid', () => {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { validateUserInfo } = require('./validateUserInfo');
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { validatePropertiesInfo } = require('./validatePropertiesInfo');
     validateUserInfo.mockReturnValueOnce(ValidatorTypes.Invalid);
     expect(() => generate(userInfo, propertiesInfo, settings)).toThrow('Either UserInformation or PropertyInformation are invalid');
@@ -94,10 +100,11 @@ describe('generate', () => {
   });
 
   test('maps inputs correctly and calls simulate with proper payload', () => {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { simulate, PropertyType } = require('@cubedelement.com/realty-investor-timeline');
-    const out = generate(userInfo, propertiesInfo, settings) as any;
+    const out = generate(userInfo, propertiesInfo, settings);
     expect(simulate).toHaveBeenCalledTimes(1);
-    const args = (simulate as jest.Mock).mock.calls[0][0];
+    const args: ISimulateOptions = (simulate as jest.Mock).mock.calls[0][0];
 
     expect(args.maxYears).toBe(20);
     expect(args.amountInSavings).toBe(userInfo.savedAtStart.value);
@@ -109,8 +116,8 @@ describe('generate', () => {
     expect(args.holdRules[0]).toEqual({ value: 3, type: 'sellInYears', propertyType: PropertyType.PassiveApartment });
 
     // single family generator options picked from house
-    expect(args.generatorOptionsSingleFamily.lowestMinSellInYears).toBe(propertiesInfo.house.lowestMinSellInYears.value);
-    expect(args.generatorOptionsPassiveApartment.lowestPurchasePrice).toBe(propertiesInfo.apartment.lowestPurchasePrice.value);
+    expect(args?.generatorOptionsSingleFamily?.lowestMinSellInYears).toBe(propertiesInfo.house.lowestMinSellInYears.value);
+    expect(args?.generatorOptionsPassiveApartment?.lowestPurchasePrice).toBe(propertiesInfo.apartment.lowestPurchasePrice.value);
 
     expect(out).toEqual({ id: 'timeline', args });
   });

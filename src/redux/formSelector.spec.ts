@@ -1,10 +1,19 @@
 import { getFormData, getRulesConfig } from './formSelector';
+import { RootState } from './store';
+import { IUserInfo } from '../data/IUserInfo';
+import { IPropertiesInformationPropsEvent } from '../views/IPropertiesInformationProps';
+import { ISettings } from '../data/ISettings';
+import { IResult } from './timelineSlice';
 
 describe('formSelector', () => {
-  const baseState: any = {
+  const baseState: RootState = {
     form: {
-      rulesConfig: { purchaseRules: ['a'], holdRules: ['b'] },
+      rulesConfig: { purchaseRules: [{ ruleTitle: 'a', property: 1 }], holdRules: [{ ruleTitle: 'b', property: 0 }] },
+      userInfo: {} as unknown as IUserInfo,
+      propertiesInfo: {} as unknown as jest.Mocked<IPropertiesInformationPropsEvent>,
+      settings: {} as unknown as jest.Mocked<ISettings>,
     },
+    result: {} as jest.Mocked<IResult>,
   };
 
   test('getFormData returns the form slice', () => {
@@ -12,6 +21,6 @@ describe('formSelector', () => {
   });
 
   test('getRulesConfig derives rulesConfig from form', () => {
-    expect(getRulesConfig(baseState)).toEqual({ purchaseRules: ['a'], holdRules: ['b'] });
+    expect(getRulesConfig(baseState)).toEqual({ purchaseRules: [{ ruleTitle: 'a', property: 1 }], holdRules: [{ ruleTitle: 'b', property: 0 }] });
   });
 });

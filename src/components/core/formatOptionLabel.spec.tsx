@@ -16,7 +16,7 @@ describe('formatOptionLabel layout and style checks', () => {
     };
 
     const node = formatOptionLabel(opt) as React.ReactElement;
-    const { container } = render(<>{node}</>);
+    render(<>{node}</>);
     const img = screen.getByRole('img');
     expect(img).toHaveAttribute('src', '/path/duplex.png');
     expect(img).toHaveAttribute('alt', 'Duplex');

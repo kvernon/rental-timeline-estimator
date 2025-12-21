@@ -56,6 +56,7 @@ describe('formSlice reducer', () => {
           highestMinSellInYears: { value: 10, validationResult: ValidatorTypes.Valid },
           lowestAppreciationValue: { value: 11, validationResult: ValidatorTypes.Valid },
           highestAppreciationValue: { value: 12, validationResult: ValidatorTypes.Valid },
+          maxMonthsToCache: { value: 30, validationResult: ValidatorTypes.Valid },
         },
       }),
     );

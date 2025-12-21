@@ -16,6 +16,7 @@ export interface IPropertyInformationParams {
   highestMinSellInYears: ConditionEventResult<true, ConditionalNumber<true>>;
   lowestAppreciationValue: ConditionEventResult<true, ConditionalNumber<true>>;
   highestAppreciationValue: ConditionEventResult<true, ConditionalNumber<true>>;
+  maxMonthsToCache: ConditionEventResult<true, ConditionalNumber<true>>;
 }
 
 export interface IPropertyInformationOnChangeParams extends IPropertyInformationParams {
