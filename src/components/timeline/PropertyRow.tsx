@@ -10,7 +10,7 @@ import { FontGroups } from '../../theming/fontGroups';
 import { DateAvailable } from './DateAvailable';
 import { currencyFormatter } from '../../data/currency-formatter';
 
-export function PropertyRow(props: { historicalProperty: IHistoricalProperty }) {
+export function PropertyRow(props: { historicalProperty: IHistoricalProperty; endDate: Date }) {
   const costDownValue = props.historicalProperty.property.costDownPrice || 0;
   const costDownAmount = currencyFormatter(costDownValue);
   const marketTitle = costDownValue > 0 ? `Market ($${costDownAmount} Down Payment)` : 'Market';
@@ -43,9 +43,9 @@ export function PropertyRow(props: { historicalProperty: IHistoricalProperty }) 
           value={
             props.historicalProperty.property.soldDate
               ? props.historicalProperty.property.getEquityFromSell(props.historicalProperty.property.soldDate)
-              : 0
+              : props.historicalProperty.property.getEstimatedEquityFromSell(props.endDate)
           }
-          title={'Equity'}
+          title={props.historicalProperty.property.soldDate ? 'Equity Captured' : 'Potential Equity'}
         />
         <PropertyCash fontGroup={FontGroups.h6} value={props.historicalProperty.property.rawEstimatedAnnualCashFlow} title={'Cash Flow'} />
       </Stack>
