@@ -39,6 +39,7 @@ describe('PropertyRow', () => {
         soldDate: undefined,
         rawEstimatedAnnualCashFlow: 12000,
         getEquityFromSell: mockGetEquityFromSell,
+        getEstimatedEquityFromSell: jest.fn().mockReturnValue(210),
         ...overrides,
       },
       // IHistoricalProperty usually has other fields, but we only access .property in the component
@@ -56,13 +57,13 @@ describe('PropertyRow', () => {
     });
 
     jest.mocked(getOwnership).mockReturnValue(OwnershipType.WasOwned);
-    render(<PropertyRow historicalProperty={historicalProperty} />);
+    render(<PropertyRow historicalProperty={historicalProperty} endDate={new Date()} />);
 
     const pc = screen.getAllByTestId('property-cash');
     expect(pc.length).toEqual(3);
 
     expect(PropertyCash).toHaveBeenNthCalledWith(1, { title: 'Market', value: undefined }, undefined);
-    expect(PropertyCash).toHaveBeenNthCalledWith(2, { title: 'Equity', value: 0, fontGroup: FontGroups.h5 }, undefined);
+    expect(PropertyCash).toHaveBeenNthCalledWith(2, { title: 'Potential Equity', value: 210, fontGroup: FontGroups.h5 }, undefined);
     expect(PropertyCash).toHaveBeenNthCalledWith(3, { title: 'Cash Flow', value: 12000, fontGroup: FontGroups.h6 }, undefined);
 
     expect(DateAvailable).toHaveBeenCalledWith(

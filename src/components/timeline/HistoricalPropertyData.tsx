@@ -5,10 +5,14 @@ import { Stack } from '../core/Stack';
 import { Reasons } from '../reasons/Reasons';
 import { PropertyRow } from './PropertyRow';
 
-export function HistoricalPropertyData(props: { historicalProperty: IHistoricalProperty }): ReactNode {
+export function HistoricalPropertyData(props: { historicalProperty: IHistoricalProperty; endDate: Date }): ReactNode {
   return (
     <Stack>
-      <PropertyRow historicalProperty={props.historicalProperty} key={`property-${props.historicalProperty.property.address}`} />
+      <PropertyRow
+        endDate={props.endDate}
+        historicalProperty={props.historicalProperty}
+        key={`property-${props.historicalProperty.property.address}`}
+      />
       <Reasons historicalProperty={props.historicalProperty} />
     </Stack>
   );
