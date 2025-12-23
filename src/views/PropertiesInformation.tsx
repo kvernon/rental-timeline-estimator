@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { NavListSub } from '../components/navigation/NavListSub';
 import { updatePropertiesInfo } from '../redux/formSlice';
 import { IPropertyInformationParams } from '../components/validators/IPropertyInformationParams';
-import { propertyOptions } from '../components/validators/PropertyOptions';
+import { propertyOptionsMap } from '../components/validators/PropertyOptions';
 import { useFormDispatch, useFormSelector } from '../redux/hooks';
 
 export const PropertiesInformation = () => {
@@ -14,11 +14,11 @@ export const PropertiesInformation = () => {
       isSelected?: boolean | undefined;
       isDisabled?: boolean | undefined;
     }[]
-  >(propertyOptions.map((x, i) => ({ title: x, isSelected: i === 0 })));
+  >(propertyOptionsMap.map((x, i) => ({ title: x.title, isSelected: i === 0 })));
 
   const dispatch = useFormDispatch();
   const value = useFormSelector((state) => state.form.propertiesInfo);
-  const [location, setLocation] = React.useState<string>(propertyOptions[0]);
+  const [location, setLocation] = React.useState<string>(propertyOptionsMap[0].title);
 
   const handlePropertyChange = (key: keyof typeof value) => (e: IPropertyInformationParams) => {
     dispatch(updatePropertiesInfo({ key, value: e }));
@@ -34,8 +34,8 @@ export const PropertiesInformation = () => {
           setNav(navList);
         }}
       />
-      {location === propertyOptions[0] && <PropertyInformation {...value.apartment} onChange={handlePropertyChange('apartment')} />}
-      {location === propertyOptions[1] && <PropertyInformation {...value.house} onChange={handlePropertyChange('house')} />}
+      {location === propertyOptionsMap[0].title && <PropertyInformation {...value.apartment} onChange={handlePropertyChange('apartment')} />}
+      {location === propertyOptionsMap[1].title && <PropertyInformation {...value.house} onChange={handlePropertyChange('house')} />}
     </Stack>
   );
 };
