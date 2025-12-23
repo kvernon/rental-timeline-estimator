@@ -25,6 +25,10 @@ const PropertyRangeValidationPanel = styled(RangeValidationPanel)`
 
 export const PropertyInformation = (props: IPropertyInformationOnChangeParams) => {
   const propertyOption = propertyOptions[props.propertyType === PropertyType.PassiveApartment ? 0 : 1];
+  const minAppreciation = 1;
+  const maxAppreciation = props.propertyType === PropertyType.PassiveApartment ? 299 : 19;
+  const maxEquity = props.propertyType === PropertyType.PassiveApartment ? 299 : 100;
+  const maxCashFlow = props.propertyType === PropertyType.PassiveApartment ? 1999 : 529;
 
   return (
     <Stack aria-label={props.title} direction="row">
@@ -185,8 +189,8 @@ export const PropertyInformation = (props: IPropertyInformationOnChangeParams) =
 
             <AnimatedRangeFieldValidator<true>
               delay={DEFAULT_START_DELAY * 6}
-              min={1}
-              max={20}
+              min={minAppreciation}
+              max={maxAppreciation}
               suffix="%"
               required={true}
               title="Lowest Appreciation Percent"
@@ -205,7 +209,7 @@ export const PropertyInformation = (props: IPropertyInformationOnChangeParams) =
             <AnimatedRangeFieldValidator<true>
               delay={DEFAULT_START_DELAY * 7}
               min={props.lowestAppreciationValue.value + 1}
-              max={20}
+              max={maxAppreciation + 1}
               suffix="%"
               required={true}
               title="Highest Appreciation Percent"
@@ -228,7 +232,7 @@ export const PropertyInformation = (props: IPropertyInformationOnChangeParams) =
             <AnimatedRangeFieldValidator<true>
               delay={DEFAULT_START_DELAY * 5}
               min={100}
-              max={200}
+              max={maxCashFlow}
               prefix="$"
               required={true}
               title="Lowest Amount"
@@ -247,7 +251,7 @@ export const PropertyInformation = (props: IPropertyInformationOnChangeParams) =
             <AnimatedRangeFieldValidator<true>
               delay={DEFAULT_START_DELAY * 6}
               min={props.lowestCashFlow.value + 1}
-              max={10}
+              max={maxCashFlow + 1}
               prefix="$"
               required={true}
               title="Highest Amount"
@@ -255,7 +259,7 @@ export const PropertyInformation = (props: IPropertyInformationOnChangeParams) =
               useUnderlineOnly={false}
               showTitle={true}
               value={props.highestCashFlow}
-              id="lowest-cash-flow"
+              id="highest-cash-flow"
               onChange={(e) => {
                 props.onChange({
                   ...props,
@@ -270,7 +274,7 @@ export const PropertyInformation = (props: IPropertyInformationOnChangeParams) =
             <AnimatedRangeFieldValidator<true>
               delay={DEFAULT_START_DELAY * 6}
               min={1}
-              max={100}
+              max={maxEquity}
               suffix="%"
               required={true}
               title="Lowest Equity"
@@ -289,7 +293,7 @@ export const PropertyInformation = (props: IPropertyInformationOnChangeParams) =
             <AnimatedRangeFieldValidator<true>
               delay={DEFAULT_START_DELAY * 7}
               min={props.lowestEquityCapturePercent.value + 1}
-              max={100}
+              max={maxEquity}
               suffix="%"
               required={true}
               title="Highest Equity"

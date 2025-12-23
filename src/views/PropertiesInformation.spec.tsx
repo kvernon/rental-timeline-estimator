@@ -84,11 +84,11 @@ describe('PropertiesInformation unit tests', () => {
           navList: [
             {
               isSelected: true,
-              title: 'apartment',
+              title: 'Passive Apartment',
             },
             {
               isSelected: false,
-              title: 'house',
+              title: 'Single Family',
             },
           ],
         },

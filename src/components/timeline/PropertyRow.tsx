@@ -9,11 +9,15 @@ import { PropertyCash } from './PropertyCash';
 import { FontGroups } from '../../theming/fontGroups';
 import { DateAvailable } from './DateAvailable';
 import { currencyFormatter } from '../../data/currency-formatter';
+import { PropertyType } from '@cubedelement.com/realty-investor-timeline';
+import { PassiveApartmentEquity } from './PassiveApartmentEquity';
+import { SingleFamilyEquity } from './SingleFamilyEquity';
 
 export function PropertyRow(props: { historicalProperty: IHistoricalProperty; endDate: Date }) {
   const costDownValue = props.historicalProperty.property.costDownPrice || 0;
   const costDownAmount = currencyFormatter(costDownValue);
   const marketTitle = costDownValue > 0 ? `Market ($${costDownAmount} Down Payment)` : 'Market';
+
   return (
     <StackRowPill direction="row">
       <Stack direction="column">
@@ -38,16 +42,13 @@ export function PropertyRow(props: { historicalProperty: IHistoricalProperty; en
           availableEndDate={props.historicalProperty.property.availableEndDate}
         />
         <PropertyCash value={props.historicalProperty.property.purchasePrice} title={marketTitle} />
-        <PropertyCash
-          fontGroup={FontGroups.h5}
-          value={
-            props.historicalProperty.property.soldDate
-              ? props.historicalProperty.property.getEquityFromSell(props.historicalProperty.property.soldDate)
-              : props.historicalProperty.property.getEstimatedEquityFromSell(props.endDate)
-          }
-          title={props.historicalProperty.property.soldDate ? 'Equity Captured' : 'Potential Equity'}
-        />
-        <PropertyCash fontGroup={FontGroups.h6} value={props.historicalProperty.property.rawEstimatedAnnualCashFlow} title={'Cash Flow'} />
+        {props.historicalProperty.property.propertyType === PropertyType.SingleFamily && (
+          <SingleFamilyEquity historicalProperty={props.historicalProperty} endDate={props.endDate} />
+        )}
+        {props.historicalProperty.property.propertyType === PropertyType.PassiveApartment && (
+          <PassiveApartmentEquity historicalProperty={props.historicalProperty} endDate={props.endDate} />
+        )}
+        <PropertyCash fontGroup={FontGroups.h6} value={props.historicalProperty.property.rawEstimatedAnnualCashFlow} title={'Annual Cash Flow'} />
       </Stack>
     </StackRowPill>
   );

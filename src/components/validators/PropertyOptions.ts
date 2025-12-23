@@ -5,10 +5,12 @@ export const propertyOptions = ['apartment', 'house'];
 export const propertyOptionsMap = [
   {
     label: propertyOptions[0],
+    title: 'Passive Apartment',
     propertyType: PropertyType.PassiveApartment,
   },
   {
     label: propertyOptions[1],
+    title: 'Single Family',
     propertyType: PropertyType.SingleFamily,
   },
 ];
