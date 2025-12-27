@@ -71,6 +71,7 @@ describe('getRulesValuesToRulesValuesResults unit tests', () => {
               {
                 ruleTitle: 'foo',
                 property: 0,
+                rule: 'HoldRuleTypes',
               },
             ]),
           ).toEqual(expected);
@@ -98,6 +99,7 @@ describe('getRulesValuesToRulesValuesResults unit tests', () => {
               {
                 ruleTitle: 'fooood',
                 property: 0,
+                rule: 'HoldRuleTypes',
               },
             ]),
           ).toEqual([
@@ -136,10 +138,12 @@ describe('getRulesValuesToRulesValuesResults unit tests', () => {
               {
                 ruleTitle: 'fooood',
                 property: 0,
+                rule: 'HoldRuleTypes',
               },
               {
                 ruleTitle: 'foooasddod',
                 property: 0,
+                rule: 'HoldRuleTypes',
               },
             ]),
           ).toEqual([
@@ -185,14 +189,17 @@ describe('getRulesValuesToRulesValuesResults unit tests', () => {
               {
                 ruleTitle: 'fooood',
                 property: 0,
+                rule: 'HoldRuleTypes',
               },
               {
                 ruleTitle: 'foooasddod',
                 property: 0,
+                rule: 'HoldRuleTypes',
               },
               {
                 ruleTitle: 'feed',
                 property: 0,
+                rule: 'HoldRuleTypes',
               },
             ]),
           ).toEqual([

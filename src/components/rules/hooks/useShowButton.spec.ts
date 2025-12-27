@@ -12,8 +12,8 @@ describe('useShowButton unit tests', () => {
   const mockGetRemainingValues = jest.mocked(getRemainingValues);
 
   const dummyChoices: IRuleStackEntity[] = [
-    { ruleTitle: 'Rule 1', property: 1 },
-    { ruleTitle: 'Rule 2', property: 2 },
+    { ruleTitle: 'Rule 1', property: 1, rule: 'HoldRuleTypes' },
+    { ruleTitle: 'Rule 2', property: 2, rule: 'HoldRuleTypes' },
   ];
 
   const createRuleValue = (
@@ -31,8 +31,8 @@ describe('useShowButton unit tests', () => {
   describe('showButton logic', () => {
     it('should be true when there are remaining non-disabled values', () => {
       mockGetRemainingValues.mockReturnValue([
-        { ruleTitle: 'Rule 1', property: 1, isDisabled: false },
-        { ruleTitle: 'Rule 2', property: 2, isDisabled: true },
+        { ruleTitle: 'Rule 1', property: 1, isDisabled: false, rule: 'HoldRuleTypes' },
+        { ruleTitle: 'Rule 2', property: 2, isDisabled: true, rule: 'HoldRuleTypes' },
       ]);
 
       const result = useShowButton(dummyChoices, []);
@@ -42,8 +42,8 @@ describe('useShowButton unit tests', () => {
 
     it('should be false when all remaining values are disabled', () => {
       mockGetRemainingValues.mockReturnValue([
-        { ruleTitle: 'Rule 1', property: 1, isDisabled: true },
-        { ruleTitle: 'Rule 2', property: 2, isDisabled: true },
+        { ruleTitle: 'Rule 1', property: 1, isDisabled: true, rule: 'HoldRuleTypes' },
+        { ruleTitle: 'Rule 2', property: 2, isDisabled: true, rule: 'HoldRuleTypes' },
       ]);
 
       const result = useShowButton(dummyChoices, []);

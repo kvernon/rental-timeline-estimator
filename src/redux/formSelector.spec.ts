@@ -8,7 +8,10 @@ import { IResult } from './timelineSlice';
 describe('formSelector', () => {
   const baseState: RootState = {
     form: {
-      rulesConfig: { purchaseRules: [{ ruleTitle: 'a', property: 1 }], holdRules: [{ ruleTitle: 'b', property: 0 }] },
+      rulesConfig: {
+        purchaseRules: [{ ruleTitle: 'a', property: 1, rule: 'HoldRuleTypes' }],
+        holdRules: [{ ruleTitle: 'b', property: 0, rule: 'HoldRuleTypes' }],
+      },
       userInfo: {} as unknown as IUserInfo,
       propertiesInfo: {} as unknown as jest.Mocked<IPropertiesInformationPropsEvent>,
       settings: {} as unknown as jest.Mocked<ISettings>,
@@ -21,6 +24,9 @@ describe('formSelector', () => {
   });
 
   test('getRulesConfig derives rulesConfig from form', () => {
-    expect(getRulesConfig(baseState)).toEqual({ purchaseRules: [{ ruleTitle: 'a', property: 1 }], holdRules: [{ ruleTitle: 'b', property: 0 }] });
+    expect(getRulesConfig(baseState)).toEqual({
+      purchaseRules: [{ ruleTitle: 'a', property: 1, rule: 'HoldRuleTypes' }],
+      holdRules: [{ ruleTitle: 'b', property: 0, rule: 'HoldRuleTypes' }],
+    });
   });
 });
