@@ -51,6 +51,7 @@ export const PropertyInformation = (props: IPropertyInformationOnChangeParams) =
               max={5}
               required={true}
               title="Minimum Generated Rental Opportunities"
+              suffix="Quantity"
               hasSpinner={true}
               useUnderlineOnly={false}
               showTitle={true}
@@ -70,6 +71,7 @@ export const PropertyInformation = (props: IPropertyInformationOnChangeParams) =
               max={10}
               required={true}
               title="Maximum Generated Rental Opportunities"
+              suffix="Quantity"
               hasSpinner={true}
               useUnderlineOnly={false}
               showTitle={true}
@@ -89,6 +91,7 @@ export const PropertyInformation = (props: IPropertyInformationOnChangeParams) =
               max={6}
               required={true}
               title="Maximum Time Listed"
+              suffix="Months"
               hasSpinner={true}
               useUnderlineOnly={false}
               showTitle={true}

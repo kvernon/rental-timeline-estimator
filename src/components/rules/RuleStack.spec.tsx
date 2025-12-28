@@ -29,10 +29,6 @@ jest.mock('../validators/ValidationBar', () => {
   };
 });
 
-function getRuleName(index: number) {
-  return `Rule Number ${index}`;
-}
-
 describe('RuleStack unit tests', () => {
   beforeEach(() => {
     jest.mocked(getValidationResult).mockReturnValue(ValidatorTypes.Optional);
@@ -51,20 +47,21 @@ describe('RuleStack unit tests', () => {
       props = {
         index: 0,
         ruleStackValues: [
-          { ruleTitle: 'title', property: 0 },
-          { ruleTitle: 'nothing', property: 1 },
+          { ruleTitle: 'title', property: 0, rule: 'HoldRuleTypes' },
+          { ruleTitle: 'nothing', property: 1, rule: 'HoldRuleTypes' },
         ],
         value: {
-          title: { value: { value: 0, label: '' }, validationResult: ValidatorTypes.Optional },
+          title: { value: { value: 0, label: 'title 0' }, validationResult: ValidatorTypes.Optional },
           property: { value: { value: 0, label: '' }, validationResult: ValidatorTypes.Optional },
           range: { value: undefined, validationResult: ValidatorTypes.Optional },
         },
+        onUpdate: jest.fn(),
       };
       render(<RuleStack {...props} />);
     });
 
     test('should generate with StackBase', () => {
-      const entity = screen.getByLabelText<HTMLDivElement>(getRuleName(props.index));
+      const entity = screen.getByLabelText<HTMLDivElement>('title 0');
 
       expect(entity).toHaveStyle('background-color: #4f41b9');
       expect(entity).toHaveStyle('padding-left:0');
@@ -88,7 +85,7 @@ describe('RuleStack unit tests', () => {
     });
 
     test('should generate with TitleDropDownValidator', () => {
-      const entity = screen.getByLabelText<HTMLDivElement>(getRuleName(props.index));
+      const entity = screen.getByLabelText<HTMLDivElement>('title 0');
 
       expect(entity).toBeInTheDocument();
       expect(TitleDropDownValidator).toHaveBeenCalledWith(
@@ -159,6 +156,7 @@ describe('RuleStack unit tests', () => {
             property: 1,
             max: 7,
             suffix: 'suffix-one',
+            rule: 'HoldRuleTypes',
           },
           {
             min: 8,
@@ -167,6 +165,7 @@ describe('RuleStack unit tests', () => {
             property: 1,
             max: 20,
             suffix: 'suffix-two',
+            rule: 'HoldRuleTypes',
           },
         ],
         value: {
@@ -174,6 +173,7 @@ describe('RuleStack unit tests', () => {
           range: { value: 1, validationResult: ValidatorTypes.Valid },
           title: { value: { value: 1, label: 'nothing' }, validationResult: ValidatorTypes.Invalid },
         },
+        onUpdate: jest.fn(),
       };
       render(<RuleStack {...props} />);
     });
@@ -187,7 +187,7 @@ describe('RuleStack unit tests', () => {
     });
 
     test('should generate with TitleDropDownValidator', () => {
-      const entity = screen.getByLabelText<HTMLDivElement>(getRuleName(props.index));
+      const entity = screen.getByLabelText<HTMLDivElement>('nothing');
 
       expect(entity).toBeInTheDocument();
       expect(TitleDropDownValidator).toHaveBeenCalledWith(
@@ -266,6 +266,7 @@ describe('RuleStack unit tests', () => {
             property: 0,
             max: 7,
             suffix: 'suffix-one',
+            rule: 'HoldRuleTypes',
           },
           {
             min: 8,
@@ -274,6 +275,7 @@ describe('RuleStack unit tests', () => {
             property: 1,
             max: 20,
             suffix: 'suffix-two',
+            rule: 'HoldRuleTypes',
           },
         ],
         removeClick: removeClickMock,

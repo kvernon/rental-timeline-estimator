@@ -1,5 +1,6 @@
 export interface IRuleConfigEntity {
   ruleType: string;
+  description?: string;
   min?: number;
   max?: number;
   suffix?: string;
@@ -8,4 +9,5 @@ export interface IRuleConfigEntity {
 
 export interface IRuleConfigWithPropertyType extends IRuleConfigEntity {
   propertyType: number;
+  rule: 'PurchaseRuleTypes' | 'HoldRuleTypes';
 }

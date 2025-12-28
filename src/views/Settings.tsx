@@ -26,7 +26,8 @@ export function Settings() {
             min={1}
             max={20}
             required={true}
-            title="Maximum Amount of Years"
+            title="Maximum Length"
+            suffix="Years"
             hasSpinner={true}
             useUnderlineOnly={false}
             showTitle={true}

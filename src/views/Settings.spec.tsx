@@ -31,7 +31,7 @@ describe('Settings', () => {
     render(<Settings />);
 
     expect(screen.getByText('Time')).toBeInTheDocument();
-    expect(screen.getByLabelText('Maximum Amount of Years')).toBeInTheDocument();
+    expect(screen.getByLabelText('Maximum Length')).toBeInTheDocument();
     expect(screen.getByText('Single Family Loans')).toBeInTheDocument();
     expect(screen.getByLabelText('Loan Interest Rate')).toBeInTheDocument();
     expect(screen.getByLabelText('Loan Mortgage Term')).toBeInTheDocument();
@@ -42,7 +42,7 @@ describe('Settings', () => {
   it('should render with initial values from store', () => {
     render(<Settings />);
 
-    expect(screen.getByLabelText('Maximum Amount of Years')).toHaveValue(mockSettings.maxYears.value);
+    expect(screen.getByLabelText('Maximum Length')).toHaveValue(mockSettings.maxYears.value);
     expect(screen.getByLabelText('Loan Interest Rate')).toHaveValue(mockSettings.singleFamilyLoanRatePercent.value);
     expect(screen.getByLabelText('Loan Mortgage Term')).toHaveValue(mockSettings.singleFamilyLoanTermInYears.value);
     expect(screen.getByLabelText('Multi Family Minimum Monthly Reserves')).toHaveValue(
@@ -52,7 +52,7 @@ describe('Settings', () => {
 
   it('should dispatch updateSettings when maxYears changes', () => {
     render(<Settings />);
-    const input = screen.getByLabelText('Maximum Amount of Years');
+    const input = screen.getByLabelText('Maximum Length');
     fireEvent.change(input, { target: { value: '15' } });
 
     expect(mockDispatch).toHaveBeenCalledTimes(1);

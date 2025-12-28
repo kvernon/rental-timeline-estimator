@@ -19,12 +19,12 @@ describe('getRemainingValues unit tests', () => {
 
     beforeEach(() => {
       choices = [
-        { ruleTitle: 'one', property: 0 },
-        { ruleTitle: 'one', property: 1 },
-        { ruleTitle: 'two', property: 0 },
-        { ruleTitle: 'two', property: 1 },
-        { ruleTitle: 'three', property: 1 },
-        { ruleTitle: 'four', property: 1 },
+        { ruleTitle: 'one', property: 0, rule: 'HoldRuleTypes' },
+        { ruleTitle: 'one', property: 1, rule: 'HoldRuleTypes' },
+        { ruleTitle: 'two', property: 0, rule: 'HoldRuleTypes' },
+        { ruleTitle: 'two', property: 1, rule: 'HoldRuleTypes' },
+        { ruleTitle: 'three', property: 1, rule: 'HoldRuleTypes' },
+        { ruleTitle: 'four', property: 1, rule: 'HoldRuleTypes' },
       ];
     });
 
@@ -64,12 +64,12 @@ describe('getRemainingValues unit tests', () => {
             },
           ]),
         ).toEqual([
-          { isDisabled: true, property: 0, ruleTitle: 'one' },
-          { isDisabled: false, property: 1, ruleTitle: 'one' },
-          { isDisabled: false, property: 0, ruleTitle: 'two' },
-          { isDisabled: true, property: 1, ruleTitle: 'two' },
-          { isDisabled: false, property: 1, ruleTitle: 'three' },
-          { isDisabled: false, property: 1, ruleTitle: 'four' },
+          { isDisabled: true, property: 0, ruleTitle: 'one', rule: 'HoldRuleTypes' },
+          { isDisabled: false, property: 1, ruleTitle: 'one', rule: 'HoldRuleTypes' },
+          { isDisabled: false, property: 0, ruleTitle: 'two', rule: 'HoldRuleTypes' },
+          { isDisabled: true, property: 1, ruleTitle: 'two', rule: 'HoldRuleTypes' },
+          { isDisabled: false, property: 1, ruleTitle: 'three', rule: 'HoldRuleTypes' },
+          { isDisabled: false, property: 1, ruleTitle: 'four', rule: 'HoldRuleTypes' },
         ]);
       });
     });
@@ -110,12 +110,12 @@ describe('getRemainingValues unit tests', () => {
             },
           ]),
         ).toEqual([
-          { isDisabled: true, property: 0, ruleTitle: 'one' },
-          { isDisabled: false, property: 1, ruleTitle: 'one' },
-          { isDisabled: true, property: 0, ruleTitle: 'two' },
-          { isDisabled: false, property: 1, ruleTitle: 'two' },
-          { isDisabled: false, property: 1, ruleTitle: 'three' },
-          { isDisabled: false, property: 1, ruleTitle: 'four' },
+          { isDisabled: true, property: 0, ruleTitle: 'one', rule: 'HoldRuleTypes' },
+          { isDisabled: false, property: 1, ruleTitle: 'one', rule: 'HoldRuleTypes' },
+          { isDisabled: true, property: 0, ruleTitle: 'two', rule: 'HoldRuleTypes' },
+          { isDisabled: false, property: 1, ruleTitle: 'two', rule: 'HoldRuleTypes' },
+          { isDisabled: false, property: 1, ruleTitle: 'three', rule: 'HoldRuleTypes' },
+          { isDisabled: false, property: 1, ruleTitle: 'four', rule: 'HoldRuleTypes' },
         ]);
       });
     });

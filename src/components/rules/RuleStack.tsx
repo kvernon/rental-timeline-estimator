@@ -13,6 +13,7 @@ import { ISelectOption } from '../core/ISelectOption';
 import { IEventValue } from '../validators/IEventResult';
 import { ConditionalNumber, ConditionEventResult } from '../validators/IRangeFieldValidatorEvent';
 import { getTitleChoicesFormatted } from './hooks/getTitleChoicesFormatted';
+import { Tooltip } from 'react-tooltip';
 
 const PropertyPicker = styled(PropertyDropDownValidator)`
   width: 147px;
@@ -35,8 +36,6 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
   const formattedTitles = useMemo(() => {
     return getTitleChoicesFormatted(props.ruleStackValues, props.value.property.value.value);
   }, [props.ruleStackValues, props.value.property.value.value]);
-
-  const injectProps = { ...props };
 
   const titleDropDownOnChange = (valueOption: IEventValue<ISelectOption>) => {
     if (valueOption.value && props.value.title?.value.label !== valueOption.value.label) {
@@ -74,11 +73,14 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
     }
   };
 
-  delete injectProps.onUpdate;
+  const injectProps = { ...props, value: undefined };
+
+  const dataTooltipId = `${props.index}-tool-tip-${selectedValueOptions?.property}-${selectedValueOptions?.rule}`;
 
   return (
     <StackBase
       {...injectProps}
+      data-tooltip-id={dataTooltipId}
       ref={ref}
       direction="row"
       marginBottom={'20px'}
@@ -88,7 +90,10 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
         ...props.style,
         zIndex: props.index,
       }}
-      aria-label={`Rule Number ${props.index}`}
+      tabIndex={props.index}
+      aria-orientation="vertical"
+      aria-label={props.value.title.value.label}
+      aria-description={selectedValueOptions?.description}
     >
       <DragPlaceholder role={'drag-handle'} data-movable-handle />
       <Stack direction="column" paddingTop="10px" paddingLeft="17px" paddingBottom="20px" paddingRight="17px">
@@ -128,6 +133,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
           }
         }}
       />
+      <Tooltip id={dataTooltipId} content={selectedValueOptions?.description} offset={-10} />
     </StackBase>
   );
 });

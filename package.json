@@ -1,6 +1,6 @@
 {
   "name": "realty-investor-estimator",
-  "version": "0.75.0",
+  "version": "0.76.0",
   "description": "",
   "main": "./dist/src/index.js",
   "types": "./dist/src/index.d.ts",
@@ -48,6 +48,7 @@
     "react-redux": "^9.2.0",
     "react-router": "^7.10.1",
     "react-select": "^5.10.2",
+    "react-tooltip": "^5.30.0",
     "react-use": "^17.6.0"
   },
   "devDependencies": {

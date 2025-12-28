@@ -109,6 +109,7 @@ describe('RulesCollection unit tests', () => {
             max: 20,
             min: 10,
             property: 0,
+            rule: 'HoldRuleTypes',
           },
           {
             ruleTitle: 'one',
@@ -117,6 +118,7 @@ describe('RulesCollection unit tests', () => {
             max: 20,
             min: 10,
             property: 1,
+            rule: 'HoldRuleTypes',
           },
           {
             ruleTitle: 'two',
@@ -125,6 +127,7 @@ describe('RulesCollection unit tests', () => {
             max: 40,
             min: 20,
             property: 1,
+            rule: 'HoldRuleTypes',
           },
         ],
         onChange: jest.fn(),

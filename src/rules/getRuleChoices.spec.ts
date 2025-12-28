@@ -30,6 +30,7 @@ describe('getRuleChoices unit tests', () => {
             prefix: 'prefix',
             ruleType: 'Foo',
             suffix: 'suffix',
+            rule: 'HoldRuleTypes',
           },
           {
             propertyType: 1,
@@ -38,6 +39,7 @@ describe('getRuleChoices unit tests', () => {
             prefix: 'prefix',
             ruleType: 'Foo',
             suffix: 'suffix',
+            rule: 'HoldRuleTypes',
           },
         ]),
       ).toEqual([
@@ -48,6 +50,7 @@ describe('getRuleChoices unit tests', () => {
           property: 0,
           ruleTitle: 'Big Thing Purchase',
           suffix: 'suffix',
+          rule: 'HoldRuleTypes',
         },
         {
           min: 0,
@@ -56,6 +59,7 @@ describe('getRuleChoices unit tests', () => {
           property: 1,
           ruleTitle: 'Big Thing Purchase',
           suffix: 'suffix',
+          rule: 'HoldRuleTypes',
         },
       ]);
     });
