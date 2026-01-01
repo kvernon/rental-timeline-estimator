@@ -215,7 +215,7 @@ export function Timeline() {
             </DataLayer>
             <DataLayerProperty>
               {properties.map((p, i) => (
-                <ItemOnOff key={i} visible={p.isActive} style={{ width: '325px', height: '140px', paddingRight: '10px' }}>
+                <ItemOnOff key={i} visible={p.isActive} style={{ paddingRight: '10px' }}>
                   <PropertyTimeline historicalProperty={p.property} useSmall={true} />
                 </ItemOnOff>
               ))}

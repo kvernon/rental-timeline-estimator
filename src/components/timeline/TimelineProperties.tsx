@@ -18,8 +18,8 @@ export function TimelineProperties() {
 
   return (
     <Panel title={'Historical Properties'}>
-      <StackSpaceBetween spacing={0}>
-        <PropertyTypeSpanForProperties spacing={0} direction="row">
+      <StackSpaceBetween>
+        <PropertyTypeSpanForProperties direction="row">
           {rentals.map((x, i) => (
             <AnimatedWrapFormItem delay={DEFAULT_START_DELAY * i} key={`rental-${i}`}>
               <HistoricalPropertyData endDate={endDate!} historicalProperty={x} />
