@@ -3,4 +3,5 @@ import { Stack } from '../core/Stack';
 
 export const StackSpaceBetween = styled(Stack)`
   justify-content: left;
+  padding: 0;
 `;
