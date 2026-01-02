@@ -46,7 +46,7 @@ describe('UserLedgerPage', () => {
   it('renders the page structure', () => {
     render(<UserLedgerPage />);
 
-    expect(UserLedgerSummaryForYear).toHaveBeenNthCalledWith(1, { goal: 1, ledgerCollection: mockLedgerCollection, year: 2025 }, undefined);
-    expect(UserLedgerSummariesForYearByMonth).toHaveBeenNthCalledWith(1, { goal: 1, ledgerCollection: mockLedgerCollection, year: 2025 }, undefined);
+    expect(UserLedgerSummaryForYear).toHaveBeenNthCalledWith(1, { goal: 1, ledgerCollection: mockLedgerCollection, year: 2026 }, undefined);
+    expect(UserLedgerSummariesForYearByMonth).toHaveBeenNthCalledWith(1, { goal: 1, ledgerCollection: mockLedgerCollection, year: 2026 }, undefined);
   });
 });
