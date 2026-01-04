@@ -8,13 +8,12 @@ import { currencyFormatter } from '../../data/currency-formatter';
 import { Street } from './signs/Street';
 import { PropertyType } from '@cubedelement.com/realty-investor-timeline';
 
-export function PropertyTimeline(props: { historicalProperty: IHistoricalProperty; useSmall?: boolean }) {
+export function PropertyTimeline(props: { historicalProperty: IHistoricalProperty }) {
   const costDownValue = props.historicalProperty.property.costDownPrice || 0;
   const costDownAmount = currencyFormatter(costDownValue);
   const marketTitle = costDownValue > 0 ? `Market ($${costDownAmount} Down Payment)` : 'Market';
-  const imgWidth = props.useSmall ? 88 : Math.round(629 / 3);
-  const imgHeight = props.useSmall ? 58 : Math.round(467 / 3);
-  const imgSrc = `./images/${props.historicalProperty.property.propertyType === PropertyType.SingleFamily ? 'house' : 'apartment'}${props.useSmall ? '' : '-lg'}.gif`;
+  const imgSrc = `./images/${props.historicalProperty.property.propertyType === PropertyType.SingleFamily ? 'house' : 'apartment'}.gif`;
+
   return (
     <StackRowPill direction="column" borderDebug={true}>
       <Street address={props.historicalProperty.property.address} />
@@ -53,13 +52,7 @@ export function PropertyTimeline(props: { historicalProperty: IHistoricalPropert
           transform: `translate(0, -60px)`,
         }}
       >
-        <img
-          width={imgWidth}
-          height={imgHeight}
-          src={imgSrc}
-          alt={props.historicalProperty.property.address}
-          title={props.historicalProperty.property.address}
-        />
+        <img width={88} height={58} src={imgSrc} alt={props.historicalProperty.property.address} title={props.historicalProperty.property.address} />
       </Stack>
     </StackRowPill>
   );

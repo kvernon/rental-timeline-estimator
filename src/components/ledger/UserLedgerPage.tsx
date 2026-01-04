@@ -5,27 +5,23 @@ import { UserLedgerSummariesForYearByMonth } from './UserLedgerSummariesForYearB
 import { ValidationPanel } from '../panels/ValidationPanel';
 import { ValidatorTypes } from '../validators/ValidatorTypes';
 import { useFormSelector } from '../../redux/hooks';
-import { getStartAndEndDate, getUser } from '../../redux/timelineSelectors';
+import { getUser } from '../../redux/timelineSelectors';
 import { AnimatedWrapPanel } from '../AnimatedWrapPanel';
 import { DEFAULT_START_DELAY } from '../IAnimatedProps';
+import { useYears } from './useYears';
 
 export function UserLedgerPage() {
-  const [startDate, endDate] = useFormSelector(getStartAndEndDate);
   const user = useFormSelector(getUser);
-  const years: number[] = [];
+  const years = useYears();
 
-  if (!startDate || !endDate || !user)
+  if (!user)
     return (
       <ValidationPanel title={'No data'} validationType={ValidatorTypes.Invalid}>
-        <Stack direction={'column'}>
+        <Stack>
           <span>No data</span>
         </Stack>
       </ValidationPanel>
     );
-
-  for (let i = startDate.getFullYear(); i < endDate.getFullYear() + 1; i++) {
-    years.push(i);
-  }
 
   return (
     <>
@@ -37,7 +33,7 @@ export function UserLedgerPage() {
         return (
           <AnimatedWrapPanel delay={i + DEFAULT_START_DELAY} key={`anim-${year}`}>
             <ValidationPanel key={`va-${year}`} title={year.toString()} validationType={isValid()}>
-              <Stack direction={'column'} key={`ledger-annual-${year}`}>
+              <Stack key={`ledger-annual-${year}`}>
                 <UserLedgerSummaryForYear
                   key={`ledger-annual-summary-${year}`}
                   ledgerCollection={user.ledgerCollection}
