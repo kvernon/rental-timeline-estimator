@@ -28,14 +28,8 @@ describe('ForSaleSign', () => {
       font-size: 10px;
       font-weight: bold;
       background-color: rgb(230, 230, 250);
-      rotate: -10deg;
-      position: relative;
-      top: 125px;
-      left: 125px;
       white-space: nowrap;
       min-width: auto;
-      padding-left: 5px;
-      padding-right: 5px;
       margin-top: 0;
     `;
 

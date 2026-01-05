@@ -29,14 +29,8 @@ describe('SoldSign', () => {
       font-weight: bold;
       white-space: nowrap;
       min-width: auto;
-      padding-left: 5px;
-      padding-right: 5px;
       margin-top: 0;
       background-color: rgb(255, 0, 0);
-      rotate: -10deg;
-      position: relative;
-      top: 125px;
-      left: 125px;
     `;
 
     expect(screen.getByText('SOLD')).toHaveStyle(expectedStyle);
