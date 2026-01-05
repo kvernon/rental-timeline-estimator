@@ -5,11 +5,13 @@ import { UserLedgerPage } from './UserLedgerPage';
 import { TypedUseSelectorHook } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { when } from 'jest-when';
-import { getStartAndEndDate, getUser } from '../../redux/timelineSelectors';
+import { getUser } from '../../redux/timelineSelectors';
 import { useFormSelector } from '../../redux/hooks';
 import { ILedgerCollection, IUser } from '@cubedelement.com/realty-investor-timeline';
 import { UserLedgerSummaryForYear } from './UserLedgerSummaryForYear';
 import { UserLedgerSummariesForYearByMonth } from './UserLedgerSummariesForYearByMonth';
+import { useYears } from './useYears';
+
 jest.mock('./UserLedgerSummaryForYear');
 jest.mock('./UserLedgerSummariesForYearByMonth');
 jest.mock('../panels/ValidationPanel');
@@ -17,6 +19,7 @@ jest.mock('react-redux');
 
 // Mock other likely dependencies
 jest.mock('../core/Card');
+jest.mock('./useYears');
 
 describe('UserLedgerPage', () => {
   let mockLedgerCollection: jest.Mocked<ILedgerCollection>;
@@ -29,8 +32,9 @@ describe('UserLedgerPage', () => {
       filter: jest.fn(),
     } as unknown as jest.Mocked<ILedgerCollection>;
 
+    jest.mocked(useYears).mockReturnValue([2026]);
+
     useFormSelectorMock = jest.mocked(useFormSelector).mockImplementation(() => {});
-    when(useFormSelectorMock).calledWith(getStartAndEndDate).mockReturnValue([new Date(), new Date()]);
     when(useFormSelectorMock)
       .calledWith(getUser)
       .mockReturnValue({
