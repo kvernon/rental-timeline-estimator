@@ -19,6 +19,7 @@ describe('Settings', () => {
     singleFamilyLoanRatePercent: { value: 4.5, validationResult: ValidatorTypes.Valid },
     singleFamilyLoanTermInYears: { value: 30, validationResult: ValidatorTypes.Valid },
     passiveApartmentsMinimumMonthlyReservesForRental: { value: 50000, validationResult: ValidatorTypes.Valid },
+    singleFamilyMinimumMonthlyReservesForRental: { value: 4, validationResult: ValidatorTypes.Valid },
   };
 
   beforeEach(() => {
@@ -35,7 +36,7 @@ describe('Settings', () => {
     expect(screen.getByText('Single Family Loans')).toBeInTheDocument();
     expect(screen.getByLabelText('Loan Interest Rate')).toBeInTheDocument();
     expect(screen.getByLabelText('Loan Mortgage Term')).toBeInTheDocument();
-    expect(screen.getByText('Passive Apartments')).toBeInTheDocument();
+    expect(screen.getByText('Reserves')).toBeInTheDocument();
     expect(screen.getByLabelText('Multi Family Minimum Monthly Reserves')).toBeInTheDocument();
   });
 

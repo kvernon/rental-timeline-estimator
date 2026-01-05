@@ -45,6 +45,11 @@ export function generate(userInfo: IUserInfo, propertiesInfo: IPropertiesInforma
         name: LoanSettings.LoanTermInYears,
       },
       {
+        value: settings.singleFamilyMinimumMonthlyReservesForRental.value,
+        propertyType: PropertyType.SingleFamily,
+        name: LoanSettings.MinimumMonthlyReservesForRental,
+      },
+      {
         value: settings.passiveApartmentsMinimumMonthlyReservesForRental.value,
         propertyType: PropertyType.PassiveApartment,
         name: LoanSettings.MinimumMonthlyReservesForRental,

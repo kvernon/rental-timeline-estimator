@@ -83,6 +83,7 @@ describe('generate', () => {
     singleFamilyLoanRatePercent: { value: 7, validationResult: ValidatorTypes.Valid },
     singleFamilyLoanTermInYears: { value: 30, validationResult: ValidatorTypes.Valid },
     passiveApartmentsMinimumMonthlyReservesForRental: { value: 25000, validationResult: ValidatorTypes.Valid },
+    singleFamilyMinimumMonthlyReservesForRental: { value: 4, validationResult: ValidatorTypes.Valid },
   };
 
   test('throws when validations are invalid', () => {
