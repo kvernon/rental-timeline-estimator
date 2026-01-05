@@ -34,8 +34,8 @@ export function Reasons(props: { historicalProperty: IHistoricalProperty }) {
         return (
           <ListItemStyle key={`reason-${props.historicalProperty.property.address}-${x.date.toISOString()}-${x.reason}`}>
             <NoWidthDateCell>{getDate(x.date)}</NoWidthDateCell>
-            {isNoMoney && <ReasonUserHasNoMoneyToInvest reason={x.reason} />}
-            {isRuleCash && <ReasonDoesNotMeetUserRuleAnnualCashFlow reason={x.reason} />}
+            {isNoMoney && <ReasonUserHasNoMoneyToInvest reason={x} />}
+            {isRuleCash && <ReasonDoesNotMeetUserRuleAnnualCashFlow reason={x} />}
             {!isNoMoney && !isRuleCash && x.reason}
           </ListItemStyle>
         );
