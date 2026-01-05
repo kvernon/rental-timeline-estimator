@@ -70,10 +70,24 @@ export function Settings() {
         </RangeValidationPanel>
       </AnimatedWrapPanel>
       <AnimatedWrapPanel delay={DEFAULT_START_DELAY * 2}>
-        <RangeValidationPanel title="Passive Apartments" required={true}>
+        <RangeValidationPanel title="Reserves" required={true}>
           <AnimatedRangeFieldValidator<true>
             delay={DEFAULT_START_DELAY * 4}
-            min={25000}
+            min={4}
+            max={10}
+            required={true}
+            title="Single Family Minimum Mortgage Reserves"
+            suffix={'Months'}
+            hasSpinner={true}
+            useUnderlineOnly={false}
+            showTitle={true}
+            value={value.singleFamilyMinimumMonthlyReservesForRental}
+            id="sf-monthly-reserves"
+            onChange={handleRangeChange('singleFamilyMinimumMonthlyReservesForRental')}
+          />
+          <AnimatedRangeFieldValidator<true>
+            delay={DEFAULT_START_DELAY * 5}
+            min={6}
             max={100000}
             required={true}
             title="Multi Family Minimum Monthly Reserves"

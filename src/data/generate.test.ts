@@ -91,6 +91,7 @@ describe('generate unit tests', () => {
         singleFamilyLoanRatePercent: { value: 1, validationResult: ValidatorTypes.Valid },
         maxYears: { value: 1, validationResult: ValidatorTypes.Valid },
         passiveApartmentsMinimumMonthlyReservesForRental: { value: 1, validationResult: ValidatorTypes.Valid },
+        singleFamilyMinimumMonthlyReservesForRental: { value: 4, validationResult: ValidatorTypes.Valid },
       };
 
       generate(userInfo, propertiesInfo, settings);
@@ -118,6 +119,11 @@ describe('generate unit tests', () => {
             name: LoanSettings.LoanRatePercent,
           },
           { value: 1, propertyType: PropertyType.SingleFamily, name: LoanSettings.LoanTermInYears },
+          {
+            value: 4,
+            propertyType: PropertyType.SingleFamily,
+            name: LoanSettings.MinimumMonthlyReservesForRental,
+          },
           {
             value: 1,
             propertyType: PropertyType.PassiveApartment,
@@ -217,6 +223,7 @@ describe('generate unit tests', () => {
             singleFamilyLoanRatePercent: { value: 1, validationResult: ValidatorTypes.Valid },
             maxYears: { value: 1, validationResult: ValidatorTypes.Valid },
             passiveApartmentsMinimumMonthlyReservesForRental: { value: 1, validationResult: ValidatorTypes.Valid },
+            singleFamilyMinimumMonthlyReservesForRental: { value: 4, validationResult: ValidatorTypes.Valid },
           },
         ),
       ).toThrow(new Error('Either UserInformation or PropertyInformation are invalid'));

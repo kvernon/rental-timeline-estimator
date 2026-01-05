@@ -142,6 +142,7 @@ const initialState: IWizardFormData = {
     singleFamilyLoanRatePercent: { value: 7, validationResult: ValidatorTypes.Valid },
     singleFamilyLoanTermInYears: { value: 30, validationResult: ValidatorTypes.Valid },
     passiveApartmentsMinimumMonthlyReservesForRental: { value: 25000, validationResult: ValidatorTypes.Valid },
+    singleFamilyMinimumMonthlyReservesForRental: { value: 6, validationResult: ValidatorTypes.Valid },
   },
   rulesConfig: choices,
 };
