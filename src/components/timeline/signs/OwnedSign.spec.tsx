@@ -28,10 +28,6 @@ describe('OwnedSign', () => {
       font-size: 10px;
       font-weight: bold;
       background-color: rgb(0, 128, 0);
-      rotate: -10deg;
-      position: relative;
-      top: 125px;
-      left: 125px;
       white-space: nowrap;
       min-width: auto;
       padding-left: 5px;

@@ -4,16 +4,22 @@ import { IHistoricalProperty } from '@cubedelement.com/realty-investor-timeline/
 import { Stack } from '../core/Stack';
 import { Reasons } from '../reasons/Reasons';
 import { PropertyRow } from './PropertyRow';
+import styled from '@emotion/styled';
+
+const HistoricalPropertyDataStyle = styled(Stack)`
+  width: 525px;
+  padding-right: 10px;
+`;
 
 export function HistoricalPropertyData(props: { historicalProperty: IHistoricalProperty; endDate: Date }): ReactNode {
   return (
-    <Stack>
+    <HistoricalPropertyDataStyle>
       <PropertyRow
         endDate={props.endDate}
         historicalProperty={props.historicalProperty}
         key={`property-${props.historicalProperty.property.address}`}
       />
       <Reasons historicalProperty={props.historicalProperty} />
-    </Stack>
+    </HistoricalPropertyDataStyle>
   );
 }

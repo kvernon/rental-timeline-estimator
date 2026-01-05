@@ -13,7 +13,7 @@ import { PropertyType } from '@cubedelement.com/realty-investor-timeline';
 import { PassiveApartmentEquity } from './PassiveApartmentEquity';
 import { SingleFamilyEquity } from './SingleFamilyEquity';
 
-export function PropertyRow(props: { historicalProperty: IHistoricalProperty; endDate: Date }) {
+export function PropertyRow(props: { historicalProperty: IHistoricalProperty; endDate: Date; useSmall?: boolean }) {
   const costDownValue = props.historicalProperty.property.costDownPrice || 0;
   const costDownAmount = currencyFormatter(costDownValue);
   const marketTitle = costDownValue > 0 ? `Market ($${costDownAmount} Down Payment)` : 'Market';
@@ -22,6 +22,7 @@ export function PropertyRow(props: { historicalProperty: IHistoricalProperty; en
     <StackRowPill direction="row">
       <Stack direction="column">
         <PropertyIcon
+          useSmall={props.useSmall}
           address={props.historicalProperty.property.address}
           propertyType={props.historicalProperty.property.propertyType}
           status={getOwnership(props.historicalProperty.property)}
@@ -36,7 +37,7 @@ export function PropertyRow(props: { historicalProperty: IHistoricalProperty; en
           </Stack>
         </Stack>
       </Stack>
-      <Stack borderDebug={false} paddingTop={'10px'} marginLeft={'20px'}>
+      <Stack paddingTop={'10px'} paddingRight={'10px'} marginLeft={'20px'}>
         <DateAvailable
           availableStartDate={props.historicalProperty.property.availableStartDate}
           availableEndDate={props.historicalProperty.property.availableEndDate}
