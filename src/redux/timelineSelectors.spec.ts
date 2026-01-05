@@ -76,18 +76,18 @@ describe('timelineSelectors', () => {
   test('rentals and owned/sold properties selectors', () => {
     const state = makeState();
     expect(getRentals(state)).toHaveLength(2);
-    expect(getActivelyOwnedProperties(state)).toHaveLength(2); // owned or has soldDate counts
-    expect(getActivelyOwnedPropertiesCount(state)).toBe(2);
-    expect(getOwnedOrSoldProperties(state)).toHaveLength(1); // only isOwned === true
-    expect(getOwnedOrSoldPropertiesCount(state)).toBe(1);
+    expect(getActivelyOwnedProperties(state)).toHaveLength(1); // owned or has soldDate counts
+    expect(getActivelyOwnedPropertiesCount(state)).toBe(1);
+    expect(getOwnedOrSoldProperties(state)).toHaveLength(2); // only isOwned === true
+    expect(getOwnedOrSoldPropertiesCount(state)).toBe(2);
   });
 
   test('dates, balances, and aggregates', () => {
     const state = makeState();
     expect(getStartAndEndDate(state)).toEqual([state.result.timeline.startDate, state.result.timeline.endDate]);
     expect(getEndDateBalanceForUser(state)).toBe(999);
-    expect(getEstimatedCashFlow(state)).toBe(150);
-    expect(getEquity(state)).toBe(1500);
+    expect(getEstimatedCashFlow(state)).toBe(100);
+    expect(getEquity(state)).toBe(1000);
   });
 
   test('user and goal', () => {

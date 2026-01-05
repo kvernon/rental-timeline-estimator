@@ -20,7 +20,7 @@ export const getActivelyOwnedProperties = createSelector([getTimeline], (timelin
   if (!timeline) {
     return [];
   }
-  return timeline.rentals.filter((p) => p.property.isOwned || p.property.soldDate).map((x) => x.property);
+  return timeline.rentals.filter((p) => p.property.isOwned).map((x) => x.property);
 });
 
 export const getActivelyOwnedPropertiesCount = createSelector([getActivelyOwnedProperties], (properties) => properties.length);
@@ -29,7 +29,7 @@ export const getOwnedOrSoldProperties = createSelector([getTimeline], (timeline)
   if (!timeline) {
     return [];
   }
-  return timeline.rentals.filter((p) => p.property.isOwned).map((x) => x.property);
+  return timeline.rentals.filter((p) => p.property.isOwned || p.property.soldDate).map((x) => x.property);
 });
 
 export const getOwnedOrSoldPropertiesCount = createSelector([getOwnedOrSoldProperties], (properties) => properties.length);
