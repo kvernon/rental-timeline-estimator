@@ -4,16 +4,17 @@ import '@testing-library/jest-dom';
 import { Reasons } from './Reasons';
 import { IRentalPropertyEntity, IHistoricalProperty } from '@cubedelement.com/realty-investor-timeline';
 import { getDate } from '../../data/getDate';
+import { IHistoricalReason } from '@cubedelement.com/realty-investor-timeline/dist/src/time/i-historical-reason';
 
 // Mock child components to make assertions easier and avoid tight coupling
 jest.mock('./ReasonUserHasNoMoneyToInvest', () => ({
-  ReasonUserHasNoMoneyToInvest: (props: { reason: string }) =>
-    props.reason.startsWith('UserHasNoMoneyToInvest') ? <span data-testid="no-money">NoMoney</span> : null,
+  ReasonUserHasNoMoneyToInvest: (props: { reason: IHistoricalReason }) =>
+    props.reason.reason.startsWith('UserHasNoMoneyToInvest') ? <span data-testid="no-money">NoMoney</span> : null,
 }));
 
 jest.mock('./ReasonDoesNotMeetUserRuleAnnualCashFlow', () => ({
-  ReasonDoesNotMeetUserRuleAnnualCashFlow: (props: { reason: string }) =>
-    props.reason.startsWith('DoesNotMeetUserRuleAnnualCashFlow') ? <span data-testid="rule-cash">RuleCash</span> : null,
+  ReasonDoesNotMeetUserRuleAnnualCashFlow: (props: { reason: IHistoricalReason }) =>
+    props.reason.reason.startsWith('DoesNotMeetUserRuleAnnualCashFlow') ? <span data-testid="rule-cash">RuleCash</span> : null,
 }));
 
 jest.mock('../cells/DateCell', () => ({
