@@ -76,11 +76,11 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
   const injectProps = { ...props, value: undefined };
 
   const dataTooltipId = `${props.index}-tool-tip-${selectedValueOptions?.property}-${selectedValueOptions?.rule}`;
+  const dragTooltipId = `${props.index}-drag-tool-tip-${selectedValueOptions?.property}-${selectedValueOptions?.rule}`;
 
   return (
     <StackBase
       {...injectProps}
-      data-tooltip-id={dataTooltipId}
       ref={ref}
       direction="row"
       marginBottom={'20px'}
@@ -95,8 +95,8 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
       aria-label={props.value.title.value.label}
       aria-description={selectedValueOptions?.description}
     >
-      <DragPlaceholder role={'drag-handle'} data-movable-handle />
-      <Stack direction="column" paddingTop="10px" paddingLeft="17px" paddingBottom="20px" paddingRight="17px">
+      <DragPlaceholder role="drag-handle" data-movable-handle data-tooltip-id={dragTooltipId} />
+      <Stack data-tooltip-id={dataTooltipId} paddingTop="10px" paddingLeft="17px" paddingBottom="20px" paddingRight="17px">
         <TitleDropDownValidator
           onChange={(evt) => titleDropDownOnChange(evt)}
           title="Rule Title"
@@ -133,6 +133,7 @@ export const RuleStack = React.forwardRef(function (props: IRuleStackProps, ref:
           }
         }}
       />
+      <Tooltip id={dragTooltipId} content="Drag to change the order of the rule priority" offset={-11} />
       <Tooltip id={dataTooltipId} content={selectedValueOptions?.description} offset={-10} />
     </StackBase>
   );
