@@ -13,7 +13,7 @@ export function UserLedgerSummariesForYearByMonth(props: { ledgerCollection: ILe
   return summariesAnnual.map((data, i) => (
     <UserLedgerSummaryForMonth
       ledgerCollection={props.ledgerCollection}
-      ledgerSummary={data}
+      ledgerDetailSummary={props.ledgerCollection.getSummaryMonth(new Date(Date.UTC(props.year, i, 1)))}
       year={i}
       goal={props.goal}
       key={`ledger-annual-summaries-${props.year}-${i}`}

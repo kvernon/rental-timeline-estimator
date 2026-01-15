@@ -30,6 +30,7 @@ export function UserLedgerHeader() {
         <MoneyCellStyle>Equity:</MoneyCellStyle>
         <MoneyCellStyle>Purchases:</MoneyCellStyle>
         <MoneyCellStyle>Cash Flow:</MoneyCellStyle>
+        <MoneyCellStyle>Cash Flow Qtr:</MoneyCellStyle>
       </Stack>
       <LastHeader>Balance:</LastHeader>
     </StackHeader>

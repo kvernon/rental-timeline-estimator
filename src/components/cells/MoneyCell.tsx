@@ -7,7 +7,7 @@ import { currencyFormatter } from '../../data/currency-formatter';
 export const MoneyCellBaseStyle = styled(Span)`
   white-space: nowrap;
   border: none;
-  max-width: 120px;
+  max-width: 130px;
   min-width: 96px;
 `;
 

@@ -1,4 +1,4 @@
-import { ILedgerCollection, ILedgerSummary } from '@cubedelement.com/realty-investor-timeline';
+import { ILedgerCollection, ILedgerDetailSummary } from '@cubedelement.com/realty-investor-timeline';
 import React, { useState } from 'react';
 import { Stack } from '../core/Stack';
 import { UserLedgerItems } from './UserLedgerItems';
@@ -18,7 +18,12 @@ const Expanded = styled.span<{ metGoal: boolean }>`
  * @param props
  * @constructor
  */
-export function UserLedgerSummaryForMonth(props: { ledgerCollection: ILedgerCollection; ledgerSummary: ILedgerSummary; year: number; goal: number }) {
+export function UserLedgerSummaryForMonth(props: {
+  ledgerCollection: ILedgerCollection;
+  ledgerDetailSummary: ILedgerDetailSummary;
+  year: number;
+  goal: number;
+}) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const onClick = () => {
@@ -28,16 +33,20 @@ export function UserLedgerSummaryForMonth(props: { ledgerCollection: ILedgerColl
   return (
     <Stack direction={'column'}>
       <Stack direction={'row'}>
-        <Expanded metGoal={props.ledgerSummary.cashFlow >= props.goal}>{isExpanded ? '-' : '+'}</Expanded>
-        {props.ledgerSummary.cashFlow < props.goal && <RegularStack ledgerSummary={props.ledgerSummary} onClick={onClick} />}
-        {props.ledgerSummary.cashFlow >= props.goal && <WinningStack ledgerSummary={props.ledgerSummary} onClick={onClick} />}
+        <Expanded metGoal={props.ledgerDetailSummary.averageQuarterlyCashFlow >= props.goal}>{isExpanded ? '-' : '+'}</Expanded>
+        {props.ledgerDetailSummary.averageQuarterlyCashFlow < props.goal && (
+          <RegularStack ledgerDetailSummary={props.ledgerDetailSummary} onClick={onClick} />
+        )}
+        {props.ledgerDetailSummary.averageQuarterlyCashFlow >= props.goal && (
+          <WinningStack ledgerDetailSummary={props.ledgerDetailSummary} onClick={onClick} />
+        )}
       </Stack>
 
       {isExpanded && (
         <UserLedgerItems
-          goalMet={props.ledgerSummary.cashFlow >= props.goal}
+          goalMet={props.ledgerDetailSummary.averageQuarterlyCashFlow >= props.goal}
           ledgerCollection={props.ledgerCollection}
-          date={props.ledgerSummary.date}
+          date={props.ledgerDetailSummary.date}
         />
       )}
     </Stack>

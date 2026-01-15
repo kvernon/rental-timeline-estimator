@@ -45,7 +45,8 @@ describe('timelineSelectors', () => {
 
     const user = {
       metMonthlyGoal: (d: Date) => d.getTime() === end.getTime(),
-      ledgerCollection: { items: [1, 2, 3] },
+      metAverageQuarterlyGoal: (d: Date) => d.getTime() === end.getTime(),
+      ledgerCollection: { items: [1, 2, 3], getAverageCashFlowMonthByQuarter: jest.fn(() => 100) },
     } as any;
 
     const timeline = {
@@ -98,7 +99,7 @@ describe('timelineSelectors', () => {
 
   test('ledger and completed validation', () => {
     const state = makeState();
-    expect(getLedgerCollection(state)).toEqual({ items: [1, 2, 3] });
+    expect(getLedgerCollection(state)).toEqual(expect.objectContaining({ items: [1, 2, 3] }));
     expect(getCompletedValidation(state)).toBe(ValidatorTypes.Valid);
   });
 

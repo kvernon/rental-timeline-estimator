@@ -26,8 +26,9 @@ export function UserLedgerPage() {
   return (
     <>
       {years.map((year, i) => {
-        const isValid = () => {
-          const b = user.ledgerCollection.getMonthlyCashFlowByYear(year).some((cashFlow) => cashFlow >= user.monthlyIncomeAmountGoal);
+        const isValid: () => ValidatorTypes = () => {
+          const summariesAnnual = user.ledgerCollection.getSummariesAnnual(year);
+          const b = summariesAnnual[summariesAnnual.length - 1].cashFlow >= user.monthlyIncomeAmountGoal;
           return b ? ValidatorTypes.Valid : ValidatorTypes.Invalid;
         };
 
