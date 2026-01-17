@@ -160,6 +160,7 @@ export function UserInformation(props: IUserInformationProps) {
         <AnimatedWrapPanel delay={0.5}>
           <RulesCollection
             title="Purchase Rules"
+            toolTip="A collection of purchase rules that help the system know how to handle multiple contraints"
             values={value.userInfo.purchaseRules}
             possibleChoices={value.rulesConfig.purchaseRules}
             onChange={(e) => {
@@ -170,6 +171,7 @@ export function UserInformation(props: IUserInformationProps) {
         <AnimatedWrapPanel delay={1}>
           <RulesCollectionWidth
             title="Hold Rules"
+            toolTip="A collection of holding, or selling, rules that help the system know how to handle multiple contraints"
             values={value.userInfo.holdRules}
             possibleChoices={value.rulesConfig.holdRules}
             onChange={(e) => {

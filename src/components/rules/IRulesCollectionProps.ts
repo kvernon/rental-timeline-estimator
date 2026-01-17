@@ -8,4 +8,5 @@ export interface IRulesCollectionProps {
   values: IRuleValues<IEventResult<ISelectOption>, IEventResult<number | undefined>>[];
   onChange?: (inputData: IRuleValues<IEventValue<ISelectOption>, IEventValue<number | undefined>>[]) => void;
   possibleChoices: IRuleStackEntity[];
+  toolTip: string;
 }
