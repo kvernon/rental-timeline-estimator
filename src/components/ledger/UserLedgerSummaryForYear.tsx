@@ -1,6 +1,6 @@
 import React from 'react';
 import { Stack } from '../core/Stack';
-import { ILedgerCollection, ILedgerDetailSummary } from '@cubedelement.com/realty-investor-timeline';
+import { ILedgerCollection } from '@cubedelement.com/realty-investor-timeline';
 import { MoneyCell } from '../cells/MoneyCell';
 import { DateCellStyle } from '../cells/DateCell';
 import { AddressSpan } from '../cells/AddressSpan';
