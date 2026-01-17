@@ -12,6 +12,7 @@ describe('UserLedgerSummariesForYearByMonth', () => {
   // Cast to unknown first to avoid mocking the entire interface
   const mockLedgerCollection = {
     getSummariesAnnual: mockGetSummariesAnnual,
+    getSummaryMonth: jest.fn().mockReturnValue({ id: 'summary-1', val: 100 }),
   } as unknown as ILedgerCollection;
 
   const defaultProps = {
@@ -47,8 +48,8 @@ describe('UserLedgerSummariesForYearByMonth', () => {
       1,
       expect.objectContaining({
         ledgerCollection: mockLedgerCollection,
-        ledgerSummary: mockSummaries[0],
-        year: 0, // The component maps index to the 'year' prop
+        ledgerDetailSummary: mockSummaries[0],
+        year: 0,
         goal: 50000,
       }),
       undefined,
@@ -58,7 +59,7 @@ describe('UserLedgerSummariesForYearByMonth', () => {
     expect(UserLedgerSummaryForMonth).toHaveBeenLastCalledWith(
       expect.objectContaining({
         ledgerCollection: mockLedgerCollection,
-        ledgerSummary: mockSummaries[2],
+        ledgerDetailSummary: mockSummaries[0],
         year: 2,
         goal: 50000,
       }),

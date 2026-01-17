@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { UserLedgerSummaryForMonth } from './UserLedgerSummaryForMonth';
-import { ILedgerCollection, ILedgerSummary } from '@cubedelement.com/realty-investor-timeline';
+import { ILedgerCollection, ILedgerDetailSummary } from '@cubedelement.com/realty-investor-timeline';
 import { UserLedgerItems } from './UserLedgerItems';
 
 // Mock dependencies
@@ -13,17 +13,18 @@ jest.mock('@cubedelement.com/realty-investor-timeline');
 
 describe('UserLedgerSummaryForMonth', () => {
   let mockLedgerCollection: jest.Mocked<ILedgerCollection>;
-  let mockLedgerSummary: ILedgerSummary;
+  let mockLedgerSummary: ILedgerDetailSummary;
 
   beforeEach(() => {
     mockLedgerCollection = {
-      getSummaryAnnual: jest.fn(),
+      getSummaryAnnual: jest.fn().mockReturnValue({ equity: 1, cashFlow: 2, averageCashFlow: 3, balance: 4 } as ILedgerDetailSummary),
       filter: jest.fn(),
     } as unknown as jest.Mocked<ILedgerCollection>;
 
     mockLedgerSummary = {
       balance: 0,
       cashFlow: 1,
+      averageQuarterlyCashFlow: 1,
       date: new Date(),
       equity: 2,
       purchases: 3,
@@ -35,7 +36,7 @@ describe('UserLedgerSummaryForMonth', () => {
     render(
       <UserLedgerSummaryForMonth
         ledgerCollection={mockLedgerCollection}
-        ledgerSummary={mockLedgerSummary}
+        ledgerDetailSummary={mockLedgerSummary}
         year={2023}
         goal={11} // Goal higher than cashFlow
       />,
@@ -49,7 +50,7 @@ describe('UserLedgerSummaryForMonth', () => {
     render(
       <UserLedgerSummaryForMonth
         ledgerCollection={mockLedgerCollection}
-        ledgerSummary={mockLedgerSummary}
+        ledgerDetailSummary={mockLedgerSummary}
         year={2023}
         goal={1} // Goal higher than cashFlow
       />,
@@ -60,7 +61,7 @@ describe('UserLedgerSummaryForMonth', () => {
   });
 
   it('toggles details on click', () => {
-    render(<UserLedgerSummaryForMonth ledgerCollection={mockLedgerCollection} ledgerSummary={mockLedgerSummary} year={2023} goal={2000} />);
+    render(<UserLedgerSummaryForMonth ledgerCollection={mockLedgerCollection} ledgerDetailSummary={mockLedgerSummary} year={2023} goal={2000} />);
 
     const stack = screen.getByText('RegularStack');
 

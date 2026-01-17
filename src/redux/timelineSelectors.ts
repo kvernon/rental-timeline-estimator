@@ -50,17 +50,17 @@ export const getStartAndEndDate = createSelector([getTimeline], (timeline) => {
   return [timeline.startDate, timeline.endDate];
 });
 
-export const getEstimatedCashFlow = createSelector([getStartAndEndDate, getActivelyOwnedProperties], (dates, properties) => {
+export const getUser = createSelector([getTimeline], (timeline) => timeline?.user);
+
+export const getEstimatedCashFlow = createSelector([getStartAndEndDate, getUser], (dates, user) => {
   const [, endDate] = dates;
 
   if (endDate === null) {
     return 0;
   }
 
-  return properties.reduce((previousValue, currentValue) => previousValue + currentValue.getCashFlowByDate(endDate), 0);
+  return user?.ledgerCollection?.getAverageCashFlowMonthByQuarter(endDate) || 0;
 });
-
-export const getUser = createSelector([getTimeline], (timeline) => timeline?.user);
 
 export const getGoalMetForUser = createSelector([getStartAndEndDate, getUser], (dates, user) => {
   const [, endDate] = dates;
@@ -69,7 +69,7 @@ export const getGoalMetForUser = createSelector([getStartAndEndDate, getUser], (
     return false;
   }
 
-  return user?.metMonthlyGoal(endDate) || false;
+  return user?.metAverageQuarterlyGoal(endDate) || false;
 });
 
 export const getEquity = createSelector([getStartAndEndDate, getActivelyOwnedProperties], (dates, properties) => {

@@ -28,6 +28,7 @@ describe('UserLedgerPage', () => {
   beforeEach(() => {
     mockLedgerCollection = {
       getSummaryAnnual: jest.fn(),
+      getSummariesAnnual: jest.fn().mockReturnValue([{ cashFlow: 1 }, { cashFlow: 2 }]),
       getMonthlyCashFlowByYear: jest.fn().mockReturnValue([1, 2]),
       filter: jest.fn(),
     } as unknown as jest.Mocked<ILedgerCollection>;

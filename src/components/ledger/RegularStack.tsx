@@ -1,4 +1,4 @@
-import { ILedgerSummary } from '@cubedelement.com/realty-investor-timeline';
+import { ILedgerDetailSummary } from '@cubedelement.com/realty-investor-timeline';
 import { AddressFormatted } from '../cells/AddressSpan';
 import { DateCell } from '../cells/DateCell';
 import { MoneyCell } from '../cells/MoneyCell';
@@ -14,18 +14,19 @@ const RegStackHand = styled(RegStack)`
   }
 `;
 
-export function RegularStack(props: { ledgerSummary: ILedgerSummary; onClick: () => void }) {
+export function RegularStack(props: { ledgerDetailSummary: ILedgerDetailSummary; onClick: () => void }) {
   return (
     <RegStackHand direction={'row'} onClick={props.onClick}>
-      <DateCell date={props.ledgerSummary.date} />
+      <DateCell date={props.ledgerDetailSummary.date} />
       <LedgerType />
       <Stack direction="row">
         <AddressFormatted />
-        <MoneyCell currency={props.ledgerSummary.equity} />
-        <MoneyCell currency={props.ledgerSummary.purchases} />
-        <MoneyCell currency={props.ledgerSummary.cashFlow} />
+        <MoneyCell currency={props.ledgerDetailSummary.equity} />
+        <MoneyCell currency={props.ledgerDetailSummary.purchases} />
+        <MoneyCell currency={props.ledgerDetailSummary.cashFlow} />
+        <MoneyCell currency={props.ledgerDetailSummary.averageQuarterlyCashFlow} />
       </Stack>
-      <MoneyCell currency={props.ledgerSummary.balance} />
+      <MoneyCell currency={props.ledgerDetailSummary.balance} />
     </RegStackHand>
   );
 }
